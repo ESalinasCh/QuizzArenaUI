@@ -1,0 +1,12 @@
+<header class="flex items-center justify-between w-full h-18 px-6 md:px-8 bg-light-bg dark:bg-dark-bg transition-colors duration-200 select-none">
+  <!-- Toggle button (hamburger menu) -->
+  <button (click)="onMenuClick()" class="flex items-center justify-center w-11 h-11 rounded-xl bg-primary-light text-primary dark:bg-dark-surface-alt dark:text-primary-soft hover:bg-primary/15 dark:hover:bg-primary/20 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary" aria-label="Toggle navigation sidebar">
+    <app-icon name="menu" />
+  </button>
+
+  <!-- Spacer -->
+  <div class="flex-1"></div>
+
+  <!-- User actions -->
+  <div class="flex items-center gap-4"><app-user-menu /></div>
+</header>

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Button } from './shared/atoms/button/button';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Button],
+  standalone: true,
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {}
+export class App {}
