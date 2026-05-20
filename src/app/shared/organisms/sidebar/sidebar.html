@@ -1,4 +1,3 @@
-<!-- Backdrop (visible only on mobile when sidebar is open) -->
 @if (isOpen()) {
   <button
     type="button"
@@ -8,8 +7,6 @@
   ></button>
 }
 
-
-<!-- Sidebar drawer -->
 <aside
   [ngClass]="isOpen() ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
   class="fixed lg:relative left-0 top-0 h-screen lg:h-auto z-50 lg:z-auto w-64 bg-light-bg dark:bg-dark-bg border-r border-light-border dark:border-dark-border flex flex-col px-4 py-6 transition-transform duration-300 ease-in-out lg:translate-x-0"
@@ -21,7 +18,6 @@
       </h1>
     </div>
 
-    <!-- Close button for mobile -->
     <button
       (click)="onCloseClick()"
       class="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg hover:bg-light-surface-alt dark:hover:bg-dark-surface-alt text-light-text-secondary dark:text-dark-text-secondary transition-colors duration-200"
@@ -31,7 +27,6 @@
     </button>
   </div>
 
-  <!-- Navigation Items -->
   <nav class="flex-1 flex flex-col gap-1.5">
     <app-nav-item
       label="Dashboard"
