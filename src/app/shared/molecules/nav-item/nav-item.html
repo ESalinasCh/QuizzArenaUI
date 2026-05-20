@@ -1,0 +1,9 @@
+<a
+  class="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-surface-alt dark:hover:bg-dark-surface-alt hover:text-primary dark:hover:text-white transition-all duration-200"
+  [routerLink]="routerLink()"
+  routerLinkActive="bg-primary-light text-primary! dark:bg-dark-border dark:text-white!"
+  [routerLinkActiveOptions]="{ exact: true }"
+>
+  <app-icon [name]="icon()" class="w-5 h-5" />
+  <span>{{ label() }}</span>
+</a>
