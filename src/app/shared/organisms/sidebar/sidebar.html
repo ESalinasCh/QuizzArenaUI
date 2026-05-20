@@ -3,7 +3,7 @@
     type="button"
     (click)="onCloseClick()"
     class="fixed inset-0 z-40 bg-black/30 backdrop-blur-xs lg:hidden transition-opacity duration-300 cursor-default focus:outline-none"
-    aria-label="Cerrar menú lateral"
+    aria-label="Close sidebar overlay"
   ></button>
 }
 
@@ -18,13 +18,11 @@
       </h1>
     </div>
 
-    <button
-      (click)="onCloseClick()"
-      class="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg hover:bg-light-surface-alt dark:hover:bg-dark-surface-alt text-light-text-secondary dark:text-dark-text-secondary transition-colors duration-200"
-      aria-label="Close sidebar"
-    >
-      <app-icon name="close" class="w-5 h-5" />
-    </button>
+    <div class="lg:hidden">
+      <app-button size="icon" variant="ghost" (btnClick)="onCloseClick()" ariaLabel="Close sidebar">
+        <app-icon name="close" class="w-5 h-5" />
+      </app-button>
+    </div>
   </div>
 
   <nav class="flex-1 flex flex-col gap-1.5">
@@ -47,5 +45,17 @@
       (click)="onCloseClick()"
     />
   </nav>
+
+  <div class="border-t border-light-border dark:border-dark-border pt-4">
+    <app-button
+      size="icon"
+      variant="ghost"
+      class="w-full"
+      (btnClick)="toggleTheme()"
+      [ariaLabel]="currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+    >
+      <app-icon [name]="currentTheme() === 'dark' ? 'sun' : 'moon'" class="w-5 h-5" />
+    </app-button>
+  </div>
 
 </aside>
