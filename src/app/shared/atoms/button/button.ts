@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
 export type ButtonSize = 'large' | 'medium' | 'small' | 'icon' | 'action';
 export type ButtonVariant =
@@ -25,6 +25,8 @@ export class Button {
   disabled = input<boolean>(false);
   fullWidth = input<boolean>(false);
   ariaLabel = input<string | null>(null);
+
+  btnClick = output<void>();
 
   buttonClasses = computed(() => [
     this.baseClasses,
@@ -66,6 +68,6 @@ export class Button {
 
     ghost:
         'bg-transparent text-light-text hover:bg-light-surface-alt hover:text-primary ' +
-        'dark:text-dark-text dark:hover:bg-dark-surface-alt dark:hover:text-white',
+        'dark:text-dark-text dark:hover:bg-dark-surface-alt dark:hover:text-dark-text',
     };
 }
