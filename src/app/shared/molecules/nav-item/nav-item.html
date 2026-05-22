@@ -3,7 +3,7 @@
   routerLinkActive
   [routerLink]="routerLink()"
   [routerLinkActiveOptions]="{ exact: true }"
-  [ngClass]="rla.isActive
+  [class]="rla.isActive
     ? 'bg-primary-light text-primary dark:bg-dark-border dark:text-dark-text'
     : 'text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-surface-alt dark:hover:bg-dark-surface-alt hover:text-primary'"
   class="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-semibold transition-all duration-200"

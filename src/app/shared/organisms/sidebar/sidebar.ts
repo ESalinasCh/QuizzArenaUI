@@ -14,17 +14,17 @@ import { ThemeService } from '../../../core/services/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Sidebar {
-  private readonly themeService = inject(ThemeService);
+  readonly #themeService = inject(ThemeService);
 
   isOpen = input<boolean>(false);
   closeSidebar = output<void>();
-  currentTheme = this.themeService.currentTheme;
+  currentTheme = this.#themeService.currentTheme;
 
   onCloseClick(): void {
     this.closeSidebar.emit();
   }
 
   toggleTheme(): void {
-    this.themeService.toggleTheme();
+    this.#themeService.toggleTheme();
   }
 }
