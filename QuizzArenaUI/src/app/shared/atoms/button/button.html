@@ -3,6 +3,7 @@
   [disabled]="disabled()"
   [attr.aria-label]="ariaLabel()"
   [ngClass]="buttonClasses()"
+  (click)="btnClick.emit()"
 >
   <ng-content />
 </button>
