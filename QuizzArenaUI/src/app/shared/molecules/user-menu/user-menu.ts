@@ -11,5 +11,5 @@ import { Icon } from '../../atoms/icon/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserMenu {
-  username = input<string>('Alex');
+  username = input<string>('UserName');
 }
