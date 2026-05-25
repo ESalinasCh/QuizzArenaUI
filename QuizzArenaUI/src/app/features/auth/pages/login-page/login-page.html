@@ -1,0 +1,14 @@
+<div class="min-h-screen flex items-center justify-center bg-light-bg dark:bg-dark-bg transition-colors duration-200">
+  <div class="flex flex-col items-center gap-8 p-10 rounded-2xl bg-light-surface dark:bg-dark-surface shadow-lg w-full max-w-sm">
+    <div class="flex flex-col items-center gap-2 text-center">
+      <h1 class="text-2xl font-bold text-light-text dark:text-dark-text">QuizArena</h1>
+      <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        Sign in to continue
+      </p>
+    </div>
+
+    <app-button variant="primary" size="large" (btnClick)="signIn()">
+      Sign in
+    </app-button>
+  </div>
+</div>
