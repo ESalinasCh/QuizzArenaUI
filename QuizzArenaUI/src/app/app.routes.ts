@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './shared/templates/main-layout/main-layout';
+import { LoginPage } from './features/auth/pages/login-page/login-page';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./features/auth/auth.routes').then(r => r.authRoutes),
-  },
+  { path: 'login', component: LoginPage },
   {
     path: '',
     component: MainLayout,

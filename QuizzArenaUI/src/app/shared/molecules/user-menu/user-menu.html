@@ -1,3 +1,44 @@
-<app-button size="icon" variant="ghost" ariaLabel="User profile">
-  <app-icon name="user" class="w-5 h-5" />
-</app-button>
+<div class="relative" (click)="$event.stopPropagation()">
+
+  <button
+    (click)="toggle()"
+    class="flex items-center gap-2 px-3 py-2 rounded-button hover:bg-light-surface-alt dark:hover:bg-dark-surface-alt transition-colors duration-200"
+    [attr.aria-expanded]="isOpen()"
+    aria-label="User menu">
+    <div class="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center">
+      <app-icon name="user" class="w-4 h-4 text-primary" />
+    </div>
+    @if (currentUser()) {
+      <span class="text-sm font-semibold text-light-text dark:text-dark-text hidden sm:block">
+        {{ currentUser()!.username }}
+      </span>
+    }
+    <app-icon name="chevron-down" class="w-4 h-4 text-light-text-secondary dark:text-dark-text-secondary hidden sm:block" />
+  </button>
+
+  @if (isOpen()) {
+    <div class="absolute right-0 top-full mt-2 w-52 rounded-card bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border shadow-card z-50">
+
+      <div class="px-4 py-3 border-b border-light-border dark:border-dark-border">
+        <p class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Signed in as</p>
+        <p class="text-sm font-semibold text-light-text dark:text-dark-text truncate">
+          {{ currentUser()?.username ?? 'User' }}
+        </p>
+        <p class="text-xs text-light-text-secondary dark:text-dark-text-secondary truncate">
+          {{ currentUser()?.email ?? '' }}
+        </p>
+      </div>
+
+      <div class="p-2">
+        <button
+          (click)="logout()"
+          class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-danger-text-light dark:text-danger-text-dark hover:bg-danger-bg-light dark:hover:bg-danger-bg-dark transition-colors duration-200">
+          <app-icon name="logout" class="w-4 h-4" />
+          Sign out
+        </button>
+      </div>
+
+    </div>
+  }
+
+</div>

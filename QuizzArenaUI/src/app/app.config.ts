@@ -10,7 +10,7 @@ import { AuthService } from './core/services/auth.service';
 
 const keycloakConfig: AuthConfig = {
   issuer: 'https://auth.bsdevbo.com/realms/master',
-  redirectUri: window.location.origin,
+  redirectUri: `${window.location.origin}/`,
   clientId: 'quiz-arena-ui',
   responseType: 'code',
   scope: 'openid profile email',

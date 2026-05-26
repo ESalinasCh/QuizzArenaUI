@@ -23,11 +23,21 @@ export class AuthService {
         }
         return true;
       })
-      .catch(() => true); // Keycloak not available — app still loads
+      .catch(() => true);
   }
 
   login(): void {
     this.#oAuthService.initCodeFlow();
+  }
+
+  register(): void {
+    const params = new URLSearchParams({
+      client_id: this.#oAuthService.clientId ?? '',
+      response_type: 'code',
+      scope: this.#oAuthService.scope ?? 'openid profile email',
+      redirect_uri: this.#oAuthService.redirectUri ?? `${window.location.origin}/`,
+    });
+    window.location.href = `${this.#oAuthService.issuer}/protocol/openid-connect/registrations?${params}`;
   }
 
   logout(): void {
