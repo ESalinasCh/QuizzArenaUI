@@ -1,14 +1,81 @@
-<div class="min-h-screen flex items-center justify-center bg-light-bg dark:bg-dark-bg transition-colors duration-200">
-  <div class="flex flex-col items-center gap-8 p-10 rounded-2xl bg-light-surface dark:bg-dark-surface shadow-lg w-full max-w-sm">
-    <div class="flex flex-col items-center gap-2 text-center">
-      <h1 class="text-2xl font-bold text-light-text dark:text-dark-text">QuizArena</h1>
-      <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-        Sign in to continue
+<div class="min-h-screen bg-light-bg flex flex-col items-center px-6 py-10 overflow-y-auto">
+
+  <div class="w-full max-w-sm flex flex-col items-center gap-6">
+
+    <div class="w-full flex items-center justify-center py-4">
+      <img
+        src="images/login/login-illustration.svg"
+        alt="QuizArena ilustración"
+        class="w-72 max-w-full" />
+    </div>
+
+    <div class="w-full rounded-2xl bg-purple-light px-6 py-4 text-center">
+      <h1 class="text-3xl font-bold text-purple">QuizArena</h1>
+    </div>
+
+    <div class="text-center px-2">
+      <p class="text-base font-semibold text-light-text leading-snug">
+        Genera quizzes de tus clases<br />con inteligencia artificial
+      </p>
+      <p class="text-sm text-light-text-secondary mt-1 leading-snug">
+        Crea, publica y evalúa el desempeño<br />de tus estudiantes al instante
       </p>
     </div>
 
-    <app-button variant="primary" size="large" (btnClick)="signIn()">
-      Sign in
-    </app-button>
+    <div class="flex flex-col items-center gap-3 w-full">
+      <app-button
+        variant="primary"
+        size="large"
+        [fullWidth]="true"
+        (btnClick)="signIn()">
+        Iniciar sesión
+      </app-button>
+
+      <app-button
+        variant="secondary"
+        size="large"
+        [fullWidth]="true"
+        (btnClick)="register()">
+        Registrarse
+      </app-button>
+    </div>
+
+    <div class="grid grid-cols-3 gap-3 w-full mt-2">
+
+      <div class="flex flex-col items-center gap-2 p-3 rounded-card border border-light-border bg-light-surface shadow-card text-center">
+        <img
+          src="images/login/login-ia-procesos.svg"
+          alt="IA Procesos"
+          class="w-10 h-10" />
+        <span class="text-xs font-bold text-light-text leading-tight">IA Procesos</span>
+        <p class="text-[10px] text-light-text-secondary leading-tight">
+          Genera preguntas personalizadas al instante
+        </p>
+      </div>
+
+      <div class="flex flex-col items-center gap-2 p-3 rounded-card border border-light-border bg-light-surface shadow-card text-center">
+        <img
+          src="images/login/login-quizzes.svg"
+          alt="Quizzes"
+          class="w-10 h-10" />
+        <span class="text-xs font-bold text-light-text leading-tight">Quizzes</span>
+        <p class="text-[10px] text-light-text-secondary leading-tight">
+          Crea y publica quizzes listos para tus clases
+        </p>
+      </div>
+
+      <div class="flex flex-col items-center gap-2 p-3 rounded-card border border-light-border bg-light-surface shadow-card text-center">
+        <img
+          src="images/login/login-resultados.svg"
+          alt="Resultados"
+          class="w-10 h-10" />
+        <span class="text-xs font-bold text-light-text leading-tight">Resultados</span>
+        <p class="text-[10px] text-light-text-secondary leading-tight">
+          Evalúa y analiza el desempeño de tus estudiantes
+        </p>
+      </div>
+
+    </div>
+
   </div>
 </div>
