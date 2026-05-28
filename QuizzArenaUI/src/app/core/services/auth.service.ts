@@ -26,19 +26,15 @@ export class AuthService {
       .catch(() => true);
   }
 
-  login(): void {
-    this.#oAuthService.initCodeFlow();
-  }
+login(): void {
+  this.#oAuthService.customQueryParams = {};
+  this.#oAuthService.initCodeFlow();
+}
 
-  register(): void {
-    const params = new URLSearchParams({
-      client_id: this.#oAuthService.clientId ?? '',
-      response_type: 'code',
-      scope: this.#oAuthService.scope ?? 'openid profile email',
-      redirect_uri: this.#oAuthService.redirectUri ?? `${window.location.origin}/`,
-    });
-    window.location.href = `${this.#oAuthService.issuer}/protocol/openid-connect/registrations?${params}`;
-  }
+register(): void {
+  this.#oAuthService.customQueryParams = { action: 'register' };
+  this.#oAuthService.initCodeFlow();
+}
 
   logout(): void {
     this.#oAuthService.logOut();

@@ -1,0 +1,21 @@
+@if (variant() === 'row') {
+
+  <div class="flex items-center gap-4 bg-white/10 rounded-xl px-4 py-3">
+    <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
+      <img [src]="imageSrc()" [alt]="imageAlt()" class="w-6 h-6" />
+    </div>
+    <div>
+      <p class="text-white font-semibold text-sm">{{ title() }}</p>
+      <p class="text-white/60 text-xs">{{ description() }}</p>
+    </div>
+  </div>
+
+} @else {
+
+  <div class="flex flex-col items-center gap-2 p-3 rounded-card border border-light-border bg-light-surface shadow-card text-center">
+    <img [src]="imageSrc()" [alt]="imageAlt()" class="w-10 h-10" />
+    <span class="text-xs font-bold text-light-text leading-tight">{{ title() }}</span>
+    <p class="text-[10px] text-light-text-secondary leading-tight">{{ description() }}</p>
+  </div>
+
+}
