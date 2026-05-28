@@ -1,7 +1,7 @@
-<div class="relative" (click)="$event.stopPropagation()">
+<div class="relative">
 
   <button
-    (click)="toggle()"
+    (click)="toggle();$event.stopPropagation()"
     class="flex items-center gap-2 px-3 py-2 rounded-button hover:bg-light-surface-alt dark:hover:bg-dark-surface-alt transition-colors duration-200"
     [attr.aria-expanded]="isOpen()"
     aria-label="User menu">
