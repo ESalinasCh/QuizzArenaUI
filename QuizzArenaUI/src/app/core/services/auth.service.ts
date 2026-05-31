@@ -9,9 +9,12 @@ export class AuthService {
   readonly #oAuthService = inject(OAuthService);
   readonly #router = inject(Router);
 
-  readonly #authState = signal<AuthState>({ user: null, isAuthenticated: false });
+  readonly #authState = signal<AuthState>({ isAuthenticated: false });
 
-  readonly currentUser: Signal<User | null> = computed(() => this.#authState().user);
+  readonly currentUser: Signal<User | undefined> = computed(() => {
+    const state = this.#authState();
+    return state.isAuthenticated ? state.user : undefined;
+  });
   readonly isAuthenticated: Signal<boolean> = computed(() => this.#authState().isAuthenticated);
 
   initAuth(): Promise<boolean> {
@@ -26,24 +29,20 @@ export class AuthService {
       .catch(() => true);
   }
 
-login(): void {
-  this.#oAuthService.customQueryParams = {};
-  this.#oAuthService.initCodeFlow();
-}
-
-register(): void {
-  this.#oAuthService.customQueryParams = { action: 'register' };
-  this.#oAuthService.initCodeFlow();
-}
+  login(): void {
+    this.#oAuthService.customQueryParams = {};
+    this.#oAuthService.initCodeFlow();
+  }
 
   logout(): void {
     this.#oAuthService.logOut();
-    this.#authState.set({ user: null, isAuthenticated: false });
+    this.#authState.set({ isAuthenticated: false });
     this.#router.navigate(['/login']);
   }
 
   hasRole(role: string): boolean {
-    return this.#authState().user?.roles.includes(role) ?? false;
+    const state = this.#authState();
+    return state.isAuthenticated ? state.user.roles.includes(role) : false;
   }
 
   #setUserFromToken(): void {
@@ -58,6 +57,6 @@ register(): void {
       roles: claims.realm_access?.roles ?? [],
     };
 
-    this.#authState.set({ user, isAuthenticated: true });
+    this.#authState.set({ isAuthenticated: true, user });
   }
 }

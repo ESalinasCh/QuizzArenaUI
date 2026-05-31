@@ -1,6 +1,5 @@
 import { User } from './user.model';
 
-export interface AuthState {
-  user: User | null;
-  isAuthenticated: boolean;
-}
+export type AuthState =
+  | { isAuthenticated: false }
+  | { isAuthenticated: true; user: User };
