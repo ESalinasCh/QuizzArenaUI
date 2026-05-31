@@ -14,19 +14,19 @@ export class UserMenu {
   readonly #authService = inject(AuthService);
 
   readonly currentUser = this.#authService.currentUser;
-  readonly isOpen = signal(false);
+  readonly isOpened = signal(false);
 
   toggle(): void {
-    this.isOpen.update(v => !v);
+    this.isOpened.update(v => !v);
   }
 
   logout(): void {
-    this.isOpen.set(false);
+    this.isOpened.set(false);
     this.#authService.logout();
   }
 
   @HostListener('document:click')
   onDocumentClick(): void {
-    this.isOpen.set(false);
+    this.isOpened.set(false);
   }
 }

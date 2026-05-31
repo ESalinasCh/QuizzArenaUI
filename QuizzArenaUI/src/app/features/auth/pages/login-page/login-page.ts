@@ -16,6 +16,7 @@ export interface LoginFeature {
   standalone: true,
   imports: [Button, Icon, FeatureCard],
   templateUrl: './login-page.html',
+  styleUrl: './login-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPage {

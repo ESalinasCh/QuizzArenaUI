@@ -7,11 +7,12 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
+import { environment } from '../environments/environment';
 
 const keycloakConfig: AuthConfig = {
-  issuer: 'https://auth.bsdevbo.com/realms/master',
+  issuer: environment.keycloak.issuer,
   redirectUri: `${window.location.origin}/`,
-  clientId: 'quiz-arena-ui',
+  clientId: environment.keycloak.clientId,
   responseType: 'code',
   scope: 'openid profile email',
   showDebugInformation: false,
