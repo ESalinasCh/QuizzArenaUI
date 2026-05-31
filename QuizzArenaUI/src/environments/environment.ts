@@ -1,0 +1,7 @@
+export const environment = {
+  production: false,
+  keycloak: {
+    issuer: 'https://auth.bsdevbo.com/realms/master',
+    clientId: 'quiz-arena-ui',
+  },
+};
