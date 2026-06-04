@@ -23,17 +23,18 @@
       <div class="flex-1 flex items-center justify-center py-8">
         <img
           src="images/login/login-illustration.svg"
-          alt="QuizArena ilustración"
+          i18n-alt="Login illustration alt text"
+          alt="QuizArena illustration"
           class="w-full max-w-md drop-shadow-xl" />
       </div>
 
       <!-- Tagline -->
       <div class="mb-8">
-        <h2 class="text-3xl font-bold text-white leading-tight">
-          Genera quizzes con<br />inteligencia artificial
+        <h2 i18n="Login desktop tagline" class="text-3xl font-bold text-white leading-tight">
+          Generate quizzes with artificial intelligence
         </h2>
-        <p class="text-white/70 mt-2 text-sm leading-relaxed">
-          Crea, publica y evalúa el desempeño de tus<br />estudiantes al instante
+        <p i18n="Login desktop subtitle" class="text-white/70 mt-2 text-sm leading-relaxed">
+          Create, publish and evaluate your students' performance instantly
         </p>
       </div>
 
@@ -59,7 +60,8 @@
       <div class="lg:hidden w-full flex items-center justify-center py-4">
         <img
           src="images/login/login-illustration.svg"
-          alt="QuizArena ilustración"
+          i18n-alt="Login illustration alt text"
+          alt="QuizArena illustration"
           class="w-72 max-w-full" />
       </div>
 
@@ -68,17 +70,17 @@
       </div>
 
       <div class="text-center px-2">
-        <p class="text-base font-semibold text-light-text leading-snug">
-          Genera quizzes de tus clases<br />con inteligencia artificial
+        <p i18n="Login mobile tagline" class="text-base font-semibold text-light-text leading-snug">
+          Generate quizzes from your classes using artificial intelligence
         </p>
-        <p class="text-sm text-light-text-secondary mt-1 leading-snug">
-          Crea, publica y evalúa el desempeño<br />de tus estudiantes al instante
+        <p i18n="Login mobile subtitle" class="text-sm text-light-text-secondary mt-1 leading-snug">
+          Create, publish and evaluate your students' performance instantly
         </p>
       </div>
 
       <div class="flex flex-col items-center gap-3 w-full">
         <app-button variant="primary" size="large" [fullWidth]="true" (btnClick)="signIn()">
-          Comenzar
+          <ng-container i18n="Login CTA button">Get started</ng-container>
         </app-button>
       </div>
 

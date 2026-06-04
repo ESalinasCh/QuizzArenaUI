@@ -3,6 +3,7 @@
     type="button"
     (click)="onCloseClick()"
     class="fixed inset-0 z-40 bg-black/30 backdrop-blur-xs lg:hidden transition-opacity duration-300 cursor-default focus:outline-none"
+    i18n-aria-label="Aria label to close sidebar overlay"
     aria-label="Close sidebar overlay"
   ></button>
 }
@@ -19,7 +20,12 @@
     </div>
 
     <div class="lg:hidden">
-      <app-button size="icon" variant="ghost" (btnClick)="onCloseClick()" ariaLabel="Close sidebar">
+      <app-button
+        size="icon"
+        variant="ghost"
+        (btnClick)="onCloseClick()"
+        i18n-ariaLabel="Aria label to close sidebar"
+        ariaLabel="Close sidebar">
         <app-icon name="close" class="w-5 h-5" />
       </app-button>
     </div>
@@ -27,19 +33,22 @@
 
   <nav class="flex-1 flex flex-col gap-1.5">
     <app-nav-item
+      i18n-label="Sidebar nav dashboard label"
       label="Dashboard"
       icon="dashboard"
       routerLink="/dashboard"
       (click)="onCloseClick()"
     />
     <app-nav-item
-      label="Cuestionarios"
+      i18n-label="Sidebar nav quizzes label"
+      label="Quizzes"
       icon="quiz"
       routerLink="/quizzes"
       (click)="onCloseClick()"
     />
     <app-nav-item
-      label="Configuración"
+      i18n-label="Sidebar nav settings label"
+      label="Settings"
       icon="settings"
       routerLink="/settings"
       (click)="onCloseClick()"
@@ -52,7 +61,7 @@
       variant="ghost"
       class="w-full"
       (btnClick)="toggleTheme()"
-      [ariaLabel]="currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+      [ariaLabel]="currentTheme() === 'dark' ? lightModeLabel : darkModeLabel"
     >
       <app-icon [name]="currentTheme() === 'dark' ? 'sun' : 'moon'" class="w-5 h-5" />
     </app-button>

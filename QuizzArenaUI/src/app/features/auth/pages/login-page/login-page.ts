@@ -25,21 +25,21 @@ export class LoginPage {
   readonly features: LoginFeature[] = [
     {
       imageSrc: 'images/login/login-ia-procesos.svg',
-      imageAlt: 'IA Procesos',
-      title: 'IA Procesos',
-      description: 'Genera preguntas personalizadas al instante',
+      imageAlt: $localize`:Feature card image alt|AI Processes:AI Processes`,
+      title: $localize`:Feature card title|AI Processes:AI Processes`,
+      description: $localize`:Feature card description|AI Processes:Generate personalized questions instantly`,
     },
     {
       imageSrc: 'images/login/login-quizzes.svg',
-      imageAlt: 'Quizzes',
-      title: 'Quizzes',
-      description: 'Crea y publica quizzes listos para tus clases',
+      imageAlt: $localize`:Feature card image alt|Quizzes:Quizzes`,
+      title: $localize`:Feature card title|Quizzes:Quizzes`,
+      description: $localize`:Feature card description|Quizzes:Create and publish quizzes ready for your classes`,
     },
     {
       imageSrc: 'images/login/login-resultados.svg',
-      imageAlt: 'Resultados',
-      title: 'Resultados',
-      description: 'Evalúa y analiza el desempeño de tus estudiantes',
+      imageAlt: $localize`:Feature card image alt|Results:Results`,
+      title: $localize`:Feature card title|Results:Results`,
+      description: $localize`:Feature card description|Results:Evaluate and analyze your students' performance`,
     },
   ];
 

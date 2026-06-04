@@ -20,6 +20,9 @@ export class Sidebar {
   closeSidebar = output<void>();
   currentTheme = this.#themeService.currentTheme;
 
+  readonly lightModeLabel = $localize`:Aria label to switch to light mode:Switch to light mode`;
+  readonly darkModeLabel = $localize`:Aria label to switch to dark mode:Switch to dark mode`;
+
   onCloseClick(): void {
     this.closeSidebar.emit();
   }
