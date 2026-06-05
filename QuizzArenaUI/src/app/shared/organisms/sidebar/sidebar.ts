@@ -4,6 +4,14 @@ import { NavItem } from '../../molecules/nav-item/nav-item';
 import { Icon } from '../../atoms/icon/icon';
 import { Button } from '../../atoms/button/button';
 import { ThemeService } from '../../../core/services/theme.service';
+import { AuthService } from '../../../core/services/auth.service';
+
+interface SidebarNavItem {
+  label: string;
+  icon: 'dashboard' | 'quiz' | 'settings';
+  routerLink: string;
+  roles: string[];
+}
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +22,7 @@ import { ThemeService } from '../../../core/services/theme.service';
 })
 export class Sidebar {
   readonly #themeService = inject(ThemeService);
+  readonly #authService = inject(AuthService);
 
   isOpen = input<boolean>(false);
   closeSidebar = output<void>();
@@ -21,6 +30,31 @@ export class Sidebar {
 
   protected readonly lightModeLabel = $localize`:Aria label to switch to light mode:Switch to light mode`;
   protected readonly darkModeLabel = $localize`:Aria label to switch to dark mode:Switch to dark mode`;
+
+  readonly navItems: SidebarNavItem[] = [
+    {
+      label: $localize`:Sidebar nav student quizzes label:Quizzes`,
+      icon: 'quiz',
+      routerLink: '/student/quizzes',
+      roles: ['student'],
+    },
+    {
+      label: $localize`:Sidebar nav teacher dashboard label:Dashboard`,
+      icon: 'dashboard',
+      routerLink: '/teacher/dashboard',
+      roles: ['teacher'],
+    },
+    {
+      label: $localize`:Sidebar nav teacher quizzes label:Cuestionarios`,
+      icon: 'quiz',
+      routerLink: '/teacher/quizzes',
+      roles: ['teacher'],
+    },
+  ];
+
+  canShowItem(item: SidebarNavItem): boolean {
+    return item.roles.some(role => this.#authService.hasRole(role));
+  }
 
   onCloseClick(): void {
     this.closeSidebar.emit();

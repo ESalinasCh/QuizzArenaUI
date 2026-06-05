@@ -1,0 +1,23 @@
+<form class="flex flex-col gap-4" (ngSubmit)="submit()">
+  <label
+    class="flex h-[72px] items-center gap-3 rounded-2xl border border-light-border-strong bg-light-surface px-5 text-light-text transition-colors dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
+  >
+    <app-icon name="link" class="h-5 w-5 shrink-0 text-light-text-secondary dark:text-dark-text-secondary" />
+    <input
+      type="text"
+      name="quizLink"
+      [ngModel]="quizLink()"
+      (ngModelChange)="quizLink.set($event)"
+      placeholder="Pegar enlace del quiz..."
+      class="min-w-0 flex-1 bg-transparent text-base font-medium text-light-text outline-none placeholder:text-light-text-secondary dark:text-dark-text dark:placeholder:text-dark-text-secondary"
+    />
+  </label>
+
+  <button
+    type="submit"
+    class="flex h-[74px] w-full items-center justify-center gap-2 rounded-2xl bg-purple px-5 text-lg font-bold text-white shadow-button transition hover:bg-primary active:scale-[0.98]"
+  >
+    Ir al quiz
+    <app-icon name="arrow-right" class="h-5 w-5" />
+  </button>
+</form>
