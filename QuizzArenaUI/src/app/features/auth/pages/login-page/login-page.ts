@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { FeatureCard } from '../../../../shared/molecules/feature-card/feature-card';
+import { LanguageSelector } from '../../../../shared/molecules/language-selector/language-selector';
 import { AuthService } from '../../../../core/services/auth.service';
 
 export interface LoginFeature {
@@ -14,7 +15,7 @@ export interface LoginFeature {
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [Button, Icon, FeatureCard],
+  imports: [Button, Icon, FeatureCard, LanguageSelector],
   templateUrl: './login-page.html',
   styleUrl: './login-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,28 @@
+<div class="relative">
+
+  <button
+    (click)="toggle(); $event.stopPropagation()"
+    class="flex items-center gap-2 px-3 py-2 rounded-button text-sm font-semibold transition-colors duration-200"
+    [attr.aria-expanded]="isOpen()">
+    <app-icon name="language" class="w-4 h-4" />
+    <span>{{ currentLanguage.label }}</span>
+    <app-icon name="chevron-down" class="w-3 h-3" />
+  </button>
+
+  @if (isOpen()) {
+    <div class="absolute right-0 top-full mt-2 w-36 rounded-card border border-light-border bg-light-surface shadow-card z-50">
+      @for (lang of languages; track lang.code) {
+        <button
+          (click)="switchTo(lang.code)"
+          class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left transition-colors duration-200 first:rounded-t-card last:rounded-b-card"
+          [class.font-bold]="lang.code === currentLanguage.code"
+          [class.text-primary]="lang.code === currentLanguage.code"
+          [class.text-light-text]="lang.code !== currentLanguage.code"
+          [class.hover:bg-light-surface-alt]="lang.code !== currentLanguage.code">
+          {{ lang.label }}
+        </button>
+      }
+    </div>
+  }
+
+</div>
