@@ -26,24 +26,16 @@
   </div>
 
   <nav class="flex-1 flex flex-col gap-1.5">
-    <app-nav-item
-      label="Dashboard"
-      icon="dashboard"
-      routerLink="/dashboard"
-      (click)="onCloseClick()"
-    />
-    <app-nav-item
-      label="Cuestionarios"
-      icon="quiz"
-      routerLink="/quizzes"
-      (click)="onCloseClick()"
-    />
-    <app-nav-item
-      label="Configuración"
-      icon="settings"
-      routerLink="/settings"
-      (click)="onCloseClick()"
-    />
+    @for (item of navItems; track item.routerLink) {
+      @if (canShowItem(item)) {
+        <app-nav-item
+          [label]="item.label"
+          [icon]="item.icon"
+          [routerLink]="item.routerLink"
+          (click)="onCloseClick()"
+        />
+      }
+    }
   </nav>
 
   <div class="border-t border-light-border dark:border-dark-border pt-4">
@@ -57,5 +49,4 @@
       <app-icon [name]="currentTheme() === 'dark' ? 'sun' : 'moon'" class="w-5 h-5" />
     </app-button>
   </div>
-
 </aside>

@@ -1,0 +1,23 @@
+<article
+  class="flex min-h-[80px] items-center justify-between gap-4 rounded-2xl bg-light-surface px-3 py-4 shadow-card transition dark:bg-dark-surface dark:shadow-dark-card sm:px-4"
+>
+  <div class="min-w-0">
+    <h3 class="truncate text-lg font-bold text-light-text dark:text-dark-text">
+      {{ quiz().title }}
+    </h3>
+    <p class="flex items-center gap-1.5 truncate text-sm font-medium {{ statusClasses() }}">
+      <app-icon [name]="iconName()" class="h-4 w-4 shrink-0" />
+      <span>{{ quiz().score }}%</span>
+      <span aria-hidden="true">•</span>
+      <span>{{ quiz().completedAtLabel }}</span>
+    </p>
+  </div>
+
+  <button
+    type="button"
+    class="shrink-0 text-lg font-bold text-info transition hover:text-primary-hover"
+    (click)="emitView()"
+  >
+    Ver
+  </button>
+</article>
