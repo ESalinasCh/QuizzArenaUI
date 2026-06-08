@@ -33,11 +33,7 @@ export class LanguageSelector {
   }
 
   switchTo(lang: string): void {
-    const current = window.location.pathname;
-    const hasLocale = /^\/(en|es)/.test(current);
-    window.location.href = hasLocale
-      ? current.replace(/^\/(en|es)/, `/${lang}`)
-      : `/${lang}${current}`;
+    window.location.href = `/${lang}/`;
   }
 
   @HostListener('document:click')

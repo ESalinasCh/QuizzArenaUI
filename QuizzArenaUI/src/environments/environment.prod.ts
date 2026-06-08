@@ -3,6 +3,6 @@ export const environment = {
   keycloak: {
     issuer: 'https://auth.bsdevbo.com/realms/master',
     clientId: 'quiz-arena-ui',
-    redirectUri: undefined,
+    redirectUri: undefined as string | undefined,
   },
 };

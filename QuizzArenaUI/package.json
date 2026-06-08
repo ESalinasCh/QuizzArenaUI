@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:i18n": "ng build --localize && node -e \"const fs=require('fs');fs.copyFileSync('public/serve.json','dist/QuizzArenaUI/browser/serve.json');fs.copyFileSync('public/index.html','dist/QuizzArenaUI/browser/index.html');\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
