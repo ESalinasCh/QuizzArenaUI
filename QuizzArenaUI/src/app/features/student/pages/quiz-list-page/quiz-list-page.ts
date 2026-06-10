@@ -35,7 +35,9 @@ export class StudentQuizListPage {
   }
 
   viewResults(quizId: string): void {
-    void this.#router.navigate(['/student/quizzes', quizId, 'results']);
+    void this.#router.navigate(['/student/quizzes', quizId, 'results'], {
+      queryParams: { view: 'details' },
+    });
   }
 
   goToQuizFromLink(quizLink: string): void {

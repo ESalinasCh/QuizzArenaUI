@@ -34,10 +34,39 @@ export interface QuizQuestion {
 
 export interface StudentQuizStart {
   id: string;
+  matchId?: string;
+  attemptId?: string;
   title: string;
   subtitle: string;
   professorName: string;
   questionCount: number;
   timeLimitSeconds: number;
   questions: QuizQuestion[];
+}
+
+export interface StudentQuizReviewQuestion {
+  id: string;
+  number: number;
+  text: string;
+  selectedAnswerLabel: string;
+  isCorrect: boolean;
+}
+
+export interface StudentQuizReview {
+  id: string;
+  title: string;
+  subtitle: string;
+  score: number;
+  questions: StudentQuizReviewQuestion[];
+}
+
+export interface StudentQuizResultSummary {
+  attemptId: string;
+  title: string;
+  subtitle: string;
+  scorePercentage: number;
+  correctCount: number;
+  incorrectCount: number;
+  totalQuestions: number;
+  message: string;
 }
