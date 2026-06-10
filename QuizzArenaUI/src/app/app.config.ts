@@ -7,35 +7,41 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
-import { environment } from '../environments/environment';
+import { APP_CONFIG, AppConfig } from './core/config/app-config';
 
-const keycloakConfig: AuthConfig = {
-  issuer: environment.keycloak.issuer,
-  redirectUri: `${window.location.origin}/`,
-  clientId: environment.keycloak.clientId,
-  responseType: 'code',
-  scope: 'openid profile email',
-  showDebugInformation: false,
-};
-
-function initializeAuth(oAuthService: OAuthService, authService: AuthService): () => Promise<boolean> {
+function initializeAuth(oAuthService: OAuthService, authService: AuthService, config: AppConfig): () => Promise<boolean> {
   return () => {
+    const keycloakConfig: AuthConfig = {
+      issuer: config.keycloak.issuer,
+      redirectUri: `${window.location.origin}/`,
+      clientId: config.keycloak.clientId,
+      responseType: 'code',
+      scope: 'openid profile email',
+      showDebugInformation: !config.production,
+    };
     oAuthService.configure(keycloakConfig);
     return authService.initAuth();
   };
 }
 
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
-    provideOAuthClient(),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeAuth,
-      deps: [OAuthService, AuthService],
-      multi: true,
-    },
-  ],
-};
+/**
+ * Builds the application config from runtime configuration loaded in `main.ts`.
+ * The config is provided via {@link APP_CONFIG} so it is injectable app-wide.
+ */
+export function createAppConfig(config: AppConfig): ApplicationConfig {
+  return {
+    providers: [
+      { provide: APP_CONFIG, useValue: config },
+      provideBrowserGlobalErrorListeners(),
+      provideRouter(routes),
+      provideHttpClient(withInterceptors([authInterceptor])),
+      provideOAuthClient(),
+      {
+        provide: APP_INITIALIZER,
+        useFactory: initializeAuth,
+        deps: [OAuthService, AuthService, APP_CONFIG],
+        multi: true,
+      },
+    ],
+  };
+}

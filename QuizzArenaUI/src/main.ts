@@ -1,6 +1,17 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { createAppConfig } from './app/app.config';
+import { AppConfig } from './app/core/config/app-config';
 import { App } from './app/app';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+// Load runtime configuration before bootstrapping so a single built artifact
+// can run in any environment (12-Factor: Config). The container renders
+// /config.json from environment variables at startup.
+fetch('config.json', { cache: 'no-cache' })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`Failed to load config.json: HTTP ${response.status}`);
+    }
+    return response.json() as Promise<AppConfig>;
+  })
+  .then((config) => bootstrapApplication(App, createAppConfig(config)))
+  .catch((err) => console.error('Application bootstrap failed:', err));
