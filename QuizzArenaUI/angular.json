@@ -4,7 +4,9 @@
   "cli": {
     "packageManager": "npm",
     "analytics": false,
-    "schematicCollections": ["angular-eslint"]
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -80,6 +82,9 @@
             "production": {
               "buildTarget": "QuizzArenaUI:build:production"
             },
+            "options": {
+              "proxyConfig": "proxy.conf.json"
+            },
             "development": {
               "buildTarget": "QuizzArenaUI:build:development"
             },
@@ -95,7 +100,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
