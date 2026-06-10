@@ -142,7 +142,56 @@ Archivos principales:
 
 ## Mocks con Forma de API
 
-Se creo un servicio mock para simular la API futura.
+Se creo una capa de contracts y mappers para alinear el frontend con los API contracts del backend, manteniendo mocks mientras la API real esta lista.
+
+La estructura quedo asi:
+
+```txt
+features/student/api/
+  student-quiz.contract.ts
+  student-quiz.mapper.ts
+
+features/student/mocks/
+  student-quiz.mock.ts
+
+features/student/services/
+  student-quiz.service.ts
+```
+
+`student-quiz.contract.ts` contiene las formas esperadas del backend:
+
+- `AvailableMatchResponse`
+- `MatchAttemptSummaryResponse`
+- `CreatePlayRequest`
+- `CreatePlayResponse`
+- `SubmitMatchAttemptRequest`
+- `SubmitMatchAttemptResponse`
+
+`AvailableMatchResponse` incluye los datos que necesita el dashboard/start screen:
+
+- `questionCount`
+- `professorName`
+- `duration`
+
+Con eso se elimino la metadata local temporal para matches.
+
+`student-quiz.endpoints.ts` deja centralizados los paths del contrato actual:
+
+- `GET /api/v1/users/me/matches`
+- `GET /api/v1/users/me/match-attempts`
+- `GET /api/v1/match-attempts/{attempt-id}`
+- `POST /api/v1/plays`
+- `POST /api/v1/match-attempts/{attempt-id}/submit`
+
+`student-quiz.mapper.ts` convierte responses del backend a modelos internos de UI.
+
+Esto permite mantener separados:
+
+```txt
+Backend contract -> mapper -> Frontend model -> UI
+```
+
+Por ahora `StudentQuizService` sigue usando mocks, pero esos mocks ya tienen forma de response de API.
 
 ```txt
 StudentQuizService
@@ -158,6 +207,8 @@ Importante: las preguntas no incluyen respuesta correcta, porque se espera que o
 
 Archivos principales:
 
+- `src/app/features/student/api/student-quiz.contract.ts`
+- `src/app/features/student/api/student-quiz.mapper.ts`
 - `src/app/features/student/services/student-quiz.service.ts`
 - `src/app/features/student/mocks/student-quiz.mock.ts`
 - `src/app/features/student/models/student-quiz.model.ts`
@@ -213,6 +264,41 @@ Incluye:
 Archivo principal:
 
 - `src/app/features/student/pages/quiz-question-page/`
+
+## Pantalla de Resultados
+
+Se implemento la pantalla de resultados usando el mock del endpoint:
+
+```txt
+POST /api/v1/match-attempts/{attempt-id}/submit
+```
+
+La pantalla muestra:
+
+- Porcentaje final.
+- Correctas sobre total.
+- Mensaje del resultado.
+- Mini cards de correctas e incorrectas.
+- Boton para ver detalle de respuestas.
+- Boton para volver al inicio.
+
+Para las mini cards se creo un componente reutilizable:
+
+```txt
+src/app/shared/molecules/stat-card/
+```
+
+Se ubico en `shared/molecules` porque puede reutilizarse tambien en teacher.
+
+El detalle de respuestas usa el mock de:
+
+```txt
+GET /api/v1/match-attempts/{attempt-id}
+```
+
+Archivo principal:
+
+- `src/app/features/student/pages/quiz-results-page/`
 
 ## Layout Inmersivo
 
