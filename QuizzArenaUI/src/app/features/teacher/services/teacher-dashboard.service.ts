@@ -1,40 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { mapTeacherDashboardResponse } from '../api/teacher-content.mapper';
+import {
+  TEACHER_CONTENTS_RESPONSE_MOCK,
+  TEACHER_QUIZ_STATS_RESPONSE_MOCK,
+} from '../mocks/teacher-content.mock';
 import { TeacherDashboard } from '../models/teacher-dashboard.model';
 
 @Injectable({ providedIn: 'root' })
 export class TeacherDashboardService {
   getDashboard(): Observable<TeacherDashboard> {
-    // TODO: replace with real HTTP call
     return of({
-      quizCount: 8,
-      publishedCount: 8,
-      recentContent: [
-        {
-          id: '1',
-          title: 'Clase Project I - Semana 1',
-          status: 'processed',
-          info: '12 preg.',
-        },
-        {
-          id: '2',
-          title: 'Clase Project I - Semana 2',
-          status: 'processed',
-          info: '10 preg.',
-        },
-        {
-          id: '3',
-          title: 'Clase Hexagonal - Semana 3',
-          status: 'in-progress',
-          info: '5 min',
-        },
-        {
-          id: '4',
-          title: 'Clase Hexagonal - Semana 2',
-          status: 'in-progress',
-          info: '1 min',
-        },
-      ],
-    });
+      stats: TEACHER_QUIZ_STATS_RESPONSE_MOCK,
+      contents: TEACHER_CONTENTS_RESPONSE_MOCK,
+    }).pipe(map(({ stats, contents }) => mapTeacherDashboardResponse(stats, contents)));
   }
 }
