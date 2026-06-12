@@ -1,9 +1,10 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 import { MainLayout } from './shared/templates/main-layout/main-layout';
 import { LoginPage } from './features/auth/pages/login-page/login-page';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
-import { RoleRedirectPage } from './core/pages/role-redirect-page/role-redirect-page';
 
 export const routes: Routes = [
   { path: 'login', component: LoginPage },
@@ -12,7 +13,11 @@ export const routes: Routes = [
     component: MainLayout,
     canActivate: [authGuard],
     children: [
-      { path: '', pathMatch: 'full', component: RoleRedirectPage },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: () => inject(AuthService).getDefaultRoute(),
+      },
       {
         path: 'student',
         canActivate: [roleGuard],

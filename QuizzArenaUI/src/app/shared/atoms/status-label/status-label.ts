@@ -12,9 +12,9 @@ export class StatusLabel {
   label = input.required<string>();
   variant = input<StatusLabelVariant>('info');
 
-  readonly labelClasses = computed(() => this.variantClasses[this.variant()]);
+  readonly labelClasses = computed(() => this.#variantClasses[this.variant()]);
 
-  private readonly variantClasses: Record<StatusLabelVariant, string> = {
+  readonly #variantClasses: Record<StatusLabelVariant, string> = {
     success: 'text-success-text-light dark:text-success-text-dark',
     info: 'text-primary',
     warning: 'text-warning-text-light dark:text-warning-text-dark',
