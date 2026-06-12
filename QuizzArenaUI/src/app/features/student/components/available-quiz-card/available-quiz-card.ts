@@ -5,7 +5,6 @@ import { QuizCard } from '../../../../shared/organisms/quiz-card/quiz-card';
 import { AvailableQuiz } from '../../models/student-quiz.model';
 @Component({
   selector: 'app-available-quiz-card',
-  standalone: true,
   imports: [QuizCard, QuizCardMeta],
   templateUrl: './available-quiz-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

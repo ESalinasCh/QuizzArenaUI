@@ -10,7 +10,6 @@ import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
   selector: 'app-student-quiz-list-page',
-  standalone: true,
   imports: [AvailableQuizCard, QuizAccessForm, RecentQuizCard, SectionTitle],
   templateUrl: './quiz-list-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

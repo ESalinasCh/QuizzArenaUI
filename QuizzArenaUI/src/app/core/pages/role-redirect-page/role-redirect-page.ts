@@ -4,7 +4,6 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-role-redirect-page',
-  standalone: true,
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -3,7 +3,6 @@ import { LinkActionForm } from '../../../../shared/organisms/link-action-form/li
 
 @Component({
   selector: 'app-quiz-access-form',
-  standalone: true,
   imports: [LinkActionForm],
   templateUrl: './quiz-access-form.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

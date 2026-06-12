@@ -8,7 +8,6 @@ import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
   selector: 'app-student-quiz-question-page',
-  standalone: true,
   imports: [Icon],
   templateUrl: './quiz-question-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

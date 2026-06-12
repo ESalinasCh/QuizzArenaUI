@@ -5,7 +5,6 @@ import { RecentQuiz } from '../../models/student-quiz.model';
 
 @Component({
   selector: 'app-recent-quiz-card',
-  standalone: true,
   imports: [QuizCard, RecentQuizMeta],
   templateUrl: './recent-quiz-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

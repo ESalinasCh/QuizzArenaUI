@@ -7,7 +7,6 @@ import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
   selector: 'app-student-quiz-session-page',
-  standalone: true,
   imports: [Icon],
   templateUrl: './quiz-session-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
