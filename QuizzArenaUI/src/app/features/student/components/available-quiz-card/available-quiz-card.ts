@@ -3,7 +3,6 @@ import { StatusLabelVariant } from '../../../../shared/atoms/status-label/status
 import { QuizCardMeta } from '../../../../shared/molecules/quiz-card-meta/quiz-card-meta';
 import { QuizCard } from '../../../../shared/organisms/quiz-card/quiz-card';
 import { AvailableQuiz } from '../../models/student-quiz.model';
-
 @Component({
   selector: 'app-available-quiz-card',
   standalone: true,
