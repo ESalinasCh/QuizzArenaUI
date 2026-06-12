@@ -1,9 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { StatusLabelVariant } from '../../../../shared/atoms/status-label/status-label';
+import { QuizCardMeta } from '../../../../shared/molecules/quiz-card-meta/quiz-card-meta';
+import { QuizCard } from '../../../../shared/organisms/quiz-card/quiz-card';
 import { AvailableQuiz } from '../../models/student-quiz.model';
 
 @Component({
   selector: 'app-available-quiz-card',
   standalone: true,
+  imports: [QuizCard, QuizCardMeta],
   templateUrl: './available-quiz-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -15,10 +19,8 @@ export class AvailableQuizCard {
     this.quiz().status === 'available' ? 'Disponible' : 'Nuevo',
   );
 
-  readonly statusClasses = computed(() =>
-    this.quiz().status === 'available'
-      ? 'text-success-text-light dark:text-success-text-dark'
-      : 'text-primary',
+  readonly statusVariant = computed<StatusLabelVariant>(() =>
+    this.quiz().status === 'available' ? 'success' : 'info',
   );
 
   emitStart(): void {

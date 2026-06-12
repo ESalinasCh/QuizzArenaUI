@@ -1,0 +1,18 @@
+<article
+  class="flex min-h-[80px] items-center justify-between gap-4 rounded-2xl border border-primary-soft bg-light-surface px-3 py-4 shadow-card transition dark:border-dark-border-strong dark:bg-dark-surface dark:shadow-dark-card sm:px-4"
+>
+  <div class="min-w-0">
+    <h3 class="truncate text-lg font-bold text-light-text dark:text-dark-text">
+      {{ title() }}
+    </h3>
+    <ng-content />
+  </div>
+
+  <button
+    type="button"
+    class="shrink-0 text-lg font-bold text-info transition hover:text-primary-hover"
+    (click)="actionClick.emit()"
+  >
+    {{ actionLabel() }}
+  </button>
+</article>

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { EMPTY, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
@@ -19,8 +19,16 @@ export class StudentQuizSessionPage {
 
   readonly quiz = toSignal(
     this.#route.paramMap.pipe(
-      map(params => params.get('quizId') ?? 'project-1-review'),
-      switchMap(quizId => this.#studentQuizService.getQuizStart(quizId)),
+      switchMap(params => {
+        const quizId = params.get('quizId');
+
+        if (!quizId) {
+          void this.#router.navigate(['/student/quizzes']);
+          return EMPTY;
+        }
+
+        return this.#studentQuizService.getQuizStart(quizId);
+      }),
     ),
   );
 

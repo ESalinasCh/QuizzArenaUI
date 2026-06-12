@@ -51,7 +51,7 @@
         <button
           type="button"
           class="mt-2 flex h-[74px] w-full items-center justify-center gap-2 rounded-2xl bg-purple px-5 text-lg font-extrabold text-white shadow-button transition hover:bg-primary active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
-          [disabled]="!selectedOptionId()"
+          [disabled]="!selectedOptionId() || isSubmitting()"
           (click)="confirmAnswer()"
         >
           Confirmar respuesta

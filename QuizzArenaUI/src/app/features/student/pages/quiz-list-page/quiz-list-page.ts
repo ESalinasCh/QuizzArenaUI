@@ -2,16 +2,16 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
+import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
 import { AvailableQuizCard } from '../../components/available-quiz-card/available-quiz-card';
 import { QuizAccessForm } from '../../components/quiz-access-form/quiz-access-form';
 import { RecentQuizCard } from '../../components/recent-quiz-card/recent-quiz-card';
-import { StudentSectionTitle } from '../../components/student-section-title/student-section-title';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
   selector: 'app-student-quiz-list-page',
   standalone: true,
-  imports: [AvailableQuizCard, QuizAccessForm, RecentQuizCard, StudentSectionTitle],
+  imports: [AvailableQuizCard, QuizAccessForm, RecentQuizCard, SectionTitle],
   templateUrl: './quiz-list-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -27,7 +27,7 @@ export class StudentQuizListPage {
   readonly displayName = computed(() => {
     const user = this.#authService.currentUser();
 
-    return user?.name?.split(' ')[0] ?? user?.username ?? 'Maria';
+    return user?.name?.split(' ')[0] ?? user?.username ?? 'Estudiante';
   });
 
   startQuiz(quizId: string): void {

@@ -11,7 +11,7 @@ export const STUDENT_AVAILABLE_MATCHES_RESPONSE_MOCK: AvailableMatchResponse[] =
     id: 'project-1-review',
     title: 'Repaso Clase Project I',
     courseName: 'Domain-Driven Design',
-    createdAt: '2026-06-01',
+    createdAt: '2026-06-11',
     questionCount: 5,
     professorName: 'Prof. Estiven',
     duration: 12,

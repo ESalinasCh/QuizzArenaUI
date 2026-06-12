@@ -1,22 +1,11 @@
-<article
-  class="flex min-h-[80px] items-center justify-between gap-4 rounded-2xl border border-primary-soft bg-light-surface px-3 py-4 shadow-card transition dark:border-dark-border-strong dark:bg-dark-surface dark:shadow-dark-card sm:px-4"
+<app-quiz-card
+  [title]="quiz().title"
+  actionLabel="Empezar"
+  (actionClick)="emitStart()"
 >
-  <div class="min-w-0">
-    <h3 class="truncate text-lg font-bold text-light-text dark:text-dark-text">
-      {{ quiz().title }}
-    </h3>
-    <p class="truncate text-sm text-light-text-secondary dark:text-dark-text-secondary">
-      <span aria-hidden="true">▧</span>
-      {{ quiz().questionCount }} preguntas -
-      <span class="font-medium {{ statusClasses() }}">{{ statusLabel() }}</span>
-    </p>
-  </div>
-
-  <button
-    type="button"
-    class="shrink-0 text-lg font-bold text-info transition hover:text-primary-hover"
-    (click)="emitStart()"
-  >
-    Empezar
-  </button>
-</article>
+  <app-quiz-card-meta
+    [questionCount]="quiz().questionCount"
+    [statusLabel]="statusLabel()"
+    [statusVariant]="statusVariant()"
+  />
+</app-quiz-card>

@@ -68,10 +68,14 @@ export class AuthService {
       username: claims.preferred_username,
       email: claims.email,
       name: claims.name,
-      roles: accessTokenClaims?.realm_access?.roles ?? [],
+      roles: this.#getRolesFromAccessToken(accessTokenClaims),
     };
 
     this.#authState.set({ isAuthenticated: true, user });
+  }
+
+  #getRolesFromAccessToken(claims: KeycloakAccessTokenClaims | null): string[] {
+    return claims?.roles ?? [];
   }
 
   #decodeAccessToken(): KeycloakAccessTokenClaims | null {

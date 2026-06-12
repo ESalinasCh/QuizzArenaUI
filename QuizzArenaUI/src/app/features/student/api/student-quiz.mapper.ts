@@ -30,7 +30,7 @@ export function mapAvailableMatchResponse(response: AvailableMatchResponse): Ava
     id: response.id,
     title: response.title,
     questionCount: response.questionCount,
-    status: 'available',
+    status: getAvailableMatchStatus(response.createdAt),
   };
 }
 
@@ -109,6 +109,15 @@ export function mapSubmitMatchAttemptResponse(
 
 function mapRecentQuizStatus(status: MatchAttemptSummaryResponse['status']): RecentQuizStatus {
   return status === 'passed' ? 'passed' : 'warning';
+}
+
+function getAvailableMatchStatus(createdAt: string): AvailableQuiz['status'] {
+  const createdDate = new Date(createdAt);
+  const now = new Date();
+  const diffInMs = now.getTime() - createdDate.getTime();
+  const diffInDays = diffInMs / 86_400_000;
+
+  return diffInDays <= 2 ? 'new' : 'available';
 }
 
 function formatRelativeDate(value: string): string {

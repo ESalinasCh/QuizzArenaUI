@@ -41,12 +41,12 @@ export class MainLayout {
   }
 
   #getDeepestRouteData(): Record<string, unknown> {
-    let route = this.#activatedRoute;
+    let route: ActivatedRoute | null = this.#activatedRoute;
 
-    while (route.firstChild) {
+    while (route?.firstChild) {
       route = route.firstChild;
     }
 
-    return route.snapshot.data;
+    return route?.snapshot?.data ?? {};
   }
 }

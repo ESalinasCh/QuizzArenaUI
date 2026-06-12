@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { EMPTY, map, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
@@ -21,25 +21,26 @@ export class StudentQuizResultsPage {
 
   readonly attemptId = toSignal(
     this.#route.paramMap.pipe(
-      map(params => params.get('quizId') ?? 'attempt-project-1-review'),
-      map(id => (id.startsWith('attempt-') ? id : `attempt-${id}`)),
+      map(params => this.#getRequiredAttemptId(params.get('quizId'))),
+      switchMap(attemptId => (attemptId ? [attemptId] : EMPTY)),
     ),
-    { initialValue: 'attempt-project-1-review' },
   );
 
   readonly summary = toSignal(
     this.#route.paramMap.pipe(
-      map(params => params.get('quizId') ?? 'attempt-project-1-review'),
-      map(id => (id.startsWith('attempt-') ? id : `attempt-${id}`)),
-      switchMap(attemptId => this.#studentQuizService.getMatchAttemptResultSummary(attemptId)),
+      map(params => this.#getRequiredAttemptId(params.get('quizId'))),
+      switchMap(attemptId =>
+        attemptId ? this.#studentQuizService.getMatchAttemptResultSummary(attemptId) : EMPTY,
+      ),
     ),
   );
 
   readonly review = toSignal(
     this.#route.paramMap.pipe(
-      map(params => params.get('quizId') ?? 'attempt-project-1-week-7'),
-      map(id => (id.startsWith('attempt-') ? id : `attempt-${id}`)),
-      switchMap(attemptId => this.#studentQuizService.getMatchAttemptDetail(attemptId)),
+      map(params => this.#getRequiredAttemptId(params.get('quizId'))),
+      switchMap(attemptId =>
+        attemptId ? this.#studentQuizService.getMatchAttemptDetail(attemptId) : EMPTY,
+      ),
     ),
   );
 
@@ -59,5 +60,18 @@ export class StudentQuizResultsPage {
 
   goHome(): void {
     void this.#router.navigate(['/student/quizzes']);
+  }
+
+  #getRequiredAttemptId(routeId: string | null): string | null {
+    if (!routeId) {
+      void this.#router.navigate(['/student/quizzes']);
+      return null;
+    }
+
+    return this.#normalizeAttemptId(routeId);
+  }
+
+  #normalizeAttemptId(id: string): string {
+    return id.startsWith('attempt-') ? id : `attempt-${id}`;
   }
 }
