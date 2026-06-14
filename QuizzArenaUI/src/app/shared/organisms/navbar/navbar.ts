@@ -6,7 +6,6 @@ import { LanguageSelector } from '../../molecules/language-selector/language-sel
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
   imports: [Icon, Button, UserMenu, LanguageSelector],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',

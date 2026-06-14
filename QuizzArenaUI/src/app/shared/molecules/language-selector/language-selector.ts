@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostListener, LOCALE_ID, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, LOCALE_ID, inject, signal } from '@angular/core';
 import { Icon } from '../../atoms/icon/icon';
 
 interface Language {
@@ -8,7 +8,6 @@ interface Language {
 
 @Component({
   selector: 'app-language-selector',
-  standalone: true,
   imports: [Icon],
   templateUrl: './language-selector.html',
   styleUrl: './language-selector.css',
@@ -32,12 +31,11 @@ export class LanguageSelector {
     this.isOpen.update(v => !v);
   }
 
-  switchTo(lang: string): void {
-    window.location.href = `/${lang}/`;
+  close(): void {
+    this.isOpen.set(false);
   }
 
-  @HostListener('document:click')
-  onDocumentClick(): void {
-    this.isOpen.set(false);
+  switchTo(lang: string): void {
+    window.location.href = `/${lang}/`;
   }
 }

@@ -7,7 +7,6 @@ import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-sidebar',
-  standalone: true,
   imports: [NgClass, NavItem, Icon, Button],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
@@ -20,8 +19,8 @@ export class Sidebar {
   closeSidebar = output<void>();
   currentTheme = this.#themeService.currentTheme;
 
-  readonly lightModeLabel = $localize`:Aria label to switch to light mode:Switch to light mode`;
-  readonly darkModeLabel = $localize`:Aria label to switch to dark mode:Switch to dark mode`;
+  protected readonly lightModeLabel = $localize`:Aria label to switch to light mode:Switch to light mode`;
+  protected readonly darkModeLabel = $localize`:Aria label to switch to dark mode:Switch to dark mode`;
 
   onCloseClick(): void {
     this.closeSidebar.emit();
