@@ -4,7 +4,6 @@ export type FeatureCardVariant = 'row' | 'card';
 
 @Component({
   selector: 'app-feature-card',
-  standalone: true,
   templateUrl: './feature-card.html',
   styleUrl: './feature-card.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 
 const keycloakConfig: AuthConfig = {
   issuer: environment.keycloak.issuer,
-  redirectUri: `${window.location.origin}/`,
+  redirectUri: environment.keycloak.redirectUri ?? document.baseURI,
   clientId: environment.keycloak.clientId,
   responseType: 'code',
   scope: 'openid profile email',

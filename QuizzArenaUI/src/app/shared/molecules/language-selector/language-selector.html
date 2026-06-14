@@ -1,0 +1,39 @@
+@if (isOpen()) {
+  <div class="fixed inset-0 z-40" (click)="close()" aria-hidden="true"></div>
+}
+
+<div class="relative">
+  <button
+    (click)="toggle()"
+    class="flex items-center gap-2 px-3 py-2 rounded-button text-sm font-semibold transition-colors duration-200"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="listbox"
+  >
+    <app-icon name="language" class="w-4 h-4" />
+    <span>{{ currentLanguage.label }}</span>
+    <app-icon
+      name="chevron-down"
+      class="w-3 h-3 transition-transform duration-200"
+      [class.rotate-180]="isOpen()"
+    />
+  </button>
+
+  @if (isOpen()) {
+    <div
+      role="listbox"
+      class="absolute right-0 top-full mt-1 z-50 w-36 rounded-card border border-light-border bg-light-surface shadow-card"
+    >
+      @for (lang of languages; track lang.code) {
+        <button
+          role="option"
+          [attr.aria-selected]="lang.code === currentLanguage.code"
+          (click)="switchTo(lang.code)"
+          class="w-full flex items-center px-4 py-2 text-sm text-left transition-colors duration-200 first:rounded-t-card last:rounded-b-card hover:bg-light-surface-alt"
+          [class.font-bold]="lang.code === currentLanguage.code"
+          [class.text-primary]="lang.code === currentLanguage.code"
+          [class.text-light-text]="lang.code !== currentLanguage.code"
+        >{{ lang.label }}</button>
+      }
+    </div>
+  }
+</div>

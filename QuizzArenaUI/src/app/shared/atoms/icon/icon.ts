@@ -5,7 +5,6 @@ export type IconName = keyof typeof SVG_ICONS;
 
 @Component({
   selector: 'app-icon',
-  standalone: true,
   templateUrl: './icon.html',
   styleUrl: './icon.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

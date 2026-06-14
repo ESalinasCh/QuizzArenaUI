@@ -4,7 +4,6 @@ import { Icon, IconName } from '../../atoms/icon/icon';
 
 @Component({
   selector: 'app-nav-item',
-  standalone: true,
   imports: [RouterLink, RouterLinkActive, Icon],
   templateUrl: './nav-item.html',
   styleUrl: './nav-item.css',

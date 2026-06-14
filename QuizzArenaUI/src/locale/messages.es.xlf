@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="8762257556328863715" datatype="html">
+        <source>QuizArena illustration</source>
+        <target>QuizArena ilustración</target>
+        <note priority="1" from="description">Login illustration alt text</note>
+      </trans-unit>
+      <trans-unit id="2682948767831391160" datatype="html">
+        <source> Generate quizzes with artificial intelligence </source>
+        <target> Genera quizzes con inteligencia artificial </target>
+        <note priority="1" from="description">Login desktop tagline</note>
+      </trans-unit>
+      <trans-unit id="5268552998975987488" datatype="html">
+        <source> Create, publish and evaluate your students' performance instantly </source>
+        <target> Crea, publica y evalúa el desempeño de tus estudiantes al instante </target>
+        <note priority="1" from="description">Login desktop subtitle</note>
+      </trans-unit>
+      <trans-unit id="1268461588430082201" datatype="html">
+        <source> Generate quizzes from your classes using artificial intelligence </source>
+        <target> Genera quizzes de tus clases con inteligencia artificial </target>
+        <note priority="1" from="description">Login mobile tagline</note>
+      </trans-unit>
+      <trans-unit id="3163044740176820503" datatype="html">
+        <source>Get started</source>
+        <target>Comenzar</target>
+        <note priority="1" from="description">Login CTA button</note>
+      </trans-unit>
+      <trans-unit id="7228136119811576789" datatype="html">
+        <source>User menu</source>
+        <target>Menú de usuario</target>
+        <note priority="1" from="description">Aria label for user menu button</note>
+      </trans-unit>
+      <trans-unit id="7632485632455273845" datatype="html">
+        <source>Signed in as</source>
+        <target>Conectado como</target>
+        <note priority="1" from="description">User menu signed in as label</note>
+      </trans-unit>
+      <trans-unit id="2949848596707725099" datatype="html">
+        <source>Sign out</source>
+        <target>Cerrar sesión</target>
+        <note priority="1" from="description">User menu sign out button</note>
+      </trans-unit>
+      <trans-unit id="5180023178152482610" datatype="html">
+        <source>Toggle navigation sidebar</source>
+        <target>Abrir o cerrar menú de navegación</target>
+        <note priority="1" from="description">Aria label to toggle navigation sidebar</note>
+      </trans-unit>
+      <trans-unit id="7220368782880400123" datatype="html">
+        <source>Close sidebar overlay</source>
+        <target>Cerrar menú lateral</target>
+        <note priority="1" from="description">Aria label to close sidebar overlay</note>
+      </trans-unit>
+      <trans-unit id="8117793287570797769" datatype="html">
+        <source>Close sidebar</source>
+        <target>Cerrar barra lateral</target>
+        <note priority="1" from="description">Aria label to close sidebar</note>
+      </trans-unit>
+      <trans-unit id="6570363013146073520" datatype="html">
+        <source>Dashboard</source>
+        <target>Dashboard</target>
+        <note priority="1" from="description">Sidebar nav dashboard label</note>
+      </trans-unit>
+      <trans-unit id="9739615701762462" datatype="html">
+        <source>Quizzes</source>
+        <target>Cuestionarios</target>
+        <note priority="1" from="description">Sidebar nav quizzes label</note>
+      </trans-unit>
+      <trans-unit id="4930506384627295710" datatype="html">
+        <source>Settings</source>
+        <target>Configuración</target>
+        <note priority="1" from="description">Sidebar nav settings label</note>
+      </trans-unit>
+      <trans-unit id="4608015944298801142" datatype="html">
+        <source>Switch to light mode</source>
+        <target>Cambiar a modo claro</target>
+        <note priority="1" from="description">Aria label to switch to light mode</note>
+      </trans-unit>
+      <trans-unit id="803131845720356706" datatype="html">
+        <source>Switch to dark mode</source>
+        <target>Cambiar a modo oscuro</target>
+        <note priority="1" from="description">Aria label to switch to dark mode</note>
+      </trans-unit>
+      <trans-unit id="8507819610865426554" datatype="html">
+        <source>AI Processes</source>
+        <target>IA Procesos</target>
+      </trans-unit>
+      <trans-unit id="1757731709015086499" datatype="html">
+        <source>AI Processes</source>
+        <target>IA Procesos</target>
+      </trans-unit>
+      <trans-unit id="5265016548443713549" datatype="html">
+        <source>Generate personalized questions instantly</source>
+        <target>Genera preguntas personalizadas al instante</target>
+      </trans-unit>
+      <trans-unit id="3319369075267370169" datatype="html">
+        <source>Quizzes</source>
+        <target>Cuestionarios</target>
+      </trans-unit>
+      <trans-unit id="5792653210271805922" datatype="html">
+        <source>Quizzes</source>
+        <target>Cuestionarios</target>
+      </trans-unit>
+      <trans-unit id="4299032998225902337" datatype="html">
+        <source>Create and publish quizzes ready for your classes</source>
+        <target>Crea y publica quizzes listos para tus clases</target>
+      </trans-unit>
+      <trans-unit id="6012783069893727123" datatype="html">
+        <source>Results</source>
+        <target>Resultados</target>
+      </trans-unit>
+      <trans-unit id="8486067204898162876" datatype="html">
+        <source>Results</source>
+        <target>Resultados</target>
+      </trans-unit>
+      <trans-unit id="5273885127657555916" datatype="html">
+        <source>Evaluate and analyze your students' performance</source>
+        <target>Evalúa y analiza el desempeño de tus estudiantes</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
