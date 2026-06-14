@@ -5,7 +5,6 @@ import { Sidebar } from '../../organisms/sidebar/sidebar';
 
 @Component({
   selector: 'app-main-layout',
-  standalone: true,
   imports: [RouterOutlet, Navbar, Sidebar],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',

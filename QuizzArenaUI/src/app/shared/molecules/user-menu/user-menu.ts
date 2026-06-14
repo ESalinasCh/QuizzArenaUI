@@ -4,7 +4,6 @@ import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-user-menu',
-  standalone: true,
   imports: [Icon],
   templateUrl: './user-menu.html',
   styleUrl: './user-menu.css',

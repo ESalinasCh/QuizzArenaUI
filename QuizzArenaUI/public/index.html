@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      const supported = ['en', 'es'];
+      const preferred = navigator.language?.slice(0, 2).toLowerCase();
+      const lang = supported.includes(preferred) ? preferred : 'en';
+      window.location.replace('/' + lang + '/');
+    </script>
+  </head>
+</html>
