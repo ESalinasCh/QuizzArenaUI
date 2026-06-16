@@ -19,6 +19,8 @@ export class TeacherUploadContentPage {
   readonly #router = inject(Router);
   readonly #contentService = inject(TeacherContentService);
 
+  readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
+
   readonly acceptedExtensions = ACCEPTED_EXTENSIONS.join(',');
   readonly acceptedExtensionsLabel = ACCEPTED_EXTENSIONS.join(' ');
 

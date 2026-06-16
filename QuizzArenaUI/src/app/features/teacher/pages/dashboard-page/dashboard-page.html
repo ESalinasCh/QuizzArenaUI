@@ -1,16 +1,16 @@
 <section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
-  <h1 class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
-    Bienvenido, {{ displayName() }}
+  <h1 i18n="Teacher dashboard welcome heading" class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
+    Welcome, {{ displayName() }}
   </h1>
 
   <div class="mx-auto flex w-full max-w-[480px] justify-center gap-4">
     <app-stat-card
-      label="Quizzes"
+      [label]="quizzesLabel"
       [value]="dashboard().quizCount"
       variant="blue"
     />
     <app-stat-card
-      label="Publicados"
+      [label]="publishedLabel"
       [value]="dashboard().publishedCount"
       variant="green"
     />
@@ -21,15 +21,15 @@
     variant="primary"
     [fullWidth]="true"
     (btnClick)="uploadContent()"
-    ariaLabel="Cargar contenido"
+    [ariaLabel]="uploadContentAriaLabel"
   >
     <app-icon name="upload" class="w-5 h-5" />
-    <span>Cargar Contenido</span>
+    <span i18n="Teacher dashboard upload button label">Upload Content</span>
   </app-button>
 
   <div class="flex flex-col gap-4">
-    <h2 class="text-base font-bold text-light-text dark:text-dark-text">
-      Contenido Reciente
+    <h2 i18n="Teacher dashboard recent content heading" class="text-base font-bold text-light-text dark:text-dark-text">
+      Recent Content
     </h2>
 
     <div class="flex flex-col gap-3">
