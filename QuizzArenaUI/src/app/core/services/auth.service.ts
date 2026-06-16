@@ -68,7 +68,7 @@ export class AuthService {
       username: claims.preferred_username,
       email: claims.email,
       name: claims.name,
-      roles: accessTokenClaims?.realm_access?.roles ?? [],
+      roles: accessTokenClaims?.roles ?? [],
     };
 
     this.#authState.set({ isAuthenticated: true, user });
@@ -76,7 +76,7 @@ export class AuthService {
 
   #decodeAccessToken(): KeycloakAccessTokenClaims | null {
     const token = this.#oAuthService.getAccessToken();
-    const payload = token.split('.')[1];
+    const payload = token.split('.').at(1);
 
     if (!payload) {
       return null;
