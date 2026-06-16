@@ -1,0 +1,6 @@
+<p class="flex items-center gap-1.5 truncate text-sm font-medium {{ metaClasses() }}">
+  <app-icon [name]="iconName()" class="h-4 w-4 shrink-0" />
+  <span>{{ score() }}%</span>
+  <span aria-hidden="true">•</span>
+  <span>{{ completedAtLabel() }}</span>
+</p>

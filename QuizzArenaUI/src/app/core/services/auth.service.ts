@@ -2,7 +2,7 @@ import { Injectable, Signal, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthState } from '../models/auth-state.model';
-import { KeycloakTokenClaims, User } from '../models/user.model';
+import { KeycloakAccessTokenClaims, KeycloakTokenClaims, User } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -40,6 +40,18 @@ export class AuthService {
     this.#router.navigate(['/login']);
   }
 
+  getDefaultRoute(): string {
+    if (this.hasRole('student')) {
+      return '/student/quizzes';
+    }
+
+    if (this.hasRole('teacher')) {
+      return '/teacher/dashboard';
+    }
+
+    return '/login';
+  }
+
   hasRole(role: string): boolean {
     const state = this.#authState();
     return state.isAuthenticated ? state.user.roles.includes(role) : false;
@@ -47,6 +59,7 @@ export class AuthService {
 
   #setUserFromToken(): void {
     const claims = this.#oAuthService.getIdentityClaims() as KeycloakTokenClaims | null;
+    const accessTokenClaims = this.#decodeAccessToken();
 
     if (!claims) return;
 
@@ -54,9 +67,36 @@ export class AuthService {
       id: claims.sub,
       username: claims.preferred_username,
       email: claims.email,
-      roles: claims.realm_access?.roles ?? [],
+      name: claims.name,
+      roles: this.#getRolesFromAccessToken(accessTokenClaims),
     };
 
     this.#authState.set({ isAuthenticated: true, user });
+  }
+
+  #getRolesFromAccessToken(claims: KeycloakAccessTokenClaims | null): string[] {
+    return claims?.roles ?? [];
+  }
+
+  #decodeAccessToken(): KeycloakAccessTokenClaims | null {
+    const token = this.#oAuthService.getAccessToken();
+    const payload = token.split('.')[1];
+
+    if (!payload) {
+      return null;
+    }
+
+    try {
+      const normalizedPayload = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const paddedPayload = normalizedPayload.padEnd(
+        normalizedPayload.length + ((4 - (normalizedPayload.length % 4)) % 4),
+        '=',
+      );
+      const decodedPayload = atob(paddedPayload);
+
+      return JSON.parse(decodedPayload) as KeycloakAccessTokenClaims;
+    } catch {
+      return null;
+    }
   }
 }

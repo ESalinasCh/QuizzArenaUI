@@ -1,0 +1,63 @@
+<section class="min-h-screen bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text">
+  <div class="mx-auto flex min-h-screen w-full max-w-[430px] flex-col gap-5 px-3 pb-10 pt-3 sm:max-w-[520px] sm:px-6">
+    @if (currentQuestion(); as question) {
+      <div class="rounded-2xl bg-purple px-5 py-3 text-center text-xl font-medium text-white shadow-button">
+        {{ progressLabel() }}
+      </div>
+
+      <div class="h-3 overflow-hidden rounded bg-light-border dark:bg-dark-border">
+        <div class="h-full rounded bg-purple transition-all duration-300" [style.width]="progressValue()"></div>
+      </div>
+
+      <div class="flex flex-1 flex-col gap-6 px-3 pt-5">
+        <button
+          type="button"
+          class="sr-only"
+          aria-label="Volver al inicio del quiz"
+          (click)="goBack()"
+        ></button>
+
+        <article
+          class="rounded-2xl border border-light-border-strong bg-light-surface px-9 py-6 text-center shadow-sm dark:border-dark-border-strong dark:bg-dark-surface-alt"
+        >
+          <h1 class="text-xl font-extrabold leading-tight text-light-text dark:text-white">
+            {{ question.statement }}
+          </h1>
+        </article>
+
+        <p class="text-center text-xl font-extrabold text-light-text-secondary dark:text-dark-border-strong dark:text-dark-text">
+          Opciones
+        </p>
+
+        <div class="flex flex-col gap-4">
+          @for (option of question.options; track option.id; let index = $index) {
+            <button
+              type="button"
+              [class]="selectedOptionId() === option.id
+                ? 'grid min-h-[78px] grid-cols-[28px_1fr] items-center gap-3 rounded-2xl border-3 border-purple bg-purple-light px-3 py-4 text-left shadow-card transition dark:bg-dark-surface-alt dark:shadow-none'
+                : 'grid min-h-[78px] grid-cols-[28px_1fr] items-center gap-3 rounded-2xl border-3 border-transparent bg-light-surface px-3 py-4 text-left shadow-card transition dark:bg-dark-surface-alt dark:shadow-none'"
+              (click)="selectOption(option.id)"
+            >
+              <span class="text-xl font-extrabold text-purple dark:text-purple-dark">
+                {{ optionLetters[index] }}
+              </span>
+              <span class="text-left text-lg font-medium leading-snug text-light-text dark:text-white">
+                {{ option.label }}
+              </span>
+            </button>
+          }
+        </div>
+
+        <button
+          type="button"
+          class="mt-2 flex h-[74px] w-full items-center justify-center gap-2 rounded-2xl bg-purple px-5 text-lg font-extrabold text-white shadow-button transition hover:bg-primary active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+          [disabled]="!selectedOptionId() || isSubmitting()"
+          (click)="confirmAnswer()"
+        >
+          Confirmar respuesta
+          <app-icon name="arrow-right" class="h-5 w-5" />
+        </button>
+      </div>
+    }
+  </div>
+</section>
