@@ -3,14 +3,15 @@
     <button
       type="button"
       class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-light text-primary transition hover:bg-primary-soft dark:bg-dark-surface-alt dark:text-primary"
-      aria-label="Volver al dashboard"
+      i18n-aria-label="Back to dashboard button aria label"
+      aria-label="Go back to dashboard"
       (click)="goBack()"
     >
       <app-icon name="arrow-left" class="h-5 w-5" />
     </button>
 
-    <h1 class="text-xl font-extrabold text-primary dark:text-dark-text sm:text-2xl">
-      Cargar Contenido
+    <h1 i18n="Upload content page title" class="text-xl font-extrabold text-primary dark:text-dark-text sm:text-2xl">
+      Upload Content
     </h1>
   </header>
 
@@ -43,14 +44,15 @@
         type="button"
         class="text-xs font-medium text-danger underline"
         (click)="removeFile(); $event.preventDefault()"
+        i18n="Remove file button"
       >
-        Quitar archivo
+        Remove file
       </button>
     } @else {
       <p class="text-sm font-semibold text-primary">
-        Tocar para seleccionar
-        <span class="block font-bold text-light-text dark:text-dark-text">
-          o arrastra un archivo
+        <ng-container i18n="File drop zone tap to select">Tap to select</ng-container>
+        <span class="block font-bold text-light-text dark:text-dark-text" i18n="File drop zone drag hint">
+          or drag a file
         </span>
       </p>
       <p class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
@@ -60,16 +62,17 @@
   </label>
 
   <form class="flex flex-col gap-4" (ngSubmit)="submit()">
-    <h2 class="text-sm font-bold uppercase tracking-wide text-light-text dark:text-dark-text">
-      Datos del contenido
+    <h2 i18n="Upload content form section title" class="text-sm font-bold uppercase tracking-wide text-light-text dark:text-dark-text">
+      Content details
     </h2>
 
     <div class="flex flex-col gap-2">
       <label
         for="class-name"
+        i18n="Class name field label"
         class="text-sm font-semibold text-light-text dark:text-dark-text"
       >
-        Nombre de la clase
+        Class name
       </label>
       <input
         id="class-name"
@@ -77,7 +80,8 @@
         name="className"
         [ngModel]="className()"
         (ngModelChange)="className.set($event)"
-        placeholder="Ej: Clase DDD - Semana 3"
+        i18n-placeholder="Class name field placeholder"
+        placeholder="E.g.: DDD Class - Week 3"
         class="h-12 rounded-xl border border-light-border-strong bg-light-surface px-4 text-base text-light-text outline-none transition-colors placeholder:text-light-text-secondary focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-text-secondary"
       />
     </div>
@@ -85,9 +89,10 @@
     <div class="flex flex-col gap-2">
       <label
         for="subject"
+        i18n="Subject field label"
         class="text-sm font-semibold text-light-text dark:text-dark-text"
       >
-        Materia
+        Subject
       </label>
       <div class="relative">
         <select
@@ -98,7 +103,7 @@
           class="h-12 w-full appearance-none rounded-xl border border-light-border-strong bg-light-surface px-4 pr-10 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
           [class.text-light-text-secondary]="subjectId() === ''"
         >
-          <option value="" disabled>Selecciona una clase</option>
+          <option value="" disabled i18n="Subject select default option">Select a subject</option>
           @for (subject of subjects(); track subject.id) {
             <option [value]="subject.id">{{ subject.name }}</option>
           }
@@ -113,8 +118,8 @@
     <div class="flex flex-col gap-3 rounded-2xl border border-light-border-strong bg-light-surface px-5 py-4 dark:border-dark-border-strong dark:bg-dark-surface-alt">
       <div class="flex items-center justify-between">
         <div class="flex flex-col gap-0.5">
-          <span class="text-sm font-semibold text-light-text dark:text-dark-text">Permitir repaso</span>
-          <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Los alumnos podrán tomar quizzes auto generados del contenido de esta clase</span>
+          <span i18n="Allow review toggle label" class="text-sm font-semibold text-light-text dark:text-dark-text">Allow review</span>
+          <span i18n="Allow review toggle description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Students will be able to take auto-generated quizzes from this class content</span>
         </div>
         <button
           type="button"
@@ -138,8 +143,8 @@
 
           <div class="flex items-center justify-between gap-4">
             <div class="flex flex-col gap-0.5">
-              <span class="text-sm font-semibold text-light-text dark:text-dark-text">Cantidad de preguntas</span>
-              <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Preguntas por sesión de repaso</span>
+              <span i18n="Question count setting label" class="text-sm font-semibold text-light-text dark:text-dark-text">Number of questions</span>
+              <span i18n="Question count setting description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Questions per review session</span>
             </div>
             <input
               type="number"
@@ -154,8 +159,8 @@
 
           <div class="flex items-center justify-between">
             <div class="flex flex-col gap-0.5">
-              <span class="text-sm font-semibold text-light-text dark:text-dark-text">Mostrar respuestas correctas</span>
-              <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Al finalizar el repaso el alumno ve qué acertó</span>
+              <span i18n="Show correct answers setting label" class="text-sm font-semibold text-light-text dark:text-dark-text">Show correct answers</span>
+              <span i18n="Show correct answers setting description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">At the end of the review the student sees what they got right</span>
             </div>
             <button
               type="button"
@@ -176,8 +181,8 @@
 
           <div class="flex items-center justify-between">
             <div class="flex flex-col gap-0.5">
-              <span class="text-sm font-semibold text-light-text dark:text-dark-text">Orden aleatorio</span>
-              <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Las preguntas se mezclan en cada repaso</span>
+              <span i18n="Shuffle questions setting label" class="text-sm font-semibold text-light-text dark:text-dark-text">Random order</span>
+              <span i18n="Shuffle questions setting description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Questions are shuffled in each review</span>
             </div>
             <button
               type="button"
@@ -206,10 +211,10 @@
       type="submit"
       [fullWidth]="true"
       [disabled]="!canSubmit()"
-      ariaLabel="Cargar contenido"
+      [ariaLabel]="uploadContentAriaLabel"
     >
       <app-icon name="upload" class="h-5 w-5" />
-      <span>Cargar Contenido</span>
+      <span i18n="Upload content submit button label">Upload Content</span>
     </app-button>
   </form>
 </section>

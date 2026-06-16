@@ -19,13 +19,17 @@ export class TeacherDashboardPage {
   readonly #router = inject(Router);
   readonly #dashboardService = inject(TeacherDashboardService);
 
+  readonly quizzesLabel = $localize`:Stat card quizzes label:Quizzes`;
+  readonly publishedLabel = $localize`:Stat card published label:Published`;
+  readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
+
   readonly dashboard = toSignal(this.#dashboardService.getDashboard(), {
     initialValue: { quizCount: 0, publishedCount: 0, recentContent: [] },
   });
 
   readonly displayName = computed(() => {
     const user = this.#authService.currentUser();
-    return user?.name?.split(' ')[0] ?? user?.username ?? 'Profesor';
+    return user?.name?.split(' ')[0] ?? user?.username ?? $localize`:Teacher fallback display name:Teacher`;
   });
 
   uploadContent(): void {
