@@ -6,11 +6,11 @@ import { TeacherContentService } from '../../services/teacher-content.service';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 
-const ACCEPTED_EXTENSIONS = ['.mp4', '.webm', '.mp3', '.wav', '.pdf', '.txt', '.docx'];
+const ACCEPTED_EXTENSIONS = ['.mp3', '.mp4'];
+const DEFAULT_QUESTION_COUNT = 4;
 
 @Component({
   selector: 'app-teacher-upload-content-page',
-  standalone: true,
   imports: [FormsModule, Button, Icon],
   templateUrl: './upload-content-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,6 +30,10 @@ export class TeacherUploadContentPage {
   readonly className = signal('');
   readonly subjectId = signal('');
   readonly isDragging = signal(false);
+  readonly reviewEnabled = signal(false);
+  readonly questionCount = signal(DEFAULT_QUESTION_COUNT);
+  readonly showCorrectAnswers = signal(true);
+  readonly shuffleQuestions = signal(true);
 
   readonly canSubmit = computed(
     () => this.file() !== null && this.className().trim() !== '' && this.subjectId() !== '',
@@ -70,11 +74,23 @@ export class TeacherUploadContentPage {
       return;
     }
 
+    const review = this.reviewEnabled()
+      ? {
+          enabled: true as const,
+          settings: {
+            questionCount: this.questionCount(),
+            showCorrectAnswers: this.showCorrectAnswers(),
+            shuffleQuestions: this.shuffleQuestions(),
+          },
+        }
+      : { enabled: false as const };
+
     this.#contentService
       .uploadContent({
         file,
         className: this.className().trim(),
         subjectId: this.subjectId(),
+        review,
       })
       .subscribe(() => {
         void this.#router.navigate(['/teacher/dashboard']);

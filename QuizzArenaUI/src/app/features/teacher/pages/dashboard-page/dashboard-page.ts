@@ -10,7 +10,6 @@ import { Icon } from '../../../../shared/atoms/icon/icon';
 
 @Component({
   selector: 'app-teacher-dashboard-page',
-  standalone: true,
   imports: [StatCard, ContentItem, Button, Icon],
   templateUrl: './dashboard-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
