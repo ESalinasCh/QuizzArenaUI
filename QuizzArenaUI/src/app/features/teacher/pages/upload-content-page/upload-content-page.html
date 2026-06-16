@@ -110,6 +110,96 @@
       </div>
     </div>
 
+    <div class="flex flex-col gap-3 rounded-2xl border border-light-border-strong bg-light-surface px-5 py-4 dark:border-dark-border-strong dark:bg-dark-surface-alt">
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-0.5">
+          <span class="text-sm font-semibold text-light-text dark:text-dark-text">Permitir repaso</span>
+          <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Los alumnos podrán tomar quizzes auto generados del contenido de esta clase</span>
+        </div>
+        <button
+          type="button"
+          role="switch"
+          [attr.aria-checked]="reviewEnabled()"
+          class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          [class.bg-primary]="reviewEnabled()"
+          [class.bg-light-border-strong]="!reviewEnabled()"
+          (click)="reviewEnabled.set(!reviewEnabled())"
+        >
+          <span
+            class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transition-transform"
+            [class.translate-x-5]="reviewEnabled()"
+            [class.translate-x-0]="!reviewEnabled()"
+          ></span>
+        </button>
+      </div>
+
+      @if (reviewEnabled()) {
+        <div class="flex flex-col gap-4 border-t border-light-border pt-4 dark:border-dark-border">
+
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-sm font-semibold text-light-text dark:text-dark-text">Cantidad de preguntas</span>
+              <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Preguntas por sesión de repaso</span>
+            </div>
+            <input
+              type="number"
+              name="questionCount"
+              min="1"
+              max="20"
+              [ngModel]="questionCount()"
+              (ngModelChange)="questionCount.set(+$event)"
+              class="h-10 w-20 rounded-xl border border-light-border-strong bg-light-bg px-3 text-center text-sm font-semibold text-light-text outline-none focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
+            />
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-sm font-semibold text-light-text dark:text-dark-text">Mostrar respuestas correctas</span>
+              <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Al finalizar el repaso el alumno ve qué acertó</span>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              [attr.aria-checked]="showCorrectAnswers()"
+              class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              [class.bg-primary]="showCorrectAnswers()"
+              [class.bg-light-border-strong]="!showCorrectAnswers()"
+              (click)="showCorrectAnswers.set(!showCorrectAnswers())"
+            >
+              <span
+                class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transition-transform"
+                [class.translate-x-5]="showCorrectAnswers()"
+                [class.translate-x-0]="!showCorrectAnswers()"
+              ></span>
+            </button>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-sm font-semibold text-light-text dark:text-dark-text">Orden aleatorio</span>
+              <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Las preguntas se mezclan en cada repaso</span>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              [attr.aria-checked]="shuffleQuestions()"
+              class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              [class.bg-primary]="shuffleQuestions()"
+              [class.bg-light-border-strong]="!shuffleQuestions()"
+              (click)="shuffleQuestions.set(!shuffleQuestions())"
+            >
+              <span
+                class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transition-transform"
+                [class.translate-x-5]="shuffleQuestions()"
+                [class.translate-x-0]="!shuffleQuestions()"
+              ></span>
+            </button>
+          </div>
+
+        </div>
+      }
+    </div>
+
     <app-button
       size="large"
       variant="primary"
