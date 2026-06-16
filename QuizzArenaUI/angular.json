@@ -13,7 +13,7 @@
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "qz",
       "i18n": {
         "sourceLocale": "en",
         "locales": {

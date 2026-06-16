@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 export type StatCardVariant = 'success' | 'danger';
 
 @Component({
-  selector: 'app-stat-card',
+  selector: 'qz-stat-card',
   standalone: true,
   templateUrl: './stat-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

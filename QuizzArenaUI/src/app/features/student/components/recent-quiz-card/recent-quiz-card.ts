@@ -4,7 +4,7 @@ import { QuizCard } from '../../../../shared/organisms/quiz-card/quiz-card';
 import { RecentQuiz } from '../../models/student-quiz.model';
 
 @Component({
-  selector: 'app-recent-quiz-card',
+  selector: 'qz-recent-quiz-card',
   imports: [QuizCard, RecentQuizMeta],
   templateUrl: './recent-quiz-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

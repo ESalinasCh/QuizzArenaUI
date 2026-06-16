@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 export type StatusLabelVariant = 'success' | 'info' | 'warning' | 'danger';
 
 @Component({
-  selector: 'app-status-label',
+  selector: 'qz-status-label',
   standalone: true,
   templateUrl: './status-label.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

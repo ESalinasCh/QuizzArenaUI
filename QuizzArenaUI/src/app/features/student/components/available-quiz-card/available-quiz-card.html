@@ -1,11 +1,11 @@
-<app-quiz-card
+<qz-quiz-card
   [title]="quiz().title"
   actionLabel="Empezar"
   (actionClick)="emitStart()"
 >
-  <app-quiz-card-meta
+  <qz-quiz-card-meta
     [questionCount]="quiz().questionCount"
     [statusLabel]="statusLabel()"
     [statusVariant]="statusVariant()"
   />
-</app-quiz-card>
+</qz-quiz-card>

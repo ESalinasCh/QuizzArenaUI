@@ -53,8 +53,8 @@
       </div>
 
       <div class="grid grid-cols-2 gap-8 px-5">
-        <app-stat-card label="Incorrectas" [value]="summaryData.incorrectCount" variant="danger" />
-        <app-stat-card label="Correctas" [value]="summaryData.correctCount" variant="success" />
+        <qz-stat-card label="Incorrectas" [value]="summaryData.incorrectCount" variant="danger" />
+        <qz-stat-card label="Correctas" [value]="summaryData.correctCount" variant="success" />
       </div>
 
       <div class="flex flex-col gap-4">
@@ -100,10 +100,10 @@
             <div class="flex items-center gap-1 text-sm font-extrabold">
               @if (question.isCorrect) {
                 <span class="flex h-4 w-4 items-center justify-center rounded bg-success text-white">
-                  <app-icon name="check" class="h-3 w-3" />
+                  <qz-icon name="check" class="h-3 w-3" />
                 </span>
               } @else {
-                <app-icon name="close" class="h-5 w-5 text-danger" />
+                <qz-icon name="close" class="h-5 w-5 text-danger" />
               }
               <span>Pregunta {{ question.number }}</span>
             </div>

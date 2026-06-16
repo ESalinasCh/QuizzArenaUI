@@ -5,7 +5,7 @@ import { UserMenu } from '../../molecules/user-menu/user-menu';
 import { LanguageSelector } from '../../molecules/language-selector/language-selector';
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'qz-navbar',
   imports: [Icon, Button, UserMenu, LanguageSelector],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',

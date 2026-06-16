@@ -14,7 +14,7 @@ interface SidebarNavItem {
 }
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'qz-sidebar',
   imports: [NgClass, NavItem, Icon, Button],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',

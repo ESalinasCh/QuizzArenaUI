@@ -4,7 +4,7 @@ import { Icon, IconName } from '../../atoms/icon/icon';
 export type RecentQuizMetaStatus = 'passed' | 'warning';
 
 @Component({
-  selector: 'app-recent-quiz-meta',
+  selector: 'qz-recent-quiz-meta',
   standalone: true,
   imports: [Icon],
   templateUrl: './recent-quiz-meta.html',

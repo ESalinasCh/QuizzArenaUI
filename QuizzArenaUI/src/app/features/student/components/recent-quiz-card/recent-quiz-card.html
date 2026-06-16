@@ -1,11 +1,11 @@
-<app-quiz-card
+<qz-quiz-card
   [title]="quiz().title"
   actionLabel="Ver"
   (actionClick)="emitView()"
 >
-  <app-recent-quiz-meta
+  <qz-recent-quiz-meta
     [score]="quiz().score"
     [completedAtLabel]="quiz().completedAtLabel"
     [status]="quiz().status"
   />
-</app-quiz-card>
+</qz-quiz-card>

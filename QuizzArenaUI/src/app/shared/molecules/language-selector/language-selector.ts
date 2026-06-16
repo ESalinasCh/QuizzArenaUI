@@ -7,7 +7,7 @@ interface Language {
 }
 
 @Component({
-  selector: 'app-language-selector',
+  selector: 'qz-language-selector',
   imports: [Icon],
   templateUrl: './language-selector.html',
   styleUrl: './language-selector.css',

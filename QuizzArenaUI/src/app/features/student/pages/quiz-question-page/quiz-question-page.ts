@@ -7,7 +7,7 @@ import { SubmitMatchAttemptAnswerRequest } from '../../api/student-quiz.contract
 import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
-  selector: 'app-student-quiz-question-page',
+  selector: 'qz-student-quiz-question-page',
   imports: [Icon],
   templateUrl: './quiz-question-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

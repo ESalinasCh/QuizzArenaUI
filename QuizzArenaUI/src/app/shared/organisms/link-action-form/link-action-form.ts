@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Icon, IconName } from '../../atoms/icon/icon';
 
 @Component({
-  selector: 'app-link-action-form',
+  selector: 'qz-link-action-form',
   standalone: true,
   imports: [FormsModule, Icon],
   templateUrl: './link-action-form.html',

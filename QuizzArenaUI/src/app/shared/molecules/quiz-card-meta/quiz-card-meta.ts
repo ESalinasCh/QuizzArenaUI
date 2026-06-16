@@ -3,7 +3,7 @@ import { MetaText } from '../../atoms/meta-text/meta-text';
 import { StatusLabel, StatusLabelVariant } from '../../atoms/status-label/status-label';
 
 @Component({
-  selector: 'app-quiz-card-meta',
+  selector: 'qz-quiz-card-meta',
   standalone: true,
   imports: [MetaText, StatusLabel],
   templateUrl: './quiz-card-meta.html',

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Icon, IconName } from '../../atoms/icon/icon';
 
 @Component({
-  selector: 'app-section-title',
+  selector: 'qz-section-title',
   standalone: true,
   imports: [Icon],
   templateUrl: './section-title.html',

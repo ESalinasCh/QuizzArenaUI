@@ -11,7 +11,7 @@ export type ButtonVariant =
 export type ButtonType = 'button' | 'submit' | 'reset';
 
 @Component({
-  selector: 'app-button',
+  selector: 'qz-button',
   standalone: true,
   templateUrl: './button.html',
   styleUrl: './button.css',
