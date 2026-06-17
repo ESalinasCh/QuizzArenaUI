@@ -5,6 +5,8 @@ import { AuthState } from '../models/auth-state.model';
 import { KeycloakAccessTokenClaims, KeycloakTokenClaims, User } from '../models/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+const BASE64_BLOCK_SIZE = 4;
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   readonly #oAuthService = inject(OAuthService);

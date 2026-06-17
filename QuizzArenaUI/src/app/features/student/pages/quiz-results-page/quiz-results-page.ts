@@ -8,7 +8,7 @@ import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
   selector: 'qz-student-quiz-results-page',
-  imports: [Icon, StatCard],
+  imports: [Icon, StatCard, TruncatePipe],
   templateUrl: './quiz-results-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
