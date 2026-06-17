@@ -1,0 +1,39 @@
+services:
+  ui:
+    build:
+      context: QuizzArenaUI
+      dockerfile: Dockerfile
+    container_name: quizarena_ui
+    environment:
+      APP_PRODUCTION: "false"
+      KEYCLOAK_ISSUER:   "http://localhost:${KEYCLOAK_PORT:-8180}/realms/quiz-arena"
+      KEYCLOAK_CLIENT_ID: "${KEYCLOAK_CLIENT_ID:-quiz-arena-ui}"
+      API_BASE_URL:       "${API_BASE_URL:-http://localhost:8080}"
+    ports:
+      - "4200:8080"
+    depends_on:
+      keycloak:
+        condition: service_healthy
+    restart: unless-stopped
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.2
+    container_name: quizarena_keycloak
+    command: start-dev --import-realm
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: "${KC_ADMIN_USER:-admin}"
+      KC_BOOTSTRAP_ADMIN_PASSWORD: "${KC_ADMIN_PASSWORD:-admin}"
+      KC_HTTP_PORT: "8180"
+      KC_HOSTNAME: "http://localhost:${KEYCLOAK_PORT:-8180}"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
+    ports:
+      - "${KEYCLOAK_PORT:-8180}:8180"
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '(echo >/dev/tcp/localhost/8180) 2>/dev/null'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 45s
+    restart: unless-stopped

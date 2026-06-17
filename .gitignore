@@ -1,17 +1,40 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# Compiled output
+# ── Angular / Node build output ──────────────────────────────
 /dist
 /tmp
 /out-tsc
 /bazel-out
+QuizzArenaUI/dist
+QuizzArenaUI/tmp
+QuizzArenaUI/out-tsc
 
-# Node
+# ── Node ─────────────────────────────────────────────────────
 /node_modules
+QuizzArenaUI/node_modules
 npm-debug.log
 yarn-error.log
 
-# IDEs and editors
+# ── Angular cache ────────────────────────────────────────────
+/.angular/cache
+QuizzArenaUI/.angular/
+
+# ── Test / coverage ──────────────────────────────────────────
+/coverage
+QuizzArenaUI/coverage
+__screenshots__/
+testem.log
+
+# ── Secrets & environment ────────────────────────────────────
+.env
+.env.*
+!.env.example
+QuizzArenaUI/.env
+QuizzArenaUI/.env.*
+!QuizzArenaUI/.env.example
+
+# ── Docker ───────────────────────────────────────────────────
+docker-compose.override.yml
+
+# ── IDE / editors ────────────────────────────────────────────
 .idea/
 .project
 .classpath
@@ -20,7 +43,6 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 .vscode/
-# Visual Studio Code
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -29,19 +51,20 @@ yarn-error.log
 !.vscode/mcp.json
 .history/*
 
-# Miscellaneous
-/.angular/cache
+# ── Miscellaneous ────────────────────────────────────────────
 .sass-cache/
 /connect.lock
-/coverage
 /libpeerconnection.log
-testem.log
 /typings
-__screenshots__/
 
-# System files
+# ── OS ───────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+Desktop.ini
 
+# ── Logs ─────────────────────────────────────────────────────
+*.log
+
+# ── Claude / AI tooling ──────────────────────────────────────
 .claude
 ../.claude
