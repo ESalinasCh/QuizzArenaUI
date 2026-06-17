@@ -58,12 +58,12 @@ export class StudentQuizResultsPage {
   }
 
   goHome(): void {
-    void this.#router.navigate(['/student/quizzes']);
+    this.#navigate(['/student/quizzes']);
   }
 
   #getRequiredAttemptId(routeId: string | null): string | null {
     if (!routeId) {
-      void this.#router.navigate(['/student/quizzes']);
+      this.#navigate(['/student/quizzes']);
       return null;
     }
 
@@ -72,5 +72,18 @@ export class StudentQuizResultsPage {
 
   #normalizeAttemptId(id: string): string {
     return id.startsWith('attempt-') ? id : `attempt-${id}`;
+  }
+
+  #navigate(commands: Parameters<Router['navigate']>[0]): void {
+    this.#router
+      .navigate(commands)
+      .then(navigated => {
+        if (!navigated) {
+          console.warn('Navigation was cancelled', commands);
+        }
+      })
+      .catch(error => {
+        console.error('Navigation failed', error);
+      });
   }
 }

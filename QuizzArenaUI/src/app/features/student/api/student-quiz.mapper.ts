@@ -15,6 +15,9 @@ import {
   StudentQuizStart,
 } from '../models/student-quiz.model';
 
+const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+const NEW_MATCH_THRESHOLD_DAYS = 2;
+
 export function mapStudentDashboardResponse(
   availableMatches: AvailableMatchResponse[],
   matchAttempts: MatchAttemptSummaryResponse[],
@@ -115,16 +118,16 @@ function getAvailableMatchStatus(createdAt: string): AvailableQuiz['status'] {
   const createdDate = new Date(createdAt);
   const now = new Date();
   const diffInMs = now.getTime() - createdDate.getTime();
-  const diffInDays = diffInMs / 86_400_000;
+  const diffInDays = diffInMs / MILLISECONDS_PER_DAY;
 
-  return diffInDays <= 2 ? 'new' : 'available';
+  return diffInDays <= NEW_MATCH_THRESHOLD_DAYS ? 'new' : 'available';
 }
 
 function formatRelativeDate(value: string): string {
   const completedAt = new Date(value);
   const now = new Date();
   const diffInMs = now.getTime() - completedAt.getTime();
-  const diffInDays = Math.max(1, Math.round(diffInMs / 86_400_000));
+  const diffInDays = Math.max(1, Math.round(diffInMs / MILLISECONDS_PER_DAY));
 
   return `hace ${diffInDays} dias`;
 }

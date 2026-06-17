@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
 import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
@@ -29,22 +29,34 @@ export class StudentQuizListPage {
     return user?.name?.split(' ')[0] ?? user?.username ?? 'Estudiante';
   });
 
-  startQuiz(quizId: string): void {
-    void this.#router.navigate(['/student/quizzes', quizId, 'start']);
+  async startQuiz(quizId: string): Promise<void> {
+    await this.#navigate(['/student/quizzes', quizId, 'start']);
   }
 
-  viewResults(quizId: string): void {
-    void this.#router.navigate(['/student/quizzes', quizId, 'results'], {
+  async viewResults(quizId: string): Promise<void> {
+    await this.#navigate(['/student/quizzes', quizId, 'results'], {
       queryParams: { view: 'details' },
     });
   }
 
-  goToQuizFromLink(quizLink: string): void {
+  async goToQuizFromLink(quizLink: string): Promise<void> {
     if (!quizLink) {
       return;
     }
 
     const quizId = quizLink.split('/').filter(Boolean).at(-1) ?? quizLink;
-    this.startQuiz(quizId);
+    await this.startQuiz(quizId);
+  }
+
+  async #navigate(commands: unknown[], extras?: NavigationExtras): Promise<void> {
+    try {
+      const navigated = await this.#router.navigate(commands, extras);
+
+      if (!navigated) {
+        console.warn('Navigation was cancelled', commands);
+      }
+    } catch (error) {
+      console.error('Navigation failed', error);
+    }
   }
 }
