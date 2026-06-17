@@ -22,7 +22,7 @@ export class StudentQuizSessionPage {
         const quizId = params.get('quizId');
 
         if (!quizId) {
-          void this.#router.navigate(['/student/quizzes']);
+          this.#navigate(['/student/quizzes']);
           return EMPTY;
         }
 
@@ -38,7 +38,7 @@ export class StudentQuizSessionPage {
   });
 
   goBack(): void {
-    void this.#router.navigate(['/student/quizzes']);
+    this.#navigate(['/student/quizzes']);
   }
 
   beginQuiz(): void {
@@ -48,6 +48,19 @@ export class StudentQuizSessionPage {
       return;
     }
 
-    void this.#router.navigate(['/student/quizzes', quizId, 'questions']);
+    this.#navigate(['/student/quizzes', quizId, 'questions']);
+  }
+
+  #navigate(commands: Parameters<Router['navigate']>[0]): void {
+    this.#router
+      .navigate(commands)
+      .then(navigated => {
+        if (!navigated) {
+          console.warn('Navigation was cancelled', commands);
+        }
+      })
+      .catch(error => {
+        console.error('Navigation failed', error);
+      });
   }
 }

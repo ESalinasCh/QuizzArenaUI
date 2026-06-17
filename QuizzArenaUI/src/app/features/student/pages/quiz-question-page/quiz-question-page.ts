@@ -29,7 +29,7 @@ export class StudentQuizQuestionPage {
         const quizId = params.get('quizId');
 
         if (!quizId) {
-          void this.#router.navigate(['/student/quizzes']);
+          this.#navigate(['/student/quizzes']);
           return EMPTY;
         }
 
@@ -57,7 +57,13 @@ export class StudentQuizQuestionPage {
 
   goBack(): void {
     const quizId = this.quiz()?.id;
-    void this.#router.navigate(['/student/quizzes', quizId, 'start']);
+
+    if (!quizId) {
+      this.#navigate(['/student/quizzes']);
+      return;
+    }
+
+    this.#navigate(['/student/quizzes', quizId, 'start']);
   }
 
   selectOption(optionId: string): void {
@@ -94,7 +100,7 @@ export class StudentQuizQuestionPage {
       .submitMatchAttempt(attemptId, { answers: this.answers() })
       .subscribe({
         next: response => {
-          void this.#router.navigate(['/student/quizzes', response.attemptId, 'results']);
+          this.#navigate(['/student/quizzes', response.attemptId, 'results']);
         },
         error: () => {
           this.isSubmitting.set(false);
@@ -107,5 +113,18 @@ export class StudentQuizQuestionPage {
       ...answers.filter(answer => answer.questionId !== questionId),
       { questionId, selectedOptionId },
     ]);
+  }
+
+  #navigate(commands: Parameters<Router['navigate']>[0]): void {
+    this.#router
+      .navigate(commands)
+      .then(navigated => {
+        if (!navigated) {
+          console.warn('Navigation was cancelled', commands);
+        }
+      })
+      .catch(error => {
+        console.error('Navigation failed', error);
+      });
   }
 }
