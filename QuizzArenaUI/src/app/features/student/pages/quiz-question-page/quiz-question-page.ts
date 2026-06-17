@@ -45,14 +45,14 @@ export class StudentQuizQuestionPage {
 
     return `Pregunta ${current} de ${total}`;
   });
-  readonly progressValue = computed(() => {
+  readonly progressPercentage = computed(() => {
     const total = this.quiz()?.questions.length ?? 0;
 
     if (!total) {
-      return '0%';
+      return 0;
     }
 
-    return `${((this.questionIndex() + 1) / total) * 100}%`;
+    return ((this.questionIndex() + 1) / total) * 100;
   });
 
   goBack(): void {

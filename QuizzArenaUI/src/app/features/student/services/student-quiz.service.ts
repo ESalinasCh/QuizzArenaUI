@@ -33,8 +33,6 @@ export class StudentQuizService {
   readonly #submitResultCache = new Map<string, SubmitMatchAttemptResponse>();
 
   getDashboard(): Observable<StudentQuizDashboard> {
-    // Antes este flujo leia STUDENT_AVAILABLE_MATCHES_RESPONSE_MOCK y
-    // STUDENT_MATCH_ATTEMPTS_RESPONSE_MOCK. Ahora consumimos los endpoints reales.
     return forkJoin({
       availableMatches: this.#http.get<AvailableMatchResponse[]>(
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
@@ -56,8 +54,6 @@ export class StudentQuizService {
       return cachedQuizStart;
     }
 
-    // Antes STUDENT_PLAY_RESPONSE_MOCKS nos daba attemptId/questions.
-    // Ahora POST /plays crea el intento para este match.
     const quizStart = forkJoin({
       matches: this.#http.get<AvailableMatchResponse[]>(
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
@@ -94,7 +90,6 @@ export class StudentQuizService {
   }
 
   getMatchAttemptDetail(attemptId: string): Observable<StudentQuizReview> {
-    // Antes esto salia de STUDENT_MATCH_ATTEMPT_DETAIL_RESPONSE_MOCKS.
     return forkJoin({
       response: this.#http.get<MatchAttemptDetailResponse>(
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttemptDetail(attemptId)),
@@ -130,8 +125,6 @@ export class StudentQuizService {
     attemptId: string,
     request: SubmitMatchAttemptRequest,
   ): Observable<SubmitMatchAttemptResponse> {
-    // Antes esto devolvia STUDENT_SUBMIT_MATCH_ATTEMPT_RESPONSE_MOCKS.
-    // Ahora enviamos las respuestas seleccionadas al endpoint real.
     return this.#http
       .post<SubmitMatchAttemptResponse>(
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.submitMatchAttempt(attemptId)),
