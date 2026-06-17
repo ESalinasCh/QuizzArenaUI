@@ -2,13 +2,14 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, map, switchMap } from 'rxjs';
+import { TruncatePipe } from '../../../../core/pipes/truncate.pipe';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
   selector: 'qz-student-quiz-results-page',
-  imports: [Icon, StatCard],
+  imports: [Icon, StatCard, TruncatePipe],
   templateUrl: './quiz-results-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -29,7 +30,9 @@ export class StudentQuizResultsPage {
     this.#route.paramMap.pipe(
       map(params => this.#getRequiredAttemptId(params.get('quizId'))),
       switchMap(attemptId =>
-        attemptId ? this.#studentQuizService.getMatchAttemptResultSummary(attemptId) : EMPTY,
+        attemptId && !this.showDetails()
+          ? this.#studentQuizService.getMatchAttemptResultSummary(attemptId)
+          : EMPTY,
       ),
     ),
   );
@@ -48,10 +51,6 @@ export class StudentQuizResultsPage {
 
     return `${score} ${100 - score}`;
   });
-
-  answerPreview(value: string): string {
-    return value.length > 18 ? `${value.slice(0, 18)}...` : value;
-  }
 
   viewDetails(): void {
     this.showDetails.set(true);

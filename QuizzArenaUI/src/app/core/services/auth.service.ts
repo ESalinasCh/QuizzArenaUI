@@ -4,6 +4,8 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthState } from '../models/auth-state.model';
 import { KeycloakAccessTokenClaims, KeycloakTokenClaims, User } from '../models/user.model';
 
+const BASE64_BLOCK_SIZE = 4;
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   readonly #oAuthService = inject(OAuthService);
@@ -89,7 +91,9 @@ export class AuthService {
     try {
       const normalizedPayload = payload.replace(/-/g, '+').replace(/_/g, '/');
       const paddedPayload = normalizedPayload.padEnd(
-        normalizedPayload.length + ((4 - (normalizedPayload.length % 4)) % 4),
+        normalizedPayload.length +
+          ((BASE64_BLOCK_SIZE - (normalizedPayload.length % BASE64_BLOCK_SIZE)) %
+            BASE64_BLOCK_SIZE),
         '=',
       );
       const decodedPayload = atob(paddedPayload);

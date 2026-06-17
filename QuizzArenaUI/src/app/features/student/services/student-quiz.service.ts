@@ -103,21 +103,12 @@ export class StudentQuizService {
   getMatchAttemptResultSummary(attemptId: string): Observable<StudentQuizResultSummary> {
     const cachedSubmitResult = this.#submitResultCache.get(attemptId);
 
-    if (cachedSubmitResult) {
-      return this.#getAttemptMetadata(attemptId).pipe(
-        map(metadata => mapSubmitMatchAttemptResponse(cachedSubmitResult, metadata)),
-      );
+    if (!cachedSubmitResult) {
+      throw new Error(`No submit result found for attempt ${attemptId}`);
     }
 
-    return forkJoin({
-      response: this.#http.get<MatchAttemptDetailResponse>(
-        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttemptDetail(attemptId)),
-      ),
-      metadata: this.#getAttemptMetadata(attemptId),
-    }).pipe(
-      map(({ response, metadata }) =>
-        mapSubmitMatchAttemptResponse(this.#mapDetailToSubmitSummary(response), metadata),
-      ),
+    return this.#getAttemptMetadata(attemptId).pipe(
+      map(metadata => mapSubmitMatchAttemptResponse(cachedSubmitResult, metadata)),
     );
   }
 
@@ -157,27 +148,6 @@ export class StudentQuizService {
 
   #buildUrl(endpoint: string): string {
     return `${this.#apiBaseUrl}${endpoint}`;
-  }
-
-  #mapDetailToSubmitSummary(response: MatchAttemptDetailResponse): SubmitMatchAttemptResponse {
-    const correctCount = response.questions.filter(question => question.isCorrect).length;
-    const totalQuestions = response.questions.length;
-
-    return {
-      attemptId: response.id,
-      scorePercentage: response.score,
-      correctCount,
-      incorrectCount: totalQuestions - correctCount,
-      totalQuestions,
-      questions: response.questions.map((question, index) => ({
-        id: question.questionId,
-        number: index + 1,
-        text: question.content,
-        selectedOptionId: question.selectedOptionId,
-        correctOptionId: question.options.find(option => option.isCorrect)?.id ?? '',
-        isCorrect: question.isCorrect,
-      })),
-    };
   }
 
   #mapAttemptSummaryToMetadata(attempt: MatchAttemptSummaryResponse): {
