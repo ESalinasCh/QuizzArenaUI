@@ -13,8 +13,12 @@ export class AvailableQuizCard {
   quiz = input.required<AvailableQuiz>();
   startQuiz = output<string>();
 
+  readonly startActionLabel = $localize`:Available quiz card start action:Start`;
+
   readonly statusLabel = computed(() =>
-    this.quiz().status === 'available' ? 'Disponible' : 'Nuevo',
+    this.quiz().status === 'available'
+      ? $localize`:Available quiz status label:Available`
+      : $localize`:New quiz status label:New`,
   );
 
   readonly statusVariant = computed<StatusLabelVariant>(() =>

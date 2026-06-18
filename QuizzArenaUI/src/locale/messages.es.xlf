@@ -27,6 +27,61 @@
         <target>Comenzar</target>
         <note priority="1" from="description">Login CTA button</note>
       </trans-unit>
+      <trans-unit id="5162686434580248853" datatype="html">
+        <source>Start</source>
+        <target>Empezar</target>
+        <note priority="1" from="description">Available quiz card start action</note>
+      </trans-unit>
+      <trans-unit id="3955868613858648955" datatype="html">
+        <source>Available</source>
+        <target>Disponible</target>
+        <note priority="1" from="description">Available quiz status label</note>
+      </trans-unit>
+      <trans-unit id="5280218112746407598" datatype="html">
+        <source>New</source>
+        <target>Nuevo</target>
+        <note priority="1" from="description">New quiz status label</note>
+      </trans-unit>
+      <trans-unit id="3247153808694041723" datatype="html">
+        <source>in progress</source>
+        <target>en progreso</target>
+        <note priority="1" from="description">Recent quiz in progress label</note>
+      </trans-unit>
+      <trans-unit id="3394970372911985841" datatype="html">
+        <source><x id="days" equiv-text="diffInDays"/> days ago</source>
+        <target>hace <x id="days" equiv-text="diffInDays"/> dias</target>
+        <note priority="1" from="description">Recent quiz completed relative date</note>
+      </trans-unit>
+      <trans-unit id="2509141182388535183" datatype="html">
+        <source>View</source>
+        <target>Ver</target>
+        <note priority="1" from="description">Recent quiz card view action</note>
+      </trans-unit>
+      <trans-unit id="4161583659106904542" datatype="html">
+        <source> Welcome, <x id="INTERPOLATION" equiv-text="{{ displayName() }}"/> 👋 </source>
+        <target> Bienvenido, <x id="INTERPOLATION" equiv-text="{{ displayName() }}"/> 👋 </target>
+        <note priority="1" from="description">Student dashboard welcome heading</note>
+      </trans-unit>
+      <trans-unit id="79196985583566606" datatype="html">
+        <source>Available Quizzes</source>
+        <target>Quizzes Disponibles</target>
+        <note priority="1" from="description">Student dashboard available quizzes section title</note>
+      </trans-unit>
+      <trans-unit id="2820021834015221471" datatype="html">
+        <source>Recent Quizzes</source>
+        <target>Quizzes Recientes</target>
+        <note priority="1" from="description">Student dashboard recent quizzes section title</note>
+      </trans-unit>
+      <trans-unit id="2531042398197863879" datatype="html">
+        <source><x id="questionCount" equiv-text="this.questionCount()"/> questions</source>
+        <target><x id="questionCount" equiv-text="this.questionCount()"/> preguntas</target>
+        <note priority="1" from="description">Quiz card question count</note>
+      </trans-unit>
+      <trans-unit id="3635164936532222371" datatype="html">
+        <source>Cuestionarios</source>
+        <target>Cuestionarios</target>
+        <note priority="1" from="description">Sidebar nav teacher quizzes label</note>
+      </trans-unit>
       <trans-unit id="7228136119811576789" datatype="html">
         <source>User menu</source>
         <target>Menú de usuario</target>
@@ -242,6 +297,74 @@
       <trans-unit id="5273885127657555916" datatype="html">
         <source>Evaluate and analyze your students' performance</source>
         <target>Evalúa y analiza el desempeño de tus estudiantes</target>
+      </trans-unit>
+      <trans-unit id="6036308268629413664" datatype="html">
+        <source> Results </source>
+        <target> Resultados </target>
+      </trans-unit>
+      <trans-unit id="7252430617227854076" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{ summaryData.correctCount }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ summaryData.totalQuestions }}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> correct </source>
+        <target> <x id="INTERPOLATION" equiv-text="{{ summaryData.correctCount }}"/> de <x id="INTERPOLATION_1" equiv-text="{{ summaryData.totalQuestions }}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> correctas </target>
+      </trans-unit>
+      <trans-unit id="4458623925621601003" datatype="html">
+        <source>View answer details</source>
+        <target>Ver detalles de respuestas</target>
+      </trans-unit>
+      <trans-unit id="6801535761978393212" datatype="html">
+        <source>Back to home</source>
+        <target>Volver al inicio</target>
+      </trans-unit>
+      <trans-unit id="6028560285809307887" datatype="html">
+        <source> Answer review </source>
+        <target> Revision de respuestas </target>
+      </trans-unit>
+      <trans-unit id="9153508585400405262" datatype="html">
+        <source>Question <x id="INTERPOLATION" equiv-text="{{ question.number }}"/></source>
+        <target>Pregunta <x id="INTERPOLATION" equiv-text="{{ question.number }}"/></target>
+      </trans-unit>
+      <trans-unit id="9007626195337256325" datatype="html">
+        <source>Your answer: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/></source>
+        <target>Tu respuesta: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/></target>
+      </trans-unit>
+      <trans-unit id="2496818939481806999" datatype="html">
+        <source>Incorrect</source>
+        <target>Incorrectas</target>
+      </trans-unit>
+      <trans-unit id="7841430672042223267" datatype="html">
+        <source>Correct</source>
+        <target>Correctas</target>
+      </trans-unit>
+      <trans-unit id="8251908569174605565" datatype="html">
+        <source>No answer</source>
+        <target>Sin respuesta</target>
+      </trans-unit>
+      <trans-unit id="6666438282364978788" datatype="html">
+        <source>Back to quiz start</source>
+        <target>Volver al inicio del quiz</target>
+      </trans-unit>
+      <trans-unit id="5737984937850391422" datatype="html">
+        <source> Options </source>
+        <target> Opciones </target>
+      </trans-unit>
+      <trans-unit id="6968935085062828924" datatype="html">
+        <source>Confirm answer</source>
+        <target>Confirmar respuesta</target>
+      </trans-unit>
+      <trans-unit id="1130875928924169857" datatype="html">
+        <source>Question <x id="current" equiv-text="current"/> of <x id="total" equiv-text="total"/></source>
+        <target>Pregunta <x id="current" equiv-text="current"/> de <x id="total" equiv-text="total"/></target>
+      </trans-unit>
+      <trans-unit id="1347317405427696876" datatype="html">
+        <source>Back to available quizzes</source>
+        <target>Volver a quizzes disponibles</target>
+      </trans-unit>
+      <trans-unit id="7345259396417254354" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{ quizData.questionCount }}"/> questions </source>
+        <target> <x id="INTERPOLATION" equiv-text="{{ quizData.questionCount }}"/> preguntas </target>
+      </trans-unit>
+      <trans-unit id="3066208008327816783" datatype="html">
+        <source>Time limit <x id="minutes" equiv-text="minutes"/> min</source>
+        <target>Limite de tiempo <x id="minutes" equiv-text="minutes"/> min</target>
       </trans-unit>
     </body>
   </file>

@@ -19,6 +19,9 @@ export class StudentQuizListPage {
   readonly #router = inject(Router);
   readonly #studentQuizService = inject(StudentQuizService);
 
+  readonly availableQuizzesTitle = $localize`:Student dashboard available quizzes section title:Available Quizzes`;
+  readonly recentQuizzesTitle = $localize`:Student dashboard recent quizzes section title:Recent Quizzes`;
+
   readonly dashboard = toSignal(this.#studentQuizService.getDashboard(), {
     initialValue: { availableQuizzes: [], recentQuizzes: [] },
   });

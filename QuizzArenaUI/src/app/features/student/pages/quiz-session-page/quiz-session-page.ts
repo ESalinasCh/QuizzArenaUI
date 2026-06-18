@@ -32,9 +32,9 @@ export class StudentQuizSessionPage {
   );
 
   readonly timeLimitLabel = computed(() => {
-    const seconds = this.quiz()?.timeLimitSeconds ?? 0;
+    const minutes = this.quiz()?.timeLimitMinutes ?? 0;
 
-    return `Limite de tiempo ${seconds} seg`;
+    return $localize`:Student quiz time limit label:Time limit ${minutes}:minutes: min`;
   });
 
   goBack(): void {

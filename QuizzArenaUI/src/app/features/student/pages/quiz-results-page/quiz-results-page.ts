@@ -19,6 +19,9 @@ export class StudentQuizResultsPage {
   readonly #studentQuizService = inject(StudentQuizService);
   readonly showDetails = signal(this.#route.snapshot.queryParamMap.get('view') === 'details');
 
+  readonly incorrectAnswersLabel = $localize`:Student quiz incorrect answers stat label:Incorrect`;
+  readonly correctAnswersLabel = $localize`:Student quiz correct answers stat label:Correct`;
+
   readonly attemptId = toSignal(
     this.#route.paramMap.pipe(
       map(params => this.#getRequiredAttemptId(params.get('quizId'))),

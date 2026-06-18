@@ -3,7 +3,8 @@
     <button
       type="button"
       class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-light text-primary transition hover:bg-primary-soft dark:bg-dark-surface-alt dark:text-primary"
-      aria-label="Volver a quizzes disponibles"
+      i18n-aria-label="Student quiz start page back button aria label"
+      aria-label="Back to available quizzes"
       (click)="goBack()"
     >
       <qz-icon name="arrow-left" class="h-5 w-5" />
@@ -15,7 +16,7 @@
           class="flex h-40 w-40 items-center justify-center rounded-full bg-purple-light text-5xl dark:bg-dark-surface-alt"
           aria-hidden="true"
         >
-          📝
+          &#128221;
         </div>
 
         <div class="text-center">
@@ -30,9 +31,14 @@
         <div
           class="flex w-full flex-col items-center gap-6 rounded-3xl border border-light-border-strong bg-light-surface px-6 py-7 text-base font-medium text-light-text-secondary shadow-card dark:border-dark-border-strong dark:bg-dark-surface-alt dark:text-dark-text-secondary dark:shadow-none"
         >
-          <p>📖 {{ quizData.questionCount }} preguntas</p>
-          <p>👨‍🏫 {{ quizData.professorName }}</p>
-          <p>⏱️ {{ timeLimitLabel() }}</p>
+          <p>
+            <span aria-hidden="true">&#128214;</span>
+            <ng-container i18n="Student quiz start question count">
+              {{ quizData.questionCount }} questions
+            </ng-container>
+          </p>
+          <p>&#128104;&#8205;&#127979; {{ quizData.professorName }}</p>
+          <p>&#9201;&#65039; {{ timeLimitLabel() }}</p>
         </div>
 
         <button
@@ -41,7 +47,7 @@
           (click)="beginQuiz()"
         >
           <qz-icon name="play" class="h-5 w-5 fill-white" />
-          Comenzar
+          <ng-container i18n="Student quiz start button">Start</ng-container>
         </button>
       </div>
     }
