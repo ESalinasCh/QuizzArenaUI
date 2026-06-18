@@ -13,7 +13,8 @@
         <button
           type="button"
           class="sr-only"
-          aria-label="Volver al inicio del quiz"
+          i18n-aria-label="Student quiz questions back button aria label"
+          aria-label="Back to quiz start"
           (click)="goBack()"
         ></button>
 
@@ -25,8 +26,11 @@
           </h1>
         </article>
 
-        <p class="text-center text-xl font-extrabold text-light-text-secondary dark:text-dark-border-strong dark:text-dark-text">
-          Opciones
+        <p
+          i18n="Student quiz options section label"
+          class="text-center text-xl font-extrabold text-light-text-secondary dark:text-dark-border-strong dark:text-dark-text"
+        >
+          Options
         </p>
 
         <div class="flex flex-col gap-4">
@@ -54,7 +58,7 @@
           [disabled]="!selectedOptionId() || isSubmitting()"
           (click)="confirmAnswer()"
         >
-          Confirmar respuesta
+          <ng-container i18n="Student quiz confirm answer button">Confirm answer</ng-container>
           <qz-icon name="arrow-right" class="h-5 w-5" />
         </button>
       </div>

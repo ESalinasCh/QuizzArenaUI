@@ -1,12 +1,12 @@
 <section class="mx-auto flex w-full max-w-180 flex-col gap-6 pb-6">
-  <h1 class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
-    Bienvenido, {{ displayName() }} 👋
+  <h1 i18n="Student dashboard welcome heading" class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
+    Welcome, {{ displayName() }} &#128075;
   </h1>
 
   <!-- <qz-quiz-access-form (submitQuizLink)="goToQuizFromLink($event)" /> -->
 
   <div class="flex flex-col gap-4">
-    <qz-section-title title="Quizzes Disponibles" icon="sparkles" />
+    <qz-section-title [title]="availableQuizzesTitle" icon="sparkles" />
 
     <div class="flex flex-col gap-4">
       @for (quiz of dashboard().availableQuizzes; track quiz.id) {
@@ -16,7 +16,7 @@
   </div>
 
   <div class="flex flex-col gap-4">
-    <qz-section-title title="Quizzes Recientes" icon="clock" />
+    <qz-section-title [title]="recentQuizzesTitle" icon="clock" />
 
     <div class="flex flex-col gap-4">
       @for (quiz of dashboard().recentQuizzes; track quiz.id) {

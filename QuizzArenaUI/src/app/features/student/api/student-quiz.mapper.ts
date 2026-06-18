@@ -42,7 +42,9 @@ export function mapMatchAttemptSummaryResponse(response: MatchAttemptSummaryResp
     id: response.id,
     title: response.title,
     score: response.score,
-    completedAtLabel: response.completedAt ? formatRelativeDate(response.completedAt) : 'en progreso',
+    completedAtLabel: response.completedAt
+      ? formatRelativeDate(response.completedAt)
+      : $localize`:Recent quiz in progress label:in progress`,
     status: mapRecentQuizStatus(response.status),
   };
 }
@@ -59,7 +61,7 @@ export function mapQuizStartResponse(
     subtitle: match.courseName,
     professorName: match.professorName,
     questionCount: match.questionCount,
-    timeLimitSeconds: match.duration,
+    timeLimitMinutes: match.duration,
     questions: play.questions.map(question => ({
       id: question.id,
       statement: question.statement,
@@ -87,7 +89,8 @@ export function mapMatchAttemptDetailResponse(
         id: question.questionId,
         number: index + 1,
         text: question.content,
-        selectedAnswerLabel: selectedOption?.description ?? 'Sin respuesta',
+        selectedAnswerLabel:
+          selectedOption?.description ?? $localize`:Student quiz unanswered fallback:No answer`,
         isCorrect: question.isCorrect,
       };
     }),
@@ -129,5 +132,5 @@ function formatRelativeDate(value: string): string {
   const diffInMs = now.getTime() - completedAt.getTime();
   const diffInDays = Math.max(1, Math.round(diffInMs / MILLISECONDS_PER_DAY));
 
-  return `hace ${diffInDays} dias`;
+  return $localize`:Recent quiz completed relative date:${diffInDays}:days: days ago`;
 }

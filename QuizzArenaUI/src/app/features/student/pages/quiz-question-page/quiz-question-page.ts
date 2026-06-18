@@ -43,7 +43,7 @@ export class StudentQuizQuestionPage {
     const current = this.questionIndex() + 1;
     const total = this.quiz()?.questions.length ?? 0;
 
-    return `Pregunta ${current} de ${total}`;
+    return $localize`:Student quiz question progress label:Question ${current}:current: of ${total}:total:`;
   });
   readonly progressPercentage = computed(() => {
     const total = this.quiz()?.questions.length ?? 0;

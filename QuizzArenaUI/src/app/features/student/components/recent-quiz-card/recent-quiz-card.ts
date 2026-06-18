@@ -13,6 +13,8 @@ export class RecentQuizCard {
   quiz = input.required<RecentQuiz>();
   viewResults = output<string>();
 
+  readonly viewActionLabel = $localize`:Recent quiz card view action:View`;
+
   emitView(): void {
     this.viewResults.emit(this.quiz().id);
   }

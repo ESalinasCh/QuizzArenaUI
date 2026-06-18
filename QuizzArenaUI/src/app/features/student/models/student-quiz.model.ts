@@ -40,7 +40,7 @@ export interface StudentQuizStart {
   subtitle: string;
   professorName: string;
   questionCount: number;
-  timeLimitSeconds: number;
+  timeLimitMinutes: number;
   questions: QuizQuestion[];
 }
 
