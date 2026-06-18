@@ -66,11 +66,7 @@ export class StudentQuizResultsPage {
       return null;
     }
 
-    return this.#normalizeAttemptId(routeId);
-  }
-
-  #normalizeAttemptId(id: string): string {
-    return id.startsWith('attempt-') ? id : `attempt-${id}`;
+    return routeId;
   }
 
   #navigate(commands: Parameters<Router['navigate']>[0]): void {
