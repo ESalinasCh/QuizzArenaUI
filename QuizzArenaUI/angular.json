@@ -36,8 +36,12 @@
                 "input": "public"
               }
             ],
-            "polyfills": ["@angular/localize/init"],
-            "styles": ["src/styles.css"]
+            "polyfills": [
+              "@angular/localize/init"
+            ],
+            "styles": [
+              "src/styles.css"
+            ]
           },
           "configurations": {
             "production": {
@@ -68,7 +72,9 @@
               "sourceMap": true
             },
             "es": {
-              "localize": ["es"],
+              "localize": [
+                "es"
+              ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -78,12 +84,12 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "QuizzArenaUI:build:production"
-            },
-            "options": {
-              "proxyConfig": "proxy.conf.json"
             },
             "development": {
               "buildTarget": "QuizzArenaUI:build:development"
