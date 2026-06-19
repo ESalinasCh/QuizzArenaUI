@@ -3,7 +3,7 @@ import { Icon } from '../../atoms/icon/icon';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-user-menu',
+  selector: 'qz-user-menu',
   imports: [Icon],
   templateUrl: './user-menu.html',
   styleUrl: './user-menu.css',

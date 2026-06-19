@@ -14,7 +14,7 @@
       <!-- Logo -->
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
-          <app-icon name="quiz" class="w-6 h-6 text-white" />
+          <qz-icon name="quiz" class="w-6 h-6 text-white" />
         </div>
         <span class="text-2xl font-bold text-white">QuizArena</span>
       </div>
@@ -41,7 +41,7 @@
       <!-- Feature list -->
       <div class="flex flex-col gap-3">
         @for (feature of features; track feature.title) {
-          <app-feature-card
+          <qz-feature-card
             variant="row"
             [imageSrc]="feature.imageSrc"
             [imageAlt]="feature.imageAlt"
@@ -57,7 +57,7 @@
   <div class="flex-1 flex flex-col items-center justify-center px-6 py-10 overflow-y-auto">
 
     <div class="w-full flex justify-end px-2 mb-2">
-      <app-language-selector />
+      <qz-language-selector />
     </div>
 
     <div class="w-full max-w-sm flex flex-col items-center gap-6">
@@ -84,14 +84,14 @@
       </div>
 
       <div class="flex flex-col items-center gap-3 w-full">
-        <app-button variant="primary" size="large" [fullWidth]="true" (btnClick)="signIn()">
+        <qz-button variant="primary" size="large" [fullWidth]="true" (btnClick)="signIn()">
           <ng-container i18n="Login CTA button">Get started</ng-container>
-        </app-button>
+        </qz-button>
       </div>
 
       <div class="lg:hidden grid grid-cols-3 gap-3 w-full mt-2">
         @for (feature of features; track feature.title) {
-          <app-feature-card
+          <qz-feature-card
             variant="card"
             [imageSrc]="feature.imageSrc"
             [imageAlt]="feature.imageAlt"

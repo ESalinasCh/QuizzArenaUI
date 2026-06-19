@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-cd QuizzArenaUI && ./node_modules/.bin/commitlint --edit "../$1"
+cd QuizzArenaUI && ./node_modules/.bin/commitlint --edit "$1"

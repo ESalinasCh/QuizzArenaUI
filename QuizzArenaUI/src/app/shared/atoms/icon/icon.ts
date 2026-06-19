@@ -4,7 +4,7 @@ import { SVG_ICONS } from './icons.constants';
 export type IconName = keyof typeof SVG_ICONS;
 
 @Component({
-  selector: 'app-icon',
+  selector: 'qz-icon',
   templateUrl: './icon.html',
   styleUrl: './icon.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

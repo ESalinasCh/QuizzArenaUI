@@ -3,24 +3,24 @@
     Bienvenido, {{ displayName() }} 👋
   </h1>
 
-  <!-- <app-quiz-access-form (submitQuizLink)="goToQuizFromLink($event)" /> -->
+  <!-- <qz-quiz-access-form (submitQuizLink)="goToQuizFromLink($event)" /> -->
 
   <div class="flex flex-col gap-4">
-    <app-section-title title="Quizzes Disponibles" icon="sparkles" />
+    <qz-section-title title="Quizzes Disponibles" icon="sparkles" />
 
     <div class="flex flex-col gap-4">
       @for (quiz of dashboard().availableQuizzes; track quiz.id) {
-        <app-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
+        <qz-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
       }
     </div>
   </div>
 
   <div class="flex flex-col gap-4">
-    <app-section-title title="Quizzes Recientes" icon="clock" />
+    <qz-section-title title="Quizzes Recientes" icon="clock" />
 
     <div class="flex flex-col gap-4">
       @for (quiz of dashboard().recentQuizzes; track quiz.id) {
-        <app-recent-quiz-card [quiz]="quiz" (viewResults)="viewResults($event)" />
+        <qz-recent-quiz-card [quiz]="quiz" (viewResults)="viewResults($event)" />
       }
     </div>
   </div>

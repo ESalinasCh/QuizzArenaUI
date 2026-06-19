@@ -7,14 +7,14 @@
     i18n-aria-label="Aria label for user menu button"
     aria-label="User menu">
     <div class="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center">
-      <app-icon name="user" class="w-4 h-4 text-primary" />
+      <qz-icon name="user" class="w-4 h-4 text-primary" />
     </div>
     @if (currentUser()) {
       <span class="text-sm font-semibold text-light-text dark:text-dark-text hidden sm:block">
         {{ currentUser()?.username }}
       </span>
     }
-    <app-icon name="chevron-down" class="w-4 h-4 text-light-text-secondary dark:text-dark-text-secondary hidden sm:block" />
+    <qz-icon name="chevron-down" class="w-4 h-4 text-light-text-secondary dark:text-dark-text-secondary hidden sm:block" />
   </button>
 
   @if (isOpened()) {
@@ -34,7 +34,7 @@
         <button
           (click)="logout()"
           class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-danger-text-light dark:text-danger-text-dark hover:bg-danger-bg-light dark:hover:bg-danger-bg-dark transition-colors duration-200">
-          <app-icon name="logout" class="w-4 h-4" />
+          <qz-icon name="logout" class="w-4 h-4" />
           <ng-container i18n="User menu sign out button">Sign out</ng-container>
         </button>
       </div>

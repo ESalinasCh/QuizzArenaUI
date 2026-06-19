@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Icon, IconName } from '../icon/icon';
 
 @Component({
-  selector: 'app-meta-text',
+  selector: 'qz-meta-text',
   standalone: true,
   imports: [Icon],
   templateUrl: './meta-text.html',

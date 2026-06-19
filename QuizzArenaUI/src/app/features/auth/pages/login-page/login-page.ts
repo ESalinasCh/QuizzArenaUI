@@ -13,7 +13,7 @@ export interface LoginFeature {
 }
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'qz-login-page',
   standalone: true,
   imports: [Button, Icon, FeatureCard, LanguageSelector],
   templateUrl: './login-page.html',

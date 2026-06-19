@@ -6,7 +6,7 @@ import { Navbar } from '../../organisms/navbar/navbar';
 import { Sidebar } from '../../organisms/sidebar/sidebar';
 
 @Component({
-  selector: 'app-main-layout',
+  selector: 'qz-main-layout',
   imports: [RouterOutlet, Navbar, Sidebar],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',

@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Icon, IconName } from '../../atoms/icon/icon';
 
 @Component({
-  selector: 'app-nav-item',
+  selector: 'qz-nav-item',
   imports: [RouterLink, RouterLinkActive, Icon],
   templateUrl: './nav-item.html',
   styleUrl: './nav-item.css',

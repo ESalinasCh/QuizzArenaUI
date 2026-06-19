@@ -7,7 +7,7 @@ import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
-  selector: 'app-student-quiz-results-page',
+  selector: 'qz-student-quiz-results-page',
   imports: [Icon, StatCard],
   templateUrl: './quiz-results-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

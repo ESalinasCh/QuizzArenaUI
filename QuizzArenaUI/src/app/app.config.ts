@@ -1,5 +1,10 @@
-import { APP_INITIALIZER, ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
+import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { AuthConfig, provideOAuthClient } from 'angular-oauth2-oidc';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -18,24 +23,18 @@ const keycloakConfig: AuthConfig = {
   showDebugInformation: false,
 };
 
-function initializeAuth(oAuthService: OAuthService, authService: AuthService): () => Promise<boolean> {
-  return () => {
-    oAuthService.configure(keycloakConfig);
-    return authService.initAuth();
-  };
-}
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withXhr(), withInterceptors([authInterceptor])),
     provideOAuthClient(),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeAuth,
-      deps: [OAuthService, AuthService],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const oAuthService = inject(OAuthService);
+      const authService = inject(AuthService);
+      
+      oAuthService.configure(keycloakConfig);
+      return authService.initAuth();
+    }),
   ],
 };

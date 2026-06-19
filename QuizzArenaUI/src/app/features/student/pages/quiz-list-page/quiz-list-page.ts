@@ -9,7 +9,7 @@ import { RecentQuizCard } from '../../components/recent-quiz-card/recent-quiz-ca
 import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
-  selector: 'app-student-quiz-list-page',
+  selector: 'qz-student-quiz-list-page',
   imports: [AvailableQuizCard, QuizAccessForm, RecentQuizCard, SectionTitle],
   templateUrl: './quiz-list-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

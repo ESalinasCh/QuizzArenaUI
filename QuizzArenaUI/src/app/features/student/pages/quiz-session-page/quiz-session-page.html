@@ -6,7 +6,7 @@
       aria-label="Volver a quizzes disponibles"
       (click)="goBack()"
     >
-      <app-icon name="arrow-left" class="h-5 w-5" />
+      <qz-icon name="arrow-left" class="h-5 w-5" />
     </button>
 
     @if (quiz(); as quizData) {
@@ -40,7 +40,7 @@
           class="mt-4 flex h-[74px] w-full items-center justify-center gap-2 rounded-2xl bg-purple px-5 text-xl font-bold text-white shadow-button transition hover:bg-primary active:scale-[0.98]"
           (click)="beginQuiz()"
         >
-          <app-icon name="play" class="h-5 w-5 fill-white" />
+          <qz-icon name="play" class="h-5 w-5 fill-white" />
           Comenzar
         </button>
       </div>

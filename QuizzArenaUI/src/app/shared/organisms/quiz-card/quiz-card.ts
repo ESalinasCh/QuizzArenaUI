@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 @Component({
-  selector: 'app-quiz-card',
+  selector: 'qz-quiz-card',
   standalone: true,
   templateUrl: './quiz-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
