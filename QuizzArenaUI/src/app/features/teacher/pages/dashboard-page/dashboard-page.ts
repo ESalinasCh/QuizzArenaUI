@@ -29,7 +29,7 @@ export class TeacherDashboardPage {
 
   readonly displayName = computed(() => {
     const user = this.#authService.currentUser();
-    return user?.name?.split(' ')[0] ?? user?.username ?? $localize`:Teacher fallback display name:Teacher`;
+    return user?.name?.trim().split(' ')[0] || user?.username || $localize`:Teacher fallback display name:Teacher`;
   });
 
   uploadContent(): void {

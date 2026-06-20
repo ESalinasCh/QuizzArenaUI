@@ -9,6 +9,6 @@ import { Icon, IconName } from '../../../../shared/atoms/icon/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentSectionTitle {
-  title = input.required<string>();
-  icon = input.required<IconName>();
+  readonly title = input.required<string>();
+  readonly icon = input.required<IconName>();
 }
