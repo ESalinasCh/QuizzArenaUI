@@ -13,8 +13,4 @@ import { LanguageSelector } from '../../molecules/language-selector/language-sel
 })
 export class Navbar {
   toggleSidebar = output<void>();
-
-  onMenuClick(): void {
-    this.toggleSidebar.emit();
-  }
 }

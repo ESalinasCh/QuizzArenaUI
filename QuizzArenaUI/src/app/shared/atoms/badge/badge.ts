@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info';
@@ -6,7 +5,7 @@ export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info';
 @Component({
   selector: 'app-badge',
   standalone: true,
-  imports: [NgClass],
+  imports: [],
   templateUrl: './badge.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

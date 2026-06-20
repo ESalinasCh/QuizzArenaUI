@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 export type StatCardVariant = 'success' | 'danger' | 'blue' | 'green';
@@ -6,7 +5,7 @@ export type StatCardVariant = 'success' | 'danger' | 'blue' | 'green';
 @Component({
   selector: 'app-stat-card',
   standalone: true,
-  imports: [NgClass],
+  imports: [],
   templateUrl: './stat-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

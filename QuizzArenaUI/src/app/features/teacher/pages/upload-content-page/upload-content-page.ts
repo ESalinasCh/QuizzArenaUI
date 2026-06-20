@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TeacherContentService } from '../../services/teacher-content.service';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -18,6 +18,7 @@ const DEFAULT_QUESTION_COUNT = 4;
 export class TeacherUploadContentPage {
   readonly #router = inject(Router);
   readonly #contentService = inject(TeacherContentService);
+  readonly #destroyRef = inject(DestroyRef);
 
   readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
 
@@ -94,6 +95,7 @@ export class TeacherUploadContentPage {
         subjectId: this.subjectId(),
         review,
       })
+      .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe(() => {
         void this.#router.navigate(['/teacher/dashboard']);
       });
