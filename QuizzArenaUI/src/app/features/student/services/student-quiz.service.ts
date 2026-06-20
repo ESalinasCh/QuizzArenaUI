@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, forkJoin, map, of, shareReplay, tap } from 'rxjs';
+import { Observable, forkJoin, map, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
   AvailableMatchResponse,
@@ -104,7 +104,9 @@ export class StudentQuizService {
     const cachedSubmitResult = this.#submitResultCache.get(attemptId);
 
     if (!cachedSubmitResult) {
-      throw new Error(`No submit result found for attempt ${attemptId}`);
+      return throwError(
+        () => new Error(`No submit result found for attempt ${attemptId}`),
+      );
     }
 
     return this.#getAttemptMetadata(attemptId).pipe(

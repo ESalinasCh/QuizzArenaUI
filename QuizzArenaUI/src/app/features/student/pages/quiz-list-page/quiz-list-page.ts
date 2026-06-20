@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
 import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
@@ -21,6 +21,7 @@ export class StudentQuizListPage {
 
   readonly availableQuizzesTitle = $localize`:Student dashboard available quizzes section title:Available Quizzes`;
   readonly recentQuizzesTitle = $localize`:Student dashboard recent quizzes section title:Recent Quizzes`;
+  readonly studentFallbackName = $localize`:Student fallback display name:Student`;
 
   readonly dashboard = toSignal(this.#studentQuizService.getDashboard(), {
     initialValue: { availableQuizzes: [], recentQuizzes: [] },
@@ -29,15 +30,15 @@ export class StudentQuizListPage {
   readonly displayName = computed(() => {
     const user = this.#authService.currentUser();
 
-    return user?.name?.split(' ')[0] ?? user?.username ?? 'Estudiante';
+    return user?.name?.split(' ')[0] ?? user?.username ?? this.studentFallbackName;
   });
 
   async startQuiz(quizId: string): Promise<void> {
-    await this.#navigate(['/student/quizzes', quizId, 'start']);
+    await this.#router.navigate(['/student/quizzes', quizId, 'start']);
   }
 
   async viewResults(quizId: string): Promise<void> {
-    await this.#navigate(['/student/quizzes', quizId, 'results'], {
+    await this.#router.navigate(['/student/quizzes', quizId, 'results'], {
       queryParams: { view: 'details' },
     });
   }
@@ -49,17 +50,5 @@ export class StudentQuizListPage {
 
     const quizId = quizLink.split('/').filter(Boolean).at(-1) ?? quizLink;
     await this.startQuiz(quizId);
-  }
-
-  async #navigate(commands: unknown[], extras?: NavigationExtras): Promise<void> {
-    try {
-      const navigated = await this.#router.navigate(commands, extras);
-
-      if (!navigated) {
-        console.warn('Navigation was cancelled', commands);
-      }
-    } catch (error) {
-      console.error('Navigation failed', error);
-    }
   }
 }

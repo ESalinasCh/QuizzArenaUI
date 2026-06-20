@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, switchMap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
@@ -18,16 +18,9 @@ export class StudentQuizSessionPage {
 
   readonly quiz = toSignal(
     this.#route.paramMap.pipe(
-      switchMap(params => {
-        const quizId = params.get('quizId');
-
-        if (!quizId) {
-          this.#navigate(['/student/quizzes']);
-          return EMPTY;
-        }
-
-        return this.#studentQuizService.getQuizStart(quizId);
-      }),
+      map(params => params.get('quizId')),
+      filter((quizId): quizId is string => quizId !== null),
+      switchMap(quizId => this.#studentQuizService.getQuizStart(quizId)),
     ),
   );
 
@@ -37,30 +30,17 @@ export class StudentQuizSessionPage {
     return $localize`:Student quiz time limit label:Time limit ${minutes}:minutes: min`;
   });
 
-  goBack(): void {
-    this.#navigate(['/student/quizzes']);
+  async goBack(): Promise<void> {
+    await this.#router.navigate(['/student/quizzes']);
   }
 
-  beginQuiz(): void {
+  async beginQuiz(): Promise<void> {
     const quizId = this.quiz()?.id;
 
     if (!quizId) {
       return;
     }
 
-    this.#navigate(['/student/quizzes', quizId, 'questions']);
-  }
-
-  #navigate(commands: Parameters<Router['navigate']>[0]): void {
-    this.#router
-      .navigate(commands)
-      .then(navigated => {
-        if (!navigated) {
-          console.warn('Navigation was cancelled', commands);
-        }
-      })
-      .catch(error => {
-        console.error('Navigation failed', error);
-      });
+    await this.#router.navigate(['/student/quizzes', quizId, 'questions']);
   }
 }
