@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, map, switchMap } from 'rxjs';
+import { EMPTY, filter, map, shareReplay, switchMap } from 'rxjs';
 import { TruncatePipe } from '../../../../core/pipes/truncate.pipe';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
@@ -22,18 +22,18 @@ export class StudentQuizResultsPage {
   readonly incorrectAnswersLabel = $localize`:Student quiz incorrect answers stat label:Incorrect`;
   readonly correctAnswersLabel = $localize`:Student quiz correct answers stat label:Correct`;
 
-  readonly attemptId = toSignal(
-    this.#route.paramMap.pipe(
-      map(params => this.#getRequiredAttemptId(params.get('quizId'))),
-      switchMap(attemptId => (attemptId ? [attemptId] : EMPTY)),
-    ),
+  readonly #attemptId$ = this.#route.paramMap.pipe(
+    map(params => params.get('quizId')),
+    filter((attemptId): attemptId is string => attemptId !== null),
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 
+  readonly attemptId = toSignal(this.#attemptId$);
+
   readonly summary = toSignal(
-    this.#route.paramMap.pipe(
-      map(params => this.#getRequiredAttemptId(params.get('quizId'))),
+    this.#attemptId$.pipe(
       switchMap(attemptId =>
-        attemptId && !this.showDetails()
+        !this.showDetails()
           ? this.#studentQuizService.getMatchAttemptResultSummary(attemptId)
           : EMPTY,
       ),
@@ -41,11 +41,8 @@ export class StudentQuizResultsPage {
   );
 
   readonly review = toSignal(
-    this.#route.paramMap.pipe(
-      map(params => this.#getRequiredAttemptId(params.get('quizId'))),
-      switchMap(attemptId =>
-        attemptId ? this.#studentQuizService.getMatchAttemptDetail(attemptId) : EMPTY,
-      ),
+    this.#attemptId$.pipe(
+      switchMap(attemptId => this.#studentQuizService.getMatchAttemptDetail(attemptId)),
     ),
   );
 
@@ -59,29 +56,7 @@ export class StudentQuizResultsPage {
     this.showDetails.set(true);
   }
 
-  goHome(): void {
-    this.#navigate(['/student/quizzes']);
-  }
-
-  #getRequiredAttemptId(routeId: string | null): string | null {
-    if (!routeId) {
-      this.#navigate(['/student/quizzes']);
-      return null;
-    }
-
-    return routeId;
-  }
-
-  #navigate(commands: Parameters<Router['navigate']>[0]): void {
-    this.#router
-      .navigate(commands)
-      .then(navigated => {
-        if (!navigated) {
-          console.warn('Navigation was cancelled', commands);
-        }
-      })
-      .catch(error => {
-        console.error('Navigation failed', error);
-      });
+  async goHome(): Promise<void> {
+    await this.#router.navigate(['/student/quizzes']);
   }
 }

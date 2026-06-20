@@ -45,7 +45,7 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(() => {
       const oAuthService = inject(OAuthService);
       const authService = inject(AuthService);
-      
+
       oAuthService.configure(keycloakConfig);
       return authService.initAuth();
     }),
