@@ -112,17 +112,4 @@ export class StudentQuizQuestionPage {
       { questionId, selectedOptionId, answeredAt: new Date().toISOString() },
     ]);
   }
-
-  #navigate(commands: Parameters<Router['navigate']>[0]): void {
-    this.#router
-      .navigate(commands)
-      .then(navigated => {
-        if (!navigated) {
-          console.warn('Navigation was cancelled', commands);
-        }
-      })
-      .catch(error => {
-        console.error('Navigation failed', error);
-      });
-  }
 }
