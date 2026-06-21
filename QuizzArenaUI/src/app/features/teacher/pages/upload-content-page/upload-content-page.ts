@@ -42,8 +42,8 @@ export class TeacherUploadContentPage {
     () => this.file() !== null && this.className().trim() !== '' && this.subjectId() !== '',
   );
 
-  goBack(): void {
-    void this.#router.navigate(['/teacher/dashboard']);
+  async goBack(): Promise<void> {
+    await this.#router.navigate(['/teacher/dashboard']);
   }
 
   onFileSelected(event: Event): void {
@@ -96,8 +96,8 @@ export class TeacherUploadContentPage {
         review,
       })
       .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe(() => {
-        void this.#router.navigate(['/teacher/dashboard']);
+      .subscribe(async () => {
+        await this.#router.navigate(['/teacher/dashboard']);
       });
   }
 
