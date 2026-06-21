@@ -7,7 +7,7 @@
       aria-label="Go back to dashboard"
       (click)="goBack()"
     >
-      <app-icon name="arrow-left" class="h-5 w-5" />
+      <qz-icon name="arrow-left" class="h-5 w-5" />
     </button>
 
     <h1 i18n="Upload content page title" class="text-xl font-extrabold text-primary dark:text-dark-text sm:text-2xl">
@@ -31,7 +31,7 @@
       (change)="onFileSelected($event)"
     />
 
-    <app-icon
+    <qz-icon
       name="upload"
       class="h-10 w-10 text-light-text-secondary dark:text-dark-text-secondary"
     />
@@ -108,7 +108,7 @@
             <option [value]="subject.id">{{ subject.name }}</option>
           }
         </select>
-        <app-icon
+        <qz-icon
           name="chevron-down"
           class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-light-text dark:text-dark-text"
         />
@@ -205,7 +205,7 @@
       }
     </div>
 
-    <app-button
+    <qz-button
       size="large"
       variant="primary"
       type="submit"
@@ -213,8 +213,8 @@
       [disabled]="!canSubmit()"
       [ariaLabel]="uploadContentAriaLabel"
     >
-      <app-icon name="upload" class="h-5 w-5" />
+      <qz-icon name="upload" class="h-5 w-5" />
       <span i18n="Upload content submit button label">Upload Content</span>
-    </app-button>
+    </qz-button>
   </form>
 </section>

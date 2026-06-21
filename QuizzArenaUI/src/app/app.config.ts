@@ -5,7 +5,7 @@ import {
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
-import { provideRouter, withNavigationErrorHandler } from '@angular/router';
+import { NavigationError, provideRouter, withNavigationErrorHandler } from '@angular/router';
 import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
 
 import { routes } from './app.routes';
@@ -13,7 +13,7 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
 import { environment } from '../environments/environment';
 
-function handleNavigationError(error: Error): void {
+function handleNavigationError(error: NavigationError): void {
   console.error('[Router] Navigation failed:', error);
 }
 

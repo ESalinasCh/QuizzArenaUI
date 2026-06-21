@@ -10,21 +10,21 @@ export type StatCardVariant = 'success' | 'danger' | 'blue' | 'green';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatCard {
-  label = input.required<string>();
-  value = input.required<number | string>();
-  variant = input<StatCardVariant>('blue');
+  readonly label = input.required<string>();
+  readonly value = input.required<number | string>();
+  readonly variant = input<StatCardVariant>('blue');
 
-  containerClasses = computed(() => [
+  protected readonly containerClasses = computed(() => [
     'flex flex-col items-center justify-center gap-1 rounded-2xl px-6 py-5 flex-1',
     this.variantClasses[this.variant()].container,
   ]);
 
-  labelClasses = computed(() => [
+  protected readonly labelClasses = computed(() => [
     'text-sm font-medium',
     this.variantClasses[this.variant()].label,
   ]);
 
-  valueClasses = computed(() => [
+  protected readonly valueClasses = computed(() => [
     'text-3xl font-extrabold',
     this.variantClasses[this.variant()].value,
   ]);

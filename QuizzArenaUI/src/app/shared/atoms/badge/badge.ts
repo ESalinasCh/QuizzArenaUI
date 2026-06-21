@@ -10,10 +10,10 @@ export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Badge {
-  label = input.required<string>();
-  variant = input<BadgeVariant>('info');
+  readonly label = input.required<string>();
+  readonly variant = input<BadgeVariant>('info');
 
-  badgeClasses = computed(() => [
+  protected readonly badgeClasses = computed(() => [
     this.baseClasses,
     this.variantClasses[this.variant()],
   ]);

@@ -20,25 +20,25 @@ export class TeacherUploadContentPage {
   readonly #contentService = inject(TeacherContentService);
   readonly #destroyRef = inject(DestroyRef);
 
-  readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
+  protected readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
 
-  readonly acceptedExtensions = ACCEPTED_EXTENSIONS.join(',');
-  readonly acceptedExtensionsLabel = ACCEPTED_EXTENSIONS.join(' ');
+  protected readonly acceptedExtensions = ACCEPTED_EXTENSIONS.join(',');
+  protected readonly acceptedExtensionsLabel = ACCEPTED_EXTENSIONS.join(' ');
 
-  readonly subjects = toSignal(this.#contentService.getSubjects(), {
+  protected readonly subjects = toSignal(this.#contentService.getSubjects(), {
     initialValue: [],
   });
 
-  readonly file = signal<File | null>(null);
-  readonly className = signal('');
-  readonly subjectId = signal('');
-  readonly isDragging = signal(false);
-  readonly reviewEnabled = signal(false);
-  readonly questionCount = signal(DEFAULT_QUESTION_COUNT);
-  readonly showCorrectAnswers = signal(true);
-  readonly shuffleQuestions = signal(true);
+  protected readonly file = signal<File | null>(null);
+  protected readonly className = signal('');
+  protected readonly subjectId = signal('');
+  protected readonly isDragging = signal(false);
+  protected readonly reviewEnabled = signal(false);
+  protected readonly questionCount = signal(DEFAULT_QUESTION_COUNT);
+  protected readonly showCorrectAnswers = signal(true);
+  protected readonly shuffleQuestions = signal(true);
 
-  readonly canSubmit = computed(
+  protected readonly canSubmit = computed(
     () => this.file() !== null && this.className().trim() !== '' && this.subjectId() !== '',
   );
 

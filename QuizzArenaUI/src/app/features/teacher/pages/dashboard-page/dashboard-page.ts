@@ -19,20 +19,20 @@ export class TeacherDashboardPage {
   readonly #router = inject(Router);
   readonly #dashboardService = inject(TeacherDashboardService);
 
-  readonly quizzesLabel = $localize`:Stat card quizzes label:Quizzes`;
-  readonly publishedLabel = $localize`:Stat card published label:Published`;
-  readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
+  protected readonly quizzesLabel = $localize`:Stat card quizzes label:Quizzes`;
+  protected readonly publishedLabel = $localize`:Stat card published label:Published`;
+  protected readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
 
-  readonly dashboard = toSignal(this.#dashboardService.getDashboard(), {
+  protected readonly dashboard = toSignal(this.#dashboardService.getDashboard(), {
     initialValue: { quizCount: 0, publishedCount: 0, recentContent: [] },
   });
 
-  readonly displayName = computed(() => {
+  protected readonly displayName = computed(() => {
     const user = this.#authService.currentUser();
     return user?.name?.trim().split(' ')[0] || user?.username || $localize`:Teacher fallback display name:Teacher`;
   });
 
-  uploadContent(): void {
-    void this.#router.navigate(['/teacher/content/upload']);
+  async uploadContent(): Promise<void> {
+    await this.#router.navigate(['/teacher/content/upload']);
   }
 }
