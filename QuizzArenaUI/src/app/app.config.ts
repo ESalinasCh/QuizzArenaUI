@@ -19,7 +19,7 @@ import {
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
-import { environment } from '../environments/environment';
+import { APP_CONFIG, AppConfig } from './core/config/app-config';
 
 function handleNavigationError(error: NavigationError): void {
   console.error('Navigation failed', error.error);
@@ -56,3 +56,4 @@ export const appConfig: ApplicationConfig = {
     }),
   ],
 };
+
