@@ -2,14 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, filter, map, shareReplay, switchMap } from 'rxjs';
-import { TruncatePipe } from '../../../../core/pipes/truncate.pipe';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
   selector: 'qz-student-quiz-results-page',
-  imports: [Icon, StatCard, TruncatePipe],
+  imports: [Icon, StatCard],
   templateUrl: './quiz-results-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
