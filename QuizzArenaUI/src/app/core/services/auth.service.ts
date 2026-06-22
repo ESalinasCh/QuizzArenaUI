@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthState } from '../models/auth-state.model';
 import { KeycloakAccessTokenClaims, KeycloakTokenClaims, User } from '../models/user.model';
-
-const BASE64_BLOCK_SIZE = 4;
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -12,7 +11,7 @@ export class AuthService {
   readonly #router = inject(Router);
 
   readonly #authState = signal<AuthState>({ isAuthenticated: false });
-
+  readonly #jwtHelper = inject(JwtHelperService);
   readonly currentUser: Signal<User | undefined> = computed(() => {
     const state = this.#authState();
     return state.isAuthenticated ? state.user : undefined;
@@ -82,23 +81,15 @@ export class AuthService {
 
   #decodeAccessToken(): KeycloakAccessTokenClaims | null {
     const token = this.#oAuthService.getAccessToken();
-    const payload = token.split('.').at(1);
 
-    if (!payload) {
+    if (!token) {
       return null;
     }
 
     try {
-      const normalizedPayload = payload.replace(/-/g, '+').replace(/_/g, '/');
-      const paddedPayload = normalizedPayload.padEnd(
-        normalizedPayload.length +
-          ((BASE64_BLOCK_SIZE - (normalizedPayload.length % BASE64_BLOCK_SIZE)) %
-            BASE64_BLOCK_SIZE),
-        '=',
+      return this.#jwtHelper.decodeToken<KeycloakAccessTokenClaims>(
+        token,
       );
-      const decodedPayload = atob(paddedPayload);
-
-      return JSON.parse(decodedPayload) as KeycloakAccessTokenClaims;
     } catch {
       return null;
     }
