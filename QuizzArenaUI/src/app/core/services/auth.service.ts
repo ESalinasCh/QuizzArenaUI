@@ -80,7 +80,7 @@ export class AuthService {
 
   #decodeAccessToken(): KeycloakAccessTokenClaims | null {
     const token = this.#oAuthService.getAccessToken();
-    const payload = token.split('.')[1];
+    const payload = token.split('.').at(1);
 
     if (!payload) {
       return null;

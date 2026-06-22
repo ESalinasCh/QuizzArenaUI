@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 export type ButtonSize = 'large' | 'medium' | 'small' | 'icon' | 'action';
 export type ButtonVariant =
@@ -24,8 +24,6 @@ export class Button {
   readonly disabled = input<boolean>(false);
   readonly fullWidth = input<boolean>(false);
   readonly ariaLabel = input<string | null>(null);
-
-  readonly btnClick = output<void>();
 
   readonly buttonClasses = computed(() =>
     [

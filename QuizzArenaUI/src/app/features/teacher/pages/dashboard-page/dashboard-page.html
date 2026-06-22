@@ -1,9 +1,45 @@
-<section class="mx-auto flex w-full max-w-5xl flex-col gap-5">
-  <div class="flex flex-col gap-2">
-    <p class="text-sm font-semibold text-primary">Teacher</p>
-    <h2 class="text-2xl font-bold text-light-text dark:text-dark-text">Dashboard</h2>
-    <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-      Teacher tools will live in this role-protected area.
-    </p>
+<section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
+  <h1 i18n="Teacher dashboard welcome heading" class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
+    Welcome, {{ displayName() }}
+  </h1>
+
+  <div class="mx-auto flex w-full max-w-[480px] justify-center gap-4">
+    <qz-stat-card
+      [label]="quizzesLabel"
+      [value]="dashboard().quizCount"
+      variant="blue"
+    />
+    <qz-stat-card
+      [label]="publishedLabel"
+      [value]="dashboard().publishedCount"
+      variant="green"
+    />
+  </div>
+
+  <qz-button
+    size="large"
+    variant="primary"
+    [fullWidth]="true"
+    (click)="uploadContent()"
+    [ariaLabel]="uploadContentAriaLabel"
+  >
+    <qz-icon name="upload" class="w-5 h-5" />
+    <span i18n="Teacher dashboard upload button label">Upload Content</span>
+  </qz-button>
+
+  <div class="flex flex-col gap-4">
+    <h2 i18n="Teacher dashboard recent content heading" class="text-base font-bold text-light-text dark:text-dark-text">
+      Recent Content
+    </h2>
+
+    <div class="flex flex-col gap-3">
+      @for (item of dashboard().recentContent; track item.id) {
+        <app-content-item
+          [title]="item.title"
+          [status]="item.status"
+          [info]="item.info"
+        />
+      }
+    </div>
   </div>
 </section>

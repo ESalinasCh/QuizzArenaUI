@@ -5,14 +5,22 @@ import {
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
-import { AuthConfig, provideOAuthClient } from 'angular-oauth2-oidc';
-import { OAuthService } from 'angular-oauth2-oidc';
+import {
+  NavigationError,
+  provideRouter,
+  withNavigationErrorHandler,
+  withRouterConfig,
+} from '@angular/router';
+import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
 import { environment } from '../environments/environment';
+
+function handleNavigationError(error: NavigationError): void {
+  console.error('Navigation failed', error.error);
+}
 
 const keycloakConfig: AuthConfig = {
   issuer: environment.keycloak.issuer,
@@ -26,7 +34,12 @@ const keycloakConfig: AuthConfig = {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withNavigationErrorHandler(handleNavigationError),
+      withRouterConfig({ resolveNavigationPromiseOnError: true }),
+    ),
+    // withXhr keeps XHR backend (vs Fetch) — needed for upload progress events
     provideHttpClient(withXhr(), withInterceptors([authInterceptor])),
     provideOAuthClient(),
     provideAppInitializer(() => {
