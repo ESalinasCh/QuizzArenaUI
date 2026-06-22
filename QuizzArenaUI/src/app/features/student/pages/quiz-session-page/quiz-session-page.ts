@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, switchMap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
@@ -18,36 +18,29 @@ export class StudentQuizSessionPage {
 
   readonly quiz = toSignal(
     this.#route.paramMap.pipe(
-      switchMap(params => {
-        const quizId = params.get('quizId');
-
-        if (!quizId) {
-          void this.#router.navigate(['/student/quizzes']);
-          return EMPTY;
-        }
-
-        return this.#studentQuizService.getQuizStart(quizId);
-      }),
+      map(params => params.get('quizId')),
+      filter((quizId): quizId is string => quizId !== null),
+      switchMap(quizId => this.#studentQuizService.getQuizStart(quizId)),
     ),
   );
 
   readonly timeLimitLabel = computed(() => {
-    const seconds = this.quiz()?.timeLimitSeconds ?? 0;
+    const minutes = this.quiz()?.timeLimitMinutes ?? 0;
 
-    return `Limite de tiempo ${seconds} seg`;
+    return $localize`:Student quiz time limit label:Time limit ${minutes}:minutes: min`;
   });
 
-  goBack(): void {
-    void this.#router.navigate(['/student/quizzes']);
+  async goBack(): Promise<void> {
+    await this.#router.navigate(['/student/quizzes']);
   }
 
-  beginQuiz(): void {
+  async beginQuiz(): Promise<void> {
     const quizId = this.quiz()?.id;
 
     if (!quizId) {
       return;
     }
 
-    void this.#router.navigate(['/student/quizzes', quizId, 'questions']);
+    await this.#router.navigate(['/student/quizzes', quizId, 'questions']);
   }
 }

@@ -19,6 +19,10 @@ export class StudentQuizListPage {
   readonly #router = inject(Router);
   readonly #studentQuizService = inject(StudentQuizService);
 
+  readonly availableQuizzesTitle = $localize`:Student dashboard available quizzes section title:Available Quizzes`;
+  readonly recentQuizzesTitle = $localize`:Student dashboard recent quizzes section title:Recent Quizzes`;
+  readonly studentFallbackName = $localize`:Student fallback display name:Student`;
+
   readonly dashboard = toSignal(this.#studentQuizService.getDashboard(), {
     initialValue: { availableQuizzes: [], recentQuizzes: [] },
   });
@@ -26,25 +30,25 @@ export class StudentQuizListPage {
   readonly displayName = computed(() => {
     const user = this.#authService.currentUser();
 
-    return user?.name?.split(' ')[0] ?? user?.username ?? 'Estudiante';
+    return user?.name?.split(' ')[0] ?? user?.username ?? this.studentFallbackName;
   });
 
-  startQuiz(quizId: string): void {
-    void this.#router.navigate(['/student/quizzes', quizId, 'start']);
+  async startQuiz(quizId: string): Promise<void> {
+    await this.#router.navigate(['/student/quizzes', quizId, 'start']);
   }
 
-  viewResults(quizId: string): void {
-    void this.#router.navigate(['/student/quizzes', quizId, 'results'], {
+  async viewResults(quizId: string): Promise<void> {
+    await this.#router.navigate(['/student/quizzes', quizId, 'results'], {
       queryParams: { view: 'details' },
     });
   }
 
-  goToQuizFromLink(quizLink: string): void {
+  async goToQuizFromLink(quizLink: string): Promise<void> {
     if (!quizLink) {
       return;
     }
 
     const quizId = quizLink.split('/').filter(Boolean).at(-1) ?? quizLink;
-    this.startQuiz(quizId);
+    await this.startQuiz(quizId);
   }
 }

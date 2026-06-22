@@ -1,6 +1,6 @@
 <qz-quiz-card
   [title]="quiz().title"
-  actionLabel="Ver"
+  [actionLabel]="viewActionLabel"
   (actionClick)="emitView()"
 >
   <qz-recent-quiz-meta

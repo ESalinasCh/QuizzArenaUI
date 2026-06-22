@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, switchMap } from 'rxjs';
+import { filter, from, map, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { SubmitMatchAttemptAnswerRequest } from '../../api/student-quiz.contract';
 import { StudentQuizService } from '../../services/student-quiz.service';
@@ -25,16 +25,9 @@ export class StudentQuizQuestionPage {
 
   readonly quiz = toSignal(
     this.#route.paramMap.pipe(
-      switchMap(params => {
-        const quizId = params.get('quizId');
-
-        if (!quizId) {
-          void this.#router.navigate(['/student/quizzes']);
-          return EMPTY;
-        }
-
-        return this.#studentQuizService.getQuizStart(quizId);
-      }),
+      map(params => params.get('quizId')),
+      filter((quizId): quizId is string => quizId !== null),
+      switchMap(quizId => this.#studentQuizService.getQuizStart(quizId)),
     ),
   );
 
@@ -43,21 +36,27 @@ export class StudentQuizQuestionPage {
     const current = this.questionIndex() + 1;
     const total = this.quiz()?.questions.length ?? 0;
 
-    return `Pregunta ${current} de ${total}`;
+    return $localize`:Student quiz question progress label:Question ${current}:current: of ${total}:total:`;
   });
-  readonly progressValue = computed(() => {
+  readonly progressPercentage = computed(() => {
     const total = this.quiz()?.questions.length ?? 0;
 
     if (!total) {
-      return '0%';
+      return 0;
     }
 
-    return `${((this.questionIndex() + 1) / total) * 100}%`;
+    return ((this.questionIndex() + 1) / total) * 100;
   });
 
-  goBack(): void {
+  async goBack(): Promise<void> {
     const quizId = this.quiz()?.id;
-    void this.#router.navigate(['/student/quizzes', quizId, 'start']);
+
+    if (!quizId) {
+      await this.#router.navigate(['/student/quizzes']);
+      return;
+    }
+
+    await this.#router.navigate(['/student/quizzes', quizId, 'start']);
   }
 
   selectOption(optionId: string): void {
@@ -92,9 +91,22 @@ export class StudentQuizQuestionPage {
     this.isSubmitting.set(true);
     this.#studentQuizService
       .submitMatchAttempt(attemptId, { answers: this.answers() })
+      .pipe(
+        switchMap(response =>
+          from(
+            this.#router.navigate([
+              '/student/quizzes',
+              response.attemptId,
+              'results',
+            ]),
+          ),
+        ),
+      )
       .subscribe({
-        next: response => {
-          void this.#router.navigate(['/student/quizzes', response.attemptId, 'results']);
+        next: navigated => {
+          if (!navigated) {
+            this.isSubmitting.set(false);
+          }
         },
         error: () => {
           this.isSubmitting.set(false);

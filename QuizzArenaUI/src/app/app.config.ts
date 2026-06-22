@@ -12,7 +12,10 @@ import {
   withRouterConfig,
 } from '@angular/router';
 import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
-
+import {
+  JWT_OPTIONS,
+  JwtHelperService,
+} from '@auth0/angular-jwt';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
@@ -33,6 +36,8 @@ const keycloakConfig: AuthConfig = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: JWT_OPTIONS, useValue: {} },
+  JwtHelperService,
     provideBrowserGlobalErrorListeners(),
     provideRouter(
       routes,
@@ -45,7 +50,7 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(() => {
       const oAuthService = inject(OAuthService);
       const authService = inject(AuthService);
-      
+
       oAuthService.configure(keycloakConfig);
       return authService.initAuth();
     }),

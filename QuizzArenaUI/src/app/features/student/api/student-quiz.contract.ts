@@ -1,5 +1,5 @@
-export type MatchAttemptSummaryStatus = 'passed' | 'failed' | 'in-progress';
 export type MatchAttemptDetailStatus = 'passed' | 'failed';
+export type MatchAttemptSummaryStatus = MatchAttemptDetailStatus | 'in-progress';
 
 export interface AvailableMatchResponse {
   id: string;
