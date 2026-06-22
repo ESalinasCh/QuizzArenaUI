@@ -112,9 +112,18 @@
               {{ question.text }}
             </p>
 
-            <div class="mt-3 text-sm font-medium">
-              <span i18n="Student quiz selected answer label">Your answer: {{ question.selectedAnswerLabel | truncate }}</span>
-              <span>{{ question.isCorrect ? 'OK' : 'X' }}</span>
+            <div class="mt-3 flex min-w-0 items-center gap-1 text-sm font-medium">
+              <span
+                i18n="Student quiz selected answer label"
+                class="min-w-0 flex-1 truncate"
+                [title]="question.selectedAnswerLabel"
+              >
+                Your answer: {{ question.selectedAnswerLabel }}
+              </span>
+
+              <span class="shrink-0">
+                {{ question.isCorrect ? 'OK' : 'X' }}
+              </span>
             </div>
           </article>
         }
