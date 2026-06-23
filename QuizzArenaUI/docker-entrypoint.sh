@@ -18,4 +18,4 @@ CONF
 echo "Rendered runtime config to ${CONFIG_PATH}:"
 cat "$CONFIG_PATH"
 
-exec serve "$DIST_DIR" -l 8080
+exec serve "$DIST_DIR" --listen tcp://0.0.0.0:8080
