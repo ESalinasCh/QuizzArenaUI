@@ -12,10 +12,7 @@ import {
   withRouterConfig,
 } from '@angular/router';
 import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
-import {
-  JWT_OPTIONS,
-  JwtHelperService,
-} from '@auth0/angular-jwt';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
@@ -25,35 +22,37 @@ function handleNavigationError(error: NavigationError): void {
   console.error('Navigation failed', error.error);
 }
 
-const keycloakConfig: AuthConfig = {
-  issuer: environment.keycloak.issuer,
-  redirectUri: environment.keycloak.redirectUri ?? document.baseURI,
-  clientId: environment.keycloak.clientId,
-  responseType: 'code',
-  scope: 'openid profile email',
-  showDebugInformation: false,
-};
+export function createAppConfig(config: AppConfig): ApplicationConfig {
+  const keycloakConfig: AuthConfig = {
+    issuer: config.keycloak.issuer,
+    redirectUri: document.baseURI,
+    clientId: config.keycloak.clientId,
+    responseType: 'code',
+    scope: 'openid profile email',
+    showDebugInformation: false,
+  };
 
-export const appConfig: ApplicationConfig = {
-  providers: [
-    { provide: JWT_OPTIONS, useValue: {} },
-  JwtHelperService,
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(
-      routes,
-      withNavigationErrorHandler(handleNavigationError),
-      withRouterConfig({ resolveNavigationPromiseOnError: true }),
-    ),
-    // withXhr keeps XHR backend (vs Fetch) — needed for upload progress events
-    provideHttpClient(withXhr(), withInterceptors([authInterceptor])),
-    provideOAuthClient(),
-    provideAppInitializer(() => {
-      const oAuthService = inject(OAuthService);
-      const authService = inject(AuthService);
+  return {
+    providers: [
+      { provide: APP_CONFIG, useValue: config },
+      { provide: JWT_OPTIONS, useValue: {} },
+      JwtHelperService,
+      provideBrowserGlobalErrorListeners(),
+      provideRouter(
+        routes,
+        withNavigationErrorHandler(handleNavigationError),
+        withRouterConfig({ resolveNavigationPromiseOnError: true }),
+      ),
+      provideHttpClient(withXhr(), withInterceptors([authInterceptor])),
+      provideOAuthClient(),
+      provideAppInitializer(() => {
+        const oAuthService = inject(OAuthService);
+        const authService = inject(AuthService);
 
-      oAuthService.configure(keycloakConfig);
-      return authService.initAuth();
-    }),
-  ],
-};
+        oAuthService.configure(keycloakConfig);
+        return authService.initAuth();
+      }),
+    ],
+  };
+}
 
