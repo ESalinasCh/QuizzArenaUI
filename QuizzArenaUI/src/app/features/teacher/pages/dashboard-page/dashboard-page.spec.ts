@@ -1,9 +1,7 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
-import { of } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth.service';
-import { TeacherDashboardService } from '../../services/teacher-dashboard.service';
 import { TeacherDashboardPage } from './dashboard-page';
 
 describe('TeacherDashboardPage', () => {
