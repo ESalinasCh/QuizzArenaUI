@@ -4,6 +4,7 @@ import { StudentQuizQuestionPage } from './pages/quiz-question-page/quiz-questio
 import { StudentQuizResultsPage } from './pages/quiz-results-page/quiz-results-page';
 import { StudentQuizSessionPage } from './pages/quiz-session-page/quiz-session-page';
 import { StudentExamListPage } from './pages/exam-list-page/exam-list-page';
+import { StudentGradeHistoryPage } from './pages/grade-history-page/grade-history-page';
 
 export const studentRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'quizzes' },
@@ -11,6 +12,7 @@ export const studentRoutes: Routes = [
   { path: 'quizzes/:quizId/start', component: StudentQuizSessionPage, data: { immersive: true } },
   { path: 'quizzes/:quizId/questions', component: StudentQuizQuestionPage, data: { immersive: true } },
   { path: 'quizzes/:quizId/results', component: StudentQuizResultsPage },
-  
+
   { path: 'exams', component: StudentExamListPage },
+  { path: 'grades', component: StudentGradeHistoryPage },
 ];

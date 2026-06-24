@@ -243,6 +243,14 @@
         </context-group>
         <note priority="1" from="description">Student no exams message</note>
       </trans-unit>
+      <trans-unit id="2733311272909794098" datatype="html">
+        <source> Grade History </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/grade-history-page/grade-history-page.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+        <note priority="1" from="description">Student grade history page title</note>
+      </trans-unit>
       <trans-unit id="4161583659106904542" datatype="html">
         <source> Welcome, <x id="INTERPOLATION" equiv-text="{{ displayName() }}"/> 👋 </source>
         <context-group purpose="location">
@@ -859,7 +867,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/organisms/sidebar/sidebar.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <note priority="1" from="description">Stat card quizzes label</note>
       </trans-unit>
@@ -1159,11 +1167,19 @@
         </context-group>
         <note priority="1" from="description">Sidebar nav student exams label</note>
       </trans-unit>
+      <trans-unit id="7103624555672419715" datatype="html">
+        <source>Grade History</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/organisms/sidebar/sidebar.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <note priority="1" from="description">Sidebar nav student grade history label</note>
+      </trans-unit>
       <trans-unit id="6570363013146073520" datatype="html">
         <source>Dashboard</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/organisms/sidebar/sidebar.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="description">Sidebar nav teacher dashboard label</note>
       </trans-unit>
@@ -1171,7 +1187,7 @@
         <source>Exam Bank</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/organisms/sidebar/sidebar.ts</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="description">Sidebar nav teacher exam bank label</note>
       </trans-unit>

@@ -62,6 +62,16 @@
         <target>Ver</target>
         <note priority="1" from="description">Recent quiz card view action</note>
       </trans-unit>
+      <trans-unit id="2733311272909794098" datatype="html">
+        <source> Grade History </source>
+        <target> Historial de calificaciones </target>
+        <note priority="1" from="description">Student grade history page title</note>
+      </trans-unit>
+      <trans-unit id="7103624555672419715" datatype="html">
+        <source>Grade History</source>
+        <target>Historial de calificaciones</target>
+        <note priority="1" from="description">Sidebar nav student grade history label</note>
+      </trans-unit>
       <trans-unit id="4161583659106904542" datatype="html">
         <source> Welcome, <x id="INTERPOLATION" equiv-text="{{ displayName() }}"/> 👋 </source>
         <target> Bienvenido, <x id="INTERPOLATION" equiv-text="{{ displayName() }}"/> 👋 </target>
