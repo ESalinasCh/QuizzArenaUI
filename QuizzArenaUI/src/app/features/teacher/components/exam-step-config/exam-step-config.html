@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<form [formGroup]="form" class="flex flex-col gap-6" (ngSubmit)="submit()">
   <div class="flex flex-col gap-2">
     <label
@@ -114,10 +115,116 @@
     }
     @if (dateRangeInvalid()) {
       <p i18n="Exam step config date range error" class="text-sm text-error">End date must be after start date</p>
+=======
+<form class="flex flex-col gap-5" [formGroup]="form" (ngSubmit)="submit()">
+
+  <!-- Duración -->
+  <div class="flex flex-col gap-2">
+    <label for="duration" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Duración (minutos)
+    </label>
+    <div class="relative">
+      <qz-icon name="clock" class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-light-text-secondary dark:text-dark-text-secondary" />
+      <input
+        id="duration"
+        type="number"
+        formControlName="durationMinutes"
+        min="1"
+        max="300"
+        class="h-12 w-full rounded-xl border border-light-border-strong bg-light-surface pl-12 pr-4 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
+        [class.border-danger]="form.controls.durationMinutes.invalid && form.controls.durationMinutes.touched"
+      />
+    </div>
+    @if (form.controls.durationMinutes.invalid && form.controls.durationMinutes.touched) {
+      <p class="text-xs font-medium text-danger">Ingresá una duración entre 1 y 300 minutos.</p>
+    }
+  </div>
+
+  <!-- Reintentos -->
+  <div class="flex flex-col gap-2">
+    <label for="retries" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Cantidad de reintentos
+    </label>
+    <input
+      id="retries"
+      type="number"
+      formControlName="maxRetries"
+      min="0"
+      max="10"
+      class="h-12 rounded-xl border border-light-border-strong bg-light-surface px-4 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
+      [class.border-danger]="form.controls.maxRetries.invalid && form.controls.maxRetries.touched"
+    />
+    @if (form.controls.maxRetries.invalid && form.controls.maxRetries.touched) {
+      <p class="text-xs font-medium text-danger">Ingresá un valor entre 0 y 10.</p>
+    }
+  </div>
+
+  <!-- Shuffle -->
+  <div class="flex items-center justify-between rounded-xl border border-light-border-strong bg-light-surface px-4 py-3 dark:border-dark-border-strong dark:bg-dark-bg">
+    <div class="flex items-center gap-3">
+      <qz-icon name="shuffle" class="h-5 w-5 text-light-text-secondary dark:text-dark-text-secondary" />
+      <div class="flex flex-col">
+        <span class="text-sm font-semibold text-light-text dark:text-dark-text">Orden aleatorio</span>
+        <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Mezcla las preguntas para cada intento</span>
+      </div>
+    </div>
+    <qz-button
+      type="button"
+      size="action"
+      [variant]="shuffle() ? 'primary' : 'secondary'"
+      ariaLabel="Orden aleatorio"
+      (click)="toggleShuffle()"
+    >
+      {{ shuffle() ? 'Activado' : 'Activar' }}
+    </qz-button>
+  </div>
+
+  <!-- Habilitado desde -->
+  <div class="flex flex-col gap-2">
+    <label for="enabledFrom" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Habilitado desde
+    </label>
+    <div class="relative">
+      <qz-icon name="calendar" class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-light-text-secondary dark:text-dark-text-secondary" />
+      <input
+        id="enabledFrom"
+        type="datetime-local"
+        formControlName="enabledFrom"
+        class="h-12 w-full rounded-xl border border-light-border-strong bg-light-surface pl-12 pr-4 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
+        [class.border-danger]="form.controls.enabledFrom.invalid && form.controls.enabledFrom.touched"
+      />
+    </div>
+    @if (form.controls.enabledFrom.invalid && form.controls.enabledFrom.touched) {
+      <p class="text-xs font-medium text-danger">Seleccioná una fecha de inicio.</p>
+    }
+  </div>
+
+  <!-- Habilitado hasta -->
+  <div class="flex flex-col gap-2">
+    <label for="enabledUntil" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Habilitado hasta
+    </label>
+    <div class="relative">
+      <qz-icon name="calendar" class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-light-text-secondary dark:text-dark-text-secondary" />
+      <input
+        id="enabledUntil"
+        type="datetime-local"
+        formControlName="enabledUntil"
+        class="h-12 w-full rounded-xl border border-light-border-strong bg-light-surface pl-12 pr-4 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
+        [class.border-danger]="form.controls.enabledUntil.invalid && form.controls.enabledUntil.touched"
+      />
+    </div>
+    @if (form.controls.enabledUntil.invalid && form.controls.enabledUntil.touched) {
+      <p class="text-xs font-medium text-danger">Seleccioná una fecha de cierre.</p>
+    }
+    @if (dateRangeInvalid()) {
+      <p class="text-xs font-medium text-danger">La fecha de cierre debe ser posterior a la de inicio.</p>
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
     }
   </div>
 
   <div class="flex gap-3">
+<<<<<<< HEAD
     <qz-button
       type="button"
       size="large"
@@ -138,4 +245,14 @@
       <span i18n="Exam step config publish button label">Publish exam</span>
     </qz-button>
   </div>
+=======
+    <qz-button size="large" variant="secondary" [fullWidth]="true" ariaLabel="Volver" (click)="back.emit()">
+      Volver
+    </qz-button>
+    <qz-button size="large" variant="primary" type="submit" [fullWidth]="true" ariaLabel="Crear examen">
+      Crear examen
+    </qz-button>
+  </div>
+
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 </form>

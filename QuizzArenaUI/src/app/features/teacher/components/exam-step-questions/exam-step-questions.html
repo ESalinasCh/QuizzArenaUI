@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<div class="flex flex-col gap-4">
 
   <div class="flex items-center justify-between rounded-xl bg-primary-light px-4 py-3 dark:bg-dark-surface-alt">
@@ -8,6 +9,16 @@
     <span class="text-sm text-light-text dark:text-dark-text">
       <span i18n="Exam step questions max score label">Max score:</span>
       <strong class="text-primary"> {{ selectedCount() }}</strong>
+=======
+<div class="flex flex-col gap-4">
+
+  <div class="flex items-center justify-between rounded-xl bg-primary-light px-4 py-3 dark:bg-dark-surface-alt">
+    <span class="text-sm text-light-text dark:text-dark-text">
+      Preguntas seleccionadas: <strong class="text-primary">{{ selectedCount() }}</strong>
+    </span>
+    <span class="text-sm text-light-text dark:text-dark-text">
+      Score máximo: <strong class="text-primary">{{ selectedCount() }}</strong>
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
     </span>
   </div>
 
@@ -22,12 +33,18 @@
     }
 
     @if (visibleQuestions().length === 0) {
+<<<<<<< HEAD
       <p i18n="Exam step questions empty state" class="py-8 text-center text-sm text-light-text-secondary dark:text-dark-text-secondary">
         No questions available for the selected classes.
+=======
+      <p class="py-8 text-center text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        No hay preguntas disponibles para las clases seleccionadas.
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
       </p>
     }
   </div>
 
+<<<<<<< HEAD
   <div class="flex flex-col gap-3 sm:flex-row">
     <qz-button size="large" variant="secondary" [fullWidth]="true" [ariaLabel]="backAriaLabel" (click)="back.emit()">
       <span i18n="Exam step questions back button">Back</span>
@@ -41,16 +58,28 @@
       (click)="submitSaveToBank()"
     >
       <span i18n="Exam step questions save to bank button">Save to Exam Bank</span>
+=======
+  <div class="flex gap-3">
+    <qz-button size="large" variant="secondary" [fullWidth]="true" ariaLabel="Volver" (click)="back.emit()">
+      Volver
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
     </qz-button>
     <qz-button
       size="large"
       variant="primary"
       [fullWidth]="true"
       [disabled]="!canContinue()"
+<<<<<<< HEAD
       [ariaLabel]="publishAriaLabel"
       (click)="submitPublish()"
     >
       <span i18n="Exam step questions publish button">Publish Exam</span>
+=======
+      ariaLabel="Siguiente"
+      (click)="submit()"
+    >
+      Siguiente
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
     </qz-button>
   </div>
 
