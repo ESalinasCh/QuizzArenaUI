@@ -130,11 +130,11 @@ describe('TeacherUploadContentPage', () => {
   it('should toggle drag state on drag events', () => {
     const fixture = TestBed.createComponent(TeacherUploadContentPage);
     fixture.detectChanges();
-    expect(fixture.componentInstance['isDragging']).toBe(false);
+    expect(fixture.componentInstance['isDragging']()).toBe(false);
     fixture.componentInstance.onDragOver({ preventDefault: vi.fn() } as unknown as DragEvent);
-    expect(fixture.componentInstance['isDragging']).toBe(true);
+    expect(fixture.componentInstance['isDragging']()).toBe(true);
     fixture.componentInstance.onDragLeave();
-    expect(fixture.componentInstance['isDragging']).toBe(false);
+    expect(fixture.componentInstance['isDragging']()).toBe(false);
   });
 
   it('should set file on drop event', () => {
