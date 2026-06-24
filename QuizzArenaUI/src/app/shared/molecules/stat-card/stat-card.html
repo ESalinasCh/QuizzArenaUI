@@ -1,4 +1,4 @@
-<div [class]="containerClasses()">
-  <span [class]="labelClasses()">{{ label() }}</span>
-  <span [class]="valueClasses()">{{ value() }}</span>
+<div [class]="containerClasses().join(' ')">
+  <span [class]="labelClasses().join(' ')">{{ label() }}</span>
+  <span [class]="valueClasses().join(' ')">{{ value() }}</span>
 </div>

@@ -76,7 +76,11 @@ export class AuthService {
   }
 
   #getRolesFromAccessToken(claims: KeycloakAccessTokenClaims | null): string[] {
-    return claims?.roles ?? [];
+    if (!claims) return [];
+    if (claims.roles?.length) return claims.roles;
+    if (claims.realm_access?.roles?.length) return claims.realm_access.roles;
+    const clientRoles = Object.values(claims.resource_access ?? {}).flatMap(c => c.roles);
+    return clientRoles;
   }
 
   #decodeAccessToken(): KeycloakAccessTokenClaims | null {

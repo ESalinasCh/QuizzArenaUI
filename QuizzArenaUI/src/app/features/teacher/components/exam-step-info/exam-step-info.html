@@ -1,0 +1,76 @@
+<form class="flex flex-col gap-5" [formGroup]="form" (ngSubmit)="submit()">
+
+  <div class="flex flex-col gap-2">
+    <label for="title" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Título del examen
+    </label>
+    <input
+      id="title"
+      type="text"
+      formControlName="title"
+      placeholder="Ej: Quiz Semana 3 - DDD"
+      class="h-12 rounded-xl border bg-light-surface px-4 text-base text-light-text outline-none transition-colors placeholder:text-light-text-secondary dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-text-secondary"
+      [class.border-danger]="titleInvalid()"
+      [class.border-light-border-strong]="!titleInvalid()"
+    />
+    @if (titleInvalid()) {
+      <p class="text-xs font-medium text-danger">
+        @if (form.controls.title.hasError('required')) {
+          El título es obligatorio.
+        } @else if (form.controls.title.hasError('minlength')) {
+          El título debe tener al menos 3 caracteres.
+        }
+      </p>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="description" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Descripción <span class="font-normal text-light-text-secondary dark:text-dark-text-secondary">(opcional)</span>
+    </label>
+    <input
+      id="description"
+      type="text"
+      formControlName="description"
+      placeholder="Ej: Conceptos de DDD y arquitectura hexagonal..."
+      class="h-12 rounded-xl border border-light-border-strong bg-light-surface px-4 text-base text-light-text outline-none transition-colors placeholder:text-light-text-secondary focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-text-secondary"
+    />
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Seleccionar clases
+    </span>
+    @if (noClassesError()) {
+      <p class="text-xs font-medium text-danger">Seleccioná al menos una clase.</p>
+    }
+    <div class="flex flex-col gap-2">
+      @for (cls of classes(); track cls.id) {
+        <button
+          type="button"
+          [class]="classButtonClass(isClassSelected(cls.id))"
+          (click)="toggleClass(cls.id)"
+        >
+          <span
+            class="flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors"
+            [class.border-primary]="isClassSelected(cls.id)"
+            [class.bg-primary]="isClassSelected(cls.id)"
+            [class.border-light-border-strong]="!isClassSelected(cls.id)"
+          >
+            @if (isClassSelected(cls.id)) {
+              <svg class="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+              </svg>
+            }
+          </span>
+          <span class="text-sm font-medium text-light-text dark:text-dark-text">{{ cls.name }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <qz-button size="large" variant="primary" type="submit" [fullWidth]="true" ariaLabel="Siguiente">
+    Siguiente
+  </qz-button>
+
+</form>
