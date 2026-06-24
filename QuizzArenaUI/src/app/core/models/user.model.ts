@@ -18,5 +18,6 @@ export interface KeycloakTokenClaims {
 /** Raw claims from the Keycloak access token */
 export interface KeycloakAccessTokenClaims extends KeycloakTokenClaims {
   roles?: string[];
+  realm_access?: { roles: string[] };
   resource_access?: Record<string, { roles: string[] }>;
 }

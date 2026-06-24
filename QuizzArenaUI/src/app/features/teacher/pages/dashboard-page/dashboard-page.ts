@@ -35,4 +35,8 @@ export class TeacherDashboardPage {
   async uploadContent(): Promise<void> {
     await this.#router.navigate(['/teacher/content/upload']);
   }
+
+  async createExam(): Promise<void> {
+    await this.#router.navigate(['/teacher/exams/create']);
+  }
 }
