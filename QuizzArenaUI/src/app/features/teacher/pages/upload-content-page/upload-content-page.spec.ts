@@ -150,7 +150,7 @@ describe('TeacherUploadContentPage', () => {
   it('should set isDragging to false on drop', () => {
     const fixture = TestBed.createComponent(TeacherUploadContentPage);
     fixture.detectChanges();
-    fixture.componentInstance['isDragging'].set(true);
+    fixture.componentInstance['isDragging']['set'](true);
     const file = new File(['test'], 'test.mp3');
     const dropEvent = { preventDefault: vi.fn(), dataTransfer: { files: [file] } } as unknown as DragEvent;
     fixture.componentInstance.onDrop(dropEvent);
