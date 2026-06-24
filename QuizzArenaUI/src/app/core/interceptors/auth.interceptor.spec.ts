@@ -33,9 +33,7 @@ describe('authInterceptor', () => {
 
   it('should add Authorization Bearer header when access token exists', () => {
     mockOAuthService.getAccessToken.mockReturnValue('keycloak-token-123');
-
     httpClient.get('/api/test').subscribe();
-
     const req = httpTesting.expectOne('/api/test');
     expect(req.request.headers.get('Authorization')).toBe('Bearer keycloak-token-123');
     req.flush({});
@@ -43,9 +41,7 @@ describe('authInterceptor', () => {
 
   it('should not add Authorization header when there is no access token', () => {
     mockOAuthService.getAccessToken.mockReturnValue('');
-
     httpClient.get('/api/test').subscribe();
-
     const req = httpTesting.expectOne('/api/test');
     expect(req.request.headers.has('Authorization')).toBe(false);
     req.flush({});
@@ -53,9 +49,7 @@ describe('authInterceptor', () => {
 
   it('should not add Authorization header when token is null', () => {
     mockOAuthService.getAccessToken.mockReturnValue(null);
-
     httpClient.get('/api/test').subscribe();
-
     const req = httpTesting.expectOne('/api/test');
     expect(req.request.headers.has('Authorization')).toBe(false);
     req.flush({});
@@ -63,11 +57,9 @@ describe('authInterceptor', () => {
 
   it('should pass request through unchanged when no token', () => {
     mockOAuthService.getAccessToken.mockReturnValue(null);
-
     httpClient.get('/api/test', {
       headers: { 'X-Custom': 'value' },
     }).subscribe();
-
     const req = httpTesting.expectOne('/api/test');
     expect(req.request.headers.get('X-Custom')).toBe('value');
     expect(req.request.headers.has('Authorization')).toBe(false);

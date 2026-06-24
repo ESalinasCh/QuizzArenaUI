@@ -2,13 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { QuizCardMeta } from './quiz-card-meta';
 
 describe('QuizCardMeta', () => {
-  it('should render question count with "preguntas" label', () => {
+  it('should render question count with "questions" label', () => {
     const fixture = TestBed.createComponent(QuizCardMeta);
     fixture.componentRef.setInput('questionCount', 10);
     fixture.componentRef.setInput('statusLabel', 'Available');
     fixture.detectChanges();
-
-    expect(fixture.nativeElement.textContent).toContain('10 preguntas');
+    expect(fixture.nativeElement.textContent).toContain('10 questions');
   });
 
   it('should render the status label', () => {
@@ -47,8 +46,7 @@ describe('QuizCardMeta', () => {
     fixture.componentRef.setInput('statusLabel', 'Expired');
     fixture.componentRef.setInput('statusVariant', 'danger');
     fixture.detectChanges();
-
-    expect(fixture.nativeElement.textContent).toContain('15 preguntas');
+    expect(fixture.nativeElement.textContent).toContain('15 questions');
     expect(fixture.nativeElement.textContent).toContain('Expired');
   });
 });

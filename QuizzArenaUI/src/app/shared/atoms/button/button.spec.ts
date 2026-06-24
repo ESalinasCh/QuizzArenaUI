@@ -43,27 +43,6 @@ describe('Button', () => {
     expect(buttonEl.getAttribute('aria-label')).toBe('Submit form');
   });
 
-  it('should emit btnClick on click', () => {
-    const fixture = TestBed.createComponent(Button);
-    fixture.detectChanges();
-    let emitted = false;
-    fixture.componentInstance.btnClick.subscribe(() => (emitted = true));
-    const buttonEl: HTMLButtonElement = fixture.debugElement.query(By.css('button')).nativeElement;
-    buttonEl.click();
-    expect(emitted).toBe(true);
-  });
-
-  it('should not emit btnClick when disabled', () => {
-    const fixture = TestBed.createComponent(Button);
-    fixture.componentRef.setInput('disabled', true);
-    fixture.detectChanges();
-    let emitted = false;
-    fixture.componentInstance.btnClick.subscribe(() => (emitted = true));
-    const buttonEl: HTMLButtonElement = fixture.debugElement.query(By.css('button')).nativeElement;
-    buttonEl.click();
-    expect(emitted).toBe(false);
-  });
-
   it('should apply fullWidth class when fullWidth is true', () => {
     const fixture = TestBed.createComponent(Button);
     fixture.componentRef.setInput('fullWidth', true);

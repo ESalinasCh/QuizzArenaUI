@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from './auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 function createMockToken(payload: Record<string, unknown>): string {
   const header = btoa(JSON.stringify({ alg: 'RS256' }));
@@ -13,6 +14,7 @@ describe('AuthService', () => {
   let service: AuthService;
   let mockOAuthService: Partial<OAuthService>;
   let mockRouter: Partial<Router>;
+  let mockJwtHelper: Partial<JwtHelperService>;
 
   beforeEach(() => {
     mockOAuthService = {
@@ -25,11 +27,22 @@ describe('AuthService', () => {
       configure: vi.fn(),
     };
     mockRouter = { navigate: vi.fn() };
-
+    mockJwtHelper = {
+      decodeToken: vi.fn().mockImplementation((token: string) => {
+        if (!token) return null;
+        try {
+          const base64Body = token.split('.')[1];
+          return JSON.parse(atob(base64Body));
+        } catch {
+          return null;
+        }
+      })
+    };
     TestBed.configureTestingModule({
       providers: [
         { provide: OAuthService, useValue: mockOAuthService },
         { provide: Router, useValue: mockRouter },
+        { provide: JwtHelperService, useValue: mockJwtHelper },
       ],
     });
 
@@ -77,7 +90,6 @@ describe('AuthService', () => {
         name: 'John Doe',
         roles: ['student'],
       });
-
       (mockOAuthService.loadDiscoveryDocumentAndTryLogin as ReturnType<typeof vi.fn>).mockResolvedValue(true);
       (mockOAuthService.hasValidAccessToken as ReturnType<typeof vi.fn>).mockReturnValue(true);
       (mockOAuthService.getIdentityClaims as ReturnType<typeof vi.fn>).mockReturnValue({
@@ -87,9 +99,7 @@ describe('AuthService', () => {
         name: 'John Doe',
       });
       (mockOAuthService.getAccessToken as ReturnType<typeof vi.fn>).mockReturnValue(mockToken);
-
       await service.initAuth();
-
       expect(service.hasRole('student')).toBe(true);
     });
 

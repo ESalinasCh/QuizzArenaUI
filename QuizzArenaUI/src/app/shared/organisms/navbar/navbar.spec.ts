@@ -16,7 +16,6 @@ describe('Navbar', () => {
 
   it('should emit toggleSidebar on menu button click', () => {
     (mockAuthService.currentUser as unknown as ReturnType<typeof vi.fn>).mockReturnValue(undefined);
-
     TestBed.configureTestingModule({
       providers: [
         { provide: AuthService, useValue: mockAuthService },
@@ -25,20 +24,16 @@ describe('Navbar', () => {
     });
     const fixture = TestBed.createComponent(Navbar);
     fixture.detectChanges();
-
     let emitted = false;
     fixture.componentInstance.toggleSidebar.subscribe(() => (emitted = true));
-
     const menuButton = fixture.nativeElement.querySelector('qz-button');
     expect(menuButton).toBeTruthy();
-
-    fixture.componentInstance.onMenuClick();
+    menuButton.click();
     expect(emitted).toBe(true);
   });
 
   it('should render language selector', () => {
     (mockAuthService.currentUser as unknown as ReturnType<typeof vi.fn>).mockReturnValue(undefined);
-
     TestBed.configureTestingModule({
       providers: [
         { provide: AuthService, useValue: mockAuthService },
@@ -47,7 +42,6 @@ describe('Navbar', () => {
     });
     const fixture = TestBed.createComponent(Navbar);
     fixture.detectChanges();
-
     const langSelector = fixture.nativeElement.querySelector('qz-language-selector');
     expect(langSelector).toBeTruthy();
   });
