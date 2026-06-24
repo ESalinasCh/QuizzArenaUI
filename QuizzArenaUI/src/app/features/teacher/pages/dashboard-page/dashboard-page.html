@@ -27,6 +27,17 @@
     <span i18n="Teacher dashboard upload button label">Upload Content</span>
   </qz-button>
 
+  <qz-button
+    size="large"
+    variant="secondary"
+    [fullWidth]="true"
+    (click)="createExam()"
+    ariaLabel="Crear examen"
+  >
+    <qz-icon name="quiz" class="w-5 h-5" />
+    <span>Crear Examen</span>
+  </qz-button>
+
   <div class="flex flex-col gap-4">
     <h2 i18n="Teacher dashboard recent content heading" class="text-base font-bold text-light-text dark:text-dark-text">
       Recent Content

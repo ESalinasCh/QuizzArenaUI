@@ -1,0 +1,45 @@
+<div class="flex flex-col gap-4">
+
+  <div class="flex items-center justify-between rounded-xl bg-primary-light px-4 py-3 dark:bg-dark-surface-alt">
+    <span class="text-sm text-light-text dark:text-dark-text">
+      Preguntas seleccionadas: <strong class="text-primary">{{ selectedCount() }}</strong>
+    </span>
+    <span class="text-sm text-light-text dark:text-dark-text">
+      Score máximo: <strong class="text-primary">{{ selectedCount() }}</strong>
+    </span>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    @for (question of visibleQuestions(); track question.id) {
+      <qz-exam-question-card
+        [question]="question"
+        [selected]="isSelected(question.id)"
+        (toggle)="toggleQuestion(question.id)"
+        (remove)="removeQuestion(question.id)"
+      />
+    }
+
+    @if (visibleQuestions().length === 0) {
+      <p class="py-8 text-center text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        No hay preguntas disponibles para las clases seleccionadas.
+      </p>
+    }
+  </div>
+
+  <div class="flex gap-3">
+    <qz-button size="large" variant="secondary" [fullWidth]="true" ariaLabel="Volver" (click)="back.emit()">
+      Volver
+    </qz-button>
+    <qz-button
+      size="large"
+      variant="primary"
+      [fullWidth]="true"
+      [disabled]="!canContinue()"
+      ariaLabel="Siguiente"
+      (click)="submit()"
+    >
+      Siguiente
+    </qz-button>
+  </div>
+
+</div>
