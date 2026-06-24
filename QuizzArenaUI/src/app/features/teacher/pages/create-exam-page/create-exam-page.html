@@ -1,11 +1,21 @@
+<<<<<<< HEAD
 ﻿<section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
 
+=======
+<section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
+
+  <!-- Header -->
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
   <header class="flex items-center gap-4">
     <button
       type="button"
       class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary transition hover:bg-primary-soft dark:bg-dark-surface-alt dark:text-primary"
+<<<<<<< HEAD
       i18n-aria-label="Create exam page back button aria label"
       aria-label="Back"
+=======
+      aria-label="Volver"
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
       (click)="goBack()"
     >
       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -13,16 +23,30 @@
       </svg>
     </button>
     <div class="flex flex-col gap-0.5">
+<<<<<<< HEAD
       <h1 i18n="Create exam page heading" class="text-xl font-extrabold text-light-text dark:text-dark-text">
         Create Exam
       </h1>
       <div class="flex gap-1 text-xs text-light-text-secondary dark:text-dark-text-secondary">
         <span [class.text-primary]="currentStep() === 1" [class.font-bold]="currentStep() === 1" class="font-medium transition-colors" i18n="Create exam step info breadcrumb">Info ›</span>
         <span [class.text-primary]="currentStep() === 2" [class.font-bold]="currentStep() === 2" class="font-medium transition-colors" i18n="Create exam step questions breadcrumb">Questions</span>
+=======
+      <h1 class="text-xl font-extrabold text-light-text dark:text-dark-text">
+        Creación de examen
+      </h1>
+      <div class="flex gap-1 text-xs text-light-text-secondary dark:text-dark-text-secondary">
+        <span [class.text-primary]="currentStep() === 1" [class.font-bold]="currentStep() === 1" class="font-medium transition-colors">Información ›</span>
+        <span [class.text-primary]="currentStep() === 2" [class.font-bold]="currentStep() === 2" class="font-medium transition-colors">Preguntas ›</span>
+        <span [class.text-primary]="currentStep() === 3" [class.font-bold]="currentStep() === 3" class="font-medium transition-colors">Configuración</span>
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
       </div>
     </div>
   </header>
 
+<<<<<<< HEAD
+=======
+  <!-- Paso 1: Información y clases -->
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
   @if (currentStep() === 1) {
     <qz-exam-step-info
       [classes]="classes()"
@@ -30,11 +54,27 @@
     />
   }
 
+<<<<<<< HEAD
   @if (currentStep() === 2) {
     <qz-exam-step-questions
       [questions]="filteredQuestions()"
       (publish)="onQuestionsPublish($event)"
       (saveToBank)="onQuestionsSaveToBank($event)"
+=======
+  <!-- Paso 2: Preguntas -->
+  @if (currentStep() === 2) {
+    <qz-exam-step-questions
+      [questions]="filteredQuestions()"
+      (next)="onQuestionsNext($event)"
+      (back)="goBack()"
+    />
+  }
+
+  <!-- Paso 3: Configuración -->
+  @if (currentStep() === 3) {
+    <qz-exam-step-config
+      (next)="onConfigNext($event)"
+>>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
       (back)="goBack()"
     />
   }
