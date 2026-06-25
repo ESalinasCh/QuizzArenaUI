@@ -15,6 +15,9 @@ export class ExamStepQuestions {
   next = output<Set<string>>();
   back = output<void>();
 
+  readonly backAriaLabel = $localize`:Exam step questions back button aria label:Back`;
+  readonly nextAriaLabel = $localize`:Exam step questions next button aria label:Next`;
+
   readonly removedIds = signal<Set<string>>(new Set());
   readonly selectedIds = signal<Set<string>>(new Set());
 

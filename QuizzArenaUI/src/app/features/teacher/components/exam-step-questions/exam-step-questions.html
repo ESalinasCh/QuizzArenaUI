@@ -2,10 +2,12 @@
 
   <div class="flex items-center justify-between rounded-xl bg-primary-light px-4 py-3 dark:bg-dark-surface-alt">
     <span class="text-sm text-light-text dark:text-dark-text">
-      Preguntas seleccionadas: <strong class="text-primary">{{ selectedCount() }}</strong>
+      <span i18n="Exam step questions selected count label">Selected questions:</span>
+      <strong class="text-primary"> {{ selectedCount() }}</strong>
     </span>
     <span class="text-sm text-light-text dark:text-dark-text">
-      Score máximo: <strong class="text-primary">{{ selectedCount() }}</strong>
+      <span i18n="Exam step questions max score label">Max score:</span>
+      <strong class="text-primary"> {{ selectedCount() }}</strong>
     </span>
   </div>
 
@@ -20,25 +22,25 @@
     }
 
     @if (visibleQuestions().length === 0) {
-      <p class="py-8 text-center text-sm text-light-text-secondary dark:text-dark-text-secondary">
-        No hay preguntas disponibles para las clases seleccionadas.
+      <p i18n="Exam step questions empty state" class="py-8 text-center text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        No questions available for the selected classes.
       </p>
     }
   </div>
 
   <div class="flex gap-3">
-    <qz-button size="large" variant="secondary" [fullWidth]="true" ariaLabel="Volver" (click)="back.emit()">
-      Volver
+    <qz-button size="large" variant="secondary" [fullWidth]="true" [ariaLabel]="backAriaLabel" (click)="back.emit()">
+      <span i18n="Exam step questions back button">Back</span>
     </qz-button>
     <qz-button
       size="large"
       variant="primary"
       [fullWidth]="true"
       [disabled]="!canContinue()"
-      ariaLabel="Siguiente"
+      [ariaLabel]="nextAriaLabel"
       (click)="submit()"
     >
-      Siguiente
+      <span i18n="Exam step questions next button">Next</span>
     </qz-button>
   </div>
 

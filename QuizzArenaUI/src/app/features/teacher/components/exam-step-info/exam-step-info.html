@@ -1,14 +1,15 @@
 <form class="flex flex-col gap-5" [formGroup]="form" (ngSubmit)="submit()">
 
   <div class="flex flex-col gap-2">
-    <label for="title" class="text-sm font-semibold text-light-text dark:text-dark-text">
-      Título del examen
+    <label for="title" i18n="Exam step info title label" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Exam title
     </label>
     <input
       id="title"
       type="text"
       formControlName="title"
-      placeholder="Ej: Quiz Semana 3 - DDD"
+      i18n-placeholder="Exam step info title placeholder"
+      placeholder="Ex: Week 3 Quiz - DDD"
       class="h-12 rounded-xl border bg-light-surface px-4 text-base text-light-text outline-none transition-colors placeholder:text-light-text-secondary dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-text-secondary"
       [class.border-danger]="titleInvalid()"
       [class.border-light-border-strong]="!titleInvalid()"
@@ -16,9 +17,9 @@
     @if (titleInvalid()) {
       <p class="text-xs font-medium text-danger">
         @if (form.controls.title.hasError('required')) {
-          El título es obligatorio.
+          <span i18n="Exam step info title required error">Title is required.</span>
         } @else if (form.controls.title.hasError('minlength')) {
-          El título debe tener al menos 3 caracteres.
+          <span i18n="Exam step info title minlength error">Title must be at least 3 characters.</span>
         }
       </p>
     }
@@ -26,23 +27,27 @@
 
   <div class="flex flex-col gap-2">
     <label for="description" class="text-sm font-semibold text-light-text dark:text-dark-text">
-      Descripción <span class="font-normal text-light-text-secondary dark:text-dark-text-secondary">(opcional)</span>
+      <span i18n="Exam step info description label">Description</span>
+      <span i18n="Exam step info description optional" class="font-normal text-light-text-secondary dark:text-dark-text-secondary"> (optional)</span>
     </label>
     <input
       id="description"
       type="text"
       formControlName="description"
-      placeholder="Ej: Conceptos de DDD y arquitectura hexagonal..."
+      i18n-placeholder="Exam step info description placeholder"
+      placeholder="Ex: DDD concepts and hexagonal architecture..."
       class="h-12 rounded-xl border border-light-border-strong bg-light-surface px-4 text-base text-light-text outline-none transition-colors placeholder:text-light-text-secondary focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-text-secondary"
     />
   </div>
 
   <div class="flex flex-col gap-3">
-    <span class="text-sm font-semibold text-light-text dark:text-dark-text">
-      Seleccionar clases
+    <span i18n="Exam step info select classes label" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Select classes
     </span>
     @if (noClassesError()) {
-      <p class="text-xs font-medium text-danger">Seleccioná al menos una clase.</p>
+      <p i18n="Exam step info no classes error" class="text-xs font-medium text-danger">
+        Please select at least one class.
+      </p>
     }
     <div class="flex flex-col gap-2">
       @for (cls of classes(); track cls.id) {
@@ -69,8 +74,8 @@
     </div>
   </div>
 
-  <qz-button size="large" variant="primary" type="submit" [fullWidth]="true" ariaLabel="Siguiente">
-    Siguiente
+  <qz-button size="large" variant="primary" type="submit" [fullWidth]="true" [ariaLabel]="nextAriaLabel">
+    <span i18n="Exam step info next button">Next</span>
   </qz-button>
 
 </form>
