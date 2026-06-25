@@ -32,10 +32,10 @@
     variant="secondary"
     [fullWidth]="true"
     (click)="createExam()"
-    ariaLabel="Crear examen"
+    [ariaLabel]="createExamAriaLabel"
   >
     <qz-icon name="quiz" class="w-5 h-5" />
-    <span>Crear Examen</span>
+    <span i18n="Teacher dashboard create exam button label">Create Exam</span>
   </qz-button>
 
   <div class="flex flex-col gap-4">

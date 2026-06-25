@@ -371,6 +371,186 @@
         <source>Time limit <x id="minutes" equiv-text="minutes"/> min</source>
         <target>Limite de tiempo <x id="minutes" equiv-text="minutes"/> min</target>
       </trans-unit>
+      <trans-unit id="1669185263898985643" datatype="html">
+        <source> Question </source>
+        <target> Pregunta </target>
+        <note priority="1" from="description">Exam question card question label</note>
+      </trans-unit>
+      <trans-unit id="5030890346587082337" datatype="html">
+        <source> Score: 1 </source>
+        <target> Puntaje: 1 </target>
+        <note priority="1" from="description">Exam question card score label</note>
+      </trans-unit>
+      <trans-unit id="2952990975980825782" datatype="html">
+        <source>Added to exam</source>
+        <target>Agregada al examen</target>
+        <note priority="1" from="description">Exam question card added to exam label</note>
+      </trans-unit>
+      <trans-unit id="3323309729513285432" datatype="html">
+        <source>Add to exam</source>
+        <target>Agregar al examen</target>
+        <note priority="1" from="description">Exam question card add to exam label</note>
+      </trans-unit>
+      <trans-unit id="4880310219639806608" datatype="html">
+        <source>Remove from bank</source>
+        <target>Eliminar del banco</target>
+        <note priority="1" from="description">Exam question card remove from bank label</note>
+      </trans-unit>
+      <trans-unit id="688110201336267369" datatype="html">
+        <source> Duration (minutes) </source>
+        <target> Duración (minutos) </target>
+        <note priority="1" from="description">Exam step config duration label</note>
+      </trans-unit>
+      <trans-unit id="8276050813964113004" datatype="html">
+        <source>Enter a duration between 1 and 300 minutes.</source>
+        <target>Ingresá una duración entre 1 y 300 minutos.</target>
+        <note priority="1" from="description">Exam step config duration error</note>
+      </trans-unit>
+      <trans-unit id="253704841542484432" datatype="html">
+        <source> Number of retries </source>
+        <target> Cantidad de reintentos </target>
+        <note priority="1" from="description">Exam step config retries label</note>
+      </trans-unit>
+      <trans-unit id="1940743669162999007" datatype="html">
+        <source>Enter a value between 0 and 10.</source>
+        <target>Ingresá un valor entre 0 y 10.</target>
+        <note priority="1" from="description">Exam step config retries error</note>
+      </trans-unit>
+      <trans-unit id="5613820415457559363" datatype="html">
+        <source>Shuffles questions for each attempt</source>
+        <target>Mezcla las preguntas para cada intento</target>
+        <note priority="1" from="description">Exam step config shuffle description</note>
+      </trans-unit>
+      <trans-unit id="4816216590591222133" datatype="html">
+        <source>Enabled</source>
+        <target>Activado</target>
+        <note priority="1" from="description">Exam step config shuffle enabled label</note>
+      </trans-unit>
+      <trans-unit id="2180291763949669799" datatype="html">
+        <source>Enable</source>
+        <target>Activar</target>
+        <note priority="1" from="description">Exam step config shuffle enable label</note>
+      </trans-unit>
+      <trans-unit id="7069458098680012267" datatype="html">
+        <source> Available from </source>
+        <target> Habilitado desde </target>
+        <note priority="1" from="description">Exam step config available from label</note>
+      </trans-unit>
+      <trans-unit id="8047676061569695320" datatype="html">
+        <source>Select a start date.</source>
+        <target>Seleccioná una fecha de inicio.</target>
+        <note priority="1" from="description">Exam step config available from error</note>
+      </trans-unit>
+      <trans-unit id="1442313495084915483" datatype="html">
+        <source> Available until </source>
+        <target> Habilitado hasta </target>
+        <note priority="1" from="description">Exam step config available until label</note>
+      </trans-unit>
+      <trans-unit id="8251055041035759243" datatype="html">
+        <source>Select an end date.</source>
+        <target>Seleccioná una fecha de cierre.</target>
+        <note priority="1" from="description">Exam step config available until error</note>
+      </trans-unit>
+      <trans-unit id="2965987802857787125" datatype="html">
+        <source>The end date must be after the start date.</source>
+        <target>La fecha de cierre debe ser posterior a la de inicio.</target>
+        <note priority="1" from="description">Exam step config date range error</note>
+      </trans-unit>
+      <trans-unit id="8890553633144307762" datatype="html">
+        <source>Back</source>
+        <target>Volver</target>
+        <note priority="1" from="description">Exam step back button</note>
+      </trans-unit>
+      <trans-unit id="250441251272758628" datatype="html">
+        <source>Create exam</source>
+        <target>Crear examen</target>
+        <note priority="1" from="description">Exam step config create button</note>
+      </trans-unit>
+      <trans-unit id="8705682626553784795" datatype="html">
+        <source> Exam title </source>
+        <target> Título del examen </target>
+        <note priority="1" from="description">Exam step info title label</note>
+      </trans-unit>
+      <trans-unit id="7702195013137486241" datatype="html">
+        <source>Ex: Week 3 Quiz - DDD</source>
+        <target>Ej: Quiz Semana 3 - DDD</target>
+        <note priority="1" from="description">Exam step info title placeholder</note>
+      </trans-unit>
+      <trans-unit id="6952242034697821025" datatype="html">
+        <source>Title is required.</source>
+        <target>El título es obligatorio.</target>
+        <note priority="1" from="description">Exam step info title required error</note>
+      </trans-unit>
+      <trans-unit id="2641271940966117589" datatype="html">
+        <source>Title must be at least 3 characters.</source>
+        <target>El título debe tener al menos 3 caracteres.</target>
+        <note priority="1" from="description">Exam step info title minlength error</note>
+      </trans-unit>
+      <trans-unit id="4902817035128594900" datatype="html">
+        <source>Description</source>
+        <target>Descripción</target>
+        <note priority="1" from="description">Exam step info description label</note>
+      </trans-unit>
+      <trans-unit id="3683987907719228878" datatype="html">
+        <source> (optional)</source>
+        <target> (opcional)</target>
+        <note priority="1" from="description">Exam step info description optional</note>
+      </trans-unit>
+      <trans-unit id="3677841999786492105" datatype="html">
+        <source>Ex: DDD concepts and hexagonal architecture...</source>
+        <target>Ej: Conceptos de DDD y arquitectura hexagonal...</target>
+        <note priority="1" from="description">Exam step info description placeholder</note>
+      </trans-unit>
+      <trans-unit id="5457923856434027225" datatype="html">
+        <source> Select classes </source>
+        <target> Seleccionar clases </target>
+        <note priority="1" from="description">Exam step info select classes label</note>
+      </trans-unit>
+      <trans-unit id="4071182648887094545" datatype="html">
+        <source> Please select at least one class. </source>
+        <target> Seleccioná al menos una clase. </target>
+        <note priority="1" from="description">Exam step info no classes error</note>
+      </trans-unit>
+      <trans-unit id="3885497195825665706" datatype="html">
+        <source>Next</source>
+        <target>Siguiente</target>
+        <note priority="1" from="description">Exam step next button</note>
+      </trans-unit>
+      <trans-unit id="3609521836661525762" datatype="html">
+        <source>Selected questions:</source>
+        <target>Preguntas seleccionadas:</target>
+        <note priority="1" from="description">Exam step questions selected count label</note>
+      </trans-unit>
+      <trans-unit id="8419338122073074171" datatype="html">
+        <source>Max score:</source>
+        <target>Score máximo:</target>
+        <note priority="1" from="description">Exam step questions max score label</note>
+      </trans-unit>
+      <trans-unit id="1475149910417064856" datatype="html">
+        <source> No questions available for the selected classes. </source>
+        <target> No hay preguntas disponibles para las clases seleccionadas. </target>
+        <note priority="1" from="description">Exam step questions empty state</note>
+      </trans-unit>
+      <trans-unit id="3415926923416334907" datatype="html">
+        <source> Exam creation </source>
+        <target> Creación de examen </target>
+        <note priority="1" from="description">Create exam page heading</note>
+      </trans-unit>
+      <trans-unit id="6287506697013361544" datatype="html">
+        <source>Info ›</source>
+        <target>Información ›</target>
+        <note priority="1" from="description">Create exam step info breadcrumb</note>
+      </trans-unit>
+      <trans-unit id="7387174817593733959" datatype="html">
+        <source>Questions ›</source>
+        <target>Preguntas ›</target>
+        <note priority="1" from="description">Create exam step questions breadcrumb</note>
+      </trans-unit>
+      <trans-unit id="4582668985446729580" datatype="html">
+        <source>Create Exam</source>
+        <target>Crear Examen</target>
+        <note priority="1" from="description">Teacher dashboard create exam button label</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
