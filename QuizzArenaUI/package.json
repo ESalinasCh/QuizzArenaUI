@@ -9,7 +9,11 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "prepare": "cd .. && husky QuizzArenaUI/.husky"
+    "lint:fix": "ng lint --fix",
+    "format": "prettier --check \"src/**/*.{ts,html,scss,css,json}\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,html,scss,css,json}\"",
+    "type-check": "tsc -p tsconfig.app.json --noEmit",
+    "prepare": "cd .. && git config core.hooksPath QuizzArenaUI/.husky || true"
   },
   "private": true,
   "packageManager": "npm@11.2.0",

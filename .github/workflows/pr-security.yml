@@ -1,0 +1,218 @@
+name: PR Security Gate
+
+# Runs on every PR targeting main.
+# Combines the full quality gate with SAST (CodeQL) and SBOM generation +
+# vulnerability scan (CycloneDX / Grype) — results surface in the
+# Security tab and as PR artifacts.
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+env:
+  NODE_VERSION: '24'
+  HUSKY: '0'
+
+defaults:
+  run:
+    working-directory: QuizzArenaUI
+
+jobs:
+  # ── 1. Lint (ESLint) ────────────────────────────────────────────────────────
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: QuizzArenaUI/package-lock.json
+      - run: npm ci
+      - name: ESLint
+        run: npm run lint
+
+  # ── 2. Formatting (Prettier) ────────────────────────────────────────────────
+  format:
+    name: Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: QuizzArenaUI/package-lock.json
+      - run: npm ci
+      - name: Prettier --check
+        run: npm run format
+
+  # ── 3. Type-check (tsc) ─────────────────────────────────────────────────────
+  type-check:
+    name: Type-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: QuizzArenaUI/package-lock.json
+      - run: npm ci
+      - name: tsc --noEmit
+        run: npm run type-check
+
+  # ── 4. Unit tests ───────────────────────────────────────────────────────────
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: QuizzArenaUI/package-lock.json
+      - run: npm ci
+      - name: Run unit tests
+        run: npm run test -- --watch=false
+
+  # ── 5. Production build ─────────────────────────────────────────────────────
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: QuizzArenaUI/package-lock.json
+      - run: npm ci
+      - name: Production build
+        run: npm run build -- --configuration production
+
+  # ── 6. Secret scan (full git history) ───────────────────────────────────────
+  scan-secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Gitleaks — detect secrets in history
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
+
+  # ── 7. Dependency vulnerability audit ───────────────────────────────────────
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: QuizzArenaUI/package-lock.json
+      - run: npm ci
+      - name: npm audit (fail on high/critical)
+        run: npm audit --audit-level=high
+
+  # ── 8. SAST — CodeQL ────────────────────────────────────────────────────────
+  sast:
+    name: SAST (CodeQL)
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write # required to upload SARIF results
+    # CodeQL analyzes the repo from the root; no app-subdir working-directory.
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: javascript-typescript
+          # security-extended adds OWASP-aligned queries on top of the default set.
+          # security-and-quality adds code quality rules as well.
+          queries: security-extended,security-and-quality
+
+      # JavaScript/TypeScript is interpreted — CodeQL needs no build step.
+      - name: Analyze — upload SARIF to Security tab
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:javascript-typescript
+
+  # ── 9. SBOM — generate + scan ───────────────────────────────────────────────
+  sbom:
+    name: SBOM (CycloneDX + Grype)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write # to upload Grype SARIF results
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: QuizzArenaUI/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate SBOM (CycloneDX JSON)
+        # Produces a machine-readable inventory of every direct and transitive
+        # npm dependency with versions, licenses, and package URLs.
+        run: |
+          mkdir -p sbom
+          npx --yes @cyclonedx/cyclonedx-npm \
+            --output-format JSON \
+            --output-file sbom/sbom.cyclonedx.json \
+            --spec-version 1.5
+
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-cyclonedx
+          path: QuizzArenaUI/sbom/sbom.cyclonedx.json
+          retention-days: 90 # retain for compliance / auditing
+
+      - name: Install Grype
+        run: |
+          curl -sSfL \
+            https://raw.githubusercontent.com/anchore/grype/main/install.sh \
+            | sh -s -- -b /usr/local/bin
+
+      - name: Scan SBOM with Grype (SARIF)
+        # Produce SARIF for the Security tab; allow upload even if CVEs are found.
+        run: |
+          grype sbom:sbom/sbom.cyclonedx.json \
+            --output sarif \
+            > grype-results.sarif
+        continue-on-error: true
+
+      - name: Upload Grype SARIF to Security tab
+        uses: github/codeql-action/upload-sarif@v4
+        if: always()
+        with:
+          sarif_file: QuizzArenaUI/grype-results.sarif
+          category: sbom-grype
+
+      - name: Fail if Grype found High/Critical vulnerabilities
+        # Re-run without SARIF output so the step exits non-zero and blocks the PR.
+        run: |
+          grype sbom:sbom/sbom.cyclonedx.json --fail-on high

@@ -1,2 +1,39 @@
-#!/usr/bin/env sh
-cd QuizzArenaUI && ./node_modules/.bin/commitlint --edit "$1"
+#!/bin/sh
+# ── Husky bootstrap ───────────────────────────────────────────────────────────
+_husky="$(dirname "$0")/_/husky.sh"
+# shellcheck disable=SC1090
+[ -f "$_husky" ] && . "$_husky"
+[ "${HUSKY:-1}" = "0" ] && exit 0   # respect HUSKY=0 (CI / Docker build)
+[ "${CI:-}" = "true" ]  && exit 0   # skip in any CI environment
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Commit message gate ───────────────────────────────────────────────────────
+# Enforces Conventional Commits via commitlint (commitlint.config.js extends
+# @commitlint/config-conventional).
+#
+#   <type>(<scope>)?: <subject>
+#
+#   Types: build · chore · ci · docs · feat · fix · perf · refactor · revert · style · test
+#   Breaking change: append ! before the colon  →  feat(api)!: remove endpoint
+#
+# Force-skip (strongly discouraged): git commit --no-verify
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Resolve the commit-message file to an absolute path BEFORE changing dirs, so
+# it still resolves after we cd into the app directory (git passes it relative
+# to the repo root, which is the hook's working directory).
+MSG_FILE="$1"
+case "$MSG_FILE" in
+    /*) ;;                                                  # already absolute
+    *)  MSG_FILE="$(git rev-parse --show-toplevel)/$MSG_FILE" ;;
+esac
+
+app_dir="QuizzArenaUI"
+
+if [ ! -x "${app_dir}/node_modules/.bin/commitlint" ]; then
+    printf "⚠  commitlint not installed — run \`just install\` (npm ci). Skipping check.\n"
+    exit 0
+fi
+
+cd "$app_dir" || exit 1
+./node_modules/.bin/commitlint --edit "$MSG_FILE"
