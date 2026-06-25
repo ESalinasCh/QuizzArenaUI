@@ -28,6 +28,10 @@ export class ExamStepConfig {
   readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
   readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
 
+  readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
+  readonly createAriaLabel = $localize`:Exam step config create button aria label:Create exam`;
+  readonly shuffleAriaLabel = $localize`:Exam step config shuffle button aria label:Random order`;
+
   readonly form = new FormGroup(
     {
       durationMinutes: new FormControl<number>(30, {

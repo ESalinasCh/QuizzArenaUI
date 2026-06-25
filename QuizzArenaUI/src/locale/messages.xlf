@@ -995,7 +995,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/upload-content-page/upload-content-page.ts</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="description">Upload content button aria label</note>
       </trans-unit>
@@ -1178,14 +1178,6 @@
           <context context-type="linenumber">163,166</context>
         </context-group>
         <note priority="1" from="description">Show correct answers setting description</note>
-      </trans-unit>
-      <trans-unit id="1327022644433232021" datatype="html">
-        <source>Random order</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/pages/upload-content-page/upload-content-page.html</context>
-          <context context-type="linenumber">184,185</context>
-        </context-group>
-        <note priority="1" from="description">Shuffle questions setting label</note>
       </trans-unit>
       <trans-unit id="5418987629760138158" datatype="html">
         <source>Questions are shuffled in each review</source>
