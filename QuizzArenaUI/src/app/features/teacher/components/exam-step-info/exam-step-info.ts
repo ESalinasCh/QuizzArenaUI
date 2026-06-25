@@ -60,7 +60,8 @@ export class ExamStepInfo {
   classButtonClass(selected: boolean): string {
     const base = 'flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors';
     return selected
-      ? `${base} border-primary bg-primary-light`
+
+      ? `${base} border-primary bg-primary-light dark:bg-dark-surface-alt`
       : `${base} border-light-border-strong bg-light-surface dark:border-dark-border-strong dark:bg-dark-bg`;
   }
 
