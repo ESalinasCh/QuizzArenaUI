@@ -1,4 +1,4 @@
-﻿import { LOCALE_ID } from '@angular/core';
+import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ExamStepConfig } from './exam-step-config';
 import { ExamConfig } from '../../models/exam.model';
@@ -18,7 +18,7 @@ describe('ExamStepConfig', () => {
     fixture.componentInstance.submit();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('Duration must be at least 1 minute');
+    expect(fixture.nativeElement.textContent).toContain('Enter a duration between 1 and 300 minutes.');
   });
 
   it('should show start date required error on empty submit', () => {
@@ -28,7 +28,7 @@ describe('ExamStepConfig', () => {
     fixture.componentInstance.submit();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('Start date is required');
+    expect(fixture.nativeElement.textContent).toContain('Select a start date.');
   });
 
   it('should show date range error when end date is before start date', () => {
@@ -42,18 +42,18 @@ describe('ExamStepConfig', () => {
     fixture.componentInstance.submit();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('End date must be after start date');
+    expect(fixture.nativeElement.textContent).toContain('The end date must be after the start date.');
   });
 
-  it('should toggle shuffleQuestions independently', () => {
+  it('should toggle shuffle', () => {
     const fixture = TestBed.createComponent(ExamStepConfig);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.shuffleQuestions()).toBe(false);
-    fixture.componentInstance.toggleShuffleQuestions();
-    expect(fixture.componentInstance.shuffleQuestions()).toBe(true);
-    fixture.componentInstance.toggleShuffleQuestions();
-    expect(fixture.componentInstance.shuffleQuestions()).toBe(false);
+    expect(fixture.componentInstance.shuffle()).toBe(false);
+    fixture.componentInstance.toggleShuffle();
+    expect(fixture.componentInstance.shuffle()).toBe(true);
+    fixture.componentInstance.toggleShuffle();
+    expect(fixture.componentInstance.shuffle()).toBe(false);
   });
 
   it('should toggle shuffleOptions independently', () => {
@@ -89,14 +89,13 @@ describe('ExamStepConfig', () => {
     fixture.componentInstance.form.controls.maxRetries.setValue(2);
     fixture.componentInstance.form.controls.enabledFrom.setValue('2026-06-25T10:00');
     fixture.componentInstance.form.controls.enabledUntil.setValue('2026-06-26T10:00');
-    fixture.componentInstance.toggleShuffleQuestions();
+    fixture.componentInstance.toggleShuffle();
     fixture.componentInstance.submit();
 
     expect(emitted).toEqual({
       durationMinutes: 45,
       maxRetries: 2,
-      shuffleQuestions: true,
-      shuffleOptions: false,
+      shuffle: true,
       enabledFrom: '2026-06-25T10:00',
       enabledUntil: '2026-06-26T10:00',
     });
