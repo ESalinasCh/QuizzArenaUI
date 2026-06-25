@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Button } from '../../../../shared/atoms/button/button';
 import { ClassSource } from '../../models/exam.model';
@@ -20,6 +21,8 @@ export class ExamStepInfo {
 
   next = output<ExamInfoData>();
 
+  readonly nextAriaLabel = $localize`:Exam step info next button aria label:Next`;
+
   readonly form = new FormGroup({
     title: new FormControl('', {
       nonNullable: true,
@@ -31,10 +34,12 @@ export class ExamStepInfo {
   readonly #selectedClassIds = signal<Set<string>>(new Set());
 
   readonly #submitted = signal(false);
+  readonly #formEvents = toSignal(this.form.events);
 
-  readonly titleInvalid = computed(
-    () => this.form.controls.title.invalid && this.form.controls.title.touched,
-  );
+  readonly titleInvalid = computed(() => {
+    this.#formEvents();
+    return this.form.controls.title.invalid && this.form.controls.title.touched;
+  });
 
   readonly noClassesError = computed(
     () => this.#submitted() && this.#selectedClassIds().size === 0,

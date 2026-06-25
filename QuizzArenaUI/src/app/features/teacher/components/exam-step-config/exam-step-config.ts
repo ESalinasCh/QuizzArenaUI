@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, output, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AbstractControl, ReactiveFormsModule, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -25,6 +26,10 @@ export class ExamStepConfig {
 
   readonly shuffle = signal(false);
 
+  readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
+  readonly createAriaLabel = $localize`:Exam step config create button aria label:Create exam`;
+  readonly shuffleAriaLabel = $localize`:Exam step config shuffle button aria label:Random order`;
+
   readonly form = new FormGroup(
     {
       durationMinutes: new FormControl<number>(30, {
@@ -47,9 +52,12 @@ export class ExamStepConfig {
     { validators: dateRangeValidator },
   );
 
-  readonly dateRangeInvalid = computed(
-    () => this.form.hasError('dateRange') && this.form.controls.enabledUntil.touched,
-  );
+  readonly #formEvents = toSignal(this.form.events);
+
+  readonly dateRangeInvalid = computed(() => {
+    this.#formEvents();
+    return this.form.hasError('dateRange') && this.form.controls.enabledUntil.touched;
+  });
 
   toggleShuffle(): void {
     this.shuffle.update(v => !v);

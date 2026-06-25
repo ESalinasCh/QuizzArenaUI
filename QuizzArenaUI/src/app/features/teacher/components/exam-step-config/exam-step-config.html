@@ -1,9 +1,8 @@
 <form class="flex flex-col gap-5" [formGroup]="form" (ngSubmit)="submit()">
 
-  <!-- Duración -->
   <div class="flex flex-col gap-2">
-    <label for="duration" class="text-sm font-semibold text-light-text dark:text-dark-text">
-      Duración (minutos)
+    <label for="duration" i18n="Exam step config duration label" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Duration (minutes)
     </label>
     <div class="relative">
       <qz-icon name="clock" class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-light-text-secondary dark:text-dark-text-secondary" />
@@ -18,14 +17,13 @@
       />
     </div>
     @if (form.controls.durationMinutes.invalid && form.controls.durationMinutes.touched) {
-      <p class="text-xs font-medium text-danger">Ingresá una duración entre 1 y 300 minutos.</p>
+      <p i18n="Exam step config duration error" class="text-xs font-medium text-danger">Enter a duration between 1 and 300 minutes.</p>
     }
   </div>
 
-  <!-- Reintentos -->
   <div class="flex flex-col gap-2">
-    <label for="retries" class="text-sm font-semibold text-light-text dark:text-dark-text">
-      Cantidad de reintentos
+    <label for="retries" i18n="Exam step config retries label" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Number of retries
     </label>
     <input
       id="retries"
@@ -37,34 +35,36 @@
       [class.border-danger]="form.controls.maxRetries.invalid && form.controls.maxRetries.touched"
     />
     @if (form.controls.maxRetries.invalid && form.controls.maxRetries.touched) {
-      <p class="text-xs font-medium text-danger">Ingresá un valor entre 0 y 10.</p>
+      <p i18n="Exam step config retries error" class="text-xs font-medium text-danger">Enter a value between 0 and 10.</p>
     }
   </div>
 
-  <!-- Shuffle -->
   <div class="flex items-center justify-between rounded-xl border border-light-border-strong bg-light-surface px-4 py-3 dark:border-dark-border-strong dark:bg-dark-bg">
     <div class="flex items-center gap-3">
       <qz-icon name="shuffle" class="h-5 w-5 text-light-text-secondary dark:text-dark-text-secondary" />
       <div class="flex flex-col">
-        <span class="text-sm font-semibold text-light-text dark:text-dark-text">Orden aleatorio</span>
-        <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Mezcla las preguntas para cada intento</span>
+        <span i18n="Exam step config shuffle label" class="text-sm font-semibold text-light-text dark:text-dark-text">Random order</span>
+        <span i18n="Exam step config shuffle description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Shuffles questions for each attempt</span>
       </div>
     </div>
     <qz-button
       type="button"
       size="action"
       [variant]="shuffle() ? 'primary' : 'secondary'"
-      ariaLabel="Orden aleatorio"
+      [ariaLabel]="shuffleAriaLabel"
       (click)="toggleShuffle()"
     >
-      {{ shuffle() ? 'Activado' : 'Activar' }}
+      @if (shuffle()) {
+        <span i18n="Exam step config shuffle enabled label">Enabled</span>
+      } @else {
+        <span i18n="Exam step config shuffle enable label">Enable</span>
+      }
     </qz-button>
   </div>
 
-  <!-- Habilitado desde -->
   <div class="flex flex-col gap-2">
-    <label for="enabledFrom" class="text-sm font-semibold text-light-text dark:text-dark-text">
-      Habilitado desde
+    <label for="enabledFrom" i18n="Exam step config available from label" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Available from
     </label>
     <div class="relative">
       <qz-icon name="calendar" class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-light-text-secondary dark:text-dark-text-secondary" />
@@ -77,14 +77,13 @@
       />
     </div>
     @if (form.controls.enabledFrom.invalid && form.controls.enabledFrom.touched) {
-      <p class="text-xs font-medium text-danger">Seleccioná una fecha de inicio.</p>
+      <p i18n="Exam step config available from error" class="text-xs font-medium text-danger">Select a start date.</p>
     }
   </div>
 
-  <!-- Habilitado hasta -->
   <div class="flex flex-col gap-2">
-    <label for="enabledUntil" class="text-sm font-semibold text-light-text dark:text-dark-text">
-      Habilitado hasta
+    <label for="enabledUntil" i18n="Exam step config available until label" class="text-sm font-semibold text-light-text dark:text-dark-text">
+      Available until
     </label>
     <div class="relative">
       <qz-icon name="calendar" class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-light-text-secondary dark:text-dark-text-secondary" />
@@ -97,19 +96,19 @@
       />
     </div>
     @if (form.controls.enabledUntil.invalid && form.controls.enabledUntil.touched) {
-      <p class="text-xs font-medium text-danger">Seleccioná una fecha de cierre.</p>
+      <p i18n="Exam step config available until error" class="text-xs font-medium text-danger">Select an end date.</p>
     }
     @if (dateRangeInvalid()) {
-      <p class="text-xs font-medium text-danger">La fecha de cierre debe ser posterior a la de inicio.</p>
+      <p i18n="Exam step config date range error" class="text-xs font-medium text-danger">The end date must be after the start date.</p>
     }
   </div>
 
   <div class="flex gap-3">
-    <qz-button size="large" variant="secondary" [fullWidth]="true" ariaLabel="Volver" (click)="back.emit()">
-      Volver
+    <qz-button size="large" variant="secondary" [fullWidth]="true" [ariaLabel]="backAriaLabel" (click)="back.emit()">
+      <span i18n="Exam step config back button">Back</span>
     </qz-button>
-    <qz-button size="large" variant="primary" type="submit" [fullWidth]="true" ariaLabel="Crear examen">
-      Crear examen
+    <qz-button size="large" variant="primary" type="submit" [fullWidth]="true" [ariaLabel]="createAriaLabel">
+      <span i18n="Exam step config create button">Create exam</span>
     </qz-button>
   </div>
 

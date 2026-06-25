@@ -22,6 +22,7 @@ export class TeacherDashboardPage {
   protected readonly quizzesLabel = $localize`:Stat card quizzes label:Quizzes`;
   protected readonly publishedLabel = $localize`:Stat card published label:Published`;
   protected readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
+  protected readonly createExamAriaLabel = $localize`:Create exam button aria label:Create exam`;
 
   protected readonly dashboard = toSignal(this.#dashboardService.getDashboard(), {
     initialValue: { quizCount: 0, publishedCount: 0, recentContent: [] },
