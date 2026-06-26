@@ -51,7 +51,7 @@ export const STUDENT_MATCH_ATTEMPTS_RESPONSE_MOCK: MatchAttemptSummaryResponse[]
 export const STUDENT_PLAY_RESPONSE_MOCKS: Record<string, CreatePlayResponse> = {
   'project-1-review': {
     matchId: 'project-1-review',
-    attemptId: 'attempt-project-1-review',
+    matchAttemptId: 'attempt-project-1-review',
     questions: [
       {
         id: 'q1',
@@ -107,7 +107,7 @@ export const STUDENT_PLAY_RESPONSE_MOCKS: Record<string, CreatePlayResponse> = {
   },
   'project-1-week-1': {
     matchId: 'project-1-week-1',
-    attemptId: 'attempt-project-1-week-1',
+    matchAttemptId: 'attempt-project-1-week-1',
     questions: [
       {
         id: 'q1',

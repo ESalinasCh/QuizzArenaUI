@@ -59,13 +59,14 @@ export interface PlayQuestionResponse {
 
 export interface CreatePlayResponse {
   matchId: string;
-  attemptId: string;
+  matchAttemptId: string;
   questions: PlayQuestionResponse[];
 }
 
 export interface SubmitMatchAttemptAnswerRequest {
   questionId: string;
   selectedOptionId: string;
+  answeredAt: string;
 }
 
 export interface SubmitMatchAttemptRequest {
@@ -87,6 +88,5 @@ export interface SubmitMatchAttemptResponse {
   correctCount: number;
   incorrectCount: number;
   totalQuestions: number;
-  message?: string;
   questions: SubmittedQuestionResultResponse[];
 }
