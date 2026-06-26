@@ -1,14 +1,14 @@
 name: PR Security Gate
 
-# Runs on every PR targeting main.
-# Combines the full quality gate with SAST (CodeQL) and SBOM generation +
-# vulnerability scan (CycloneDX / Grype) — results surface in the
-# Security tab and as PR artifacts.
+# Runs on every PR targeting main, and on pushes to main so CodeQL records a
+# default-branch baseline (results surface in the Security tab).
 
 on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
 
 env:
   NODE_VERSION: '24'
