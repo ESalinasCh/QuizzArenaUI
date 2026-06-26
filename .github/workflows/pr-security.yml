@@ -124,7 +124,10 @@ jobs:
           cache-dependency-path: QuizzArenaUI/package-lock.json
       - run: npm ci
       - name: npm audit (fail on high/critical)
-        run: npm audit --audit-level=high
+        # Scoped to runtime deps: dev/build-tool advisories (esbuild, piscina via
+        # @angular/build) don't ship to users and have no non-breaking fix.
+        # Mirrors the local `just audit` gate.
+        run: npm audit --omit=dev --audit-level=high
 
   # ── 8. SAST — CodeQL ────────────────────────────────────────────────────────
   sast:
@@ -176,10 +179,13 @@ jobs:
 
       - name: Generate SBOM (CycloneDX JSON)
         # Produces a machine-readable inventory of every direct and transitive
-        # npm dependency with versions, licenses, and package URLs.
+        # PRODUCTION npm dependency with versions, licenses, and package URLs.
+        # Dev/build-tool deps are omitted so the SBOM (and the Grype gate below)
+        # reflect only what ships to users — consistent with the npm audit gate.
         run: |
           mkdir -p sbom
           npx --yes @cyclonedx/cyclonedx-npm \
+            --omit dev \
             --output-format JSON \
             --output-file sbom/sbom.cyclonedx.json \
             --spec-version 1.5
@@ -206,6 +212,11 @@ jobs:
         continue-on-error: true
 
       - name: Upload Grype SARIF to Security tab
+        # Best-effort: Grype scanning an SBOM source emits results without file
+        # (artifact) locations, which GitHub code scanning rejects. The real gate
+        # is the SBOM artifact + the `--fail-on high` step below, so a failed
+        # Security-tab upload must not fail the job.
+        continue-on-error: true
         uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:

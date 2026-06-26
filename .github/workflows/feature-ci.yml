@@ -152,4 +152,7 @@ jobs:
         run: npm ci
 
       - name: npm audit (fail on high/critical)
-        run: npm audit --audit-level=high
+        # Scoped to runtime deps: dev/build-tool advisories (esbuild, piscina via
+        # @angular/build) don't ship to users and have no non-breaking fix.
+        # Mirrors the local `just audit` gate.
+        run: npm audit --omit=dev --audit-level=high
