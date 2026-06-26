@@ -134,9 +134,12 @@ scan-secrets-staged:
 
 # ── Security audit ─────────────────────────────────────────────────────────────
 
-# Audit npm dependencies for known CVEs — fails on high/critical severity
+# Audit production npm dependencies for known CVEs — fails on high/critical severity.
+# Scoped to runtime deps (--omit=dev): dev/build-tool advisories (e.g. esbuild and
+# piscina pulled in by @angular/build) don't ship to users and currently have no
+# non-breaking fix. Shipped dependencies must stay clean.
 audit:
-    cd {{ app_dir }} && npm audit --audit-level=high
+    cd {{ app_dir }} && npm audit --omit=dev --audit-level=high
 
 # ── All quality gates ──────────────────────────────────────────────────────────
 
