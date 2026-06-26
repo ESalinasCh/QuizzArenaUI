@@ -14,4 +14,3 @@ export class Icon {
 
   path = computed(() => SVG_ICONS[this.name()]);
 }
-

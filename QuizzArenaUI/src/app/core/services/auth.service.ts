@@ -87,9 +87,7 @@ export class AuthService {
     }
 
     try {
-      return this.#jwtHelper.decodeToken<KeycloakAccessTokenClaims>(
-        token,
-      );
+      return this.#jwtHelper.decodeToken<KeycloakAccessTokenClaims>(token);
     } catch {
       return null;
     }

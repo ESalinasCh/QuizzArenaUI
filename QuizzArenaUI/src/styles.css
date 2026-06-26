@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Dark mode manual usando la clase .dark en el html */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -92,7 +92,8 @@
   /* =========================
      FONT
   ========================= */
-  --font-main: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-main:
+    'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* =========================

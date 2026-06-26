@@ -1,11 +1,11 @@
 <div class="relative">
-
   <button
-    (click)="toggle();$event.stopPropagation()"
+    (click)="toggle(); $event.stopPropagation()"
     class="flex items-center gap-2 px-3 py-2 rounded-button hover:bg-light-surface-alt dark:hover:bg-dark-surface-alt transition-colors duration-200"
     [attr.aria-expanded]="isOpened()"
     i18n-aria-label="Aria label for user menu button"
-    aria-label="User menu">
+    aria-label="User menu"
+  >
     <div class="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center">
       <qz-icon name="user" class="w-4 h-4 text-primary" />
     </div>
@@ -14,14 +14,23 @@
         {{ currentUser()?.username }}
       </span>
     }
-    <qz-icon name="chevron-down" class="w-4 h-4 text-light-text-secondary dark:text-dark-text-secondary hidden sm:block" />
+    <qz-icon
+      name="chevron-down"
+      class="w-4 h-4 text-light-text-secondary dark:text-dark-text-secondary hidden sm:block"
+    />
   </button>
 
   @if (isOpened()) {
-    <div class="absolute right-0 top-full mt-2 w-52 rounded-card bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border shadow-card z-50">
-
+    <div
+      class="absolute right-0 top-full mt-2 w-52 rounded-card bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border shadow-card z-50"
+    >
       <div class="px-4 py-3 border-b border-light-border dark:border-dark-border">
-        <p i18n="User menu signed in as label" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Signed in as</p>
+        <p
+          i18n="User menu signed in as label"
+          class="text-xs text-light-text-secondary dark:text-dark-text-secondary"
+        >
+          Signed in as
+        </p>
         <p class="text-sm font-semibold text-light-text dark:text-dark-text truncate">
           {{ currentUser()?.username ?? 'User' }}
         </p>
@@ -33,13 +42,12 @@
       <div class="p-2">
         <button
           (click)="logout()"
-          class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-danger-text-light dark:text-danger-text-dark hover:bg-danger-bg-light dark:hover:bg-danger-bg-dark transition-colors duration-200">
+          class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-danger-text-light dark:text-danger-text-dark hover:bg-danger-bg-light dark:hover:bg-danger-bg-dark transition-colors duration-200"
+        >
           <qz-icon name="logout" class="w-4 h-4" />
           <ng-container i18n="User menu sign out button">Sign out</ng-container>
         </button>
       </div>
-
     </div>
   }
-
 </div>

@@ -15,9 +15,7 @@ export class RecentQuizMeta {
   completedAtLabel = input.required<string>();
   status = input<RecentQuizMetaStatus>('warning');
 
-  readonly iconName = computed<IconName>(() =>
-    this.status() === 'passed' ? 'check' : 'warning',
-  );
+  readonly iconName = computed<IconName>(() => (this.status() === 'passed' ? 'check' : 'warning'));
 
   readonly metaClasses = computed(() =>
     this.status() === 'passed'

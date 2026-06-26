@@ -28,7 +28,6 @@ export class Badge {
       'bg-warning-bg-light text-warning-text-light dark:bg-warning-bg-dark dark:text-warning-text-dark',
     danger:
       'bg-danger-bg-light text-danger-text-light dark:bg-danger-bg-dark dark:text-danger-text-dark',
-    info:
-      'bg-info-bg-light text-info dark:bg-info-bg-dark dark:text-white',
+    info: 'bg-info-bg-light text-info dark:bg-info-bg-dark dark:text-white',
   };
 }

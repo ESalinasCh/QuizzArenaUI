@@ -55,4 +55,3 @@ export function createAppConfig(config: AppConfig): ApplicationConfig {
     ],
   };
 }
-

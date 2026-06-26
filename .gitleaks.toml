@@ -1,0 +1,22 @@
+title = "QuizzArenaUI gitleaks configuration"
+
+# Build on top of the bundled default ruleset rather than replacing it.
+[extend]
+  useDefault = true
+
+# ── Global allowlist ──────────────────────────────────────────────────────────
+# Entries here suppress known false positives across the entire scan.
+# Each entry MUST include a comment explaining why it is safe to allow.
+
+[allowlist]
+  description = "Non-source paths and known-safe values that are not real secrets"
+
+  paths = [
+    # Generated / vendored files — not hand-authored source. npm lockfiles in
+    # particular contain integrity hashes that can trip entropy-based rules.
+    '''package-lock.json''',
+    '''(^|/)node_modules/''',
+    '''(^|/)dist/''',
+    '''(^|/)\.angular/''',
+    '''(^|/)coverage/''',
+  ]

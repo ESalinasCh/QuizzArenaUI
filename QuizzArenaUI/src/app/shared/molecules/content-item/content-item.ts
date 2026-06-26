@@ -15,11 +15,9 @@ export class ContentItem {
   status = input.required<ContentStatus>();
   info = input.required<string>();
 
-  statusLabel = computed(() =>
-    this.status() === 'processed' ? 'Procesado' : 'En proceso',
-  );
+  statusLabel = computed(() => (this.status() === 'processed' ? 'Procesado' : 'En proceso'));
 
-  statusVariant = computed((): BadgeVariant =>
-    this.status() === 'processed' ? 'success' : 'warning',
+  statusVariant = computed(
+    (): BadgeVariant => (this.status() === 'processed' ? 'success' : 'warning'),
   );
 }

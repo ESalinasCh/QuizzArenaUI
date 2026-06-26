@@ -53,7 +53,7 @@ export class Sidebar {
   ];
 
   canShowItem(item: SidebarNavItem): boolean {
-    return item.roles.some(role => this.#authService.hasRole(role));
+    return item.roles.some((role) => this.#authService.hasRole(role));
   }
 
   onCloseClick(): void {

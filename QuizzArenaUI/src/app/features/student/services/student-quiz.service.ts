@@ -58,13 +58,12 @@ export class StudentQuizService {
       matches: this.#http.get<AvailableMatchResponse[]>(
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
       ),
-      play: this.#http.post<CreatePlayResponse>(
-        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.plays),
-        { matchId: quizId },
-      ),
+      play: this.#http.post<CreatePlayResponse>(this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.plays), {
+        matchId: quizId,
+      }),
     }).pipe(
       map(({ matches, play }) => {
-        const match = matches.find(item => item.id === quizId);
+        const match = matches.find((item) => item.id === quizId);
 
         if (!match) {
           throw new Error(`No match found for quiz ${quizId}`);
@@ -95,22 +94,18 @@ export class StudentQuizService {
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttemptDetail(attemptId)),
       ),
       metadata: this.#getAttemptMetadata(attemptId),
-    }).pipe(
-      map(({ response, metadata }) => mapMatchAttemptDetailResponse(response, metadata)),
-    );
+    }).pipe(map(({ response, metadata }) => mapMatchAttemptDetailResponse(response, metadata)));
   }
 
   getMatchAttemptResultSummary(attemptId: string): Observable<StudentQuizResultSummary> {
     const cachedSubmitResult = this.#submitResultCache.get(attemptId);
 
     if (!cachedSubmitResult) {
-      return throwError(
-        () => new Error(`No submit result found for attempt ${attemptId}`),
-      );
+      return throwError(() => new Error(`No submit result found for attempt ${attemptId}`));
     }
 
     return this.#getAttemptMetadata(attemptId).pipe(
-      map(metadata => mapSubmitMatchAttemptResponse(cachedSubmitResult, metadata)),
+      map((metadata) => mapSubmitMatchAttemptResponse(cachedSubmitResult, metadata)),
     );
   }
 
@@ -123,7 +118,7 @@ export class StudentQuizService {
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.submitMatchAttempt(attemptId)),
         request,
       )
-      .pipe(tap(response => this.#submitResultCache.set(response.attemptId, response)));
+      .pipe(tap((response) => this.#submitResultCache.set(response.attemptId, response)));
   }
 
   #getAttemptMetadata(attemptId: string): Observable<{ title: string; subtitle: string }> {
@@ -136,8 +131,8 @@ export class StudentQuizService {
     return this.#http
       .get<MatchAttemptSummaryResponse[]>(this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts))
       .pipe(
-        map(attempts => {
-          const attempt = attempts.find(item => item.id === attemptId);
+        map((attempts) => {
+          const attempt = attempts.find((item) => item.id === attemptId);
 
           if (!attempt) {
             throw new Error(`No quiz metadata found for attempt ${attemptId}`);

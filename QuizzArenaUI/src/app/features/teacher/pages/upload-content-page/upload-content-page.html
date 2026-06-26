@@ -10,7 +10,10 @@
       <qz-icon name="arrow-left" class="h-5 w-5" />
     </button>
 
-    <h1 i18n="Upload content page title" class="text-xl font-extrabold text-primary dark:text-dark-text sm:text-2xl">
+    <h1
+      i18n="Upload content page title"
+      class="text-xl font-extrabold text-primary dark:text-dark-text sm:text-2xl"
+    >
       Upload Content
     </h1>
   </header>
@@ -51,7 +54,10 @@
     } @else {
       <p class="text-sm font-semibold text-primary">
         <ng-container i18n="File drop zone tap to select">Tap to select</ng-container>
-        <span class="block font-bold text-light-text dark:text-dark-text" i18n="File drop zone drag hint">
+        <span
+          class="block font-bold text-light-text dark:text-dark-text"
+          i18n="File drop zone drag hint"
+        >
           or drag a file
         </span>
       </p>
@@ -62,7 +68,10 @@
   </label>
 
   <form class="flex flex-col gap-4" (ngSubmit)="submit()">
-    <h2 i18n="Upload content form section title" class="text-sm font-bold uppercase tracking-wide text-light-text dark:text-dark-text">
+    <h2
+      i18n="Upload content form section title"
+      class="text-sm font-bold uppercase tracking-wide text-light-text dark:text-dark-text"
+    >
       Content details
     </h2>
 
@@ -115,11 +124,21 @@
       </div>
     </div>
 
-    <div class="flex flex-col gap-3 rounded-2xl border border-light-border-strong bg-light-surface px-5 py-4 dark:border-dark-border-strong dark:bg-dark-surface-alt">
+    <div
+      class="flex flex-col gap-3 rounded-2xl border border-light-border-strong bg-light-surface px-5 py-4 dark:border-dark-border-strong dark:bg-dark-surface-alt"
+    >
       <div class="flex items-center justify-between">
         <div class="flex flex-col gap-0.5">
-          <span i18n="Allow review toggle label" class="text-sm font-semibold text-light-text dark:text-dark-text">Allow review</span>
-          <span i18n="Allow review toggle description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Students will be able to take auto-generated quizzes from this class content</span>
+          <span
+            i18n="Allow review toggle label"
+            class="text-sm font-semibold text-light-text dark:text-dark-text"
+            >Allow review</span
+          >
+          <span
+            i18n="Allow review toggle description"
+            class="text-xs text-light-text-secondary dark:text-dark-text-secondary"
+            >Students will be able to take auto-generated quizzes from this class content</span
+          >
         </div>
         <button
           type="button"
@@ -140,11 +159,18 @@
 
       @if (reviewEnabled()) {
         <div class="flex flex-col gap-4 border-t border-light-border pt-4 dark:border-dark-border">
-
           <div class="flex items-center justify-between gap-4">
             <div class="flex flex-col gap-0.5">
-              <span i18n="Question count setting label" class="text-sm font-semibold text-light-text dark:text-dark-text">Number of questions</span>
-              <span i18n="Question count setting description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Questions per review session</span>
+              <span
+                i18n="Question count setting label"
+                class="text-sm font-semibold text-light-text dark:text-dark-text"
+                >Number of questions</span
+              >
+              <span
+                i18n="Question count setting description"
+                class="text-xs text-light-text-secondary dark:text-dark-text-secondary"
+                >Questions per review session</span
+              >
             </div>
             <input
               type="number"
@@ -159,8 +185,16 @@
 
           <div class="flex items-center justify-between">
             <div class="flex flex-col gap-0.5">
-              <span i18n="Show correct answers setting label" class="text-sm font-semibold text-light-text dark:text-dark-text">Show correct answers</span>
-              <span i18n="Show correct answers setting description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">At the end of the review the student sees what they got right</span>
+              <span
+                i18n="Show correct answers setting label"
+                class="text-sm font-semibold text-light-text dark:text-dark-text"
+                >Show correct answers</span
+              >
+              <span
+                i18n="Show correct answers setting description"
+                class="text-xs text-light-text-secondary dark:text-dark-text-secondary"
+                >At the end of the review the student sees what they got right</span
+              >
             </div>
             <button
               type="button"
@@ -181,8 +215,16 @@
 
           <div class="flex items-center justify-between">
             <div class="flex flex-col gap-0.5">
-              <span i18n="Shuffle questions setting label" class="text-sm font-semibold text-light-text dark:text-dark-text">Random order</span>
-              <span i18n="Shuffle questions setting description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Questions are shuffled in each review</span>
+              <span
+                i18n="Shuffle questions setting label"
+                class="text-sm font-semibold text-light-text dark:text-dark-text"
+                >Random order</span
+              >
+              <span
+                i18n="Shuffle questions setting description"
+                class="text-xs text-light-text-secondary dark:text-dark-text-secondary"
+                >Questions are shuffled in each review</span
+              >
             </div>
             <button
               type="button"
@@ -200,7 +242,6 @@
               ></span>
             </button>
           </div>
-
         </div>
       }
     </div>

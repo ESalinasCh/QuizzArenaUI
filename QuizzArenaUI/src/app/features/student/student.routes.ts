@@ -8,6 +8,10 @@ export const studentRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'quizzes' },
   { path: 'quizzes', component: StudentQuizListPage },
   { path: 'quizzes/:quizId/start', component: StudentQuizSessionPage, data: { immersive: true } },
-  { path: 'quizzes/:quizId/questions', component: StudentQuizQuestionPage, data: { immersive: true } },
+  {
+    path: 'quizzes/:quizId/questions',
+    component: StudentQuizQuestionPage,
+    data: { immersive: true },
+  },
   { path: 'quizzes/:quizId/results', component: StudentQuizResultsPage },
 ];

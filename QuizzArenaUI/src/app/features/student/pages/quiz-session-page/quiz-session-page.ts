@@ -18,9 +18,9 @@ export class StudentQuizSessionPage {
 
   readonly quiz = toSignal(
     this.#route.paramMap.pipe(
-      map(params => params.get('quizId')),
+      map((params) => params.get('quizId')),
       filter((quizId): quizId is string => quizId !== null),
-      switchMap(quizId => this.#studentQuizService.getQuizStart(quizId)),
+      switchMap((quizId) => this.#studentQuizService.getQuizStart(quizId)),
     ),
   );
 

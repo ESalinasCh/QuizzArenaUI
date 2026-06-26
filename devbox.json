@@ -3,7 +3,10 @@
   "packages": [
     "just@latest",
     "nodejs@latest",
-    "gh@latest"
+    "gh@latest",
+    "jq@latest",
+    "yq@latest",
+    "git@latest"
   ],
   "shell": {
     "init_hook": [

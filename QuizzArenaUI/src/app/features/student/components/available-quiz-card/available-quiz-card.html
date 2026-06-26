@@ -1,8 +1,4 @@
-<qz-quiz-card
-  [title]="quiz().title"
-  [actionLabel]="startActionLabel"
-  (actionClick)="emitStart()"
->
+<qz-quiz-card [title]="quiz().title" [actionLabel]="startActionLabel" (actionClick)="emitStart()">
   <qz-quiz-card-meta
     [questionCount]="quiz().questionCount"
     [statusLabel]="statusLabel()"

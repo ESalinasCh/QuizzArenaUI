@@ -62,10 +62,10 @@ export function mapQuizStartResponse(
     professorName: match.professorName,
     questionCount: match.questionCount,
     timeLimitMinutes: match.duration,
-    questions: play.questions.map(question => ({
+    questions: play.questions.map((question) => ({
       id: question.id,
       statement: question.statement,
-      options: question.options.map(option => ({
+      options: question.options.map((option) => ({
         id: option.id,
         label: option.label,
       })),
@@ -83,7 +83,9 @@ export function mapMatchAttemptDetailResponse(
     subtitle: metadata.subtitle,
     score: response.score,
     questions: response.questions.map((question, index) => {
-      const selectedOption = question.options.find(option => option.id === question.selectedOptionId);
+      const selectedOption = question.options.find(
+        (option) => option.id === question.selectedOptionId,
+      );
 
       return {
         id: question.questionId,

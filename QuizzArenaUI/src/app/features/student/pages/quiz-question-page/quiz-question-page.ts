@@ -25,9 +25,9 @@ export class StudentQuizQuestionPage {
 
   readonly quiz = toSignal(
     this.#route.paramMap.pipe(
-      map(params => params.get('quizId')),
+      map((params) => params.get('quizId')),
       filter((quizId): quizId is string => quizId !== null),
-      switchMap(quizId => this.#studentQuizService.getQuizStart(quizId)),
+      switchMap((quizId) => this.#studentQuizService.getQuizStart(quizId)),
     ),
   );
 
@@ -92,18 +92,12 @@ export class StudentQuizQuestionPage {
     this.#studentQuizService
       .submitMatchAttempt(attemptId, { answers: this.answers() })
       .pipe(
-        switchMap(response =>
-          from(
-            this.#router.navigate([
-              '/student/quizzes',
-              response.attemptId,
-              'results',
-            ]),
-          ),
+        switchMap((response) =>
+          from(this.#router.navigate(['/student/quizzes', response.attemptId, 'results'])),
         ),
       )
       .subscribe({
-        next: navigated => {
+        next: (navigated) => {
           if (!navigated) {
             this.isSubmitting.set(false);
           }
@@ -115,8 +109,8 @@ export class StudentQuizQuestionPage {
   }
 
   #saveAnswer(questionId: string, selectedOptionId: string): void {
-    this.answers.update(answers => [
-      ...answers.filter(answer => answer.questionId !== questionId),
+    this.answers.update((answers) => [
+      ...answers.filter((answer) => answer.questionId !== questionId),
       { questionId, selectedOptionId },
     ]);
   }
