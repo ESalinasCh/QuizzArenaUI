@@ -23,7 +23,7 @@ export class MainLayout {
   constructor() {
     this.#router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         startWith(null),
         takeUntilDestroyed(this.#destroyRef),
       )

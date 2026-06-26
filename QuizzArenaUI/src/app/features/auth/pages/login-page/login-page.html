@@ -1,16 +1,15 @@
 <div class="min-h-screen bg-light-bg flex flex-col lg:flex-row">
-
   <!-- Left panel: desktop only -->
   <div class="login-panel hidden lg:flex lg:w-1/2 flex-col relative overflow-hidden">
-
     <!-- Decorative circles -->
     <div class="absolute top-[-80px] left-[-80px] w-72 h-72 rounded-full opacity-10 bg-white"></div>
-    <div class="absolute bottom-[-60px] right-[-60px] w-56 h-56 rounded-full opacity-10 bg-white"></div>
+    <div
+      class="absolute bottom-[-60px] right-[-60px] w-56 h-56 rounded-full opacity-10 bg-white"
+    ></div>
     <div class="absolute top-1/2 right-[-40px] w-32 h-32 rounded-full opacity-10 bg-white"></div>
 
     <!-- Content -->
     <div class="relative flex flex-col h-full p-12 z-10">
-
       <!-- Logo -->
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
@@ -25,7 +24,8 @@
           src="images/login/login-illustration.svg"
           i18n-alt="Login illustration alt text"
           alt="QuizArena illustration"
-          class="w-full max-w-md drop-shadow-xl" />
+          class="w-full max-w-md drop-shadow-xl"
+        />
       </div>
 
       <!-- Tagline -->
@@ -46,28 +46,27 @@
             [imageSrc]="feature.imageSrc"
             [imageAlt]="feature.imageAlt"
             [title]="feature.title"
-            [description]="feature.description" />
+            [description]="feature.description"
+          />
         }
       </div>
-
     </div>
   </div>
 
   <!-- Right panel: login content -->
   <div class="flex-1 flex flex-col items-center justify-center px-6 py-10 overflow-y-auto">
-
     <div class="w-full flex justify-end px-2 mb-2">
       <qz-language-selector />
     </div>
 
     <div class="w-full max-w-sm flex flex-col items-center gap-6">
-
       <div class="lg:hidden w-full flex items-center justify-center py-4">
         <img
           src="images/login/login-illustration.svg"
           i18n-alt="Login illustration alt text"
           alt="QuizArena illustration"
-          class="w-72 max-w-full" />
+          class="w-72 max-w-full"
+        />
       </div>
 
       <div class="w-full rounded-2xl bg-purple-light px-6 py-4 text-center">
@@ -96,11 +95,10 @@
             [imageSrc]="feature.imageSrc"
             [imageAlt]="feature.imageAlt"
             [title]="feature.title"
-            [description]="feature.description" />
+            [description]="feature.description"
+          />
         }
       </div>
-
     </div>
   </div>
-
 </div>

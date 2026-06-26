@@ -1,4 +1,6 @@
-<div class="flex h-screen w-screen overflow-hidden bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text transition-colors duration-200">
+<div
+  class="flex h-screen w-screen overflow-hidden bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text transition-colors duration-200"
+>
   @if (!isImmersiveRoute()) {
     <qz-sidebar [isOpen]="isSidebarOpen()" (closeSidebar)="closeSidebar()" />
   }
@@ -8,10 +10,10 @@
       <qz-navbar (toggleSidebar)="toggleSidebar()" />
     }
 
-    <main class="flex-1 overflow-y-auto {{ !isImmersiveRoute() ? 'px-6 pb-6 lg:px-8 lg:pb-8' : '' }}">
-      <div
-        class="{{ !isImmersiveRoute() ? 'py-4 md:py-8' : '' }}"
-      >
+    <main
+      class="flex-1 overflow-y-auto {{ !isImmersiveRoute() ? 'px-6 pb-6 lg:px-8 lg:pb-8' : '' }}"
+    >
+      <div class="{{ !isImmersiveRoute() ? 'py-4 md:py-8' : '' }}">
         <router-outlet />
       </div>
     </main>

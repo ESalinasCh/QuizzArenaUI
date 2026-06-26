@@ -24,11 +24,11 @@ export class LanguageSelector {
   ];
 
   get currentLanguage(): Language {
-    return this.languages.find(l => this.#localeId.startsWith(l.code)) ?? this.languages[0];
+    return this.languages.find((l) => this.#localeId.startsWith(l.code)) ?? this.languages[0];
   }
 
   toggle(): void {
-    this.isOpen.update(v => !v);
+    this.isOpen.update((v) => !v);
   }
 
   close(): void {

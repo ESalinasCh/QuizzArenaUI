@@ -13,9 +13,7 @@ import { RecentContent } from '../models/teacher-dashboard.model';
 @Injectable({ providedIn: 'root' })
 export class TeacherContentService {
   getSubjects(): Observable<Subject[]> {
-    return of(TEACHER_COURSES_RESPONSE_MOCK).pipe(
-      map(courses => courses.map(mapCourseResponse)),
-    );
+    return of(TEACHER_COURSES_RESPONSE_MOCK).pipe(map((courses) => courses.map(mapCourseResponse)));
   }
 
   uploadContent(request: ContentUploadRequest): Observable<RecentContent> {
@@ -25,7 +23,7 @@ export class TeacherContentService {
     );
 
     return of(response).pipe(
-      map(uploaded =>
+      map((uploaded) =>
         mapTeacherContentResponse({
           ...uploaded,
           questionCount: null,

@@ -1,12 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 export type ButtonSize = 'large' | 'medium' | 'small' | 'icon' | 'action';
-export type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'danger'
-  | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'ghost';
 
 export type ButtonType = 'button' | 'submit' | 'reset';
 
@@ -52,8 +47,7 @@ export class Button {
   };
 
   readonly #variantClasses: Record<ButtonVariant, string> = {
-    primary:
-      'bg-primary text-white shadow-button hover:bg-primary-hover hover:shadow-card-hover',
+    primary: 'bg-primary text-white shadow-button hover:bg-primary-hover hover:shadow-card-hover',
 
     secondary:
       'border border-light-border bg-light-surface-alt text-light-text hover:border-primary hover:bg-primary-light hover:text-primary ' +

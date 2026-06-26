@@ -16,7 +16,7 @@ export class UserMenu {
   readonly isOpened = signal(false);
 
   toggle(): void {
-    this.isOpened.update(v => !v);
+    this.isOpened.update((v) => !v);
   }
 
   logout(): void {

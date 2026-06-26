@@ -1,19 +1,14 @@
 <section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
-  <h1 i18n="Teacher dashboard welcome heading" class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
+  <h1
+    i18n="Teacher dashboard welcome heading"
+    class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl"
+  >
     Welcome, {{ displayName() }}
   </h1>
 
   <div class="mx-auto flex w-full max-w-[480px] justify-center gap-4">
-    <qz-stat-card
-      [label]="quizzesLabel"
-      [value]="dashboard().quizCount"
-      variant="blue"
-    />
-    <qz-stat-card
-      [label]="publishedLabel"
-      [value]="dashboard().publishedCount"
-      variant="green"
-    />
+    <qz-stat-card [label]="quizzesLabel" [value]="dashboard().quizCount" variant="blue" />
+    <qz-stat-card [label]="publishedLabel" [value]="dashboard().publishedCount" variant="green" />
   </div>
 
   <qz-button
@@ -28,17 +23,16 @@
   </qz-button>
 
   <div class="flex flex-col gap-4">
-    <h2 i18n="Teacher dashboard recent content heading" class="text-base font-bold text-light-text dark:text-dark-text">
+    <h2
+      i18n="Teacher dashboard recent content heading"
+      class="text-base font-bold text-light-text dark:text-dark-text"
+    >
       Recent Content
     </h2>
 
     <div class="flex flex-col gap-3">
       @for (item of dashboard().recentContent; track item.id) {
-        <app-content-item
-          [title]="item.title"
-          [status]="item.status"
-          [info]="item.info"
-        />
+        <app-content-item [title]="item.title" [status]="item.status" [info]="item.info" />
       }
     </div>
   </div>

@@ -22,7 +22,7 @@ export class StudentQuizResultsPage {
   readonly correctAnswersLabel = $localize`:Student quiz correct answers stat label:Correct`;
 
   readonly #attemptId$ = this.#route.paramMap.pipe(
-    map(params => params.get('quizId')),
+    map((params) => params.get('quizId')),
     filter((attemptId): attemptId is string => attemptId !== null),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
@@ -31,7 +31,7 @@ export class StudentQuizResultsPage {
 
   readonly summary = toSignal(
     this.#attemptId$.pipe(
-      switchMap(attemptId =>
+      switchMap((attemptId) =>
         !this.showDetails()
           ? this.#studentQuizService.getMatchAttemptResultSummary(attemptId)
           : EMPTY,
@@ -41,7 +41,7 @@ export class StudentQuizResultsPage {
 
   readonly review = toSignal(
     this.#attemptId$.pipe(
-      switchMap(attemptId => this.#studentQuizService.getMatchAttemptDetail(attemptId)),
+      switchMap((attemptId) => this.#studentQuizService.getMatchAttemptDetail(attemptId)),
     ),
   );
 

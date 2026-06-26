@@ -123,7 +123,10 @@ export const STUDENT_PLAY_RESPONSE_MOCKS: Record<string, CreatePlayResponse> = {
   },
 };
 
-export const STUDENT_MATCH_ATTEMPT_DETAIL_RESPONSE_MOCKS: Record<string, MatchAttemptDetailResponse> = {
+export const STUDENT_MATCH_ATTEMPT_DETAIL_RESPONSE_MOCKS: Record<
+  string,
+  MatchAttemptDetailResponse
+> = {
   'attempt-project-1-week-7': {
     id: 'attempt-project-1-week-7',
     score: 80,
@@ -135,7 +138,11 @@ export const STUDENT_MATCH_ATTEMPT_DETAIL_RESPONSE_MOCKS: Record<string, MatchAt
         selectedOptionId: 'q1-a',
         isCorrect: true,
         options: [
-          { id: 'q1-a', description: 'Controlar la consistencia de un cluster de entidades', isCorrect: true },
+          {
+            id: 'q1-a',
+            description: 'Controlar la consistencia de un cluster de entidades',
+            isCorrect: true,
+          },
           { id: 'q1-b', description: 'Servir como base de datos principal', isCorrect: false },
           { id: 'q1-c', description: 'Definir las rutas de la API', isCorrect: false },
           { id: 'q1-d', description: 'Gestionar la autenticacion de usuarios', isCorrect: false },
@@ -159,7 +166,11 @@ export const STUDENT_MATCH_ATTEMPT_DETAIL_RESPONSE_MOCKS: Record<string, MatchAt
         selectedOptionId: 'q3-a',
         isCorrect: true,
         options: [
-          { id: 'q3-a', description: 'Un limite donde un modelo tiene significado claro', isCorrect: true },
+          {
+            id: 'q3-a',
+            description: 'Un limite donde un modelo tiene significado claro',
+            isCorrect: true,
+          },
           { id: 'q3-b', description: 'Un tipo de base de datos', isCorrect: false },
           { id: 'q3-c', description: 'Un framework de testing', isCorrect: false },
           { id: 'q3-d', description: 'Un patron de diseno visual', isCorrect: false },
@@ -171,7 +182,11 @@ export const STUDENT_MATCH_ATTEMPT_DETAIL_RESPONSE_MOCKS: Record<string, MatchAt
         selectedOptionId: 'q4-a',
         isCorrect: true,
         options: [
-          { id: 'q4-a', description: 'El lenguaje compartido entre negocio y equipo tecnico', isCorrect: true },
+          {
+            id: 'q4-a',
+            description: 'El lenguaje compartido entre negocio y equipo tecnico',
+            isCorrect: true,
+          },
           { id: 'q4-b', description: 'El idioma del navegador', isCorrect: false },
           { id: 'q4-c', description: 'Un framework de frontend', isCorrect: false },
           { id: 'q4-d', description: 'Una libreria de testing', isCorrect: false },
@@ -202,7 +217,11 @@ export const STUDENT_MATCH_ATTEMPT_DETAIL_RESPONSE_MOCKS: Record<string, MatchAt
         selectedOptionId: 'q1-b',
         isCorrect: false,
         options: [
-          { id: 'q1-a', description: 'Un limite donde un modelo tiene significado claro', isCorrect: true },
+          {
+            id: 'q1-a',
+            description: 'Un limite donde un modelo tiene significado claro',
+            isCorrect: true,
+          },
           { id: 'q1-b', description: 'Un tipo de base de datos', isCorrect: false },
           { id: 'q1-c', description: 'Un framework de testing', isCorrect: false },
           { id: 'q1-d', description: 'Un patron de diseno visual', isCorrect: false },
@@ -212,7 +231,10 @@ export const STUDENT_MATCH_ATTEMPT_DETAIL_RESPONSE_MOCKS: Record<string, MatchAt
   },
 };
 
-export const STUDENT_SUBMIT_MATCH_ATTEMPT_RESPONSE_MOCKS: Record<string, SubmitMatchAttemptResponse> = {
+export const STUDENT_SUBMIT_MATCH_ATTEMPT_RESPONSE_MOCKS: Record<
+  string,
+  SubmitMatchAttemptResponse
+> = {
   'attempt-project-1-review': {
     attemptId: 'attempt-project-1-review',
     scorePercentage: 80,

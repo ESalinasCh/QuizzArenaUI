@@ -12,7 +12,7 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
     return true;
   }
 
-  if (requiredRoles.some(role => authService.hasRole(role))) {
+  if (requiredRoles.some((role) => authService.hasRole(role))) {
     return true;
   }
 
