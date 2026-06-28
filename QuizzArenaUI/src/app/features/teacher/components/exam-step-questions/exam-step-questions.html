@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-4">
+﻿<div class="flex flex-col gap-4">
 
   <div class="flex items-center justify-between rounded-xl bg-primary-light px-4 py-3 dark:bg-dark-surface-alt">
     <span class="text-sm text-light-text dark:text-dark-text">
@@ -28,19 +28,29 @@
     }
   </div>
 
-  <div class="flex gap-3">
+  <div class="flex flex-col gap-3 sm:flex-row">
     <qz-button size="large" variant="secondary" [fullWidth]="true" [ariaLabel]="backAriaLabel" (click)="back.emit()">
       <span i18n="Exam step questions back button">Back</span>
+    </qz-button>
+    <qz-button
+      size="large"
+      variant="secondary"
+      [fullWidth]="true"
+      [disabled]="!canContinue()"
+      [ariaLabel]="saveToBankAriaLabel"
+      (click)="submitSaveToBank()"
+    >
+      <span i18n="Exam step questions save to bank button">Save to Exam Bank</span>
     </qz-button>
     <qz-button
       size="large"
       variant="primary"
       [fullWidth]="true"
       [disabled]="!canContinue()"
-      [ariaLabel]="nextAriaLabel"
-      (click)="submit()"
+      [ariaLabel]="publishAriaLabel"
+      (click)="submitPublish()"
     >
-      <span i18n="Exam step questions next button">Next</span>
+      <span i18n="Exam step questions publish button">Publish Exam</span>
     </qz-button>
   </div>
 

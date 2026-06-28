@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { ExamQuestionCard } from '../exam-question-card/exam-question-card';
 import { Question } from '../../models/exam.model';
@@ -12,11 +12,13 @@ import { Question } from '../../models/exam.model';
 export class ExamStepQuestions {
   questions = input.required<Question[]>();
 
-  next = output<Set<string>>();
+  publish = output<Set<string>>();
+  saveToBank = output<Set<string>>();
   back = output<void>();
 
   readonly backAriaLabel = $localize`:Exam step questions back button aria label:Back`;
-  readonly nextAriaLabel = $localize`:Exam step questions next button aria label:Next`;
+  readonly publishAriaLabel = $localize`:Exam step questions publish button aria label:Publish exam`;
+  readonly saveToBankAriaLabel = $localize`:Exam step questions save to bank button aria label:Save to exam bank`;
 
   readonly removedIds = signal<Set<string>>(new Set());
   readonly selectedIds = signal<Set<string>>(new Set());
@@ -26,7 +28,6 @@ export class ExamStepQuestions {
   );
 
   readonly selectedCount = computed(() => this.selectedIds().size);
-
   readonly canContinue = computed(() => this.selectedIds().size > 0);
 
   isSelected(id: string): boolean {
@@ -50,8 +51,13 @@ export class ExamStepQuestions {
     });
   }
 
-  submit(): void {
+  submitPublish(): void {
     if (!this.canContinue()) return;
-    this.next.emit(new Set(this.selectedIds()));
+    this.publish.emit(new Set(this.selectedIds()));
+  }
+
+  submitSaveToBank(): void {
+    if (!this.canContinue()) return;
+    this.saveToBank.emit(new Set(this.selectedIds()));
   }
 }

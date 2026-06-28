@@ -1,17 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
-import { ExamStepConfig } from '../../components/exam-step-config/exam-step-config';
-import { ExamConfig } from '../../models/exam.model';
 
-type Step = 1 | 2 | 3;
+type Step = 1 | 2;
 
 @Component({
   selector: 'app-teacher-create-exam-page',
-  imports: [ExamStepInfo, ExamStepQuestions, ExamStepConfig],
+  imports: [ExamStepInfo, ExamStepQuestions],
   templateUrl: './create-exam-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -22,7 +20,6 @@ export class TeacherCreateExamPage {
   readonly currentStep = signal<Step>(1);
 
   readonly #examInfo = signal<ExamInfoData | null>(null);
-  readonly #selectedQuestionIds = signal<Set<string>>(new Set());
 
   readonly #allClasses = toSignal(this.#examService.getClasses(), { initialValue: [] });
   readonly #allQuestions = toSignal(this.#examService.getQuestions(), { initialValue: [] });
@@ -40,24 +37,27 @@ export class TeacherCreateExamPage {
     this.currentStep.set(2);
   }
 
-  onQuestionsNext(selectedIds: Set<string>): void {
-    this.#selectedQuestionIds.set(selectedIds);
-    this.currentStep.set(3);
-  }
-
-  onConfigNext(config: ExamConfig): void {
+  onQuestionsPublish(selectedIds: Set<string>): void {
     const info = this.#examInfo();
     if (!info) return;
-
-    this.#examService
-      .createExam({
+    void this.#router.navigate(['/teacher/exams/publish'], {
+      state: {
         title: info.title,
         description: info.description,
-        questionIds: [...this.#selectedQuestionIds()],
-        config,
-      })
+        classIds: info.classIds,
+        questionIds: [...selectedIds],
+        from: 'create',
+      },
+    });
+  }
+
+  onQuestionsSaveToBank(selectedIds: Set<string>): void {
+    const info = this.#examInfo();
+    if (!info) return;
+    this.#examService
+      .saveDraftExam(info.title, info.description, [...selectedIds])
       .subscribe(() => {
-        void this.#router.navigate(['/teacher/dashboard']);
+        void this.#router.navigate(['/teacher/exams/bank']);
       });
   }
 

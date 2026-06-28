@@ -1,4 +1,4 @@
-<section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
+﻿<section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
 
   <header class="flex items-center gap-4">
     <button
@@ -14,12 +14,11 @@
     </button>
     <div class="flex flex-col gap-0.5">
       <h1 i18n="Create exam page heading" class="text-xl font-extrabold text-light-text dark:text-dark-text">
-        Exam creation
+        Create Exam
       </h1>
       <div class="flex gap-1 text-xs text-light-text-secondary dark:text-dark-text-secondary">
         <span [class.text-primary]="currentStep() === 1" [class.font-bold]="currentStep() === 1" class="font-medium transition-colors" i18n="Create exam step info breadcrumb">Info ›</span>
-        <span [class.text-primary]="currentStep() === 2" [class.font-bold]="currentStep() === 2" class="font-medium transition-colors" i18n="Create exam step questions breadcrumb">Questions ›</span>
-        <span [class.text-primary]="currentStep() === 3" [class.font-bold]="currentStep() === 3" class="font-medium transition-colors" i18n="Create exam step config breadcrumb">Settings</span>
+        <span [class.text-primary]="currentStep() === 2" [class.font-bold]="currentStep() === 2" class="font-medium transition-colors" i18n="Create exam step questions breadcrumb">Questions</span>
       </div>
     </div>
   </header>
@@ -34,14 +33,8 @@
   @if (currentStep() === 2) {
     <qz-exam-step-questions
       [questions]="filteredQuestions()"
-      (next)="onQuestionsNext($event)"
-      (back)="goBack()"
-    />
-  }
-
-  @if (currentStep() === 3) {
-    <qz-exam-step-config
-      (next)="onConfigNext($event)"
+      (publish)="onQuestionsPublish($event)"
+      (saveToBank)="onQuestionsSaveToBank($event)"
       (back)="goBack()"
     />
   }
