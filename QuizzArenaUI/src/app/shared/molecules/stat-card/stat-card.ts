@@ -17,17 +17,17 @@ export class StatCard {
   protected readonly containerClasses = computed(() => [
     'flex flex-col items-center justify-center gap-1 rounded-2xl px-6 py-5 flex-1',
     this.variantClasses[this.variant()].container,
-  ]);
+  ].join(' '));
 
   protected readonly labelClasses = computed(() => [
     'text-sm font-medium',
     this.variantClasses[this.variant()].label,
-  ]);
+  ].join(' '));
 
   protected readonly valueClasses = computed(() => [
     'text-3xl font-extrabold',
     this.variantClasses[this.variant()].value,
-  ]);
+  ].join(' '));
 
   private readonly variantClasses: Record<
     StatCardVariant,
