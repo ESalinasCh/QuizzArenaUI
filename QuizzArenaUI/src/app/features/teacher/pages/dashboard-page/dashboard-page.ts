@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -49,7 +49,6 @@ export class TeacherDashboardPage {
   async createExam(): Promise<void> {
     await this.#router.navigate(['/teacher/exams/create']);
   }
-<<<<<<< HEAD
 
   async goToExamBank(): Promise<void> {
     await this.#router.navigate(['/teacher/exams/bank']);
@@ -66,6 +65,4 @@ export class TeacherDashboardPage {
       },
     });
   }
-=======
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 }

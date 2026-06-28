@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿import { ClassSourceResponse, ExamResponse, QuestionResponse } from '../api/teacher-exam.contract';
-=======
 import { ClassSourceResponse, ExamResponse, QuestionResponse } from '../api/teacher-exam.contract';
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 
 export const TEACHER_CLASSES_RESPONSE_MOCK: ClassSourceResponse[] = [
   { id: 'source-ddd-1', name: 'DDD - Semana 1' },
@@ -109,7 +105,6 @@ export const TEACHER_QUESTIONS_RESPONSE_MOCK: QuestionResponse[] = [
   },
 ];
 
-<<<<<<< HEAD
 export const TEACHER_EXAMS_MOCK: ExamResponse[] = [
   {
     id: 'exam-draft-1',
@@ -145,26 +140,17 @@ export const TEACHER_EXAMS_MOCK: ExamResponse[] = [
   },
 ];
 
-=======
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 export function buildCreateExamResponseMock(
   title: string,
   description: string,
   questionIds: string[],
-<<<<<<< HEAD
   status: 'draft' | 'published' = 'draft',
-=======
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 ): ExamResponse {
   return {
     id: `exam-${Date.now()}`,
     title,
     description,
-<<<<<<< HEAD
     status,
-=======
-    status: 'draft',
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
     questionIds,
     createdAt: new Date().toISOString(),
   };

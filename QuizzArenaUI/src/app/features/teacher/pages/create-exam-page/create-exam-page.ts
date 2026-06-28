@@ -1,30 +1,15 @@
-<<<<<<< HEAD
-﻿import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-=======
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
-<<<<<<< HEAD
 
 type Step = 1 | 2;
 
 @Component({
   selector: 'app-teacher-create-exam-page',
   imports: [ExamStepInfo, ExamStepQuestions],
-=======
-import { ExamStepConfig } from '../../components/exam-step-config/exam-step-config';
-import { ExamConfig } from '../../models/exam.model';
-
-type Step = 1 | 2 | 3;
-
-@Component({
-  selector: 'app-teacher-create-exam-page',
-  imports: [ExamStepInfo, ExamStepQuestions, ExamStepConfig],
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
   templateUrl: './create-exam-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -35,10 +20,6 @@ export class TeacherCreateExamPage {
   readonly currentStep = signal<Step>(1);
 
   readonly #examInfo = signal<ExamInfoData | null>(null);
-<<<<<<< HEAD
-=======
-  readonly #selectedQuestionIds = signal<Set<string>>(new Set());
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 
   readonly #allClasses = toSignal(this.#examService.getClasses(), { initialValue: [] });
   readonly #allQuestions = toSignal(this.#examService.getQuestions(), { initialValue: [] });
@@ -56,7 +37,6 @@ export class TeacherCreateExamPage {
     this.currentStep.set(2);
   }
 
-<<<<<<< HEAD
   onQuestionsPublish(selectedIds: Set<string>): void {
     const info = this.#examInfo();
     if (!info) return;
@@ -78,26 +58,6 @@ export class TeacherCreateExamPage {
       .saveDraftExam(info.title, info.description, [...selectedIds])
       .subscribe(() => {
         void this.#router.navigate(['/teacher/exams/bank']);
-=======
-  onQuestionsNext(selectedIds: Set<string>): void {
-    this.#selectedQuestionIds.set(selectedIds);
-    this.currentStep.set(3);
-  }
-
-  onConfigNext(config: ExamConfig): void {
-    const info = this.#examInfo();
-    if (!info) return;
-
-    this.#examService
-      .createExam({
-        title: info.title,
-        description: info.description,
-        questionIds: [...this.#selectedQuestionIds()],
-        config,
-      })
-      .subscribe(() => {
-        void this.#router.navigate(['/teacher/dashboard']);
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
       });
   }
 
