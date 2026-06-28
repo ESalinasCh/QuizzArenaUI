@@ -27,7 +27,7 @@
       <qz-exam-question-card
         [question]="question"
         [selected]="isSelected(question.id)"
-        (toggle)="toggleQuestion(question.id)"
+        (toggleSelect)="toggleQuestion(question.id)"
         (remove)="removeQuestion(question.id)"
       />
     }

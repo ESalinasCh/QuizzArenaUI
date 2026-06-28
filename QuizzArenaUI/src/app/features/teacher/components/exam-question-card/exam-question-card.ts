@@ -12,6 +12,6 @@ export class ExamQuestionCard {
   question = input.required<Question>();
   selected = input.required<boolean>();
 
-  toggle = output<void>();
+  toggleSelect = output<void>();
   remove = output<void>();
 }
