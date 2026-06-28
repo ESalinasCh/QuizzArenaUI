@@ -11,7 +11,6 @@ import { Question } from '../../models/exam.model';
 export class ExamStepQuestions {
   questions = input.required<Question[]>();
 
-<<<<<<< HEAD
   publish = output<Set<string>>();
   saveToBank = output<Set<string>>();
   back = output<void>();
@@ -20,11 +19,6 @@ export class ExamStepQuestions {
   readonly publishAriaLabel = $localize`:Exam step questions publish button aria label:Publish exam`;
   readonly saveToBankAriaLabel = $localize`:Exam step questions save to bank button aria label:Save to exam bank`;
 
-=======
-  next = output<Set<string>>();
-  back = output<void>();
-
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
   readonly removedIds = signal<Set<string>>(new Set());
   readonly selectedIds = signal<Set<string>>(new Set());
 
@@ -33,10 +27,6 @@ export class ExamStepQuestions {
   );
 
   readonly selectedCount = computed(() => this.selectedIds().size);
-<<<<<<< HEAD
-=======
-
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
   readonly canContinue = computed(() => this.selectedIds().size > 0);
 
   isSelected(id: string): boolean {
@@ -60,7 +50,6 @@ export class ExamStepQuestions {
     });
   }
 
-<<<<<<< HEAD
   submitPublish(): void {
     if (!this.canContinue()) return;
     this.publish.emit(new Set(this.selectedIds()));
@@ -69,10 +58,5 @@ export class ExamStepQuestions {
   submitSaveToBank(): void {
     if (!this.canContinue()) return;
     this.saveToBank.emit(new Set(this.selectedIds()));
-=======
-  submit(): void {
-    if (!this.canContinue()) return;
-    this.next.emit(new Set(this.selectedIds()));
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
   }
 }

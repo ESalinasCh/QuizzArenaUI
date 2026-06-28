@@ -4,7 +4,6 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
-<<<<<<< HEAD
 
 type Step = 1 | 2;
 
@@ -31,10 +30,6 @@ export class TeacherCreateExamPage {
   readonly currentStep = signal<Step>(1);
 
   readonly #examInfo = signal<ExamInfoData | null>(null);
-<<<<<<< HEAD
-=======
-  readonly #selectedQuestionIds = signal<Set<string>>(new Set());
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 
   readonly #allClasses = toSignal(this.#examService.getClasses(), { initialValue: [] });
   readonly #allQuestions = toSignal(this.#examService.getQuestions(), { initialValue: [] });
@@ -52,7 +47,6 @@ export class TeacherCreateExamPage {
     this.currentStep.set(2);
   }
 
-<<<<<<< HEAD
   onQuestionsPublish(selectedIds: Set<string>): void {
     const info = this.#examInfo();
     if (!info) return;

@@ -22,26 +22,18 @@ function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'qz-exam-step-config',
-<<<<<<< HEAD
   imports: [ReactiveFormsModule, Button],
-=======
-  imports: [ReactiveFormsModule, Button, Icon],
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
   templateUrl: './exam-step-config.html',
 })
 export class ExamStepConfig {
   next = output<ExamConfig>();
   back = output<void>();
 
-<<<<<<< HEAD
   readonly shuffleQuestions = signal(false);
   readonly shuffleOptions = signal(false);
 
   readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
   readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
-=======
-  readonly shuffle = signal(false);
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 
   readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
   readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
@@ -75,7 +67,6 @@ export class ExamStepConfig {
     { validators: dateRangeValidator },
   );
 
-<<<<<<< HEAD
   readonly #formEvents = toSignal(this.form.events);
 
   readonly dateRangeInvalid = computed(() => {
@@ -99,12 +90,8 @@ export class ExamStepConfig {
     this.next.emit({
       durationMinutes,
       maxRetries,
-<<<<<<< HEAD
       shuffleQuestions: this.shuffleQuestions(),
       shuffleOptions: this.shuffleOptions(),
-=======
-      shuffle: this.shuffle(),
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
       enabledFrom,
       enabledUntil,
     });

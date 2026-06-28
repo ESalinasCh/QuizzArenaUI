@@ -206,7 +206,7 @@
       id="enabledFrom"
       type="datetime-local"
       formControlName="enabledFrom"
-      class="w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text"
+      class="w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text focus:border-primary focus:ring-2 focus:ring-primary/20 [&::-webkit-calendar-picker-indicator]:opacity-50 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:dark:invert"
     />
     @if (form.controls.enabledFrom.touched && form.controls.enabledFrom.hasError('required')) {
       <p i18n="Exam step config enabled from required error" class="text-sm text-error">Start date is required</p>
@@ -225,7 +225,7 @@
       id="enabledUntil"
       type="datetime-local"
       formControlName="enabledUntil"
-      class="w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text"
+      class="w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text focus:border-primary focus:ring-2 focus:ring-primary/20 [&::-webkit-calendar-picker-indicator]:opacity-50 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:dark:invert"
     />
     @if (form.controls.enabledUntil.touched && form.controls.enabledUntil.hasError('required')) {
       <p i18n="Exam step config enabled until required error" class="text-sm text-error">End date is required</p>
@@ -237,7 +237,6 @@
   </div>
 
   <div class="flex gap-3">
-<<<<<<< HEAD
     <qz-button
       type="button"
       size="large"
@@ -273,5 +272,4 @@
     </qz-button>
   </div>
 
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 </form>
