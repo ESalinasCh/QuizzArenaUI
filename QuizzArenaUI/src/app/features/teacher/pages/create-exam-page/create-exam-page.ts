@@ -15,7 +15,7 @@ type Step = 1 | 2;
 import { ExamStepConfig } from '../../components/exam-step-config/exam-step-config';
 import { ExamConfig } from '../../models/exam.model';
 
-type Step = 1 | 2 | 3;
+type Step = 1 | 2;
 
 @Component({
   selector: 'app-teacher-create-exam-page',

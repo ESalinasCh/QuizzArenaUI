@@ -118,102 +118,117 @@
 <form class="flex flex-col gap-5" [formGroup]="form" (ngSubmit)="submit()">
 
   <div class="flex flex-col gap-2">
-    <label for="duration" i18n="Exam step config duration label" class="text-sm font-semibold text-light-text dark:text-dark-text">
+    <label
+      for="durationMinutes"
+      i18n="Exam step config duration label"
+      class="text-sm font-medium text-light-text dark:text-dark-text"
+    >
       Duration (minutes)
     </label>
-    <div class="relative">
-      <qz-icon name="clock" class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-light-text-secondary dark:text-dark-text-secondary" />
-      <input
-        id="duration"
-        type="number"
-        formControlName="durationMinutes"
-        min="1"
-        max="300"
-        class="h-12 w-full rounded-xl border border-light-border-strong bg-light-surface pl-12 pr-4 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
-        [class.border-danger]="form.controls.durationMinutes.invalid && form.controls.durationMinutes.touched"
-      />
-    </div>
-    @if (form.controls.durationMinutes.invalid && form.controls.durationMinutes.touched) {
-      <p i18n="Exam step config duration error" class="text-xs font-medium text-danger">Enter a duration between 1 and 300 minutes.</p>
+    <input
+      id="durationMinutes"
+      type="number"
+      formControlName="durationMinutes"
+      class="w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text"
+    />
+    @if (form.controls.durationMinutes.touched && form.controls.durationMinutes.hasError('required')) {
+      <p i18n="Exam step config duration required error" class="text-sm text-error">Duration is required</p>
+    }
+    @if (form.controls.durationMinutes.touched && form.controls.durationMinutes.hasError('min')) {
+      <p i18n="Exam step config duration min error" class="text-sm text-error">Duration must be at least 1 minute</p>
     }
   </div>
 
   <div class="flex flex-col gap-2">
-    <label for="retries" i18n="Exam step config retries label" class="text-sm font-semibold text-light-text dark:text-dark-text">
-      Number of retries
+    <label
+      for="maxRetries"
+      i18n="Exam step config retries label"
+      class="text-sm font-medium text-light-text dark:text-dark-text"
+    >
+      Max retries
     </label>
     <input
-      id="retries"
+      id="maxRetries"
       type="number"
       formControlName="maxRetries"
-      min="0"
-      max="10"
-      class="h-12 rounded-xl border border-light-border-strong bg-light-surface px-4 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
-      [class.border-danger]="form.controls.maxRetries.invalid && form.controls.maxRetries.touched"
+      class="w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text"
     />
-    @if (form.controls.maxRetries.invalid && form.controls.maxRetries.touched) {
-      <p i18n="Exam step config retries error" class="text-xs font-medium text-danger">Enter a value between 0 and 10.</p>
+    @if (form.controls.maxRetries.touched && form.controls.maxRetries.hasError('required')) {
+      <p i18n="Exam step config retries required error" class="text-sm text-error">Max retries is required</p>
     }
   </div>
 
-  <div class="flex items-center justify-between rounded-xl border border-light-border-strong bg-light-surface px-4 py-3 dark:border-dark-border-strong dark:bg-dark-bg">
-    <div class="flex items-center gap-3">
-      <qz-icon name="shuffle" class="h-5 w-5 text-light-text-secondary dark:text-dark-text-secondary" />
-      <div class="flex flex-col">
-        <span i18n="Exam step config shuffle label" class="text-sm font-semibold text-light-text dark:text-dark-text">Random order</span>
-        <span i18n="Exam step config shuffle description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">Shuffles questions for each attempt</span>
-      </div>
-    </div>
-    <qz-button
-      type="button"
-      size="action"
-      [variant]="shuffle() ? 'primary' : 'secondary'"
-      [ariaLabel]="shuffleAriaLabel"
-      (click)="toggleShuffle()"
-    >
-      @if (shuffle()) {
-        <span i18n="Exam step config shuffle enabled label">Enabled</span>
-      } @else {
-        <span i18n="Exam step config shuffle enable label">Enable</span>
-      }
-    </qz-button>
+  <div class="flex flex-col gap-4">
+    <label class="flex items-start gap-3 cursor-pointer">
+      <input
+        type="checkbox"
+        [checked]="shuffleQuestions()"
+        (change)="toggleShuffleQuestions()"
+        class="mt-0.5 h-4 w-4 accent-primary"
+      />
+      <span class="flex flex-col gap-0.5">
+        <span i18n="Exam step config shuffle questions label" class="text-sm font-medium text-light-text dark:text-dark-text">
+          Shuffle questions
+        </span>
+        <span i18n="Exam step config shuffle questions description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+          Questions will be shown in a random order for each student
+        </span>
+      </span>
+    </label>
+
+    <label class="flex items-start gap-3 cursor-pointer">
+      <input
+        type="checkbox"
+        [checked]="shuffleOptions()"
+        (change)="toggleShuffleOptions()"
+        class="mt-0.5 h-4 w-4 accent-primary"
+      />
+      <span class="flex flex-col gap-0.5">
+        <span i18n="Exam step config shuffle options label" class="text-sm font-medium text-light-text dark:text-dark-text">
+          Shuffle options
+        </span>
+        <span i18n="Exam step config shuffle options description" class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+          Answer options will be shown in a random order for each student
+        </span>
+      </span>
+    </label>
   </div>
 
   <div class="flex flex-col gap-2">
-    <label for="enabledFrom" i18n="Exam step config available from label" class="text-sm font-semibold text-light-text dark:text-dark-text">
+    <label
+      for="enabledFrom"
+      i18n="Exam step config enabled from label"
+      class="text-sm font-medium text-light-text dark:text-dark-text"
+    >
       Available from
     </label>
-    <div class="relative">
-      <qz-icon name="calendar" class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-light-text-secondary dark:text-dark-text-secondary" />
-      <input
-        id="enabledFrom"
-        type="datetime-local"
-        formControlName="enabledFrom"
-        class="h-12 w-full rounded-xl border border-light-border-strong bg-light-surface pl-12 pr-4 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
-        [class.border-danger]="form.controls.enabledFrom.invalid && form.controls.enabledFrom.touched"
-      />
-    </div>
-    @if (form.controls.enabledFrom.invalid && form.controls.enabledFrom.touched) {
-      <p i18n="Exam step config available from error" class="text-xs font-medium text-danger">Select a start date.</p>
+    <input
+      id="enabledFrom"
+      type="datetime-local"
+      formControlName="enabledFrom"
+      class="w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text"
+    />
+    @if (form.controls.enabledFrom.touched && form.controls.enabledFrom.hasError('required')) {
+      <p i18n="Exam step config enabled from required error" class="text-sm text-error">Start date is required</p>
     }
   </div>
 
   <div class="flex flex-col gap-2">
-    <label for="enabledUntil" i18n="Exam step config available until label" class="text-sm font-semibold text-light-text dark:text-dark-text">
+    <label
+      for="enabledUntil"
+      i18n="Exam step config enabled until label"
+      class="text-sm font-medium text-light-text dark:text-dark-text"
+    >
       Available until
     </label>
-    <div class="relative">
-      <qz-icon name="calendar" class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-light-text-secondary dark:text-dark-text-secondary" />
-      <input
-        id="enabledUntil"
-        type="datetime-local"
-        formControlName="enabledUntil"
-        class="h-12 w-full rounded-xl border border-light-border-strong bg-light-surface pl-12 pr-4 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
-        [class.border-danger]="form.controls.enabledUntil.invalid && form.controls.enabledUntil.touched"
-      />
-    </div>
-    @if (form.controls.enabledUntil.invalid && form.controls.enabledUntil.touched) {
-      <p i18n="Exam step config available until error" class="text-xs font-medium text-danger">Select an end date.</p>
+    <input
+      id="enabledUntil"
+      type="datetime-local"
+      formControlName="enabledUntil"
+      class="w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text"
+    />
+    @if (form.controls.enabledUntil.touched && form.controls.enabledUntil.hasError('required')) {
+      <p i18n="Exam step config enabled until required error" class="text-sm text-error">End date is required</p>
     }
     @if (dateRangeInvalid()) {
       <p class="text-xs font-medium text-danger">La fecha de cierre debe ser posterior a la de inicio.</p>
@@ -247,8 +262,14 @@
     <qz-button size="large" variant="secondary" [fullWidth]="true" ariaLabel="Volver" (click)="back.emit()">
       Volver
     </qz-button>
-    <qz-button size="large" variant="primary" type="submit" [fullWidth]="true" [ariaLabel]="createAriaLabel">
-      <span i18n="Exam step config create button">Create exam</span>
+    <qz-button
+      type="submit"
+      size="large"
+      variant="primary"
+      [fullWidth]="true"
+      [ariaLabel]="publishAriaLabel"
+    >
+      <span i18n="Exam step config publish button label">Publish exam</span>
     </qz-button>
   </div>
 

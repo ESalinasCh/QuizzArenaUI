@@ -1,4 +1,4 @@
-import { LOCALE_ID } from '@angular/core';
+﻿import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ExamStepQuestions } from './exam-step-questions';
 import { Question } from '../../models/exam.model';
@@ -59,31 +59,58 @@ describe('ExamStepQuestions', () => {
     expect(fixture.componentInstance.isSelected('q1')).toBe(false);
   });
 
-  it('should not emit when no question is selected', () => {
+  it('should not emit publish when no question is selected', () => {
     const fixture = TestBed.createComponent(ExamStepQuestions);
     fixture.componentRef.setInput('questions', MOCK_QUESTIONS);
     fixture.detectChanges();
 
     let emitted = false;
-    fixture.componentInstance.next.subscribe(() => (emitted = true));
+    fixture.componentInstance.publish.subscribe(() => (emitted = true));
 
-    fixture.componentInstance.submit();
+    fixture.componentInstance.submitPublish();
     expect(emitted).toBe(false);
   });
 
-  it('should emit selected question IDs on submit', () => {
+  it('should not emit saveToBank when no question is selected', () => {
+    const fixture = TestBed.createComponent(ExamStepQuestions);
+    fixture.componentRef.setInput('questions', MOCK_QUESTIONS);
+    fixture.detectChanges();
+
+    let emitted = false;
+    fixture.componentInstance.saveToBank.subscribe(() => (emitted = true));
+
+    fixture.componentInstance.submitSaveToBank();
+    expect(emitted).toBe(false);
+  });
+
+  it('should emit publish with selected question IDs', () => {
     const fixture = TestBed.createComponent(ExamStepQuestions);
     fixture.componentRef.setInput('questions', MOCK_QUESTIONS);
     fixture.detectChanges();
 
     let emitted: Set<string> | undefined;
-    fixture.componentInstance.next.subscribe((ids: Set<string>) => (emitted = ids));
+    fixture.componentInstance.publish.subscribe((ids: Set<string>) => (emitted = ids));
 
     fixture.componentInstance.toggleQuestion('q1');
-    fixture.componentInstance.submit();
+    fixture.componentInstance.submitPublish();
 
     expect(emitted?.has('q1')).toBe(true);
     expect(emitted?.has('q2')).toBe(false);
+  });
+
+  it('should emit saveToBank with selected question IDs', () => {
+    const fixture = TestBed.createComponent(ExamStepQuestions);
+    fixture.componentRef.setInput('questions', MOCK_QUESTIONS);
+    fixture.detectChanges();
+
+    let emitted: Set<string> | undefined;
+    fixture.componentInstance.saveToBank.subscribe((ids: Set<string>) => (emitted = ids));
+
+    fixture.componentInstance.toggleQuestion('q2');
+    fixture.componentInstance.submitSaveToBank();
+
+    expect(emitted?.has('q2')).toBe(true);
+    expect(emitted?.has('q1')).toBe(false);
   });
 
   it('canContinue should be false with no selection and true after selecting', () => {
