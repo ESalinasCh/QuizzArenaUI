@@ -1,4 +1,4 @@
-import { LOCALE_ID } from '@angular/core';
+﻿import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ExamStepConfig } from './exam-step-config';
 import { ExamConfig } from '../../models/exam.model';
@@ -67,7 +67,18 @@ describe('ExamStepConfig', () => {
     expect(fixture.componentInstance.shuffleOptions()).toBe(false);
   });
 
-  it('should emit ExamConfig on valid submit', () => {
+  it('should toggle shuffleOptions independently', () => {
+    const fixture = TestBed.createComponent(ExamStepConfig);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.shuffleOptions()).toBe(false);
+    fixture.componentInstance.toggleShuffleOptions();
+    expect(fixture.componentInstance.shuffleOptions()).toBe(true);
+    fixture.componentInstance.toggleShuffleOptions();
+    expect(fixture.componentInstance.shuffleOptions()).toBe(false);
+  });
+
+  it('should emit ExamConfig with both shuffle values on valid submit', () => {
     const fixture = TestBed.createComponent(ExamStepConfig);
     fixture.detectChanges();
 

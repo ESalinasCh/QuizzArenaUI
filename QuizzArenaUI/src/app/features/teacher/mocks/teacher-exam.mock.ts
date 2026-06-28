@@ -1,4 +1,4 @@
-import { ClassSourceResponse, ExamResponse, QuestionResponse } from '../api/teacher-exam.contract';
+﻿import { ClassSourceResponse, ExamResponse, QuestionResponse } from '../api/teacher-exam.contract';
 
 export const TEACHER_CLASSES_RESPONSE_MOCK: ClassSourceResponse[] = [
   { id: 'source-ddd-1', name: 'DDD - Semana 1' },

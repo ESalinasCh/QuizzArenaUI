@@ -1,4 +1,4 @@
-export interface ClassSourceResponse {
+﻿export interface ClassSourceResponse {
   id: string;
   name: string;
 }
