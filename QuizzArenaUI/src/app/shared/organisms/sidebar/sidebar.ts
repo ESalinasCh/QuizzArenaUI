@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { NavItem } from '../../molecules/nav-item/nav-item';
-import { Icon } from '../../atoms/icon/icon';
+import { Icon, IconName } from '../../atoms/icon/icon';
 import { Button } from '../../atoms/button/button';
 import { ThemeService } from '../../../core/services/theme.service';
 import { AuthService } from '../../../core/services/auth.service';
 
 interface SidebarNavItem {
   label: string;
-  icon: 'dashboard' | 'quiz' | 'settings';
+  icon: IconName;
   routerLink: string;
   roles: string[];
 }
@@ -45,9 +45,15 @@ export class Sidebar {
       roles: ['teacher'],
     },
     {
-      label: $localize`:Sidebar nav teacher quizzes label:Cuestionarios`,
+      label: $localize`:Sidebar nav teacher quizzes label:Quizzes`,
       icon: 'quiz',
       routerLink: '/teacher/quizzes',
+      roles: ['teacher'],
+    },
+    {
+      label: $localize`:Sidebar nav teacher exam bank label:Exam Bank`,
+      icon: 'chart-bar',
+      routerLink: '/teacher/exams/bank',
       roles: ['teacher'],
     },
   ];

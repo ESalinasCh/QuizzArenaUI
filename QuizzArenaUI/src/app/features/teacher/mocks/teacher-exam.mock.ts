@@ -1,4 +1,4 @@
-import { ClassSourceResponse, ExamResponse, QuestionResponse } from '../api/teacher-exam.contract';
+﻿import { ClassSourceResponse, ExamResponse, QuestionResponse } from '../api/teacher-exam.contract';
 
 export const TEACHER_CLASSES_RESPONSE_MOCK: ClassSourceResponse[] = [
   { id: 'source-ddd-1', name: 'DDD - Semana 1' },
@@ -105,16 +105,52 @@ export const TEACHER_QUESTIONS_RESPONSE_MOCK: QuestionResponse[] = [
   },
 ];
 
+export const TEACHER_EXAMS_MOCK: ExamResponse[] = [
+  {
+    id: 'exam-draft-1',
+    title: 'DDD Fundamentals',
+    description: 'Core DDD concepts quiz',
+    status: 'draft',
+    questionIds: ['q1', 'q2', 'q3'],
+    createdAt: '2026-06-20T10:00:00.000Z',
+  },
+  {
+    id: 'exam-draft-2',
+    title: 'Hexagonal Architecture',
+    description: 'Ports and adapters concepts',
+    status: 'draft',
+    questionIds: ['q7', 'q8'],
+    createdAt: '2026-06-22T14:30:00.000Z',
+  },
+  {
+    id: 'exam-pub-1',
+    title: 'DDD Week 1 Exam',
+    description: 'First week assessment',
+    status: 'published',
+    questionIds: ['q1', 'q2', 'q3', 'q4'],
+    createdAt: '2026-06-15T09:00:00.000Z',
+  },
+  {
+    id: 'exam-pub-2',
+    title: 'Domain Events & Repositories',
+    description: 'Second week assessment',
+    status: 'published',
+    questionIds: ['q5', 'q6'],
+    createdAt: '2026-06-18T11:00:00.000Z',
+  },
+];
+
 export function buildCreateExamResponseMock(
   title: string,
   description: string,
   questionIds: string[],
+  status: 'draft' | 'published' = 'draft',
 ): ExamResponse {
   return {
     id: `exam-${Date.now()}`,
     title,
     description,
-    status: 'draft',
+    status,
     questionIds,
     createdAt: new Date().toISOString(),
   };

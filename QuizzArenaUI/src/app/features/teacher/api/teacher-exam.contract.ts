@@ -1,4 +1,4 @@
-export interface ClassSourceResponse {
+﻿export interface ClassSourceResponse {
   id: string;
   name: string;
 }
@@ -14,14 +14,18 @@ export interface QuestionResponse {
 export interface ExamConfigBody {
   durationMinutes: number;
   maxRetries: number;
-  shuffle: boolean;
+  shuffleQuestions: boolean;
+  shuffleOptions: boolean;
   enabledFrom: string;
   enabledUntil: string;
 }
 
+export type ExamOriginBody = 'ai_generated' | 'manually_created';
+
 export interface CreateExamRequestBody {
   title: string;
   description: string;
+  origin: ExamOriginBody;
   questionIds: string[];
   config: ExamConfigBody;
 }

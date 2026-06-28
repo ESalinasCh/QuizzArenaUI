@@ -14,14 +14,18 @@ export interface Question {
 export interface ExamConfig {
   durationMinutes: number;
   maxRetries: number;
-  shuffle: boolean;
+  shuffleQuestions: boolean;
+  shuffleOptions: boolean;
   enabledFrom: string;
   enabledUntil: string;
 }
 
+export type ExamOrigin = 'ai_generated' | 'manually_created';
+
 export interface CreateExamRequest {
   title: string;
   description: string;
+  origin: ExamOrigin;
   questionIds: string[];
   config: ExamConfig;
 }

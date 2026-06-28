@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, output, signal } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, computed, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AbstractControl, ReactiveFormsModule, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Button } from '../../../../shared/atoms/button/button';
-import { Icon } from '../../../../shared/atoms/icon/icon';
 import { ExamConfig } from '../../models/exam.model';
 
 function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
@@ -16,7 +15,7 @@ function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'qz-exam-step-config',
-  imports: [ReactiveFormsModule, Button, Icon],
+  imports: [ReactiveFormsModule, Button],
   templateUrl: './exam-step-config.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -24,11 +23,11 @@ export class ExamStepConfig {
   next = output<ExamConfig>();
   back = output<void>();
 
-  readonly shuffle = signal(false);
+  readonly shuffleQuestions = signal(false);
+  readonly shuffleOptions = signal(false);
 
   readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
-  readonly createAriaLabel = $localize`:Exam step config create button aria label:Create exam`;
-  readonly shuffleAriaLabel = $localize`:Exam step config shuffle button aria label:Random order`;
+  readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
 
   readonly form = new FormGroup(
     {
@@ -59,8 +58,12 @@ export class ExamStepConfig {
     return this.form.hasError('dateRange') && this.form.controls.enabledUntil.touched;
   });
 
-  toggleShuffle(): void {
-    this.shuffle.update(v => !v);
+  toggleShuffleQuestions(): void {
+    this.shuffleQuestions.update(v => !v);
+  }
+
+  toggleShuffleOptions(): void {
+    this.shuffleOptions.update(v => !v);
   }
 
   submit(): void {
@@ -71,7 +74,8 @@ export class ExamStepConfig {
     this.next.emit({
       durationMinutes,
       maxRetries,
-      shuffle: this.shuffle(),
+      shuffleQuestions: this.shuffleQuestions(),
+      shuffleOptions: this.shuffleOptions(),
       enabledFrom,
       enabledUntil,
     });

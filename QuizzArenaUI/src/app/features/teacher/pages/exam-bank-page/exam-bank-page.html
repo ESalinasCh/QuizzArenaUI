@@ -1,0 +1,49 @@
+﻿<section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
+
+  <header class="flex items-center justify-between">
+    <h1 i18n="Exam bank page heading" class="text-xl font-extrabold text-light-text dark:text-dark-text">
+      Exam Bank
+    </h1>
+    <qz-button
+      size="small"
+      variant="primary"
+      (click)="createExam()"
+      [ariaLabel]="createExamAriaLabel"
+    >
+      <qz-icon name="quiz" class="w-4 h-4" />
+      <span i18n="Exam bank create exam button label">Create Exam</span>
+    </qz-button>
+  </header>
+
+  @if (draftExams().length === 0) {
+    <div class="flex flex-col items-center gap-4 py-12 text-center">
+      <qz-icon name="quiz" class="h-12 w-12 text-light-text-secondary dark:text-dark-text-secondary opacity-40" />
+      <p i18n="Exam bank empty state" class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        No draft exams yet. Create an exam to get started.
+      </p>
+    </div>
+  } @else {
+    <div class="flex flex-col gap-3">
+      @for (exam of draftExams(); track exam.id) {
+        <div class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3">
+          <div class="flex flex-col gap-0.5">
+            <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ exam.title }}</span>
+            <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+              {{ exam.questionIds.length }}
+              <ng-container i18n="Exam bank question count label"> questions</ng-container>
+            </span>
+          </div>
+          <qz-button
+            size="small"
+            variant="primary"
+            (click)="publishExam(exam)"
+            [ariaLabel]="publishAriaLabel"
+          >
+            <span i18n="Exam bank publish button label">Publish</span>
+          </qz-button>
+        </div>
+      }
+    </div>
+  }
+
+</section>
