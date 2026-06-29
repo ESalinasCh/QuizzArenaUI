@@ -551,6 +551,146 @@
         <target>Crear Examen</target>
         <note priority="1" from="description">Teacher dashboard create exam button label</note>
       </trans-unit>
+      <trans-unit id="2587748736973980864" datatype="html">
+        <source>Exam Bank</source>
+        <target>Banco de Exámenes</target>
+        <note priority="1" from="description">Sidebar nav exam bank label</note>
+      </trans-unit>
+      <trans-unit id="6858966534640657016" datatype="html">
+        <source> Exam Bank </source>
+        <target> Banco de Exámenes </target>
+        <note priority="1" from="description">Exam bank page heading</note>
+      </trans-unit>
+      <trans-unit id="5610408988501843695" datatype="html">
+        <source>Publish exam</source>
+        <target>Publicar examen</target>
+        <note priority="1" from="description">Publish exam button aria label</note>
+      </trans-unit>
+      <trans-unit id="6871927627948371513" datatype="html">
+        <source> Created Exams </source>
+        <target> Exámenes Creados </target>
+        <note priority="1" from="description">Teacher dashboard created exams heading</note>
+      </trans-unit>
+      <trans-unit id="7485137843147933823" datatype="html">
+        <source> View Exam Bank </source>
+        <target> Ver Banco de Exámenes </target>
+        <note priority="1" from="description">Teacher dashboard view exam bank link</note>
+      </trans-unit>
+      <trans-unit id="7430416142942514215" datatype="html">
+        <source>Publish</source>
+        <target>Publicar</target>
+        <note priority="1" from="description">Teacher dashboard publish exam button label</note>
+      </trans-unit>
+      <trans-unit id="2058104466198439180" datatype="html">
+        <source> Published Exams </source>
+        <target> Exámenes Publicados </target>
+        <note priority="1" from="description">Teacher dashboard published exams heading</note>
+      </trans-unit>
+      <trans-unit id="8481607203070134929" datatype="html">
+        <source> Published </source>
+        <target> Publicado </target>
+        <note priority="1" from="description">Teacher dashboard published badge</note>
+      </trans-unit>
+      <trans-unit id="7683366894293922477" datatype="html">
+        <source>Save to exam bank</source>
+        <target>Guardar en banco de exámenes</target>
+        <note priority="1" from="description">Exam step questions save to bank button aria label</note>
+      </trans-unit>
+      <trans-unit id="5736826871078477774" datatype="html">
+        <source>Save to Exam Bank</source>
+        <target>Guardar en Banco de Exámenes</target>
+        <note priority="1" from="description">Exam step questions save to bank button</note>
+      </trans-unit>
+      <trans-unit id="8342263747304173820" datatype="html">
+        <source>Publish Exam</source>
+        <target>Publicar Examen</target>
+        <note priority="1" from="description">Exam step questions publish button</note>
+      </trans-unit>
+      <trans-unit id="6119386296422043482" datatype="html">
+        <source> Publish Exam </source>
+        <target> Publicar Examen </target>
+        <note priority="1" from="description">Publish exam page heading</note>
+      </trans-unit>
+      <trans-unit id="1165252213235635651" datatype="html">
+        <source> Create Exam </source>
+        <target> Crear Examen </target>
+        <note priority="1" from="description">Create exam page heading</note>
+      </trans-unit>
+      <trans-unit id="907136822175606758" datatype="html">
+        <source>Questions</source>
+        <target>Preguntas</target>
+        <note priority="1" from="description">Create exam step questions breadcrumb</note>
+      </trans-unit>
+      <trans-unit id="5919883372499707403" datatype="html">
+        <source> Max retries </source>
+        <target> Cantidad de reintentos </target>
+        <note priority="1" from="description">Exam step config retries label</note>
+      </trans-unit>
+      <trans-unit id="9112907888990088848" datatype="html">
+        <source> Shuffle questions </source>
+        <target> Mezclar preguntas </target>
+        <note priority="1" from="description">Exam step config shuffle questions label</note>
+      </trans-unit>
+      <trans-unit id="2442998897716567096" datatype="html">
+        <source> Questions will be shown in a random order for each student </source>
+        <target> Las preguntas se mostrarán en orden aleatorio para cada estudiante </target>
+        <note priority="1" from="description">Exam step config shuffle questions description</note>
+      </trans-unit>
+      <trans-unit id="7469576359727404685" datatype="html">
+        <source> Shuffle options </source>
+        <target> Mezclar opciones </target>
+        <note priority="1" from="description">Exam step config shuffle options label</note>
+      </trans-unit>
+      <trans-unit id="5205925535482897256" datatype="html">
+        <source> Answer options will be shown in a random order for each student </source>
+        <target> Las opciones de respuesta se mostrarán en orden aleatorio para cada estudiante </target>
+        <note priority="1" from="description">Exam step config shuffle options description</note>
+      </trans-unit>
+      <trans-unit id="553796158312016055" datatype="html">
+        <source>Duration is required</source>
+        <target>La duración es obligatoria</target>
+        <note priority="1" from="description">Exam step config duration required error</note>
+      </trans-unit>
+      <trans-unit id="1873557814712918690" datatype="html">
+        <source>Duration must be at least 1 minute</source>
+        <target>La duración debe ser de al menos 1 minuto</target>
+        <note priority="1" from="description">Exam step config duration min error</note>
+      </trans-unit>
+      <trans-unit id="5924907352393694188" datatype="html">
+        <source>Max retries is required</source>
+        <target>La cantidad de reintentos es obligatoria</target>
+        <note priority="1" from="description">Exam step config retries required error</note>
+      </trans-unit>
+      <trans-unit id="6583026510154883429" datatype="html">
+        <source>Start date is required</source>
+        <target>La fecha de inicio es obligatoria</target>
+        <note priority="1" from="description">Exam step config enabled from required error</note>
+      </trans-unit>
+      <trans-unit id="4160695003192296009" datatype="html">
+        <source>End date is required</source>
+        <target>La fecha de cierre es obligatoria</target>
+        <note priority="1" from="description">Exam step config enabled until required error</note>
+      </trans-unit>
+      <trans-unit id="5502970700065255293" datatype="html">
+        <source>End date must be after start date</source>
+        <target>La fecha de cierre debe ser posterior a la de inicio</target>
+        <note priority="1" from="description">Exam step config date range error</note>
+      </trans-unit>
+      <trans-unit id="6105704867856680001" datatype="html">
+        <source> No draft exams yet. Create an exam to get started. </source>
+        <target> Todavía no hay exámenes en borrador. Creá un examen para empezar. </target>
+        <note priority="1" from="description">Exam bank page empty state</note>
+      </trans-unit>
+      <trans-unit id="4459192685950606885" datatype="html">
+        <source> questions</source>
+        <target> preguntas</target>
+        <note priority="1" from="description">Exam bank question count suffix</note>
+      </trans-unit>
+      <trans-unit id="6110229795058919586" datatype="html">
+        <source> Your answer: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/> </source>
+        <target> Tu respuesta: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/> </target>
+        <note priority="1" from="description">Quiz results your answer label</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
