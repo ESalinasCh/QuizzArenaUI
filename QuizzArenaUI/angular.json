@@ -117,7 +117,11 @@
               "statements": 80,
               "branches": 80,
               "functions": 80
-            }
+            },
+            "coverageReporters": [
+              "text-summary",
+              "json-summary"
+            ]
           }
         },
         "lint": {
