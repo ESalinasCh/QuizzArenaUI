@@ -13,6 +13,7 @@ import {
 } from '../api/student-quiz.contract';
 import { STUDENT_QUIZ_ENDPOINTS } from '../api/student-quiz.endpoints';
 import {
+  mapAttemptHistoryCardResponse,
   mapMatchAttemptDetailResponse,
   mapQuizStartResponse,
   mapStudentDashboardResponse,
@@ -20,6 +21,7 @@ import {
   mapSubmitMatchAttemptResponse,
 } from '../api/student-quiz.mapper';
 import {
+  AttemptHistoryCard,
   StudentQuizDashboard,
   StudentQuizReview,
   StudentQuizResultSummary,
@@ -54,11 +56,19 @@ export class StudentQuizService {
   }
 
   getMatches(filters: MatchFilters): Observable<AvailableQuiz[]> {
-    return this.#http.get<AvailableMatchResponse[]>(
-      this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches  ), { params: { ...filters } })
-      .pipe(
-        map(availableMatches => mapStudentMatchesResponse(availableMatches)),
-      );
+    return this.#http
+      .get<AvailableMatchResponse[]>(this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
+        params: { ...filters },
+      })
+      .pipe(map(availableMatches => mapStudentMatchesResponse(availableMatches)));
+  }
+
+  getGradeHistory(): Observable<AttemptHistoryCard[]> {
+    return this.#http
+      .get<MatchAttemptSummaryResponse[]>(this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts), {
+        params: { matchmode: 'exam' },
+      })
+      .pipe(map(attempts => attempts.map(mapAttemptHistoryCardResponse)));
   }
 
   getQuizStart(quizId: string): Observable<StudentQuizStart> {

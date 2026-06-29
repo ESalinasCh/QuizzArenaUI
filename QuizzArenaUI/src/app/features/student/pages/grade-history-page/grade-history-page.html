@@ -1,8 +1,32 @@
-<section>
-  <h1
-    i18n="Student grade history page title"
-    class="text-2xl font-bold text-light-text dark:text-dark-text"
-  >
-    Grade History
-  </h1>
+<section class="mx-auto flex w-full max-w-[720px] flex-col gap-5 pb-6">
+  <header>
+    <h1
+      i18n="Student grade history page title"
+      class="text-3xl font-extrabold text-light-text dark:text-dark-text"
+    >
+      Grade History
+    </h1>
+    <p
+      i18n="Student grade history page subtitle"
+      class="mt-1 text-lg font-medium text-purple dark:text-purple-dark"
+    >
+      Review your completed exams
+    </p>
+  </header>
+
+  <div class="flex flex-col gap-4">
+    @for (attempt of attempts(); track attempt.id) {
+      <qz-attempt-history-card
+        [title]="attempt.title"
+        [subtitle]="attempt.subtitle"
+        [completedAtLabel]="attempt.completedAtLabel"
+        [durationLabel]="attempt.durationLabel"
+        [scoreLabel]="attempt.scoreLabel"
+        [statusLabel]="attempt.statusLabel"
+        [statusVariant]="attempt.statusVariant"
+        [actionLabel]="viewLabel"
+        (actionClick)="viewAttempt(attempt.id)"
+      />
+    }
+  </div>
 </section>
