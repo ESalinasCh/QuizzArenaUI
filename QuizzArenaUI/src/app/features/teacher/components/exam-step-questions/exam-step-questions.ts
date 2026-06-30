@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { ExamQuestionCard } from '../exam-question-card/exam-question-card';
 import { Question } from '../../models/exam.model';
@@ -7,7 +7,6 @@ import { Question } from '../../models/exam.model';
   selector: 'qz-exam-step-questions',
   imports: [Button, ExamQuestionCard],
   templateUrl: './exam-step-questions.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamStepQuestions {
   questions = input.required<Question[]>();

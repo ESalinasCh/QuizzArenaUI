@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Button } from '../../../../shared/atoms/button/button';
@@ -14,7 +14,6 @@ export interface ExamInfoData {
   selector: 'qz-exam-step-info',
   imports: [ReactiveFormsModule, Button],
   templateUrl: './exam-step-info.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamStepInfo {
   classes = input.required<ClassSource[]>();

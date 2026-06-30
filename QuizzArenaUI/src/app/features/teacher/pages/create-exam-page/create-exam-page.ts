@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
@@ -11,11 +11,11 @@ type Step = 1 | 2;
   selector: 'app-teacher-create-exam-page',
   imports: [ExamStepInfo, ExamStepQuestions],
   templateUrl: './create-exam-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeacherCreateExamPage {
   readonly #router = inject(Router);
   readonly #examService = inject(TeacherExamService);
+  readonly #destroyRef = inject(DestroyRef);
 
   readonly currentStep = signal<Step>(1);
 
@@ -56,9 +56,8 @@ export class TeacherCreateExamPage {
     if (!info) return;
     this.#examService
       .saveDraftExam(info.title, info.description, [...selectedIds])
-      .subscribe(() => {
-        void this.#router.navigate(['/teacher/exams/bank']);
-      });
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe(() => void this.#router.navigate(['/teacher/exams/bank']));
   }
 
   goBack(): void {

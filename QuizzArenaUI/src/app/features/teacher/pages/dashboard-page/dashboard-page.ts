@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -14,7 +14,6 @@ import { Exam } from '../../models/exam.model';
   selector: 'qz-teacher-dashboard-page',
   imports: [StatCard, ContentItem, Button, Icon],
   templateUrl: './dashboard-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeacherDashboardPage {
   readonly #authService = inject(AuthService);

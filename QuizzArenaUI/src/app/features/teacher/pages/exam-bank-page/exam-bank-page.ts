@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+﻿import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
@@ -10,7 +10,6 @@ import { Exam } from '../../models/exam.model';
   selector: 'qz-teacher-exam-bank-page',
   imports: [Button, Icon],
   templateUrl: './exam-bank-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeacherExamBankPage {
   readonly #router = inject(Router);
