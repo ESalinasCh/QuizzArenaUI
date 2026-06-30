@@ -65,9 +65,12 @@ export class StudentQuizService {
 
   getGradeHistory(): Observable<AttemptHistoryCard[]> {
     return this.#http
-      .get<MatchAttemptSummaryResponse[]>(this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts), {
-        params: { matchmode: 'exam' },
-      })
+      .get<MatchAttemptSummaryResponse[]>(
+        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts),
+        {
+          params: { matchmode: 'exam' },
+        },
+      )
       .pipe(map(attempts => attempts.map(mapAttemptHistoryCardResponse)));
   }
 

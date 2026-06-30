@@ -47,10 +47,30 @@
         <target>en progreso</target>
         <note priority="1" from="description">Recent quiz in progress label</note>
       </trans-unit>
+      <trans-unit id="3307214558906712688" datatype="html">
+        <source>In progress</source>
+        <target>En progreso</target>
+        <note priority="1" from="description">Attempt history in progress date label</note>
+      </trans-unit>
+      <trans-unit id="7427655947787703925" datatype="html">
+        <source><x id="duration" equiv-text="response.duration"/> min</source>
+        <target><x id="duration" equiv-text="response.duration"/> min</target>
+        <note priority="1" from="description">Attempt history duration label</note>
+      </trans-unit>
       <trans-unit id="8179054508455181088" datatype="html">
         <source>Result submitted</source>
         <target>Resultado enviado</target>
         <note priority="1" from="description">Student quiz result default message</note>
+      </trans-unit>
+      <trans-unit id="1541369093323945540" datatype="html">
+        <source>Passed</source>
+        <target>Aprobado</target>
+        <note priority="1" from="description">Attempt history passed status label</note>
+      </trans-unit>
+      <trans-unit id="7256395947475975935" datatype="html">
+        <source>Failed</source>
+        <target>Reprobado</target>
+        <note priority="1" from="description">Attempt history failed status label</note>
       </trans-unit>
       <trans-unit id="3394970372911985841" datatype="html">
         <source><x id="days" equiv-text="diffInDays"/> days ago</source>
@@ -66,6 +86,11 @@
         <source> Grade History </source>
         <target> Historial de calificaciones </target>
         <note priority="1" from="description">Student grade history page title</note>
+      </trans-unit>
+      <trans-unit id="7950221105331650100" datatype="html">
+        <source> Review your completed exams </source>
+        <target> Revisa tus examenes completados </target>
+        <note priority="1" from="description">Student grade history page subtitle</note>
       </trans-unit>
       <trans-unit id="7103624555672419715" datatype="html">
         <source>Grade History</source>
@@ -370,6 +395,10 @@
       <trans-unit id="9007626195337256325" datatype="html">
         <source>Your answer: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/></source>
         <target>Tu respuesta: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/></target>
+      </trans-unit>
+      <trans-unit id="6110229795058919586" datatype="html">
+        <source> Your answer: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel }}"/> </source>
+        <target> Tu respuesta: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel }}"/> </target>
       </trans-unit>
       <trans-unit id="2496818939481806999" datatype="html">
         <source>Incorrect</source>

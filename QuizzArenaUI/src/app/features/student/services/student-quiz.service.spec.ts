@@ -182,4 +182,35 @@ describe('StudentQuizService', () => {
       });
     });
   });
+  describe('getGradeHistory', () => {
+    it('should fetch match attempts with exam match mode and map grade history', () => {
+      service.getGradeHistory().subscribe(attempts => {
+        expect(attempts.length).toBe(1);
+        expect(attempts[0].id).toBe('attempt-1');
+        expect(attempts[0].title).toBe('Clase Project I - Semana 7');
+        expect(attempts[0].subtitle).toBe('Domain-Driven Design');
+        expect(attempts[0].scoreLabel).toBe('80%');
+        expect(attempts[0].statusLabel).toBe('Passed');
+      });
+
+      const req = httpTesting.expectOne(
+        `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}?matchmode=exam`,
+      );
+
+      expect(req.request.method).toBe('GET');
+
+      req.flush([
+        {
+          id: 'attempt-1',
+          title: 'Clase Project I - Semana 7',
+          courseName: 'Domain-Driven Design',
+          completedAt: '2026-06-01',
+          score: 80,
+          status: 'passed',
+          duration: 10,
+        },
+      ]);
+    });
+  });
+
 });
