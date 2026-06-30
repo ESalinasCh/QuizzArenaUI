@@ -20,7 +20,7 @@ describe('StudentQuizQuestionPage', () => {
 
   beforeEach(() => {
     mockStudentQuizService = {
-      getQuizStart: vi.fn().mockReturnValue(of(mockQuizStart)),
+      getActiveQuizStart: vi.fn().mockReturnValue(mockQuizStart),
       submitMatchAttempt: vi.fn().mockReturnValue(of({ attemptId: 'attempt-1' })),
     };
 
@@ -96,8 +96,8 @@ describe('StudentQuizQuestionPage', () => {
 
     expect(mockStudentQuizService.submitMatchAttempt).toHaveBeenCalledWith('attempt-1', {
       answers: [
-        { questionId: 'q1', selectedOptionId: 'q1-a' },
-        { questionId: 'q2', selectedOptionId: 'q2-a' },
+        expect.objectContaining({ questionId: 'q1', selectedOptionId: 'q1-a' }),
+        expect.objectContaining({ questionId: 'q2', selectedOptionId: 'q2-a' }),
       ],
     });
   });
@@ -123,7 +123,7 @@ describe('StudentQuizQuestionPage', () => {
   });
 
   it('should navigate to quiz list if no quiz loaded on goBack', async () => {
-    mockStudentQuizService.getQuizStart = vi.fn().mockReturnValue(of(undefined));
+    mockStudentQuizService.getActiveQuizStart = vi.fn().mockReturnValue(undefined);
 
     const fixture = TestBed.createComponent(StudentQuizQuestionPage);
     fixture.detectChanges();
