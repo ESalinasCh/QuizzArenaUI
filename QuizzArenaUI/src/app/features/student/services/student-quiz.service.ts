@@ -28,7 +28,7 @@ import {
 export class StudentQuizService {
   readonly #http = inject(HttpClient);
   readonly #apiBaseUrl = environment.apiBaseUrl;
-  readonly #activeQuizStart = signal<StudentQuizStart | null>(null);
+  readonly #activeQuizStart = signal<StudentQuizStart | undefined>(undefined);
   readonly #attemptMetadataCache = new Map<string, { title: string; subtitle: string }>();
   readonly #submitResultCache = new Map<string, SubmitMatchAttemptResponse>();
 
@@ -86,7 +86,7 @@ export class StudentQuizService {
 
     return quizStart;
   }
-  getActiveQuizStart(): StudentQuizStart | null {
+  getActiveQuizStart(): StudentQuizStart | undefined {
     return this.#activeQuizStart();
   }
   getMatchAttemptDetail(attemptId: string): Observable<StudentQuizReview> {
