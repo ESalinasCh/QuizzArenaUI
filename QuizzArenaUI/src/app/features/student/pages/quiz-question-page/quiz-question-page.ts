@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
-import { filter, from, map, switchMap } from 'rxjs';
+import {  Router } from '@angular/router';
+import { from, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { SubmitMatchAttemptAnswerRequest } from '../../api/student-quiz.contract';
 import { StudentQuizService } from '../../services/student-quiz.service';
@@ -13,7 +12,6 @@ import { StudentQuizService } from '../../services/student-quiz.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentQuizQuestionPage {
-  readonly #route = inject(ActivatedRoute);
   readonly #router = inject(Router);
   readonly #studentQuizService = inject(StudentQuizService);
 
@@ -23,13 +21,7 @@ export class StudentQuizQuestionPage {
   readonly questionIndex = signal(0);
   readonly optionLetters = ['A', 'B', 'C', 'D'];
 
-  readonly quiz = toSignal(
-    this.#route.paramMap.pipe(
-      map(params => params.get('quizId')),
-      filter((quizId): quizId is string => quizId !== null),
-      switchMap(quizId => this.#studentQuizService.getQuizStart(quizId)),
-    ),
-  );
+  readonly quiz = computed(() => this.#studentQuizService.getActiveQuizStart());
 
   readonly currentQuestion = computed(() => this.quiz()?.questions[this.questionIndex()]);
   readonly progressLabel = computed(() => {
@@ -117,7 +109,7 @@ export class StudentQuizQuestionPage {
   #saveAnswer(questionId: string, selectedOptionId: string): void {
     this.answers.update(answers => [
       ...answers.filter(answer => answer.questionId !== questionId),
-      { questionId, selectedOptionId },
+      { questionId, selectedOptionId, answeredAt: new Date().toISOString() },
     ]);
   }
 }

@@ -56,7 +56,7 @@ export function mapQuizStartResponse(
   return {
     id: match.id,
     matchId: play.matchId,
-    attemptId: play.attemptId,
+    attemptId: play.matchAttemptId,
     title: match.title,
     subtitle: match.courseName,
     professorName: match.professorName,
@@ -109,7 +109,7 @@ export function mapSubmitMatchAttemptResponse(
     correctCount: response.correctCount,
     incorrectCount: response.incorrectCount,
     totalQuestions: response.totalQuestions,
-    message: response.message ?? 'Resultado registrado',
+    message: $localize`:Student quiz result default message:Result submitted`,
   };
 }
 

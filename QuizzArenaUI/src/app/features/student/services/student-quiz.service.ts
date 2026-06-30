@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Observable, forkJoin, map, of, shareReplay, tap, throwError } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
+import { Observable, forkJoin, map, of, tap, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
   AvailableMatchResponse,
@@ -28,7 +28,7 @@ import {
 export class StudentQuizService {
   readonly #http = inject(HttpClient);
   readonly #apiBaseUrl = environment.apiBaseUrl;
-  readonly #quizStartCache = new Map<string, Observable<StudentQuizStart>>();
+  readonly #activeQuizStart = signal<StudentQuizStart | undefined>(undefined);
   readonly #attemptMetadataCache = new Map<string, { title: string; subtitle: string }>();
   readonly #submitResultCache = new Map<string, SubmitMatchAttemptResponse>();
 
@@ -36,6 +36,9 @@ export class StudentQuizService {
     return forkJoin({
       availableMatches: this.#http.get<AvailableMatchResponse[]>(
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
+        {
+          params: { status: 'active' },
+        },
       ),
       matchAttempts: this.#http.get<MatchAttemptSummaryResponse[]>(
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts),
@@ -48,15 +51,13 @@ export class StudentQuizService {
   }
 
   getQuizStart(quizId: string): Observable<StudentQuizStart> {
-    const cachedQuizStart = this.#quizStartCache.get(quizId);
-
-    if (cachedQuizStart) {
-      return cachedQuizStart;
-    }
 
     const quizStart = forkJoin({
       matches: this.#http.get<AvailableMatchResponse[]>(
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
+        {
+          params: { status: 'active' },
+        },
       ),
       play: this.#http.post<CreatePlayResponse>(
         this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.plays),
@@ -71,7 +72,7 @@ export class StudentQuizService {
         }
 
         const mappedQuizStart = mapQuizStartResponse(match, play);
-
+        this.#activeQuizStart.set(mappedQuizStart);
         if (mappedQuizStart.attemptId) {
           this.#attemptMetadataCache.set(mappedQuizStart.attemptId, {
             title: mappedQuizStart.title,
@@ -80,15 +81,14 @@ export class StudentQuizService {
         }
 
         return mappedQuizStart;
-      }),
-      shareReplay({ bufferSize: 1, refCount: false }),
+      })
     );
-
-    this.#quizStartCache.set(quizId, quizStart);
 
     return quizStart;
   }
-
+  getActiveQuizStart(): StudentQuizStart | undefined {
+    return this.#activeQuizStart();
+  }
   getMatchAttemptDetail(attemptId: string): Observable<StudentQuizReview> {
     return forkJoin({
       response: this.#http.get<MatchAttemptDetailResponse>(

@@ -15,7 +15,8 @@ import { StudentQuizService } from './student-quiz.service';
 describe('StudentQuizService', () => {
   let service: StudentQuizService;
   let httpTesting: HttpTestingController;
-  const apiBaseUrl = 'https://n8n.bsdevbo.com/webhook';
+  const apiBaseUrl = 'http://localhost:8080';
+  const activeMatchesUrl = `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}?status=active`;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -46,7 +47,7 @@ describe('StudentQuizService', () => {
         expect(dashboard.recentQuizzes[0].title).toBe('Attempt 1');
       });
 
-      const matchReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}`);
+      const matchReq = httpTesting.expectOne(activeMatchesUrl);
       expect(matchReq.request.method).toBe('GET');
       matchReq.flush(availableMatchesMock);
 
@@ -62,21 +63,21 @@ describe('StudentQuizService', () => {
       questionCount: 2, professorName: 'Prof A', duration: 10,
     };
     const playResponse: CreatePlayResponse = {
-      matchId: 'quiz-1', attemptId: 'attempt-1',
+      matchId: 'quiz-1', matchAttemptId: 'attempt-1',
       questions: [
         { id: 'q1', statement: 'Question 1', options: [{ id: 'q1-a', label: 'A' }, { id: 'q1-b', label: 'B' }] },
         { id: 'q2', statement: 'Question 2', options: [{ id: 'q2-a', label: 'A' }, { id: 'q2-b', label: 'B' }] },
       ],
     };
 
-    it('should fetch match and create play and cache the result', () => {
+    it('should fetch match and create play', () => {
       service.getQuizStart('quiz-1').subscribe(quizStart => {
         expect(quizStart.title).toBe('Quiz 1');
         expect(quizStart.attemptId).toBe('attempt-1');
         expect(quizStart.questions.length).toBe(2);
       });
 
-      const matchReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}`);
+      const matchReq = httpTesting.expectOne(activeMatchesUrl);
       matchReq.flush([match]);
 
       const playReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
@@ -85,15 +86,21 @@ describe('StudentQuizService', () => {
       playReq.flush(playResponse);
     });
 
-    it('should return cached observable for same quizId', () => {
+    it('should create a new play for each quiz start request', () => {
       service.getQuizStart('quiz-1').subscribe();
       service.getQuizStart('quiz-1').subscribe();
 
-      const matchReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}`);
-      matchReq.flush([match]);
+      const matchReqs = httpTesting.match(activeMatchesUrl);
+      expect(matchReqs.length).toBe(2);
+      matchReqs.forEach(req => req.flush([match]));
 
-      const playReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
-      playReq.flush(playResponse);
+      const playReqs = httpTesting.match(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
+      expect(playReqs.length).toBe(2);
+      playReqs.forEach(req => {
+        expect(req.request.method).toBe('POST');
+        expect(req.request.body).toEqual({ matchId: 'quiz-1' });
+        req.flush(playResponse);
+      });
     });
 
     it('should throw when match not found', () => {
@@ -101,7 +108,7 @@ describe('StudentQuizService', () => {
         error: err => expect(err.message).toContain('No match found for quiz unknown'),
       });
 
-      const matchReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}`);
+      const matchReq = httpTesting.expectOne(activeMatchesUrl);
       matchReq.flush([match]);
 
       httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`).flush(playResponse);
@@ -132,7 +139,15 @@ describe('StudentQuizService', () => {
 
   describe('submitMatchAttempt', () => {
     it('should POST answers and cache the response', () => {
-      const request: SubmitMatchAttemptRequest = { answers: [{ questionId: 'q1', selectedOptionId: 'q1-a' }] };
+      const request: SubmitMatchAttemptRequest = {
+        answers: [
+          {
+            questionId: 'q1',
+            selectedOptionId: 'q1-a',
+            answeredAt: '2026-06-30T00:00:00.000Z',
+          },
+        ],
+      };
       const response: SubmitMatchAttemptResponse = { attemptId: 'attempt-1', scorePercentage: 100, correctCount: 1, incorrectCount: 0, totalQuestions: 1, questions: [] };
 
       service.submitMatchAttempt('attempt-1', request).subscribe(res => {
