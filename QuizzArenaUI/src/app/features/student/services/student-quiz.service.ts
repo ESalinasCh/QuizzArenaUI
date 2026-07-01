@@ -8,7 +8,6 @@ import {
   MatchAttemptDetailResponse,
   MatchAttemptSummaryResponse,
   MatchFilters,
-  MatchResponse,
   SubmitMatchAttemptRequest,
   SubmitMatchAttemptResponse,
 } from '../api/student-quiz.contract';
@@ -25,10 +24,8 @@ import {
   StudentQuizReview,
   StudentQuizResultSummary,
   StudentQuizStart,
-  Match,
+  AvailableQuiz,
 } from '../models/student-quiz.model';
-import { PENDING_EXAMS } from '../mocks/pendingExams';
-import { COMPLETED_EXAMS } from '../mocks/completedExams';
 
 @Injectable({ providedIn: 'root' })
 export class StudentQuizService {
@@ -56,9 +53,8 @@ export class StudentQuizService {
     );
   }
 
-  getExams(filters: MatchFilters): Observable<Match[]> {
-    console.log('filters', filters)
-    return this.#http.get<MatchResponse[]>(
+  getExams(filters: MatchFilters): Observable<AvailableQuiz[]> {
+    return this.#http.get<AvailableMatchResponse[]>(
       this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches  ), { params: { ...filters } })
       .pipe(
         map(availableMatches => mapStudentMatchesResponse(availableMatches)),

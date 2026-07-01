@@ -68,7 +68,7 @@ describe('StudentExamListPage', () => {
 
         (mockStudentQuizService.getExams as ReturnType<typeof vi.fn>).mockClear();
 
-        (fixture.componentInstance as any).changeStatus(MatchStatus.Active);
+        fixture.componentInstance['changeStatus'](MatchStatus.Active);
         fixture.detectChanges();
 
         expect(mockStudentQuizService.getExams).toHaveBeenCalledWith({

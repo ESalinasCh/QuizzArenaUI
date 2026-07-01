@@ -3,7 +3,6 @@ import {
   CreatePlayResponse,
   MatchAttemptDetailResponse,
   MatchAttemptSummaryResponse,
-  MatchResponse,
   SubmitMatchAttemptResponse,
 } from './student-quiz.contract';
 import {
@@ -14,7 +13,6 @@ import {
   StudentQuizReview,
   StudentQuizResultSummary,
   StudentQuizStart,
-  Match,
 } from '../models/student-quiz.model';
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
@@ -116,21 +114,9 @@ export function mapSubmitMatchAttemptResponse(
 }
 
 export function mapStudentMatchesResponse(
-  availableExams: MatchResponse[]
-): Match[] {
-  return availableExams.map(mapMatchResponse);
-}
-
-export function mapMatchResponse(response: MatchResponse): Match {
-  return {
-    id: response.id,
-    title: response.title,
-    questionCount: response.questionCount,
-    status: response.status,
-    courseName: response.courseName,
-    professorName: response.professorName,
-    duration: response.duration,
-  };
+  availableExams: AvailableMatchResponse[]
+): AvailableQuiz[] {
+  return availableExams.map(mapAvailableMatchResponse);
 }
 
 function mapRecentQuizStatus(status: MatchAttemptSummaryResponse['status']): RecentQuizStatus {

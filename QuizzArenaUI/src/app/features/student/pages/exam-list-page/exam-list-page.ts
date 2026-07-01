@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { AuthService } from '../../../../core/services/auth.service';
 import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
 import { AvailableQuizCard } from '../../components/available-quiz-card/available-quiz-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
@@ -16,7 +15,6 @@ import { FilterTabs } from '../../components/filter-tabs/filter-tabs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentExamListPage {
-  readonly #authService = inject(AuthService);
   readonly #router = inject(Router);
   readonly #studentQuizService = inject(StudentQuizService);
   protected readonly matchStatus = MatchStatus;
