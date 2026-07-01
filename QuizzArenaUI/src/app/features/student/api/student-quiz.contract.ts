@@ -1,5 +1,15 @@
+import { AvailableQuizStatus } from "../models/student-quiz.model";
+
 export type MatchAttemptDetailStatus = 'passed' | 'failed';
 export type MatchAttemptSummaryStatus = MatchAttemptDetailStatus | 'in-progress';
+
+export enum MatchStatus {
+  Active = 'Active',
+  Pending = 'Pending',
+  Expired = 'Expired',
+}
+
+export type MatchMode = 'Solo' | 'Multiple' | 'Exam';
 
 export interface AvailableMatchResponse {
   id: string;
@@ -89,4 +99,24 @@ export interface SubmitMatchAttemptResponse {
   incorrectCount: number;
   totalQuestions: number;
   questions: SubmittedQuestionResultResponse[];
+}
+
+export interface MatchResponse {
+  id: string;
+  title: string;
+  courseName: string;
+  questionCount: number;
+  professorName: string;
+  duration: number;
+  status: AvailableQuizStatus;
+  score: number;
+  completedAtLabel: string;
+}
+
+export interface MatchFilters {
+  code?: string;
+  status?: MatchStatus;
+  mode?: MatchMode;
+  courseId?: string;
+  quizId?: string;
 }

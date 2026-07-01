@@ -1,0 +1,14 @@
+<div class="inline-flex rounded-full bg-gray-200 p-1 dark:bg-dark-surface">
+    @for (option of options(); track option.value) {
+    <button
+        class="rounded-full px-5 py-2 text-sm font-medium transition-colors text-gray-600 dark:text-dark-text-secondary"
+        [class.bg-white]="value() === option.value"
+        [class.text-black]="value() === option.value"
+        [class.dark:bg-dark-bg]="value() === option.value"
+        [class.dark:text-dark-text]="value() === option.value"
+        (click)="select(option.value)"
+    >
+        {{ option.label }}
+    </button>
+    }
+</div>

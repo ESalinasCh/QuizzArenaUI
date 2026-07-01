@@ -47,6 +47,11 @@
         <target>en progreso</target>
         <note priority="1" from="description">Recent quiz in progress label</note>
       </trans-unit>
+      <trans-unit id="8179054508455181088" datatype="html">
+        <source>Result submitted</source>
+        <target>Resultado enviado</target>
+        <note priority="1" from="description">Student quiz result default message</note>
+      </trans-unit>
       <trans-unit id="3394970372911985841" datatype="html">
         <source><x id="days" equiv-text="diffInDays"/> days ago</source>
         <target>hace <x id="days" equiv-text="diffInDays"/> dias</target>
@@ -61,6 +66,21 @@
         <source> Welcome, <x id="INTERPOLATION" equiv-text="{{ displayName() }}"/> 👋 </source>
         <target> Bienvenido, <x id="INTERPOLATION" equiv-text="{{ displayName() }}"/> 👋 </target>
         <note priority="1" from="description">Student dashboard welcome heading</note>
+      </trans-unit>
+      <trans-unit id="5019406383927359220" datatype="html">
+        <source> Exams👋 </source>
+        <target> Exámenes👋 </target>
+        <note priority="1" from="description">Student exams</note>
+      </trans-unit>
+      <trans-unit id="2198122567925367437" datatype="html">
+        <source> Available Exams </source>
+        <target> Exámenes Disponibles </target>
+        <note priority="1" from="description">Student available exams section title</note>
+      </trans-unit>
+      <trans-unit id="6314462802055379332" datatype="html">
+        <source> Recent Exams </source>
+        <target> Exámenes Recientes </target>
+        <note priority="1" from="description">Student recent exams section title</note>
       </trans-unit>
       <trans-unit id="79196985583566606" datatype="html">
         <source>Available Quizzes</source>
@@ -266,6 +286,11 @@
         <source>Switch to dark mode</source>
         <target>Cambiar a modo oscuro</target>
         <note priority="1" from="description">Aria label to switch to dark mode</note>
+      </trans-unit>
+      <trans-unit id="Exams" datatype="html">
+        <source>Exams</source>
+        <target>Exámenes</target>
+        <note priority="1" from="description">Sidebar nav student exams label</note>
       </trans-unit>
       <trans-unit id="8507819610865426554" datatype="html">
         <source>AI Processes</source>
