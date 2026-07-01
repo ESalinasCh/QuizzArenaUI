@@ -194,7 +194,11 @@ describe('StudentQuizService', () => {
         expect(attempts[0].statusLabel).toBe('Passed');
       });
 
-      const req = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}`);
+      const req = httpTesting.expectOne(
+        request =>
+          request.url === `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}` &&
+          request.params.get('matchmode') === 'exam',
+      );
 
       expect(req.request.method).toBe('GET');
 
