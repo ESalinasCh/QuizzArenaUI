@@ -1,5 +1,6 @@
 import { AvailableMatchResponse, CreatePlayResponse, MatchAttemptDetailResponse, MatchAttemptSummaryResponse, SubmitMatchAttemptResponse } from './student-quiz.contract';
 import {
+  mapAttemptHistoryCardResponse,
   mapAvailableMatchResponse,
   mapMatchAttemptDetailResponse,
   mapMatchAttemptSummaryResponse,
@@ -9,6 +10,8 @@ import {
 } from './student-quiz.mapper';
 
 describe('student-quiz.mapper', () => {
+  const startedAt = '2026-06-18T00:00:00.000Z';
+
   describe('mapAvailableMatchResponse', () => {
     it('should map an available match response', () => {
       const response: AvailableMatchResponse = {
@@ -28,7 +31,7 @@ describe('student-quiz.mapper', () => {
     it('should map a passed attempt', () => {
       const response: MatchAttemptSummaryResponse = {
         id: 'a1', title: 'Attempt 1', courseName: 'DDD',
-        completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10,
+        startedAt, completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10,
       };
 
       const result = mapMatchAttemptSummaryResponse(response);
@@ -41,7 +44,7 @@ describe('student-quiz.mapper', () => {
     it('should map an in-progress attempt', () => {
       const response: MatchAttemptSummaryResponse = {
         id: 'a2', title: 'Attempt 2', courseName: 'DDD',
-        completedAt: null, score: 60, status: 'failed', duration: 10,
+        startedAt, completedAt: null, score: 60, status: 'failed', duration: 10,
       };
 
       const result = mapMatchAttemptSummaryResponse(response);
@@ -55,12 +58,49 @@ describe('student-quiz.mapper', () => {
         { id: 'm1', title: 'Quiz 1', courseName: 'DDD', createdAt: '2026-06-20', questionCount: 5, professorName: 'Prof A', duration: 10 },
       ];
       const attempts: MatchAttemptSummaryResponse[] = [
-        { id: 'a1', title: 'Attempt 1', courseName: 'DDD', completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 },
+        { id: 'a1', title: 'Attempt 1', courseName: 'DDD', startedAt, completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 },
       ];
 
       const result = mapStudentDashboardResponse(matches, attempts);
       expect(result.availableQuizzes.length).toBe(1);
       expect(result.recentQuizzes.length).toBe(1);
+    });
+  });
+
+  describe('mapAttemptHistoryCardResponse', () => {
+    it('should use startedAt as the grade history date label', () => {
+      const response: MatchAttemptSummaryResponse = {
+        id: 'a0', title: 'Attempt 0', courseName: 'DDD',
+        startedAt, completedAt: null, score: 80, status: 'failed', duration: 10,
+      };
+
+      const result = mapAttemptHistoryCardResponse(response);
+
+      expect(result.completedAtLabel).not.toBe('In progress');
+    });
+
+    it('should mark grade history attempt as passed when score is greater than the passing threshold', () => {
+      const response: MatchAttemptSummaryResponse = {
+        id: 'a1', title: 'Attempt 1', courseName: 'DDD',
+        startedAt, completedAt: '2026-06-19', score: 80, status: 'failed', duration: 10,
+      };
+
+      const result = mapAttemptHistoryCardResponse(response);
+
+      expect(result.statusLabel).toBe('Passed');
+      expect(result.statusVariant).toBe('success');
+    });
+
+    it('should mark grade history attempt as failed when score is equal to the passing threshold', () => {
+      const response: MatchAttemptSummaryResponse = {
+        id: 'a2', title: 'Attempt 2', courseName: 'DDD',
+        startedAt, completedAt: '2026-06-19', score: 50, status: 'passed', duration: 10,
+      };
+
+      const result = mapAttemptHistoryCardResponse(response);
+
+      expect(result.statusLabel).toBe('Failed');
+      expect(result.statusVariant).toBe('danger');
     });
   });
 

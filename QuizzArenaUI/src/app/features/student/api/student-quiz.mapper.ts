@@ -18,6 +18,7 @@ import {
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 const NEW_MATCH_THRESHOLD_DAYS = 2;
+const GRADE_HISTORY_PASSING_SCORE = 50;
 
 export function mapStudentDashboardResponse(
   availableMatches: AvailableMatchResponse[],
@@ -57,13 +58,11 @@ export function mapAttemptHistoryCardResponse(
     id: response.id,
     title: response.title,
     subtitle: response.courseName,
-    completedAtLabel: response.completedAt
-      ? formatDisplayDate(response.completedAt)
-      : $localize`:Attempt history in progress date label:In progress`,
+    completedAtLabel: formatDisplayDate(response.startedAt),
     durationLabel: $localize`:Attempt history duration label:${response.duration}:duration: min`,
     scoreLabel: `${response.score}%`,
-    statusLabel: mapAttemptHistoryStatusLabel(response.status),
-    statusVariant: mapAttemptHistoryStatusVariant(response.status),
+    statusLabel: mapAttemptHistoryStatusLabel(response.score),
+    statusVariant: mapAttemptHistoryStatusVariant(response.score),
   };
 }
 
@@ -141,24 +140,14 @@ function mapRecentQuizStatus(status: MatchAttemptSummaryResponse['status']): Rec
   return status === 'passed' ? 'passed' : 'warning';
 }
 
-function mapAttemptHistoryStatusLabel(status: MatchAttemptSummaryResponse['status']): string {
-  const labels: Record<MatchAttemptSummaryResponse['status'], string> = {
-    passed: $localize`:Attempt history passed status label:Passed`,
-    failed: $localize`:Attempt history failed status label:Failed`,
-    'in-progress': $localize`:Attempt history in progress status label:In progress`,
-  };
-
-  return labels[status];
+function mapAttemptHistoryStatusLabel(score: number): string {
+  return score > GRADE_HISTORY_PASSING_SCORE
+    ? $localize`:Attempt history passed status label:Passed`
+    : $localize`:Attempt history failed status label:Failed`;
 }
 
-function mapAttemptHistoryStatusVariant(
-  status: MatchAttemptSummaryResponse['status'],
-): AttemptHistoryCard['statusVariant'] {
-  if (status === 'passed') {
-    return 'success';
-  }
-
-  return status === 'failed' ? 'danger' : 'warning';
+function mapAttemptHistoryStatusVariant(score: number): AttemptHistoryCard['statusVariant'] {
+  return score > GRADE_HISTORY_PASSING_SCORE ? 'success' : 'danger';
 }
 
 function getAvailableMatchStatus(createdAt: string): AvailableQuiz['status'] {

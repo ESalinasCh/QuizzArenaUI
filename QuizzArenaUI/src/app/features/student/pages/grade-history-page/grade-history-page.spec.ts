@@ -54,6 +54,34 @@ describe('StudentGradeHistoryPage', () => {
     expect(fixture.nativeElement.textContent).toContain('Passed');
   });
 
+  it('should switch to table view', () => {
+    const fixture = TestBed.createComponent(StudentGradeHistoryPage);
+    fixture.detectChanges();
+
+    fixture.componentInstance.viewMode.set('table');
+    fixture.detectChanges();
+
+    const table = fixture.nativeElement.querySelector('table');
+    expect(table).toBeTruthy();
+    expect(fixture.nativeElement.textContent).toContain('Exam');
+    expect(fixture.nativeElement.textContent).toContain('Course');
+  });
+
+  it('should toggle view mode from the view switch', () => {
+    const fixture = TestBed.createComponent(StudentGradeHistoryPage);
+    fixture.detectChanges();
+
+    const toggle = fixture.nativeElement.querySelector(
+      'button[aria-label="Toggle grade history view mode"]',
+    );
+
+    toggle.click();
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.viewMode()).toBe('table');
+    expect(fixture.nativeElement.querySelector('table')).toBeTruthy();
+  });
+
   it('should navigate to attempt review details on viewAttempt', async () => {
     const fixture = TestBed.createComponent(StudentGradeHistoryPage);
     fixture.detectChanges();

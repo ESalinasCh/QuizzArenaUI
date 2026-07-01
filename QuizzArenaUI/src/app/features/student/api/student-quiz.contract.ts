@@ -21,6 +21,7 @@ export interface MatchAttemptSummaryResponse {
   id: string;
   title: string;
   courseName: string;
+  startedAt: string;
   completedAt: string | null;
   score: number;
   status: MatchAttemptSummaryStatus;

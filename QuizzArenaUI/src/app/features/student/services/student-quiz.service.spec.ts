@@ -17,6 +17,7 @@ describe('StudentQuizService', () => {
   let httpTesting: HttpTestingController;
   const apiBaseUrl = 'http://localhost:8080';
   const activeMatchesUrl = `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}?status=active`;
+  const startedAt = '2026-06-18T00:00:00.000Z';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -36,7 +37,7 @@ describe('StudentQuizService', () => {
       { id: 'm1', title: 'Quiz 1', courseName: 'DDD', createdAt: '2026-06-20', questionCount: 5, professorName: 'Prof A', duration: 10 },
     ];
     const matchAttemptsMock: MatchAttemptSummaryResponse[] = [
-      { id: 'a1', title: 'Attempt 1', courseName: 'DDD', completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 },
+      { id: 'a1', title: 'Attempt 1', courseName: 'DDD', startedAt, completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 },
     ];
 
     it('should fetch available matches and match attempts and map the dashboard', () => {
@@ -173,7 +174,7 @@ describe('StudentQuizService', () => {
       });
 
       httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}`)
-        .flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', completedAt: null, score: 80, status: 'passed', duration: 10 }]);
+        .flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', startedAt, completedAt: null, score: 80, status: 'passed', duration: 10 }]);
     });
 
     it('should throw when no cached result', () => {
@@ -183,7 +184,7 @@ describe('StudentQuizService', () => {
     });
   });
   describe('getGradeHistory', () => {
-    it('should fetch match attempts with exam match mode and map grade history', () => {
+    it('should fetch match attempts and map grade history', () => {
       service.getGradeHistory().subscribe(attempts => {
         expect(attempts.length).toBe(1);
         expect(attempts[0].id).toBe('attempt-1');
@@ -193,9 +194,7 @@ describe('StudentQuizService', () => {
         expect(attempts[0].statusLabel).toBe('Passed');
       });
 
-      const req = httpTesting.expectOne(
-        `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}?matchmode=exam`,
-      );
+      const req = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}`);
 
       expect(req.request.method).toBe('GET');
 
@@ -204,6 +203,7 @@ describe('StudentQuizService', () => {
           id: 'attempt-1',
           title: 'Clase Project I - Semana 7',
           courseName: 'Domain-Driven Design',
+          startedAt,
           completedAt: '2026-06-01',
           score: 80,
           status: 'passed',

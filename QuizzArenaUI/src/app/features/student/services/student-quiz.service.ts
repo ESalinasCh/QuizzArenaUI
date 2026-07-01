@@ -74,6 +74,7 @@ export class StudentQuizService {
       .pipe(map(attempts => attempts.map(mapAttemptHistoryCardResponse)));
   }
 
+
   getQuizStart(quizId: string): Observable<StudentQuizStart> {
 
     const quizStart = forkJoin({

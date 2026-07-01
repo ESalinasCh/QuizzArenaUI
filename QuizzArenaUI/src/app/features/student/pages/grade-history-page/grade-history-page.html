@@ -1,32 +1,106 @@
 <section class="mx-auto flex w-full max-w-[720px] flex-col gap-5 pb-6">
-  <header>
-    <h1
-      i18n="Student grade history page title"
-      class="text-3xl font-extrabold text-light-text dark:text-dark-text"
-    >
-      Grade History
-    </h1>
-    <p
-      i18n="Student grade history page subtitle"
-      class="mt-1 text-lg font-medium text-purple dark:text-purple-dark"
-    >
-      Review your completed exams
-    </p>
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h1
+        i18n="Student grade history page title"
+        class="text-3xl font-extrabold text-light-text dark:text-dark-text"
+      >
+        Grade History
+      </h1>
+      <p
+        i18n="Student grade history page subtitle"
+        class="mt-1 text-lg font-medium text-purple dark:text-purple-dark"
+      >
+        Review your completed exams
+      </p>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button
+        type="button"
+        class="flex h-11 w-20 items-center rounded-full border border-light-border bg-light-surface p-1 transition-colors dark:border-dark-border dark:bg-dark-surface"
+        aria-label="Toggle grade history view mode"
+        i18n-aria-label="Grade history view mode toggle aria label"
+        (click)="viewMode.set(viewMode() === 'cards' ? 'table' : 'cards')"
+      >
+        <span
+          class="h-9 w-9 rounded-full bg-primary shadow-sm transition-transform duration-200"
+          [class.translate-x-9]="viewMode() === 'table'"
+        ></span>
+      </button>
+      <span
+        i18n="Grade history table mode toggle label"
+        class="text-sm font-semibold text-light-muted dark:text-dark-muted"
+      >
+        Table mode
+      </span>
+    </div>
   </header>
 
-  <div class="flex flex-col gap-4">
-    @for (attempt of attempts(); track attempt.id) {
-      <qz-attempt-history-card
-        [title]="attempt.title"
-        [subtitle]="attempt.subtitle"
-        [completedAtLabel]="attempt.completedAtLabel"
-        [durationLabel]="attempt.durationLabel"
-        [scoreLabel]="attempt.scoreLabel"
-        [statusLabel]="attempt.statusLabel"
-        [statusVariant]="attempt.statusVariant"
-        [actionLabel]="viewLabel"
-        (actionClick)="viewAttempt(attempt.id)"
-      />
-    }
-  </div>
+  @if (viewMode() === 'cards') {
+    <div class="flex flex-col gap-4">
+      @for (attempt of attempts(); track attempt.id) {
+        <qz-attempt-history-card
+          [title]="attempt.title"
+          [subtitle]="attempt.subtitle"
+          [completedAtLabel]="attempt.completedAtLabel"
+          [durationLabel]="attempt.durationLabel"
+          [scoreLabel]="attempt.scoreLabel"
+          [statusLabel]="attempt.statusLabel"
+          [statusVariant]="attempt.statusVariant"
+          [actionLabel]="viewLabel"
+          (actionClick)="viewAttempt(attempt.id)"
+        />
+      }
+    </div>
+  } @else {
+    <div class="overflow-x-auto rounded-2xl border border-light-border bg-light-surface dark:border-dark-border dark:bg-dark-surface">
+      <table class="w-full min-w-[680px] text-left text-sm">
+        <thead class="border-b border-light-border text-xs uppercase text-light-muted dark:border-dark-border dark:text-dark-muted">
+          <tr>
+            <th i18n="Grade history table exam column" class="px-4 py-3 font-semibold">Exam</th>
+            <th i18n="Grade history table course column" class="px-4 py-3 font-semibold">Course</th>
+            <th i18n="Grade history table date column" class="px-4 py-3 font-semibold">Date</th>
+            <th i18n="Grade history table duration column" class="px-4 py-3 font-semibold">Duration</th>
+            <th i18n="Grade history table score column" class="px-4 py-3 font-semibold">Score</th>
+            <th i18n="Grade history table status column" class="px-4 py-3 font-semibold">Status</th>
+            <th i18n="Grade history table action column" class="px-4 py-3 font-semibold">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-light-border dark:divide-dark-border">
+          @for (attempt of attempts(); track attempt.id) {
+            <tr class="text-light-text dark:text-dark-text">
+              <td class="px-4 py-4 font-semibold">{{ attempt.title }}</td>
+              <td class="px-4 py-4 text-light-muted dark:text-dark-muted">{{ attempt.subtitle }}</td>
+              <td class="px-4 py-4 text-light-muted dark:text-dark-muted">{{ attempt.completedAtLabel }}</td>
+              <td class="px-4 py-4 text-light-muted dark:text-dark-muted">{{ attempt.durationLabel }}</td>
+              <td class="px-4 py-4 font-bold">{{ attempt.scoreLabel }}</td>
+              <td class="px-4 py-4">
+                <span
+                  class="rounded-md px-2 py-1 text-xs font-bold"
+                  [class.bg-green-100]="attempt.statusVariant === 'success'"
+                  [class.text-green-700]="attempt.statusVariant === 'success'"
+                  [class.bg-red-100]="attempt.statusVariant === 'danger'"
+                  [class.text-red-700]="attempt.statusVariant === 'danger'"
+                  [class.bg-yellow-100]="attempt.statusVariant === 'warning'"
+                  [class.text-yellow-700]="attempt.statusVariant === 'warning'"
+                >
+                  {{ attempt.statusLabel }}
+                </span>
+              </td>
+              <td class="px-4 py-4">
+                <button
+                  type="button"
+                  class="font-bold text-primary transition-colors hover:text-purple dark:text-blue-400 dark:hover:text-purple-dark"
+                  (click)="viewAttempt(attempt.id)"
+                >
+                  {{ viewLabel }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </section>

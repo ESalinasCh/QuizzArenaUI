@@ -92,6 +92,66 @@
         <target> Revisa tus examenes completados </target>
         <note priority="1" from="description">Student grade history page subtitle</note>
       </trans-unit>
+      <trans-unit id="7308652358236832488" datatype="html">
+        <source>Toggle grade history view mode</source>
+        <target>Cambiar modo de vista del historial de calificaciones</target>
+        <note priority="1" from="description">Grade history view mode toggle aria label</note>
+      </trans-unit>
+      <trans-unit id="4043131645695841897" datatype="html">
+        <source> Table mode </source>
+        <target> Modo tabla </target>
+        <note priority="1" from="description">Grade history table mode toggle label</note>
+      </trans-unit>
+      <trans-unit id="342532163571925122" datatype="html">
+        <source>Grade history view mode</source>
+        <target>Modo de vista del historial de calificaciones</target>
+        <note priority="1" from="description">Grade history view mode toggle aria label</note>
+      </trans-unit>
+      <trans-unit id="4590203878724292966" datatype="html">
+        <source> Cards </source>
+        <target> Tarjetas </target>
+        <note priority="1" from="description">Grade history cards view button</note>
+      </trans-unit>
+      <trans-unit id="3665869345305496484" datatype="html">
+        <source> Table </source>
+        <target> Tabla </target>
+        <note priority="1" from="description">Grade history table view button</note>
+      </trans-unit>
+      <trans-unit id="2009689739817524652" datatype="html">
+        <source>Exam</source>
+        <target>Examen</target>
+        <note priority="1" from="description">Grade history table exam column</note>
+      </trans-unit>
+      <trans-unit id="8317457230285174180" datatype="html">
+        <source>Course</source>
+        <target>Curso</target>
+        <note priority="1" from="description">Grade history table course column</note>
+      </trans-unit>
+      <trans-unit id="3973931101896534797" datatype="html">
+        <source>Date</source>
+        <target>Fecha</target>
+        <note priority="1" from="description">Grade history table date column</note>
+      </trans-unit>
+      <trans-unit id="7410432243549869948" datatype="html">
+        <source>Duration</source>
+        <target>Duracion</target>
+        <note priority="1" from="description">Grade history table duration column</note>
+      </trans-unit>
+      <trans-unit id="7123653594948067002" datatype="html">
+        <source>Score</source>
+        <target>Nota</target>
+        <note priority="1" from="description">Grade history table score column</note>
+      </trans-unit>
+      <trans-unit id="5611592591303869712" datatype="html">
+        <source>Status</source>
+        <target>Estado</target>
+        <note priority="1" from="description">Grade history table status column</note>
+      </trans-unit>
+      <trans-unit id="9216117865911519658" datatype="html">
+        <source>Action</source>
+        <target>Accion</target>
+        <note priority="1" from="description">Grade history table action column</note>
+      </trans-unit>
       <trans-unit id="7103624555672419715" datatype="html">
         <source>Grade History</source>
         <target>Historial de calificaciones</target>
