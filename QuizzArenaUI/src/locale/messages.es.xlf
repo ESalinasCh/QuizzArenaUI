@@ -387,7 +387,7 @@
         <target>Cambiar a modo oscuro</target>
         <note priority="1" from="description">Aria label to switch to dark mode</note>
       </trans-unit>
-      <trans-unit id="Exams" datatype="html">
+      <trans-unit id="3620668876378879803" datatype="html">
         <source>Exams</source>
         <target>Exámenes</target>
         <note priority="1" from="description">Sidebar nav student exams label</note>
