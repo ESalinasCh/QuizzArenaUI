@@ -40,15 +40,18 @@ export class TeacherCreateExamPage {
   onQuestionsPublish(selectedIds: Set<string>): void {
     const info = this.#examInfo();
     if (!info) return;
-    void this.#router.navigate(['/teacher/exams/publish'], {
-      state: {
-        title: info.title,
-        description: info.description,
-        classIds: info.classIds,
-        questionIds: [...selectedIds],
-        from: 'create',
-      },
-    });
+    this.#examService
+      .saveDraftExam(info.title, info.description, [...selectedIds])
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe(exam =>
+        void this.#router.navigate(['/teacher/exams/publish'], {
+          state: {
+            quizId: exam.id,
+            classIds: info.classIds,
+            from: 'create',
+          },
+        }),
+      );
   }
 
   onQuestionsSaveToBank(selectedIds: Set<string>): void {

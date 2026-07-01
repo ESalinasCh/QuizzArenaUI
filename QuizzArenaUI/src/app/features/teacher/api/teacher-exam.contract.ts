@@ -5,29 +5,34 @@ export interface ClassSourceResponse {
 
 export interface QuestionResponse {
   id: string;
-  text: string;
-  options: string[];
-  sourceId: string;
-  sourceName: string;
+  content: string;
+  processingJobId: string;
+  status: string;
 }
-
-export interface ExamConfigBody {
-  durationMinutes: number;
-  maxRetries: number;
-  shuffleQuestions: boolean;
-  shuffleOptions: boolean;
-  enabledFrom: string;
-  enabledUntil: string;
-}
-
-export type ExamOriginBody = 'ai_generated' | 'manually_created';
 
 export interface CreateExamRequestBody {
   title: string;
   description: string;
-  origin: ExamOriginBody;
   questionIds: string[];
-  config: ExamConfigBody;
+}
+
+export interface CreateQuizResponseBody {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  questions: { questionId: string; position: number; valueScore: number }[];
+}
+
+export interface CreateMatchRequestBody {
+  quizId: string;
+  courseId: string;
+  startedAt: string;
+  finishedAt: string;
+  timeMinutes: number;
+  attemptsAmount: number;
+  shuffleQuestion: boolean;
+  shuffleOptions: boolean;
 }
 
 export interface ExamResponse {
