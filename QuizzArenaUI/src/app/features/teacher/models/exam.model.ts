@@ -27,6 +27,7 @@ export interface CreateExamRequest {
   description: string;
   origin: ExamOrigin;
   questionIds: string[];
+  classIds: string[];
   config: ExamConfig;
 }
 
