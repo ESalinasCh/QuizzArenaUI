@@ -6,7 +6,6 @@ import { of } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth.service';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { StudentExamListPage } from './exam-list-page';
-import { MatchStatus } from '../../api/student-quiz.contract';
 
 describe('StudentExamListPage', () => {
     let mockAuthService: Partial<AuthService>;
@@ -16,7 +15,7 @@ describe('StudentExamListPage', () => {
         mockAuthService = {};
 
         mockStudentQuizService = {
-            getExams: vi.fn().mockReturnValue(of([])),
+            getMatches: vi.fn().mockReturnValue(of([])),
         };
 
         TestBed.configureTestingModule({
@@ -42,13 +41,13 @@ describe('StudentExamListPage', () => {
         const fixture = TestBed.createComponent(StudentExamListPage);
         fixture.detectChanges();
 
-        expect(mockStudentQuizService.getExams).toHaveBeenCalledWith({
-            status: MatchStatus.Pending,
+        expect(mockStudentQuizService.getMatches).toHaveBeenCalledWith({
+            status: 'Pending',
         });
     });
 
-    it('should render available exams', () => {
-        (mockStudentQuizService.getExams as ReturnType<typeof vi.fn>).mockReturnValue(
+    it('should render available exams', async () => {
+        (mockStudentQuizService.getMatches as ReturnType<typeof vi.fn>).mockReturnValue(
             of([
             { id: '1' },
             { id: '2' },
@@ -56,6 +55,9 @@ describe('StudentExamListPage', () => {
         );
 
         const fixture = TestBed.createComponent(StudentExamListPage);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
         fixture.detectChanges();
 
         const cards = fixture.nativeElement.querySelectorAll('qz-available-quiz-card');
@@ -66,13 +68,13 @@ describe('StudentExamListPage', () => {
     it('should reload exams when status changes', () => {
         const fixture = TestBed.createComponent(StudentExamListPage);
 
-        (mockStudentQuizService.getExams as ReturnType<typeof vi.fn>).mockClear();
+        (mockStudentQuizService.getMatches as ReturnType<typeof vi.fn>).mockClear();
 
-        fixture.componentInstance['changeStatus'](MatchStatus.Active);
+        fixture.componentInstance['changeStatus']('Active');
         fixture.detectChanges();
 
-        expect(mockStudentQuizService.getExams).toHaveBeenCalledWith({
-            status: MatchStatus.Active,
+        expect(mockStudentQuizService.getMatches).toHaveBeenCalledWith({
+            status: 'Active',
         });
     });
 
@@ -89,5 +91,40 @@ describe('StudentExamListPage', () => {
             'quiz-id',
             'start',
         ]);
+    });
+
+    it('should render empty message when there are no exams', async () => {
+        (mockStudentQuizService.getMatches as ReturnType<typeof vi.fn>).mockReturnValue(
+            of([])
+        );
+
+        const fixture = TestBed.createComponent(StudentExamListPage);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.textContent).toContain(
+            fixture.componentInstance.noExamsMessage
+        );
+
+        const cards = fixture.nativeElement.querySelectorAll('qz-available-quiz-card');
+        expect(cards.length).toBe(0);
+    });
+
+    it('should not render empty message when exams are available', async () => {
+        (mockStudentQuizService.getMatches as ReturnType<typeof vi.fn>).mockReturnValue(
+            of([{ id: '1' }])
+        );
+
+        const fixture = TestBed.createComponent(StudentExamListPage);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.textContent).not.toContain(
+            fixture.componentInstance.noExamsMessage
+        );
     });
 });

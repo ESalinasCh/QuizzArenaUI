@@ -8,7 +8,7 @@ import { MatchStatus } from '../../api/student-quiz.contract';
 })
 export class FilterTabs {
   readonly options = input.required<FilterStatusOption[]>();
-  readonly value = input.required<MatchStatus | undefined>();
+  readonly value = input.required<MatchStatus>();
   readonly valueChange = output<MatchStatus>();
 
   protected select(value: MatchStatus): void {

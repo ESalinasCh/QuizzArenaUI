@@ -53,7 +53,7 @@ export class StudentQuizService {
     );
   }
 
-  getExams(filters: MatchFilters): Observable<AvailableQuiz[]> {
+  getMatches(filters: MatchFilters): Observable<AvailableQuiz[]> {
     return this.#http.get<AvailableMatchResponse[]>(
       this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches  ), { params: { ...filters } })
       .pipe(

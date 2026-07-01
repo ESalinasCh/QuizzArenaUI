@@ -3,11 +3,7 @@ import { AvailableQuizStatus } from "../models/student-quiz.model";
 export type MatchAttemptDetailStatus = 'passed' | 'failed';
 export type MatchAttemptSummaryStatus = MatchAttemptDetailStatus | 'in-progress';
 
-export enum MatchStatus {
-  Active = 'Active',
-  Pending = 'Pending',
-  Expired = 'Expired',
-}
+export type MatchStatus = 'Active' | 'Pending' | 'Expired';
 
 export type MatchMode = 'Solo' | 'Multiple' | 'Exam';
 
@@ -109,13 +105,11 @@ export interface MatchResponse {
   professorName: string;
   duration: number;
   status: AvailableQuizStatus;
-  score: number;
-  completedAtLabel: string;
 }
 
 export interface MatchFilters {
   code?: string;
-  status?: MatchStatus;
+  status: MatchStatus;
   mode?: MatchMode;
   courseId?: string;
   quizId?: string;

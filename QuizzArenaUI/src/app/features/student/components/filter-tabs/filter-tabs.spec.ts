@@ -1,16 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { FilterTabs } from './filter-tabs';
-import { MatchStatus } from '../../api/student-quiz.contract';
 
 describe('FilterTabs', () => {
   const options = [
     {
       label: 'Pending',
-      value: MatchStatus.Pending,
+      value: 'Pending',
     },
     {
       label: 'Active',
-      value: MatchStatus.Active,
+      value: 'Active',
     },
   ];
 
@@ -18,7 +17,7 @@ describe('FilterTabs', () => {
     const fixture = TestBed.createComponent(FilterTabs);
 
     fixture.componentRef.setInput('options', options);
-    fixture.componentRef.setInput('value', MatchStatus.Pending);
+    fixture.componentRef.setInput('value', 'Pending');
     fixture.detectChanges();
 
     const buttons = fixture.nativeElement.querySelectorAll('button');
@@ -32,7 +31,7 @@ describe('FilterTabs', () => {
     const fixture = TestBed.createComponent(FilterTabs);
 
     fixture.componentRef.setInput('options', options);
-    fixture.componentRef.setInput('value', MatchStatus.Active);
+    fixture.componentRef.setInput('value', 'Active');
     fixture.detectChanges();
 
     const buttons = fixture.nativeElement.querySelectorAll('button');
@@ -45,7 +44,7 @@ describe('FilterTabs', () => {
     const fixture = TestBed.createComponent(FilterTabs);
 
     fixture.componentRef.setInput('options', options);
-    fixture.componentRef.setInput('value', MatchStatus.Pending);
+    fixture.componentRef.setInput('value', 'Pending');
 
     const emitSpy = vi.spyOn(fixture.componentInstance.valueChange, 'emit');
 
@@ -54,6 +53,6 @@ describe('FilterTabs', () => {
     const buttons = fixture.nativeElement.querySelectorAll('button');
     buttons[1].click();
 
-    expect(emitSpy).toHaveBeenCalledWith(MatchStatus.Active);
+    expect(emitSpy).toHaveBeenCalledWith('Active');
   });
 });

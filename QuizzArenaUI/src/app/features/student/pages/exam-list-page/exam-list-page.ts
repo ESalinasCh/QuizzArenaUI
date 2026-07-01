@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, resource, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
 import { AvailableQuizCard } from '../../components/available-quiz-card/available-quiz-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { MatchFilters, MatchStatus } from '../../api/student-quiz.contract';
-import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { FilterTabs } from '../../components/filter-tabs/filter-tabs';
+import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
+import { FilterStatusOption } from '../../models/student-quiz.model';
 
 @Component({
   selector: 'qz-student-exam-list-page',
@@ -17,33 +17,30 @@ import { FilterTabs } from '../../components/filter-tabs/filter-tabs';
 export class StudentExamListPage {
   readonly #router = inject(Router);
   readonly #studentQuizService = inject(StudentQuizService);
-  protected readonly matchStatus = MatchStatus;
-  protected readonly statusOptions = [
+  protected readonly statusOptions: FilterStatusOption[] = [
     {
       label: 'Pending',
-      value: MatchStatus.Pending,
+      value: 'Pending',
     },
     {
       label: 'Active',
-      value: MatchStatus.Active,
+      value: 'Active',
     },
   ];
 
   readonly filters = signal<MatchFilters>({
-    status: MatchStatus.Pending,
+    status: 'Pending',
   });
   
   readonly availableExamsTitle = $localize`:Student available exams section title:Available Exams`;
   readonly recentExamsTitle = $localize`:Student recent exams section title:Recent Exams`;
   readonly studentFallbackName = $localize`:Student fallback display name:Student`;
+  readonly noExamsMessage = $localize`:Student no exams message:You don't have any exams.`;
 
-  // readonly exams = toSignal(this.#studentQuizService.getExams(this.filters()));
-  readonly exams = toSignal(
-    toObservable(this.filters).pipe(
-      switchMap(filters => this.#studentQuizService.getExams(filters))
-    ),
-    { initialValue: [] }
-  );
+  readonly exams = resource({
+    params: () => this.filters(),
+    loader: ({params: filters}) => firstValueFrom(this.#studentQuizService.getMatches(filters)),
+  })
 
   async startQuiz(quizId: string): Promise<void> {
     await this.#router.navigate(['/student/quizzes', quizId, 'start']);

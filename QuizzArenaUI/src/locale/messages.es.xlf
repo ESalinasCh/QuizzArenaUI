@@ -97,6 +97,11 @@
         <target>Estudiante</target>
         <note priority="1" from="description">Student fallback display name</note>
       </trans-unit>
+      <trans-unit id="8354875480742307297" datatype="html">
+        <source>You don&apos;t have any exams.</source>
+        <target>No tienes ningún examen disponible.</target>
+        <note priority="1" from="description">Student no exams message</note>
+      </trans-unit>
       <trans-unit id="2531042398197863879" datatype="html">
         <source><x id="questionCount" equiv-text="this.questionCount()"/> questions</source>
         <target><x id="questionCount" equiv-text="this.questionCount()"/> preguntas</target>
