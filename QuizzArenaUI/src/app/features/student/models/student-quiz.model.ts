@@ -1,3 +1,5 @@
+import { MatchStatus } from "../api/student-quiz.contract";
+
 export type AvailableQuizStatus = 'available' | 'new';
 export type RecentQuizStatus = 'passed' | 'warning';
 
@@ -14,6 +16,16 @@ export interface RecentQuiz {
   score: number;
   completedAtLabel: string;
   status: RecentQuizStatus;
+}
+
+export interface Match {
+  id: string;
+  title: string;
+  courseName: string;
+  questionCount: number;
+  professorName: string;
+  duration: number;
+  status: AvailableQuizStatus;
 }
 
 export interface StudentQuizDashboard {
@@ -69,4 +81,9 @@ export interface StudentQuizResultSummary {
   incorrectCount: number;
   totalQuestions: number;
   message: string;
+}
+
+export interface FilterStatusOption {
+  label: string;
+  value: MatchStatus;
 }

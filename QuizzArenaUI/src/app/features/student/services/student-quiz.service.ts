@@ -7,6 +7,7 @@ import {
   CreatePlayResponse,
   MatchAttemptDetailResponse,
   MatchAttemptSummaryResponse,
+  MatchFilters,
   SubmitMatchAttemptRequest,
   SubmitMatchAttemptResponse,
 } from '../api/student-quiz.contract';
@@ -15,6 +16,7 @@ import {
   mapMatchAttemptDetailResponse,
   mapQuizStartResponse,
   mapStudentDashboardResponse,
+  mapStudentMatchesResponse,
   mapSubmitMatchAttemptResponse,
 } from '../api/student-quiz.mapper';
 import {
@@ -22,6 +24,7 @@ import {
   StudentQuizReview,
   StudentQuizResultSummary,
   StudentQuizStart,
+  AvailableQuiz,
 } from '../models/student-quiz.model';
 
 @Injectable({ providedIn: 'root' })
@@ -48,6 +51,14 @@ export class StudentQuizService {
         mapStudentDashboardResponse(availableMatches, matchAttempts),
       ),
     );
+  }
+
+  getMatches(filters: MatchFilters): Observable<AvailableQuiz[]> {
+    return this.#http.get<AvailableMatchResponse[]>(
+      this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches  ), { params: { ...filters } })
+      .pipe(
+        map(availableMatches => mapStudentMatchesResponse(availableMatches)),
+      );
   }
 
   getQuizStart(quizId: string): Observable<StudentQuizStart> {

@@ -113,6 +113,12 @@ export function mapSubmitMatchAttemptResponse(
   };
 }
 
+export function mapStudentMatchesResponse(
+  availableExams: AvailableMatchResponse[]
+): AvailableQuiz[] {
+  return availableExams.map(mapAvailableMatchResponse);
+}
+
 function mapRecentQuizStatus(status: MatchAttemptSummaryResponse['status']): RecentQuizStatus {
   return status === 'passed' ? 'passed' : 'warning';
 }
