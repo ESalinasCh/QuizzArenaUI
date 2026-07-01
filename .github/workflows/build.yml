@@ -34,6 +34,27 @@ jobs:
       - name: Run unit tests
         run: npm run test -- --watch=false
 
+      - name: Add Coverage to Job Summary
+        if: always()
+        run: |
+          node -e "
+          const fs = require('fs');
+          const summaryPath = 'coverage/QuizzArenaUI/coverage-summary.json';
+          if (!fs.existsSync(summaryPath)) {
+            console.log('Coverage summary not found at ' + summaryPath);
+            process.exit(0);
+          }
+          const summary = JSON.parse(fs.readFileSync(summaryPath)).total;
+          const md = '## 📊 Frontend Code Coverage Summary\n\n' +
+            '| Metric | Coverage % | Total Lines | Covered Lines |\n' +
+            '| :--- | :---: | :---: | :---: |\n' +
+            '| **Lines** | ' + summary.lines.pct + '% | ' + summary.lines.total + ' | ' + summary.lines.covered + ' |\n' +
+            '| **Statements** | ' + summary.statements.pct + '% | ' + summary.statements.total + ' | ' + summary.statements.covered + ' |\n' +
+            '| **Branches** | ' + summary.branches.pct + '% | ' + summary.branches.total + ' | ' + summary.branches.covered + ' |\n' +
+            '| **Functions** | ' + summary.functions.pct + '% | ' + summary.functions.total + ' | ' + summary.functions.covered + ' |\n';
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
+          "
+
       - name: Production build
         run: npm run build -- --configuration production
 

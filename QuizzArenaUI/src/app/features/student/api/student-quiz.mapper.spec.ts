@@ -71,7 +71,7 @@ describe('student-quiz.mapper', () => {
         createdAt: '2026-06-20', questionCount: 2, professorName: 'Prof A', duration: 10,
       };
       const play: CreatePlayResponse = {
-        matchId: 'quiz-1', attemptId: 'attempt-1',
+        matchId: 'quiz-1', matchAttemptId: 'attempt-1',
         questions: [
           { id: 'q1', statement: 'Q1', options: [{ id: 'q1-a', label: 'A' }] },
         ],
@@ -106,14 +106,14 @@ describe('student-quiz.mapper', () => {
     it('should map submit response with metadata', () => {
       const response: SubmitMatchAttemptResponse = {
         attemptId: 'attempt-1', scorePercentage: 80, correctCount: 4, incorrectCount: 1,
-        totalQuestions: 5, message: 'Good job', questions: [],
+        totalQuestions: 5, questions: [],
       };
       const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
 
       const result = mapSubmitMatchAttemptResponse(response, metadata);
       expect(result.scorePercentage).toBe(80);
       expect(result.correctCount).toBe(4);
-      expect(result.message).toBe('Good job');
+      expect(result.message).toBe('Result submitted');
     });
   });
 });
