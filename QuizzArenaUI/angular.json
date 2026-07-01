@@ -110,7 +110,8 @@
               "src/**/*.model.ts",
               "src/**/*.contract.ts",
               "src/**/*.endpoints.ts",
-              "src/environments/**"
+              "src/environments/**",
+              "src/**/*.html"
             ],
             "coverageThresholds": {
               "lines": 80,

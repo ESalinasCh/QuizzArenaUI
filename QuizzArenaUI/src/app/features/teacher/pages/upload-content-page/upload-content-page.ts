@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -13,7 +13,6 @@ const DEFAULT_QUESTION_COUNT = 4;
   selector: 'app-teacher-upload-content-page',
   imports: [FormsModule, Button, Icon],
   templateUrl: './upload-content-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeacherUploadContentPage {
   readonly #router = inject(Router);

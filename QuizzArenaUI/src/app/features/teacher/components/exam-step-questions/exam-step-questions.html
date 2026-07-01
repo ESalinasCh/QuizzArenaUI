@@ -1,0 +1,57 @@
+<div class="flex flex-col gap-4">
+
+  <div class="flex items-center justify-between rounded-xl bg-primary-light px-4 py-3 dark:bg-dark-surface-alt">
+    <span class="text-sm text-light-text dark:text-dark-text">
+      <span i18n="Exam step questions selected count label">Selected questions:</span>
+      <strong class="text-primary"> {{ selectedCount() }}</strong>
+    </span>
+    <span class="text-sm text-light-text dark:text-dark-text">
+      <span i18n="Exam step questions max score label">Max score:</span>
+      <strong class="text-primary"> {{ selectedCount() }}</strong>
+    </span>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    @for (question of visibleQuestions(); track question.id) {
+      <qz-exam-question-card
+        [question]="question"
+        [selected]="isSelected(question.id)"
+        (toggleSelect)="toggleQuestion(question.id)"
+        (remove)="removeQuestion(question.id)"
+      />
+    }
+
+    @if (visibleQuestions().length === 0) {
+      <p i18n="Exam step questions empty state" class="py-8 text-center text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        No questions available for the selected classes.
+      </p>
+    }
+  </div>
+
+  <div class="flex flex-col gap-3 sm:flex-row">
+    <qz-button size="large" variant="secondary" [fullWidth]="true" [ariaLabel]="backAriaLabel" (click)="back.emit()">
+      <span i18n="Exam step questions back button">Back</span>
+    </qz-button>
+    <qz-button
+      size="large"
+      variant="secondary"
+      [fullWidth]="true"
+      [disabled]="!canContinue()"
+      [ariaLabel]="saveToBankAriaLabel"
+      (click)="submitSaveToBank()"
+    >
+      <span i18n="Exam step questions save to bank button">Save to Exam Bank</span>
+    </qz-button>
+    <qz-button
+      size="large"
+      variant="primary"
+      [fullWidth]="true"
+      [disabled]="!canContinue()"
+      [ariaLabel]="publishAriaLabel"
+      (click)="submitPublish()"
+    >
+      <span i18n="Exam step questions publish button">Publish Exam</span>
+    </qz-button>
+  </div>
+
+</div>

@@ -1,0 +1,25 @@
+﻿<section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
+
+  <header class="flex items-center gap-4">
+    <button
+      type="button"
+      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary transition hover:bg-primary-soft dark:bg-dark-surface-alt dark:text-primary"
+      i18n-aria-label="Publish exam page back button aria label"
+      aria-label="Back"
+      (click)="goBack()"
+    >
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+      </svg>
+    </button>
+    <h1 i18n="Publish exam page heading" class="text-xl font-extrabold text-light-text dark:text-dark-text">
+      Publish Exam
+    </h1>
+  </header>
+
+  <qz-exam-step-config
+    (next)="onPublish($event)"
+    (back)="goBack()"
+  />
+
+</section>
