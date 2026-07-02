@@ -1,0 +1,10 @@
+<div class="dropdown-box relative">
+    <div [class]="
+        `dropdown-container absolute z-50
+        ${align() === 'right' ? 'left-0' : 'right-0'}`
+    ">
+        <ng-container>
+            <ng-content></ng-content>
+        </ng-container>
+    </div>
+</div>
