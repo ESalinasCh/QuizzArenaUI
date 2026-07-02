@@ -1,0 +1,38 @@
+<div
+    class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3 gap-6">
+    <qz-text-span [text]="question().text" [bold]="'semibold'" />
+    <div class="flex gap-3">
+        @if(isMobile()) {
+        <div>
+            <qz-button size="small" variant="secondary" [fullWidth]="true"
+                (click)="!isDropdownOpened() ? toogleDropdown():''">
+                <qz-icon [name]="'ellipsis-vertical'"></qz-icon>
+            </qz-button>
+            @if (isDropdownOpened()) {
+            <qz-clickable-dropbox [align]="'left'" (closed)="toogleDropdown()">
+                <qz-item-container [clickable]="true" [additionalClasses]="'pr-8'">
+                    Information
+                </qz-item-container>
+                <qz-item-container [clickable]="true">
+                    Edit
+                </qz-item-container>
+                <qz-item-container [clickable]="true">
+                    Delete
+                </qz-item-container>
+            </qz-clickable-dropbox>
+            }
+        </div>
+        }
+        @else {
+        <qz-button size="small" variant="secondary" [fullWidth]="true">
+            <qz-icon [name]="'question'"></qz-icon>
+        </qz-button>
+        <qz-button size="small" variant="secondary" [fullWidth]="true">
+            <qz-icon [name]="'edit'"></qz-icon>
+        </qz-button>
+        <qz-button size="small" variant="secondary" [fullWidth]="true">
+            <qz-icon [name]="'trash'"></qz-icon>
+        </qz-button>
+        }
+    </div>
+</div>
