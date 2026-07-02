@@ -45,6 +45,12 @@ export class Sidebar {
       roles: ['student'],
     },
     {
+      label: $localize`:Sidebar nav student grade history label:Grade History`,
+      icon: 'chart-bar',
+      routerLink: '/student/grades',
+      roles: ['student'],
+    },
+    {
       label: $localize`:Sidebar nav teacher dashboard label:Dashboard`,
       icon: 'dashboard',
       routerLink: '/teacher/dashboard',

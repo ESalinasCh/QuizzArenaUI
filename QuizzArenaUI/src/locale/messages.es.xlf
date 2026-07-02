@@ -47,10 +47,30 @@
         <target>en progreso</target>
         <note priority="1" from="description">Recent quiz in progress label</note>
       </trans-unit>
+      <trans-unit id="3307214558906712688" datatype="html">
+        <source>In progress</source>
+        <target>En progreso</target>
+        <note priority="1" from="description">Attempt history in progress date label</note>
+      </trans-unit>
+      <trans-unit id="7427655947787703925" datatype="html">
+        <source><x id="duration" equiv-text="response.duration"/> min</source>
+        <target><x id="duration" equiv-text="response.duration"/> min</target>
+        <note priority="1" from="description">Attempt history duration label</note>
+      </trans-unit>
       <trans-unit id="8179054508455181088" datatype="html">
         <source>Result submitted</source>
         <target>Resultado enviado</target>
         <note priority="1" from="description">Student quiz result default message</note>
+      </trans-unit>
+      <trans-unit id="1541369093323945540" datatype="html">
+        <source>Passed</source>
+        <target>Aprobado</target>
+        <note priority="1" from="description">Attempt history passed status label</note>
+      </trans-unit>
+      <trans-unit id="7256395947475975935" datatype="html">
+        <source>Failed</source>
+        <target>Reprobado</target>
+        <note priority="1" from="description">Attempt history failed status label</note>
       </trans-unit>
       <trans-unit id="3394970372911985841" datatype="html">
         <source><x id="days" equiv-text="diffInDays"/> days ago</source>
@@ -61,6 +81,81 @@
         <source>View</source>
         <target>Ver</target>
         <note priority="1" from="description">Recent quiz card view action</note>
+      </trans-unit>
+      <trans-unit id="2733311272909794098" datatype="html">
+        <source> Grade History </source>
+        <target> Historial de calificaciones </target>
+        <note priority="1" from="description">Student grade history page title</note>
+      </trans-unit>
+      <trans-unit id="7950221105331650100" datatype="html">
+        <source> Review your completed exams </source>
+        <target> Revisa tus examenes completados </target>
+        <note priority="1" from="description">Student grade history page subtitle</note>
+      </trans-unit>
+      <trans-unit id="7308652358236832488" datatype="html">
+        <source>Toggle grade history view mode</source>
+        <target>Cambiar modo de vista del historial de calificaciones</target>
+        <note priority="1" from="description">Grade history view mode toggle aria label</note>
+      </trans-unit>
+      <trans-unit id="4043131645695841897" datatype="html">
+        <source> Table mode </source>
+        <target> Modo tabla </target>
+        <note priority="1" from="description">Grade history table mode toggle label</note>
+      </trans-unit>
+      <trans-unit id="342532163571925122" datatype="html">
+        <source>Grade history view mode</source>
+        <target>Modo de vista del historial de calificaciones</target>
+        <note priority="1" from="description">Grade history view mode toggle aria label</note>
+      </trans-unit>
+      <trans-unit id="4590203878724292966" datatype="html">
+        <source> Cards </source>
+        <target> Tarjetas </target>
+        <note priority="1" from="description">Grade history cards view button</note>
+      </trans-unit>
+      <trans-unit id="3665869345305496484" datatype="html">
+        <source> Table </source>
+        <target> Tabla </target>
+        <note priority="1" from="description">Grade history table view button</note>
+      </trans-unit>
+      <trans-unit id="2009689739817524652" datatype="html">
+        <source>Exam</source>
+        <target>Examen</target>
+        <note priority="1" from="description">Grade history table exam column</note>
+      </trans-unit>
+      <trans-unit id="8317457230285174180" datatype="html">
+        <source>Course</source>
+        <target>Curso</target>
+        <note priority="1" from="description">Grade history table course column</note>
+      </trans-unit>
+      <trans-unit id="3973931101896534797" datatype="html">
+        <source>Date</source>
+        <target>Fecha</target>
+        <note priority="1" from="description">Grade history table date column</note>
+      </trans-unit>
+      <trans-unit id="7410432243549869948" datatype="html">
+        <source>Duration</source>
+        <target>Duracion</target>
+        <note priority="1" from="description">Grade history table duration column</note>
+      </trans-unit>
+      <trans-unit id="7123653594948067002" datatype="html">
+        <source>Score</source>
+        <target>Nota</target>
+        <note priority="1" from="description">Grade history table score column</note>
+      </trans-unit>
+      <trans-unit id="5611592591303869712" datatype="html">
+        <source>Status</source>
+        <target>Estado</target>
+        <note priority="1" from="description">Grade history table status column</note>
+      </trans-unit>
+      <trans-unit id="9216117865911519658" datatype="html">
+        <source>Action</source>
+        <target>Accion</target>
+        <note priority="1" from="description">Grade history table action column</note>
+      </trans-unit>
+      <trans-unit id="7103624555672419715" datatype="html">
+        <source>Grade History</source>
+        <target>Historial de calificaciones</target>
+        <note priority="1" from="description">Sidebar nav student grade history label</note>
       </trans-unit>
       <trans-unit id="4161583659106904542" datatype="html">
         <source> Welcome, <x id="INTERPOLATION" equiv-text="{{ displayName() }}"/> 👋 </source>
@@ -292,7 +387,7 @@
         <target>Cambiar a modo oscuro</target>
         <note priority="1" from="description">Aria label to switch to dark mode</note>
       </trans-unit>
-      <trans-unit id="Exams" datatype="html">
+      <trans-unit id="3620668876378879803" datatype="html">
         <source>Exams</source>
         <target>Exámenes</target>
         <note priority="1" from="description">Sidebar nav student exams label</note>
@@ -360,6 +455,10 @@
       <trans-unit id="9007626195337256325" datatype="html">
         <source>Your answer: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/></source>
         <target>Tu respuesta: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/></target>
+      </trans-unit>
+      <trans-unit id="6110229795058919586" datatype="html">
+        <source> Your answer: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel }}"/> </source>
+        <target> Tu respuesta: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel }}"/> </target>
       </trans-unit>
       <trans-unit id="2496818939481806999" datatype="html">
         <source>Incorrect</source>

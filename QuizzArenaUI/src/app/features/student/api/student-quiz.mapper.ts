@@ -6,6 +6,7 @@ import {
   SubmitMatchAttemptResponse,
 } from './student-quiz.contract';
 import {
+  AttemptHistoryCard,
   AvailableQuiz,
   RecentQuiz,
   RecentQuizStatus,
@@ -17,6 +18,7 @@ import {
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 const NEW_MATCH_THRESHOLD_DAYS = 2;
+const GRADE_HISTORY_PASSING_SCORE = 50;
 
 export function mapStudentDashboardResponse(
   availableMatches: AvailableMatchResponse[],
@@ -46,6 +48,21 @@ export function mapMatchAttemptSummaryResponse(response: MatchAttemptSummaryResp
       ? formatRelativeDate(response.completedAt)
       : $localize`:Recent quiz in progress label:in progress`,
     status: mapRecentQuizStatus(response.status),
+  };
+}
+
+export function mapAttemptHistoryCardResponse(
+  response: MatchAttemptSummaryResponse,
+): AttemptHistoryCard {
+  return {
+    id: response.id,
+    title: response.title,
+    subtitle: response.courseName,
+    completedAtLabel: formatDisplayDate(response.startedAt),
+    durationLabel: $localize`:Attempt history duration label:${response.duration}:duration: min`,
+    scoreLabel: `${response.score}%`,
+    statusLabel: mapAttemptHistoryStatusLabel(response.score),
+    statusVariant: mapAttemptHistoryStatusVariant(response.score),
   };
 }
 
@@ -123,6 +140,16 @@ function mapRecentQuizStatus(status: MatchAttemptSummaryResponse['status']): Rec
   return status === 'passed' ? 'passed' : 'warning';
 }
 
+function mapAttemptHistoryStatusLabel(score: number): string {
+  return score > GRADE_HISTORY_PASSING_SCORE
+    ? $localize`:Attempt history passed status label:Passed`
+    : $localize`:Attempt history failed status label:Failed`;
+}
+
+function mapAttemptHistoryStatusVariant(score: number): AttemptHistoryCard['statusVariant'] {
+  return score > GRADE_HISTORY_PASSING_SCORE ? 'success' : 'danger';
+}
+
 function getAvailableMatchStatus(createdAt: string): AvailableQuiz['status'] {
   const createdDate = new Date(createdAt);
   const now = new Date();
@@ -130,6 +157,14 @@ function getAvailableMatchStatus(createdAt: string): AvailableQuiz['status'] {
   const diffInDays = diffInMs / MILLISECONDS_PER_DAY;
 
   return diffInDays <= NEW_MATCH_THRESHOLD_DAYS ? 'new' : 'available';
+}
+
+function formatDisplayDate(value: string): string {
+  return new Intl.DateTimeFormat(undefined, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(value));
 }
 
 function formatRelativeDate(value: string): string {

@@ -33,6 +33,17 @@ export interface StudentQuizDashboard {
   recentQuizzes: RecentQuiz[];
 }
 
+export interface AttemptHistoryCard {
+  id: string;
+  title: string;
+  subtitle: string;
+  completedAtLabel: string;
+  durationLabel: string;
+  scoreLabel: string;
+  statusLabel: string;
+  statusVariant: 'success' | 'warning' | 'danger';
+}
+
 export interface QuizQuestionOption {
   id: string;
   label: string;
