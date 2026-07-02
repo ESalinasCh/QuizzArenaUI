@@ -1,32 +1,18 @@
-<div
-    [style.display]="isModalOpened() ? 'flex' : 'none'"
+<div [style.display]="isModalOpened() ? 'flex' : 'none'"
     class="modal-overlay fixed inset-0 flex items-center justify-center z-1000 bg-black/40 overflow-y-auto"
-    (click)="onOverlayClick()"
-    (keydown.escape)="close()"
-    tabindex="0"
-    role="dialog"
-    aria-modal="true"
-    [attr.aria-label]="title() || 'Modal'"
->
-    <div
-        class="modal-content border
+    (click)="onOverlayClick()" (keydown.escape)="close()" tabindex="0" role="dialog" aria-modal="true"
+    [attr.aria-label]="title() || 'Modal'">
+    <div class="modal-content border
             bg-light-bg dark:bg-dark-bg
             text-light-text dark:text-dark-text
             border-light-border dark:border-dark-border max-h-[80vh] overflow-y-auto no-scrollbar"
-        [style.width]="width()"
-        [style.maxWidth]="maxWidth()"
-        (click)="$event.stopPropagation()"
-        (keydown)="$event.stopPropagation()"
-        role="document"
-    >
-        <div
-            class="modal-header"
-            [class]="`
+        [style.width]="width()" [style.maxWidth]="maxWidth()" (click)="$event.stopPropagation()"
+        (keydown)="$event.stopPropagation()" role="document">
+        <div class="modal-header" [class]="`
                 ${title() || showCloseButton() ? 'flex p-3 border-b border-b-light-border dark:border-b-dark-border': ''}
                 ${title() && showCloseButton() ? 'justify-between ': ''}
                 ${!title() && showCloseButton() ? 'justify-end ': ''}
-            `"
-        >
+            `">
             @if (title()) {
             <h2 class="modal-title text-xl font-extrabold">{{ title() }}</h2>
             }
