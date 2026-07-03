@@ -1,9 +1,10 @@
-import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
+import { Question } from '../../models/exam.model';
 
 type Step = 1 | 2;
 
@@ -22,18 +23,17 @@ export class TeacherCreateExamPage {
   readonly #examInfo = signal<ExamInfoData | null>(null);
 
   readonly #allClasses = toSignal(this.#examService.getClasses(), { initialValue: [] });
-  readonly #allQuestions = toSignal(this.#examService.getQuestions(), { initialValue: [] });
 
   readonly classes = this.#allClasses;
 
-  readonly filteredQuestions = computed(() => {
-    const info = this.#examInfo();
-    if (!info) return [];
-    return this.#allQuestions().filter(q => info.classIds.includes(q.sourceId));
-  });
+  readonly filteredQuestions = signal<Question[]>([]);
 
   onInfoNext(data: ExamInfoData): void {
     this.#examInfo.set(data);
+    this.#examService
+      .getQuestions(data.classIds)
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe(questions => this.filteredQuestions.set(questions));
     this.currentStep.set(2);
   }
 

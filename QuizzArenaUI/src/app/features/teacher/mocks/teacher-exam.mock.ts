@@ -1,9 +1,9 @@
 import { ClassSourceResponse, ExamResponse, QuestionResponse } from '../api/teacher-exam.contract';
 
 export const TEACHER_CLASSES_RESPONSE_MOCK: ClassSourceResponse[] = [
-  { id: 'aaaaaaaa-0000-0000-0000-000000000001', name: 'DDD - Semana 1' },
-  { id: 'source-ddd-2', name: 'DDD - Semana 2' },
-  { id: 'source-hex-1', name: 'Hexagonal - Semana 1' },
+  { id: 'aaaaaaaa-0000-0000-0000-000000000001', name: 'Desarrollo Web Full Stack' },
+  { id: 'aaaaaaaa-0000-0000-0000-000000000002', name: 'React y Node.js' },
+  { id: 'aaaaaaaa-0000-0000-0000-000000000003', name: 'Bases de Datos Avanzadas' },
 ];
 
 export const TEACHER_QUESTIONS_RESPONSE_MOCK: QuestionResponse[] = [

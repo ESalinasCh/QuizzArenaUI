@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
@@ -30,9 +30,15 @@ export class TeacherExamService {
     );
   }
 
-  getQuestions(): Observable<Question[]> {
+  getQuestions(processingJobIds: string[]): Observable<Question[]> {
+    let params = new HttpParams()
+      .set('status', 'Verified')
+      .set('pageSize', '100');
+    processingJobIds.forEach(id => {
+      params = params.append('processingJobIds', id);
+    });
     return this.#http
-      .get<QuestionResponse[]>(`${this.#api}${TEACHER_EXAM_ENDPOINTS.questions}`)
+      .get<QuestionResponse[]>(`${this.#api}${TEACHER_EXAM_ENDPOINTS.questions}`, { params })
       .pipe(map(questions => questions.map(mapQuestionResponse)));
   }
 
