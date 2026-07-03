@@ -2,8 +2,29 @@
   <div class="flex flex-col gap-2">
     <p class="text-sm font-semibold text-primary">Teacher</p>
     <h2 class="text-2xl font-bold text-light-text dark:text-dark-text">Quiz management</h2>
-    <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-      Quiz administration screens will be implemented here.
-    </p>
+
+    <div class="flex gap-3">
+      <div class="flex-8">
+        <qz-text-input placeholder="Search your question here" [formField]="searchForm.name" />
+      </div>
+      <div class="flex-0">
+        <qz-button class="flex-0" [fullWidth]="true" [variant]="'secondary'" (click)="toogleQuestionFilterModal()">
+          <qz-icon [name]="'filter'" />
+        </qz-button>
+      </div>
+    </div>
+
+    <qz-admin-question-card></qz-admin-question-card>
+    <qz-admin-question-card></qz-admin-question-card>
+    <qz-admin-question-card></qz-admin-question-card>
+    <qz-admin-question-card></qz-admin-question-card>
+    <qz-admin-question-card></qz-admin-question-card>
+    <qz-admin-question-card></qz-admin-question-card>
   </div>
 </section>
+
+@if (questionFilterModalIsOpen()) {
+  <qz-question-filter-modal
+    (handleToogleModal)="toogleQuestionFilterModal()"
+  />
+}

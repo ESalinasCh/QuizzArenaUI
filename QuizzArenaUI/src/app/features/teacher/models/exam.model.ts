@@ -30,11 +30,13 @@ export interface CreateExamRequest {
   config: ExamConfig;
 }
 
+export type ExamStatus = 'draft' | 'published';
+
 export interface Exam {
   id: string;
   title: string;
   description: string;
-  status: 'draft' | 'published';
+  status: ExamStatus;
   questionIds: string[];
   createdAt: string;
 }

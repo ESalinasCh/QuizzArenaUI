@@ -38,6 +38,60 @@
     <span i18n="Teacher dashboard create exam button label">Create Exam</span>
   </qz-button>
 
+  <div class="flex gap-3">
+      <div class="flex-1 flex-col">
+        <qz-text-input
+          placeholder="Search Exams by title"
+          [formField]="searchForm.text"
+          (input)="search()"
+        />
+        @if (isClearSearchOptionAvailable()) {
+        <qz-link-text
+          class="mt-12"
+          [text]="'Clear'"
+          (click)="clear()"
+        />
+        }
+      </div>
+      <qz-button
+        class="flex-0"
+        size="large"
+        variant="secondary"
+        [fullWidth]="true"
+        [ariaLabel]="createExamAriaLabel"
+        (click)="toogleFilterModal()"
+      >
+        <qz-icon
+          name="filter"
+          class="w-5 h-5"
+        />
+      </qz-button>
+  </div>
+
+  @if (foundExams().length > 0) {
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <h2 i18n="Teacher dashboard created exams heading" class="text-base font-bold text-light-text dark:text-dark-text">
+          Found Exams
+        </h2>
+      </div>
+      <div class="flex flex-col gap-3">
+        @for (exam of foundExams(); track exam.id) {
+          <div class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3">
+            <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ exam.title }}</span>
+            <qz-button
+              size="small"
+              variant="primary"
+              [ariaLabel]="publishExamAriaLabel"
+            >
+              <span>Check</span>
+            </qz-button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
   @if (draftExams().length > 0) {
     <div class="flex flex-col gap-4">
       <div class="flex items-center justify-between">
@@ -116,3 +170,11 @@
     </div>
   </div>
 </section>
+
+@if (isFilterModalOpen()) {
+  <qz-exam-filter-modal
+    [validFilter]="searchFilter()"
+    (handleToogleModal)="toogleFilterModal()"
+    (handleNewFilter)="getNewFilter($event)"
+  />
+}

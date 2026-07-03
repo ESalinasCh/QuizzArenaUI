@@ -10,13 +10,13 @@
             </qz-button>
             @if (isDropdownOpened()) {
             <qz-clickable-dropbox [align]="'left'" (closed)="toogleDropdown()">
-                <qz-item-container [clickable]="true" [additionalClasses]="'pr-8'">
+                <qz-item-container [clickable]="true" [additionalClasses]="'pr-8'" (click)="toogleShowInfoModalOpened()">
                     Information
                 </qz-item-container>
-                <qz-item-container [clickable]="true">
+                <qz-item-container [clickable]="true" (click)="toogleShowEditModalOpened()">
                     Edit
                 </qz-item-container>
-                <qz-item-container [clickable]="true">
+                <qz-item-container [clickable]="true" (click)="toogleShowDeleteModalOpened()">
                     Delete
                 </qz-item-container>
             </qz-clickable-dropbox>
@@ -24,15 +24,25 @@
         </div>
         }
         @else {
-        <qz-button size="small" variant="secondary" [fullWidth]="true">
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="toogleShowInfoModalOpened()">
             <qz-icon [name]="'question'"></qz-icon>
         </qz-button>
-        <qz-button size="small" variant="secondary" [fullWidth]="true">
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="toogleShowEditModalOpened()">
             <qz-icon [name]="'edit'"></qz-icon>
         </qz-button>
-        <qz-button size="small" variant="secondary" [fullWidth]="true">
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="toogleShowDeleteModalOpened()">
             <qz-icon [name]="'trash'"></qz-icon>
         </qz-button>
         }
     </div>
 </div>
+
+@if (isInfoModalOpened()) {
+    <qz-question-info-modal (handleToogleShowModal)="toogleShowInfoModalOpened()" />
+}
+@if (isEditModalOpened()) {
+    <qz-question-edit-modal (handleToogleShowModal)="toogleShowEditModalOpened()" />
+}
+@if (isDeleteModalOpened()) {
+    <qz-question-delete-modal (handleToogleShowModal)="toogleShowDeleteModalOpened()" />
+}
