@@ -12,20 +12,17 @@ describe('teacher-exam.mapper', () => {
   });
 
   describe('mapQuestionResponse', () => {
-    it('should map all question fields including options', () => {
+    it('should map all question fields', () => {
       const response: QuestionResponse = {
         id: 'q1',
-        text: 'What is DDD?',
-        options: ['Option A', 'Option B', 'Option C', 'Option D'],
-        sourceId: 'source-1',
-        sourceName: 'Class 1',
+        content: 'What is DDD?',
+        processingJobId: 'aaaaaaaa-0000-0000-0000-000000000001',
+        status: 'verified',
       };
       const result = mapQuestionResponse(response);
       expect(result.id).toBe('q1');
       expect(result.text).toBe('What is DDD?');
-      expect(result.options).toEqual(['Option A', 'Option B', 'Option C', 'Option D']);
-      expect(result.sourceId).toBe('source-1');
-      expect(result.sourceName).toBe('Class 1');
+      expect(result.sourceId).toBe('aaaaaaaa-0000-0000-0000-000000000001');
     });
   });
 

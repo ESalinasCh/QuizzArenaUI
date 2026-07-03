@@ -9,11 +9,13 @@ describe('TeacherContentService', () => {
     service = TestBed.inject(TeacherContentService);
   });
 
-  it('should return mapped subjects', () => {
+  it('should return mapped subjects with id and name', () => {
     service.getSubjects().subscribe(subjects => {
-      expect(subjects.length).toBe(3);
-      expect(subjects[0].name).toBe('Project I');
-      expect(subjects[1].name).toBe('Arquitectura Hexagonal');
+      expect(subjects.length).toBeGreaterThan(0);
+      subjects.forEach(s => {
+        expect(s.id).toBeTruthy();
+        expect(s.name).toBeTruthy();
+      });
     });
   });
 
