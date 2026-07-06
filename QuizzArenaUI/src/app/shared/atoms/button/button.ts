@@ -24,6 +24,7 @@ export class Button {
   readonly disabled = input<boolean>(false);
   readonly fullWidth = input<boolean>(false);
   readonly ariaLabel = input<string | null>(null);
+  readonly additionalClasses = input('');
 
   readonly buttonClasses = computed(() =>
     [

@@ -1,4 +1,5 @@
-<qz-modal (closedModalEvent)="toogleFilterModal()" [title]="'Filters'" [closeOnOverlayClick]="true"
+@if (isModalOpened()) {
+<qz-modal [(isModalOpened)]="isModalOpened" (closedModalEvent)="toogleFilterModal()" [title]="'Filters'" [closeOnOverlayClick]="true"
     [showCloseButton]="true" [showFooter]="false" >
     <form class="p-3" (submit)="$event.preventDefault(); applyFilters()">
 
@@ -31,3 +32,4 @@
         </div>
     </form>
 </qz-modal>
+}

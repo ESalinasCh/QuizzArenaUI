@@ -9,17 +9,18 @@ export class ModalTemplateComponent {
     modalContentRef = viewChild('modalContent', { read: ViewContainerRef });
 
     title = input<string>('');
-    width = input<string>('500px');
+    width = input<string>('70vw');
     maxWidth = input<string>('90vw');
     closeOnOverlayClick = input<boolean>(true);
     showCloseButton = input<boolean>(true);
     showFooter = input<boolean>(false);
     isModalOpened = input<boolean>(true);
 
-    closedModalEvent = output<void>();
+    isModalOpened = model.required();
 
     close(): void {
-        this.closedModalEvent.emit();
+        this.closeEvent.emit();
+        this.isModalOpened.set(false);
     }
 
     onOverlayClick(): void {

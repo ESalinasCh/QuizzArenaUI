@@ -11,7 +11,6 @@ export type IconName = keyof typeof SVG_ICONS;
 })
 export class Icon {
   name = input.required<IconName>();
-
   path = computed(() => SVG_ICONS[this.name()]);
 }
 

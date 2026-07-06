@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, model, output } from "@angular/core";
 import { ModalTemplateComponent } from "../../../../shared/organisms/modal-template/modal-template";
 
 
@@ -9,6 +9,7 @@ import { ModalTemplateComponent } from "../../../../shared/organisms/modal-templ
     imports: [ModalTemplateComponent],
 })
 export class QuestionDeleteModal {
+    isModalOpened = model.required();
     handleToogleShowModal = output<void>();
     
     toogleShowModal() {

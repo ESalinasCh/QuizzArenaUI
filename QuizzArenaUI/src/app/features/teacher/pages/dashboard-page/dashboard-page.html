@@ -165,6 +165,7 @@
 
 @if (isFilterModalOpen()) {
   <qz-exam-filter-modal
+    [(isModalOpened)]="isFilterModalOpen"
     [validFilter]="searchFilter()"
     (handleToogleModal)="toogleFilterModal()"
     (handleNewFilter)="getNewFilter($event)"

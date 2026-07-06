@@ -1,9 +1,28 @@
-<qz-modal
-    (closedModalEvent)="toogleShowModal()"
-    [title]="'Edit'"
-    [closeOnOverlayClick]="true"
-    [showCloseButton]="true"
-    [showFooter]="false"
->
-    
+<qz-modal [(isModalOpened)]="isModalOpened" (closeEvent)="handleCloseModal()" [title]="'Edit'"
+    [closeOnOverlayClick]="true" [showCloseButton]="true" [showFooter]="false" class="flex flex-col gap-3">
+    <div class="p-3">
+        <qz-textarea-input [label]="'Question'" [formField]="quizForm.content"></qz-textarea-input>
+        <qz-select-input [label]="'Status'" [formField]="quizForm.status">
+            @for (state of states(); track $index) {
+            <option [value]="state.key">
+                {{ state.label }}
+            </option>
+            }
+        </qz-select-input>
+        <qz-select-input [label]="'Type'" [formField]="quizForm.type">
+            @for (type of types(); track $index) {
+            <option [value]="type.key">
+                {{ type.label }}
+            </option>
+            }
+        </qz-select-input>
+        <qz-text-span [bold]="'bold'">
+            Answers
+        </qz-text-span>
+        <div class="flex flex-col gap-4">
+            <qz-item-container [clickable]="true" [variant]="'success'">sdvsdv</qz-item-container>
+            <qz-item-container [clickable]="true" [variant]="'none'">sdvsdv</qz-item-container>
+            <qz-item-container [clickable]="true" [variant]="'danger'">sdvsdv</qz-item-container>
+        </div>
+    </div>
 </qz-modal>

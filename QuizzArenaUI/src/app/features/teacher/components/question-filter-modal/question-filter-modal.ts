@@ -1,45 +1,54 @@
-import { ChangeDetectionStrategy, Component, input, linkedSignal, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, linkedSignal, model, OnInit, signal } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
-import { ExamStatus } from '../../models/exam.model';
-import { TextInput } from "../../../../shared/molecules/text-input/text-input";
 import { ModalTemplateComponent } from '../../../../shared/organisms/modal-template/modal-template';
 import { form, FormField } from '@angular/forms/signals';
 import { CheckboxInputComponent } from "../../../../shared/molecules/checkbox-input/checkbox-input";
-import { ExamFormFilter } from '../../models/exam-form-filter';
+import { TestFormFilter } from '../../models/test-form-filter';
+import { STATUS_OPTIONS_MOCK, StatusOptionMock } from '../../mocks/statusOptions.mock';
+import { TYPE_OPTIONS_MOCK, TypeQuestionOptions } from '../../mocks/typeQuestionOptions.mock';
 
 @Component({
     selector: 'qz-question-filter-modal',
-    imports: [Button, TextInput, ModalTemplateComponent, FormField, CheckboxInputComponent],
+    imports: [Button, ModalTemplateComponent, FormField, CheckboxInputComponent],
     templateUrl: './question-filter-modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QuestionFilterModal {
-    protected handleToogleModal = output<void>();
-    protected handleNewFilter = output<ExamFormFilter>();
-    validFilter = input<ExamFormFilter>(new ExamFormFilter());
-    protected filterModel = linkedSignal(() => ({ ...this.validFilter() }));
-    protected filterForm = form<ExamFormFilter>(this.filterModel);
-    protected stateOptions: { key: ExamStatus, label: string }[] = [
-        { key: 'draft', label: 'Draft' },
-        { key: 'published', label: 'Published' },
-    ];
+export class QuestionFilterModal implements OnInit {
+    isModalOpened = model.required<boolean>();
+    questionFilterModel = model.required<TestFormFilter>();
+
+    filterScreenshotModel = linkedSignal(() => {
+        if (this.isModalOpened()) return structuredClone(this.questionFilterModel());
+        return structuredClone(this.questionFilterModel())
+    });
+    filterForm = form<TestFormFilter>(this.filterScreenshotModel);
+
+    statusOptions = signal<StatusOptionMock[]>([]);
+    typeOptions = signal<TypeQuestionOptions[]>([]);
+    
+    ngOnInit(): void {
+        this.getStatus();
+        this.getTypes();
+    }
 
     protected applyFilters(): void {
-        this.handleNewFilter.emit({
-            endDate: this.filterModel().endDate,
-            startDate: this.filterModel().startDate,
-            states: this.filterModel().states,
-        });
-        this.toogleFilterModal();
+        this.questionFilterModel.set(structuredClone(this.filterScreenshotModel()));
+        this.closeFilterModal();
     }
 
     protected cleanFilters(): void {
-        this.handleNewFilter.emit(new ExamFormFilter());
-        this.toogleFilterModal();
+        this.questionFilterModel.set(new TestFormFilter());
+        this.closeFilterModal();
     }
 
-    protected toogleFilterModal() {
-        this.handleToogleModal.emit();
+    protected closeFilterModal() {
+        return this.isModalOpened.set(false);
     }
 
+    private getStatus() {
+        this.statusOptions.set(structuredClone(STATUS_OPTIONS_MOCK));
+    }
+    private getTypes() {
+        this.typeOptions.set(structuredClone(TYPE_OPTIONS_MOCK));
+    }
 }

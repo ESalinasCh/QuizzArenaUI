@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, linkedSignal, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, linkedSignal, model, output } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { ExamStatus } from '../../models/exam.model';
 import { TextInput } from "../../../../shared/molecules/text-input/text-input";
@@ -13,6 +13,8 @@ import { ExamFormFilter } from '../../models/exam-form-filter';
     templateUrl: './exam-filter-modal.html',
 })
 export class ExamFilterModal {
+    isModalOpened = model.required<boolean>();
+
     protected handleToogleModal = output<void>();
     protected handleNewFilter = output<ExamFormFilter>();
     validFilter = input<ExamFormFilter>(new ExamFormFilter());

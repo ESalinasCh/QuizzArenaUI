@@ -1,8 +1,23 @@
+<<<<<<< HEAD
 <div [style.display]="isModalOpened() ? 'flex' : 'none'"
     class="modal-overlay fixed inset-0 flex items-center justify-center z-1000 bg-black/40 overflow-y-auto"
     (click)="onOverlayClick()" (keydown.escape)="close()" tabindex="0" role="dialog" aria-modal="true"
     [attr.aria-label]="title() || 'Modal'">
     <div class="modal-content border
+=======
+@if (isModalOpened()) {
+<div
+    class="modal-overlay fixed inset-0 flex items-center justify-center z-1000 bg-black/40"
+    (click)="onOverlayClick()"
+    (keydown.escape)="close()"
+    tabindex="0"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="title() || 'Modal'"
+>
+    <div
+        class="modal-content border
+>>>>>>> 124bbcf (feat: mock pages was made)
             bg-light-bg dark:bg-dark-bg
             text-light-text dark:text-dark-text
             border-light-border dark:border-dark-border max-h-[80vh] overflow-y-auto no-scrollbar"
@@ -34,3 +49,6 @@
         }
     </div>
 </div>
+
+}
+

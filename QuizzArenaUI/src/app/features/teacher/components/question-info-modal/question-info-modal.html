@@ -1,9 +1,25 @@
 <qz-modal
-    (closedModalEvent)="toogleShowModal()"
+    [(isModalOpened)]="isModalOpened"
+    (closeEvent)="handleCloseModalEvent()"
     [title]="'Information'"
     [closeOnOverlayClick]="true"
     [showCloseButton]="true"
     [showFooter]="false"
 >
-    
+    <qz-item-container>
+        Date Creation: {{ quiz().createdAt | date:'dd/MM/yyyy' }}
+    </qz-item-container>
+    <qz-item-container>
+        Processing Job Id: {{ quiz().processingJobId }}
+    </qz-item-container>
+    <qz-item-container>
+        Status: {{ quiz().status }}
+    </qz-item-container>
+    <qz-item-container>
+        <div class="flex justify-end">
+            <qz-button [size]="'small'" [variant]="'secondary'" (click)="closeModalClick()">
+                Close
+            </qz-button>
+        </div>
+    </qz-item-container>
 </qz-modal>

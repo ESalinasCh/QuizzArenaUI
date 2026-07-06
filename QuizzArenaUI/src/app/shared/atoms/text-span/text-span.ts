@@ -2,16 +2,16 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 type SpanVariant = 'default';
 type SpanBold = 'bold' | 'semibold' | 'none';
-
 @Component({
     selector: 'qz-text-span',
     templateUrl: './text-span.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextSpan {
-    text = input.required<string>();
+    text = input<string>();
     variant = input<SpanVariant>('default');
     bold = input<SpanBold>('none');
+    additionalCssClasses = input('');
 
     variants: Record<SpanVariant, string> = {
         default: 'text-light-text dark:text-dark-text',
@@ -22,4 +22,5 @@ export class TextSpan {
         semibold: 'font-semibold',
         none: '',
     } as const;
+
 }

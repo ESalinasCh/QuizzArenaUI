@@ -1,7 +1,9 @@
 <span [class]="`
-    text-sm
+    text-sm text-inherit
     ${variants[variant()]}
     ${bolds[bold()]}
+    ${additionalCssClasses()}
 `">
     {{ text() }}
+    <ng-content></ng-content>
 </span>

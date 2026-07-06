@@ -5,26 +5,39 @@
 
     <div class="flex gap-3">
       <div class="flex-8">
-        <qz-text-input placeholder="Search your question here" [formField]="searchForm.name" />
+        <qz-text-input placeholder="Search your question here" [formField]="searchForm.names"
+          [clearOption]="clearOptions()" (clearOptionListener)="handleClearClick()" />
       </div>
       <div class="flex-0">
-        <qz-button class="flex-0" [fullWidth]="true" [variant]="'secondary'" (click)="toogleQuestionFilterModal()">
-          <qz-icon [name]="'filter'" />
+        <qz-button [fullWidth]="true" [variant]="'secondary'" (click)="openFilterModal()">
+          <div class="flex gap-0">
+            <qz-icon [name]="'filter'" />
+            @if (isFilterActive()) {
+            <div class="h-1.5 w-1.5 bg-light-text dark:bg-dark-text rounded-xl"></div>
+            }
+          </div>
         </qz-button>
       </div>
     </div>
 
-    <qz-admin-question-card></qz-admin-question-card>
-    <qz-admin-question-card></qz-admin-question-card>
-    <qz-admin-question-card></qz-admin-question-card>
-    <qz-admin-question-card></qz-admin-question-card>
-    <qz-admin-question-card></qz-admin-question-card>
-    <qz-admin-question-card></qz-admin-question-card>
+    <div class="flex flex-col gap-3">
+      @if(quizzesToShow().length > 0) {
+      @for (quiz of quizzesToShow(); track quiz.id) {
+      <qz-admin-question-card [quiz]="quiz" />
+      }
+      }
+      @else {
+      <div class="flex justify-center items-center h-[50vh]">
+        <qz-text-span [text]="'Not Found Questions'" />
+      </div>
+      }
+
+    </div>
+
   </div>
 </section>
 
-@if (questionFilterModalIsOpen()) {
-  <qz-question-filter-modal
-    (handleToogleModal)="toogleQuestionFilterModal()"
-  />
-}
+<qz-question-filter-modal 
+  [(isModalOpened)]="isQuizFilterOpened"
+  [(questionFilterModel)]="quizFilterModel"
+/>

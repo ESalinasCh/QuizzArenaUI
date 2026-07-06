@@ -1,6 +1,41 @@
 <div
     class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3 gap-6">
-    <qz-text-span [text]="question().text" [bold]="'semibold'" />
+    <div class="flex flex-col gap-2">
+        <qz-text-span [bold]="'none'" [additionalCssClasses]="'block flex items-center gap-1'">
+            @switch (quiz().status) {
+            @case ('Verified') {
+            <div class="text-green-600 flex items-center">
+                <qz-icon [name]="'check'" class="block !size-5" />
+            </div>
+            <div class="text-green-600">
+                {{ quiz().status }}
+            </div>
+            }
+            @case ('Disapproved') {
+            <div class="text-red-600 flex items-center">
+                <qz-icon [name]="'close'" class="block !size-5" />
+            </div>
+            <div class="text-red-600">
+                {{ quiz().status }}
+            </div>
+            }
+            @case ('Draft') {
+            <div class="text-amber-400 flex items-center">
+                <qz-icon [name]="'document'" class="block !size-5" />
+            </div>
+            <div class="text-amber-400">
+                {{ quiz().status }}
+            </div>
+            }
+            }
+        </qz-text-span>
+        <qz-text-span [bold]="'none'">
+            Type: {{ quiz().type }}
+        </qz-text-span>
+        <qz-text-span [bold]="'semibold'">
+            {{ quiz()?.content || '' }}
+        </qz-text-span>
+    </div>
     <div class="flex gap-3">
         @if(isMobile()) {
         <div>
@@ -10,13 +45,14 @@
             </qz-button>
             @if (isDropdownOpened()) {
             <qz-clickable-dropbox [align]="'left'" (closed)="toogleDropdown()">
-                <qz-item-container [clickable]="true" [additionalClasses]="'pr-8'" (click)="toogleShowInfoModalOpened()">
+                <qz-item-container [clickable]="true" [additionalClasses]="'pr-8'"
+                    (click)="openInfoModal()">
                     Information
                 </qz-item-container>
-                <qz-item-container [clickable]="true" (click)="toogleShowEditModalOpened()">
+                <qz-item-container [clickable]="true" (click)="openEditModal()">
                     Edit
                 </qz-item-container>
-                <qz-item-container [clickable]="true" (click)="toogleShowDeleteModalOpened()">
+                <qz-item-container [clickable]="true" (click)="openDeleteModal()">
                     Delete
                 </qz-item-container>
             </qz-clickable-dropbox>
@@ -24,25 +60,19 @@
         </div>
         }
         @else {
-        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="toogleShowInfoModalOpened()">
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openInfoModal()">
             <qz-icon [name]="'question'"></qz-icon>
         </qz-button>
-        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="toogleShowEditModalOpened()">
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openEditModal()">
             <qz-icon [name]="'edit'"></qz-icon>
         </qz-button>
-        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="toogleShowDeleteModalOpened()">
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openDeleteModal()">
             <qz-icon [name]="'trash'"></qz-icon>
         </qz-button>
         }
     </div>
 </div>
 
-@if (isInfoModalOpened()) {
-    <qz-question-info-modal (handleToogleShowModal)="toogleShowInfoModalOpened()" />
-}
-@if (isEditModalOpened()) {
-    <qz-question-edit-modal (handleToogleShowModal)="toogleShowEditModalOpened()" />
-}
-@if (isDeleteModalOpened()) {
-    <qz-question-delete-modal (handleToogleShowModal)="toogleShowDeleteModalOpened()" />
-}
+<qz-question-info-modal [quiz]="quiz()" [(isModalOpened)]="isInfoModalOpened" />
+<qz-question-edit-modal [quiz]="quiz()" [(isModalOpened)]="isEditModalOpened" />
+<qz-question-delete-modal [(isModalOpened)]="isDeleteModalOpened" />

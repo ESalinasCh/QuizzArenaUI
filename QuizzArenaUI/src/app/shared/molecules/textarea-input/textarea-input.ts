@@ -8,17 +8,16 @@ export interface InputTextClearOption {
 }
 
 @Component({
-    selector: 'qz-text-input',
-    templateUrl: './text-input.html',
+    selector: 'qz-textarea-input',
+    templateUrl: './textarea-input.html',
     imports: [LinkText],
 })
-export class TextInput implements FormValueControl<string> {
+export class TextareaInput implements FormValueControl<string> {
     value = model('');
 
     label = input('');
     for = input('');
     placeholder = input('');
-    type = input('text');
 
     errorMessage = input('');
 
