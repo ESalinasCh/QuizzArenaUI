@@ -7,7 +7,7 @@
 =======
 @if (isModalOpened()) {
 <div
-    class="modal-overlay fixed inset-0 flex items-center justify-center z-1000 bg-black/40"
+    class="modal-overlay fixed inset-0 flex items-center justify-center z-1000 bg-black/40 overflow-y-auto"
     (click)="onOverlayClick()"
     (keydown.escape)="close()"
     tabindex="0"

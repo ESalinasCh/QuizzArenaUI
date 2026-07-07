@@ -7,13 +7,13 @@
     [showFooter]="false"
 >
     <qz-item-container>
-        Date Creation: {{ quiz().createdAt | date:'dd/MM/yyyy' }}
+        Date Creation: {{ question().createdAt | date:'dd/MM/yyyy' }}
     </qz-item-container>
     <qz-item-container>
-        Processing Job Id: {{ quiz().processingJobId }}
+        Processing Job Id: {{ question().processingJobId }}
     </qz-item-container>
     <qz-item-container>
-        Status: {{ quiz().status }}
+        Status: {{ question().status }}
     </qz-item-container>
     <qz-item-container>
         <div class="flex justify-end">

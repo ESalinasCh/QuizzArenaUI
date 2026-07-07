@@ -1,18 +1,20 @@
 import { ChangeDetectionStrategy, Component, model, output } from "@angular/core";
 import { ModalTemplateComponent } from "../../../../shared/organisms/modal-template/modal-template";
+import { ItemContainer } from "../../../../shared/atoms/item-container/item-container";
+import { Button } from "../../../../shared/atoms/button/button";
 
 
 @Component({
     selector: 'qz-question-delete-modal',
     templateUrl: './question-delete-modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ModalTemplateComponent],
+    imports: [ModalTemplateComponent, ItemContainer, Button],
 })
 export class QuestionDeleteModal {
     isModalOpened = model.required();
-    handleToogleShowModal = output<void>();
+    closeShowModalEvent = output<void>();
     
-    toogleShowModal() {
-        this.handleToogleShowModal.emit();
+    handleCloseModalEvent() {
+        this.closeShowModalEvent.emit();
     }
 }

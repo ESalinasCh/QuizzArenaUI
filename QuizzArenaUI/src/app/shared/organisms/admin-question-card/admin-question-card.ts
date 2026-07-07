@@ -5,9 +5,9 @@ import { Icon } from "../../atoms/icon/icon";
 import { ItemContainer } from "../../atoms/item-container/item-container";
 import { ClickableDropbox } from '../clickable-dropbox/clickable-dropbox';
 import { QuestionInfoModal } from '../../../features/teacher/components/question-info-modal/question-info-modal';
-import { QuestionEditModal } from "../../../features/teacher/components/question-edit-modal/question-edit-modal";
+import { QuestionEditModal } from "../../../features/teacher/components/question-add-edit-modal/question-add-edit-modal";
 import { QuestionDeleteModal } from "../../../features/teacher/components/question-delete-modal/question-delete-modal";
-import { Quiz } from '../../../core/models/quiz';
+import { Question } from '../../../core/models/Question';
 
 @Component({
     selector: 'qz-admin-question-card',
@@ -19,7 +19,7 @@ import { Quiz } from '../../../core/models/quiz';
     imports: [Button, TextSpan, Icon, ClickableDropbox, ItemContainer, QuestionInfoModal, QuestionEditModal, QuestionDeleteModal],
 })
 export class AdminQuestionCard {
-    quiz = model.required<Quiz>();
+    question = model.required<Question>();
 
     private readonly mobileBreakpoint = 768;
     width = signal(window.innerWidth);

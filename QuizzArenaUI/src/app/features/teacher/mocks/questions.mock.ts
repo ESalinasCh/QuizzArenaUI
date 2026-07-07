@@ -1,6 +1,6 @@
-import { Quiz } from "../../../core/models/quiz";
+import { Question } from "../../../core/models/Question";
 
-export const QUIZZES_RESPONSE_MOCK: Quiz[] = [
+export const QUESTIONS_RESPONSE_MOCK: Question[] = [
     {
         id: 'q-001',
         content: '¿Cuál de los siguientes componentes de Angular se utiliza para gestionar la navegación entre diferentes vistas?',

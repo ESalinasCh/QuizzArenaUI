@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, model, output } from "@angular/core";
 import { ModalTemplateComponent } from "../../../../shared/organisms/modal-template/modal-template";
-import { Quiz } from "../../../../core/models/quiz";
+import { Question } from "../../../../core/models/Question";
 import { ItemContainer } from "../../../../shared/atoms/item-container/item-container";
 import { DatePipe } from "@angular/common";
 import { Button } from "../../../../shared/atoms/button/button";
@@ -16,11 +16,11 @@ export class QuestionInfoModal {
     isModalOpened = model.required();
     closeModalEvent = output<void>();
 
-    quiz = input.required<Quiz>();
+    question = input.required<Question>();
 
     handleCloseModalEvent() {
         console.log('this.quiz()');
-        console.log(this.quiz());
+        console.log(this.question());
         this.closeModalEvent.emit();
     }
 

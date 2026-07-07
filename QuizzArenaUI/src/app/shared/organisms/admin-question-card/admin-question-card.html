@@ -2,13 +2,13 @@
     class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3 gap-6">
     <div class="flex flex-col gap-2">
         <qz-text-span [bold]="'none'" [additionalCssClasses]="'block flex items-center gap-1'">
-            @switch (quiz().status) {
+            @switch (question().status) {
             @case ('Verified') {
             <div class="text-green-600 flex items-center">
                 <qz-icon [name]="'check'" class="block !size-5" />
             </div>
             <div class="text-green-600">
-                {{ quiz().status }}
+                {{ question().status }}
             </div>
             }
             @case ('Disapproved') {
@@ -16,7 +16,7 @@
                 <qz-icon [name]="'close'" class="block !size-5" />
             </div>
             <div class="text-red-600">
-                {{ quiz().status }}
+                {{ question().status }}
             </div>
             }
             @case ('Draft') {
@@ -24,16 +24,16 @@
                 <qz-icon [name]="'document'" class="block !size-5" />
             </div>
             <div class="text-amber-400">
-                {{ quiz().status }}
+                {{ question().status }}
             </div>
             }
             }
         </qz-text-span>
         <qz-text-span [bold]="'none'">
-            Type: {{ quiz().type }}
+            Type: {{ question().type }}
         </qz-text-span>
         <qz-text-span [bold]="'semibold'">
-            {{ quiz()?.content || '' }}
+            {{ question()?.content || '' }}
         </qz-text-span>
     </div>
     <div class="flex gap-3">
@@ -73,6 +73,6 @@
     </div>
 </div>
 
-<qz-question-info-modal [quiz]="quiz()" [(isModalOpened)]="isInfoModalOpened" />
-<qz-question-edit-modal [quiz]="quiz()" [(isModalOpened)]="isEditModalOpened" />
+<qz-question-info-modal [question]="question()" [(isModalOpened)]="isInfoModalOpened" />
+<qz-question-add-edit-modal [question]="question()" [(isModalOpened)]="isEditModalOpened" />
 <qz-question-delete-modal [(isModalOpened)]="isDeleteModalOpened" />

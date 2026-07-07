@@ -6,7 +6,7 @@ import { Button } from "../../../../shared/atoms/button/button";
 import { form, FormField } from '@angular/forms/signals';
 import { QuestionFilterModal } from "../../components/question-filter-modal/question-filter-modal";
 import { QuizManagementService } from '../../services/quiz-management.service';
-import { Quiz } from '../../../../core/models/quiz';
+import { Question } from '../../../../core/models/Question';
 import { take } from 'rxjs';
 import { TextSpan } from "../../../../shared/atoms/text-span/text-span";
 import { TestFormFilter } from '../../models/test-form-filter';
@@ -33,33 +33,33 @@ export class TeacherQuizManagementPage implements OnInit {
   searchModel = signal(structuredClone(searchDefaultForm));
   searchForm = form(this.searchModel);
 
-  isQuizFilterOpened = model<boolean>(false);
-  quizFilterModel = model<TestFormFilter>(new TestFormFilter());
+  isQuestionFilterOpened = model<boolean>(false);
+  questionFilterModel = model<TestFormFilter>(new TestFormFilter());
 
   isFilterActive = computed(() => {
-    if (JSON.stringify(this.quizFilterModel()) === JSON.stringify(new TestFormFilter())) {
+    if (JSON.stringify(this.questionFilterModel()) === JSON.stringify(new TestFormFilter())) {
       return false;
     }
     return true;
   });
 
-  initialQuizzes = signal<Quiz[]>([]);
-  foundQuizzes = computed<Quiz[]>(() => {
+  initialQuestion = signal<Question[]>([]);
+  foundQuestions = computed<Question[]>(() => {
     const searchText = this.searchModel().names;
     if (!searchText) return [];
-    return this.initialQuizzes().filter(quiz => {
+    return this.initialQuestion().filter(quiz => {
       const doesIncludeText = quiz.content.toLowerCase().includes(searchText.toLowerCase());
       return doesIncludeText;
     });
   });
-  showFoundQuizzes = computed(() => {
-    if (this.foundQuizzes().length > 0) return true;
+  showFoundQuestions = computed(() => {
+    if (this.foundQuestions().length > 0) return true;
     if (this.searchModel().names) return true;
     if (this.isFilterActive()) return true;
     return false;
   });
-  quizzesToShow = computed(() => {
-    return this.showFoundQuizzes() ? this.foundQuizzes() : this.initialQuizzes();
+  questionsToShow = computed(() => {
+    return this.showFoundQuestions() ? this.foundQuestions() : this.initialQuestion();
   })
 
   clearOptions = linkedSignal(() => {
@@ -69,13 +69,13 @@ export class TeacherQuizManagementPage implements OnInit {
   });
 
   ngOnInit(): void {
-    this.getMoreQuizzes();
+    this.getMoreQuestions();
   }
 
-  getMoreQuizzes() {
+  getMoreQuestions() {
     this.quizManagementService.getQuestions().pipe(take(1)).subscribe({
       next: (response) => {
-        this.initialQuizzes.update(quizzes => [...quizzes, ...response]);
+        this.initialQuestion.update(quizzes => [...quizzes, ...response]);
       },
       error: () => {
         console.error('Error');
@@ -83,20 +83,20 @@ export class TeacherQuizManagementPage implements OnInit {
     });
   }
 
-  cleanQuizzes() {
-    this.initialQuizzes.set([]);
+  cleanQuestions() {
+    this.initialQuestion.set([]);
     this.page.set(0);
-    this.getMoreQuizzes();
+    this.getMoreQuestions();
   }
 
   handleClearClick() {
-    this.cleanQuizzes();
+    this.cleanQuestions();
     this.clearOptions.set(structuredClone(defaultClearOptions));
     this.searchModel.set(structuredClone(searchDefaultForm));
   }
 
   openFilterModal() {
-    this.isQuizFilterOpened.set(true);
+    this.isQuestionFilterOpened.set(true);
   }
 
 }

@@ -1,8 +1,8 @@
-import { QuizStatus, QuizType } from "../../../core/models/quiz";
+import { QuestionStatus, QuestionType } from "../../../core/models/Question";
 
 export class TestFormFilter {
-    status: Record<QuizStatus, boolean>;
-    types: Record<QuizType, boolean>;
+    status: Record<QuestionStatus, boolean>;
+    types: Record<QuestionType, boolean>;
 
     constructor() {
         this.status = {
@@ -12,6 +12,7 @@ export class TestFormFilter {
         };
         this.types = {
             MultipleChoice: false,
+            SingleChoice: false,
         };
     }
 }

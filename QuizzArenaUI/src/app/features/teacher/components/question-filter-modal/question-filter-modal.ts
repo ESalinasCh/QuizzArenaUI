@@ -4,7 +4,7 @@ import { ModalTemplateComponent } from '../../../../shared/organisms/modal-templ
 import { form, FormField } from '@angular/forms/signals';
 import { CheckboxInputComponent } from "../../../../shared/molecules/checkbox-input/checkbox-input";
 import { TestFormFilter } from '../../models/test-form-filter';
-import { STATUS_OPTIONS_MOCK, StatusOptionMock } from '../../mocks/statusOptions.mock';
+import { QUESTION_STATUS_RESPONSE, StatusQuestionOptions } from '../../mocks/questionStatusResponse.mock';
 import { TYPE_OPTIONS_MOCK, TypeQuestionOptions } from '../../mocks/typeQuestionOptions.mock';
 
 @Component({
@@ -23,7 +23,7 @@ export class QuestionFilterModal implements OnInit {
     });
     filterForm = form<TestFormFilter>(this.filterScreenshotModel);
 
-    statusOptions = signal<StatusOptionMock[]>([]);
+    statusOptions = signal<StatusQuestionOptions[]>([]);
     typeOptions = signal<TypeQuestionOptions[]>([]);
     
     ngOnInit(): void {
@@ -46,7 +46,7 @@ export class QuestionFilterModal implements OnInit {
     }
 
     private getStatus() {
-        this.statusOptions.set(structuredClone(STATUS_OPTIONS_MOCK));
+        this.statusOptions.set(structuredClone(QUESTION_STATUS_RESPONSE));
     }
     private getTypes() {
         this.typeOptions.set(structuredClone(TYPE_OPTIONS_MOCK));

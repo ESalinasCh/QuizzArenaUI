@@ -21,9 +21,9 @@
     </div>
 
     <div class="flex flex-col gap-3">
-      @if(quizzesToShow().length > 0) {
-      @for (quiz of quizzesToShow(); track quiz.id) {
-      <qz-admin-question-card [quiz]="quiz" />
+      @if(questionsToShow().length > 0) {
+      @for (question of questionsToShow(); track question.id) {
+      <qz-admin-question-card [question]="question" />
       }
       }
       @else {
@@ -38,6 +38,6 @@
 </section>
 
 <qz-question-filter-modal 
-  [(isModalOpened)]="isQuizFilterOpened"
-  [(questionFilterModel)]="quizFilterModel"
+  [(isModalOpened)]="isQuestionFilterOpened"
+  [(questionFilterModel)]="questionFilterModel"
 />
