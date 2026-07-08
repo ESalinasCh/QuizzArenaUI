@@ -1,6 +1,7 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { rxResource, takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
@@ -21,19 +22,25 @@ export class TeacherCreateExamPage {
   readonly currentStep = signal<Step>(1);
 
   readonly #examInfo = signal<ExamInfoData | null>(null);
+  readonly #selectedClassIds = signal<string[]>([]);
 
   readonly #allClasses = toSignal(this.#examService.getClasses(), { initialValue: [] });
 
   readonly classes = this.#allClasses;
 
-  readonly filteredQuestions = signal<Question[]>([]);
+  readonly questionsResource = rxResource<Question[], { classIds: string[] }>({
+    params: () => ({ classIds: this.#selectedClassIds() }),
+    stream: ({ params }) => {
+      if (params.classIds.length === 0) return of([]);
+      return this.#examService.getQuestions(params.classIds);
+    }
+  });
+
+  readonly filteredQuestions = computed(() => this.questionsResource.value() ?? []);
 
   onInfoNext(data: ExamInfoData): void {
     this.#examInfo.set(data);
-    this.#examService
-      .getQuestions(data.classIds)
-      .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe(questions => this.filteredQuestions.set(questions));
+    this.#selectedClassIds.set(data.classIds);
     this.currentStep.set(2);
   }
 
