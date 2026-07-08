@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -45,7 +45,7 @@ export class TeacherDashboardPage {
     return user?.name?.trim().split(' ')[0] || user?.username || $localize`:Teacher fallback display name:Teacher`;
   });
 
-  protected isFilterModalOpen = model(false);
+  protected isFilterModalOpen = signal(false);
   searchFilter = signal(new ExamFormFilter());
 
   async uploadContent(): Promise<void> {
@@ -94,12 +94,11 @@ export class TeacherDashboardPage {
     this.isClearSearchOptionAvailable.set(false);
   }
 
-  protected toogleFilterModal() {
+  protected toggleFilterModal() {
     this.isFilterModalOpen.update(value => !value);
   }
 
   protected getNewFilter(newFilter: ExamFormFilter) {
-    console.log(this.#allExams())
     this.searchFilter.set(newFilter);
   }
 

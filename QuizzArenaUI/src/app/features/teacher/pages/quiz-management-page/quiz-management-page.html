@@ -23,7 +23,7 @@
     <div class="flex flex-col gap-3">
       @if(questionsToShow().length > 0) {
       @for (question of questionsToShow(); track question.id) {
-      <qz-admin-question-card [question]="question" />
+      <qz-admin-question-card [question]="question" (newQuestion)="handleNewQuestion($event)" (deleteQuestionById)="handleDeleteQuestion($event)" />
       }
       }
       @else {
@@ -38,6 +38,8 @@
 </section>
 
 <qz-question-filter-modal 
-  [(isModalOpened)]="isQuestionFilterOpened"
-  [(questionFilterModel)]="questionFilterModel"
+  [isModalOpened]="isQuestionFilterOpened()"
+  [questionFilter]="questionFilterModel()"
+  (closeEvent)="handleCloseFilterModal()"
+  (newFilterEvent)="handleNewFilter($event)"
 />

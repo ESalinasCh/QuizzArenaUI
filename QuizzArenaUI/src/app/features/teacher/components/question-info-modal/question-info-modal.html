@@ -1,23 +1,36 @@
-<qz-modal
-    [(isModalOpened)]="isModalOpened"
-    (closeEvent)="handleCloseModalEvent()"
-    [title]="'Information'"
-    [closeOnOverlayClick]="true"
-    [showCloseButton]="true"
-    [showFooter]="false"
->
+<qz-modal [isModalOpened]="isModalOpened()" (closeEvent)="handleCloseModalEvent()" [title]="'Information'"
+    [closeOnOverlayClick]="true" [showCloseButton]="true" [showFooter]="false">
     <qz-item-container>
-        Date Creation: {{ question().createdAt | date:'dd/MM/yyyy' }}
+        <qz-text-span [bold]="'semibold'">
+            {{ question().content }}
+        </qz-text-span>
+    </qz-item-container>
+
+    <qz-item-container>
+        <div class="flex justify-between">
+            <qz-text-span [bold]="'semibold'">Date Creation: </qz-text-span>
+            <div>{{ question().createdAt | date:'dd/MM/yyyy' }}</div>
+        </div>
     </qz-item-container>
     <qz-item-container>
-        Processing Job Id: {{ question().processingJobId }}
+        <div class="flex justify-between">
+            <qz-text-span [bold]="'semibold'">Processing Job Id: </qz-text-span>
+            <div>{{ question().processingJobId }}</div>
+        </div>
     </qz-item-container>
     <qz-item-container>
-        Status: {{ question().status }}
+        <div class="flex justify-between">
+            <qz-text-span [bold]="'semibold'">Status: </qz-text-span>
+            <div>{{ question().status }}</div>
+        </div>
+    </qz-item-container>
+    <qz-item-container>
+        <qz-text-span [bold]="'semibold'">Justification: </qz-text-span>
+        <div>{{ question().justification }}</div>
     </qz-item-container>
     <qz-item-container>
         <div class="flex justify-end">
-            <qz-button [size]="'small'" [variant]="'secondary'" (click)="closeModalClick()">
+            <qz-button [size]="'small'" [variant]="'secondary'" (click)="handleCloseModalEvent()">
                 Close
             </qz-button>
         </div>

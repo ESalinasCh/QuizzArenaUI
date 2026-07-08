@@ -1,5 +1,5 @@
 <qz-modal
-    [(isModalOpened)]="isModalOpened"
+    [isModalOpened]="isModalOpened()"
     (closeEvent)="handleCloseModalEvent()"
     [title]="'Delete'"
     [closeOnOverlayClick]="true"
@@ -10,11 +10,14 @@
         Are you sure that you want to delete this item
     </qz-item-container>
     <qz-item-container>
+        {{ question().content }}
+    </qz-item-container>
+    <qz-item-container>
         <div class="flex justify-between gap-3 flex-wrap">
-            <qz-button [fullWidth]="true" [variant]="'secondary'">
+            <qz-button [fullWidth]="true" [variant]="'secondary'" (click)="handleCloseModalEvent()">
                 Cancel
             </qz-button>
-            <qz-button [fullWidth]="true" [variant]="'danger'">
+            <qz-button [fullWidth]="true" [variant]="'danger'" (click)="handleDeleteClick()">
                 Delete
             </qz-button>
         </div>

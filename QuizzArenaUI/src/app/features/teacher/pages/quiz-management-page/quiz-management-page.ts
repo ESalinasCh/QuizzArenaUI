@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, OnInit, signal } from '@angular/core';
 import { InputTextClearOption, TextInput } from "../../../../shared/molecules/text-input/text-input";
-import { AdminQuestionCard } from "../../../../shared/organisms/admin-question-card/admin-question-card";
 import { Icon } from "../../../../shared/atoms/icon/icon";
 import { Button } from "../../../../shared/atoms/button/button";
 import { form, FormField } from '@angular/forms/signals';
 import { QuestionFilterModal } from "../../components/question-filter-modal/question-filter-modal";
 import { QuizManagementService } from '../../services/quiz-management.service';
-import { Question } from '../../../../core/models/Question';
 import { take } from 'rxjs';
 import { TextSpan } from "../../../../shared/atoms/text-span/text-span";
-import { TestFormFilter } from '../../models/test-form-filter';
+import { AdminQuestionCard } from '../../components/admin-question-card/admin-question-card';
+import { Question } from '../../models/question';
+import { QuestionFilter } from '../../models/question-form-filter';
 
 const defaultClearOptions: InputTextClearOption = {
   isActivated: false,
@@ -33,11 +33,11 @@ export class TeacherQuizManagementPage implements OnInit {
   searchModel = signal(structuredClone(searchDefaultForm));
   searchForm = form(this.searchModel);
 
-  isQuestionFilterOpened = model<boolean>(false);
-  questionFilterModel = model<TestFormFilter>(new TestFormFilter());
+  isQuestionFilterOpened = signal<boolean>(false);
+  questionFilterModel = signal<QuestionFilter>(new QuestionFilter());
 
   isFilterActive = computed(() => {
-    if (JSON.stringify(this.questionFilterModel()) === JSON.stringify(new TestFormFilter())) {
+    if (JSON.stringify(this.questionFilterModel()) === JSON.stringify(new QuestionFilter())) {
       return false;
     }
     return true;
@@ -87,6 +87,28 @@ export class TeacherQuizManagementPage implements OnInit {
     this.initialQuestion.set([]);
     this.page.set(0);
     this.getMoreQuestions();
+  }
+
+  handleCloseFilterModal() {
+    this.isQuestionFilterOpened.set(false);
+  }
+
+  handleNewFilter(questionFilter: QuestionFilter) {
+    this.questionFilterModel.set(questionFilter);
+  }
+
+  handleNewQuestion(question: Question) {
+    this.initialQuestion.update(questionCollection =>
+      questionCollection.map(quest => {
+        return quest.id == question.id ? question : quest
+      })
+    )
+  }
+
+  handleDeleteQuestion(id: string) {
+    this.initialQuestion.update(questionCollection =>
+      questionCollection.filter(quest => quest.id != id)
+    )
   }
 
   handleClearClick() {

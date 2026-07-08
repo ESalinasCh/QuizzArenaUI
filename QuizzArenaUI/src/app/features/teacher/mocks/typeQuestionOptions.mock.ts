@@ -1,4 +1,4 @@
-import { QuestionType } from "../../../core/models/Question";
+import { QuestionType } from "../models/question";
 
 export interface TypeQuestionOptions {
     key: QuestionType,

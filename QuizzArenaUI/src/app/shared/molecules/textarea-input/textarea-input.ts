@@ -1,6 +1,7 @@
 import { Component, model, input, output } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
 import { LinkText } from "../../atoms/link-text/link-text";
+import { TextSpan } from "../../atoms/text-span/text-span";
 
 export interface InputTextClearOption {
     isActivated: boolean;
@@ -10,7 +11,7 @@ export interface InputTextClearOption {
 @Component({
     selector: 'qz-textarea-input',
     templateUrl: './textarea-input.html',
-    imports: [LinkText],
+    imports: [LinkText, TextSpan],
 })
 export class TextareaInput implements FormValueControl<string> {
     value = model('');

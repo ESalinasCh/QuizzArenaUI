@@ -1,4 +1,4 @@
-import { QuestionStatus } from "../../../core/models/Question";
+import { QuestionStatus } from "../models/question";
 
 export interface StatusQuestionOptions {
     key: QuestionStatus,
@@ -6,7 +6,7 @@ export interface StatusQuestionOptions {
 }
 
 export const QUESTION_STATUS_RESPONSE: StatusQuestionOptions[] = [
-    { key: 'Draft', label: 'MultipleChoice' },
+    { key: 'Draft', label: 'Draft' },
     { key: 'Disapproved', label: 'Disapproved' },
     { key: 'Verified', label: 'Verified' },
 ];

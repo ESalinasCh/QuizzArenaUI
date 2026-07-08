@@ -1,4 +1,4 @@
-import { Option } from "../../../core/models/Options";
+import { Option } from "../models/options";
 
 export const OPTIONS_MOCK: Option[] = [
     {

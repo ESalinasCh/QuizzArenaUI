@@ -1,4 +1,4 @@
-import { Question } from "../../../core/models/Question";
+import { Question } from "../models/question";
 
 export const QUESTIONS_RESPONSE_MOCK: Question[] = [
     {

@@ -1,5 +1,6 @@
 import { Component, model, input } from '@angular/core';
 import { FormValueControl } from '@angular/forms/signals';
+import { TextSpan } from "../../atoms/text-span/text-span";
 
 export interface InputTextClearOption {
     isActivated: boolean;
@@ -9,7 +10,7 @@ export interface InputTextClearOption {
 @Component({
     selector: 'qz-select-input',
     templateUrl: './select-input.html',
-    imports: [],
+    imports: [TextSpan],
 })
 export class SelectInput implements FormValueControl<string> {
     value = model('');

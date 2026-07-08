@@ -1,6 +1,6 @@
-import { QuestionStatus, QuestionType } from "../../../core/models/Question";
+import { QuestionStatus, QuestionType } from "./question";
 
-export class TestFormFilter {
+export class QuestionFilter {
     status: Record<QuestionStatus, boolean>;
     types: Record<QuestionType, boolean>;
 
