@@ -59,6 +59,7 @@ describe('TeacherCreateExamPage', () => {
     const fixture = TestBed.createComponent(TeacherCreateExamPage);
     fixture.detectChanges();
     fixture.componentInstance.onInfoNext({ title: 'Exam', description: 'Desc', classIds: ['source-ddd-1'] });
+    fixture.detectChanges();
     const filtered = fixture.componentInstance.filteredQuestions();
     expect(filtered.length).toBe(2);
     expect(mockExamService.getQuestions).toHaveBeenCalledWith(['source-ddd-1']);
@@ -85,6 +86,7 @@ describe('TeacherCreateExamPage', () => {
     const fixture = TestBed.createComponent(TeacherCreateExamPage);
     fixture.detectChanges();
     fixture.componentInstance.onInfoNext({ title: 'Exam', description: 'Desc', classIds: ['source-ddd-1'] });
+    fixture.detectChanges();
     const router = TestBed.inject(Router);
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     fixture.componentInstance.onQuestionsPublish(new Set(['q1']));
@@ -106,6 +108,7 @@ describe('TeacherCreateExamPage', () => {
     const fixture = TestBed.createComponent(TeacherCreateExamPage);
     fixture.detectChanges();
     fixture.componentInstance.onInfoNext({ title: 'Exam', description: 'Desc', classIds: ['source-ddd-1'] });
+    fixture.detectChanges();
     const router = TestBed.inject(Router);
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     fixture.componentInstance.onQuestionsSaveToBank(new Set(['q1']));
