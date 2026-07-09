@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, input, output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, input } from "@angular/core";
 import { ModalTemplateComponent } from "../../../../shared/organisms/modal-template/modal-template";
 import { ItemContainer } from "../../../../shared/atoms/item-container/item-container";
 import { Button } from "../../../../shared/atoms/button/button";
-import { ModalMethods } from "../../../../shared/organisms/modal-template/ModalMethods";
 import { Question } from "../../models/question";
+import { ModalRef } from "../../../../core/services/modal.service";
 
 
 @Component({
@@ -12,19 +12,17 @@ import { Question } from "../../models/question";
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModalTemplateComponent, ItemContainer, Button],
 })
-export class QuestionDeleteModal implements ModalMethods {
-    closeModalEvent = output<void>();
-    confirmDeleteEvent = output<string>();
-    isModalOpened = input.required<boolean>();
+export class QuestionDeleteModal {
+    readonly #modalRef = inject(ModalRef);
+    isModalOpened = input<boolean>(true);
     question = input.required<Question>();
 
     closeModal(): void {
-        this.closeModalEvent.emit();
+        this.#modalRef.close();
     }
 
     handleDeleteClick() {
-        this.confirmDeleteEvent.emit(this.question().id);
-        this.closeModal();
+        this.#modalRef.close(this.question().id);
     }
 
     handleCloseModalEvent() {

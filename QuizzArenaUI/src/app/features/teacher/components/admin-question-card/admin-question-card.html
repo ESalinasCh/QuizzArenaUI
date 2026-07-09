@@ -45,13 +45,13 @@
             </qz-button>
             @if (isDropdownOpened()) {
             <qz-clickable-dropbox [align]="'left'" (closed)="handleToggleDropdown(false)">
-                <qz-item-container [clickable]="true" [additionalClasses]="'pr-8'" (click)="toggleInfoModal(true)">
+                <qz-item-container [clickable]="true" [additionalClasses]="'pr-8'" (click)="openInfoModal()">
                     Information
                 </qz-item-container>
-                <qz-item-container [clickable]="true" (click)="toggleEditModal(true)">
+                <qz-item-container [clickable]="true" (click)="openEditModal()">
                     Edit
                 </qz-item-container>
-                <qz-item-container [clickable]="true" (click)="toggleDeleteModal(true)">
+                <qz-item-container [clickable]="true" (click)="openDeleteModal()">
                     Delete
                 </qz-item-container>
             </qz-clickable-dropbox>
@@ -59,19 +59,15 @@
         </div>
         }
         @else {
-        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="toggleInfoModal(true)">
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openInfoModal()">
             <qz-icon [name]="'question'"></qz-icon>
         </qz-button>
-        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="toggleEditModal(true)">
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openEditModal()">
             <qz-icon [name]="'edit'"></qz-icon>
         </qz-button>
-        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="toggleDeleteModal(true)">
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openDeleteModal()">
             <qz-icon [name]="'trash'"></qz-icon>
         </qz-button>
         }
-    </div>
 </div>
 
-<qz-question-info-modal [question]="question()" [isModalOpened]="isInfoModalOpened()" (closeModalEvent)="toggleInfoModal(false)" />
-<qz-question-add-edit-modal [question]="question()" [isModalOpened]="isEditModalOpened()" (closeModalEvent)="toggleEditModal(false)" (newQuestion)="handleNewQuestion($event)" />
-<qz-question-delete-modal [question]="question()" [isModalOpened]="isDeleteModalOpened()" (closeModalEvent)="toggleDeleteModal(false)" (confirmDeleteEvent)="handleDeleteQuestion($event)" />

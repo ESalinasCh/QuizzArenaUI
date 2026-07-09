@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output, signal } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { TextSpan } from '../../../../shared/atoms/text-span/text-span';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -8,6 +8,8 @@ import { QuestionEditModal } from '../question-add-edit-modal/question-add-edit-
 import { QuestionInfoModal } from '../question-info-modal/question-info-modal';
 import { QuestionDeleteModal } from '../question-delete-modal/question-delete-modal';
 import { Question } from '../../models/question';
+import { ModalService } from '../../../../core/services/modal.service';
+
 
 @Component({
     selector: 'qz-admin-question-card',
@@ -16,25 +18,40 @@ import { Question } from '../../models/question';
     host: {
         '(window:resize)': 'onResize()',
     },
-    imports: [Button, TextSpan, Icon, ClickableDropbox, ItemContainer, QuestionInfoModal, QuestionEditModal, QuestionDeleteModal],
+    imports: [Button, TextSpan, Icon, ClickableDropbox, ItemContainer],
 })
 export class AdminQuestionCard {
+    readonly #modalService = inject(ModalService);
     question = input.required<Question>();
     newQuestion = output<Question>()
     deleteQuestionById = output<string>();
 
-    private readonly mobileBreakpoint = 768;
+    readonly #mobileBreakpoint = 768;
     width = signal(window.innerWidth);
-    isMobile = () => this.width() < this.mobileBreakpoint;
+    isMobile = () => this.width() < this.#mobileBreakpoint;
     isDropdownOpened = signal(false);
 
-    isInfoModalOpened = signal<boolean>(false);
-    isEditModalOpened = signal<boolean>(false);
-    isDeleteModalOpened = signal<boolean>(false);
+    openInfoModal() {
+        this.#modalService.open(QuestionInfoModal, { question: this.question() });
+    }
 
-    toggleInfoModal(flag: boolean) { this.isInfoModalOpened.set(flag); }
-    toggleEditModal(flag: boolean) { this.isEditModalOpened.set(flag); }
-    toggleDeleteModal(flag: boolean) { this.isDeleteModalOpened.set(flag); }
+    openEditModal() {
+        const ref = this.#modalService.open<QuestionEditModal, Question>(QuestionEditModal, { question: this.question() });
+        ref.afterClosed.then((question) => {
+            if (question) {
+                this.handleNewQuestion(question);
+            }
+        });
+    }
+
+    openDeleteModal() {
+        const ref = this.#modalService.open<QuestionDeleteModal, string>(QuestionDeleteModal, { question: this.question() });
+        ref.afterClosed.then((id) => {
+            if (id) {
+                this.handleDeleteQuestion(id);
+            }
+        });
+    }
 
     handleToggleDropdown(value: boolean) { this.isDropdownOpened.set(value); }
 

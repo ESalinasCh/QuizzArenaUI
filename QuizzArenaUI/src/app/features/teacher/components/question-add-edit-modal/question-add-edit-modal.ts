@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, linkedSignal, output, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, output, signal } from "@angular/core";
 import { ModalTemplateComponent } from "../../../../shared/organisms/modal-template/modal-template";
 import { ItemContainer } from "../../../../shared/atoms/item-container/item-container";
 import { SelectInput } from "../../../../shared/molecules/select-input/select-input";
@@ -9,10 +9,10 @@ import { form, FormField } from "@angular/forms/signals";
 import { OPTIONS_MOCK } from "../../mocks/options.mock";
 import { QUESTION_STATUS_RESPONSE } from "../../mocks/questionStatusResponse.mock";
 import { Button } from "../../../../shared/atoms/button/button";
-import { ModalMethods } from "../../../../shared/organisms/modal-template/ModalMethods";
 import { PROCESS_JOB_MOCK } from "../../mocks/processJob.mock";
 import { Question } from "../../models/question";
 import { Option } from "../../models/options";
+import { ModalRef } from "../../../../core/services/modal.service";
 
 const changeOptionCorrectStatus = (currentOptions: Option[], selectedOption: Option) => {
     return currentOptions.map(opt => ({
@@ -27,12 +27,12 @@ const changeOptionCorrectStatus = (currentOptions: Option[], selectedOption: Opt
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ModalTemplateComponent, ItemContainer, SelectInput, TextareaInput, TextSpan, FormField, Button],
 })
-export class QuestionEditModal implements ModalMethods {
+export class QuestionEditModal {
+    readonly #modalRef = inject(ModalRef);
     question = input<Question>(new Question());
     formType = computed(() => this.question().id == '' ? 'Create' : 'Edit');
-    isModalOpened = input.required<boolean>();
+    isModalOpened = input<boolean>(true);
     closeModalEvent = output<void>();
-    newQuestion = output<Question>();
 
     questionModel = linkedSignal(() => { return this.isModalOpened() ? this.question() : this.question() });
     questionForm = form(this.questionModel);
@@ -47,8 +47,9 @@ export class QuestionEditModal implements ModalMethods {
         return this.isModalOpened() ? options : options;
     });
 
-    closeModal() {
+    closeModal(result?: Question) {
         this.closeModalEvent.emit();
+        this.#modalRef.close(result);
     }
 
     handleChangeCorrectAnswer(selectedOption: Option) {
@@ -63,8 +64,7 @@ export class QuestionEditModal implements ModalMethods {
 
     handleSubmitForm(event: Event) {
         event.preventDefault();
-        this.newQuestion.emit(this.questionModel());
-        this.closeModal();
+        this.closeModal(this.questionModel());
     }
 
     handleCloseModal() {
