@@ -10,6 +10,8 @@ import { TextSpan } from "../../../../shared/atoms/text-span/text-span";
 import { AdminQuestionCard } from '../../components/admin-question-card/admin-question-card';
 import { Question } from '../../models/question';
 import { QuestionFilter } from '../../models/question-form-filter';
+import { ModalService } from '../../../../core/services/modal.service';
+
 
 const defaultClearOptions: InputTextClearOption = {
   isActivated: false,
@@ -24,16 +26,16 @@ const searchDefaultForm = { names: '' }
   selector: 'qz-teacher-quiz-management-page',
   templateUrl: './quiz-management-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TextInput, AdminQuestionCard, Icon, Button, FormField, QuestionFilterModal, TextSpan],
+  imports: [TextInput, AdminQuestionCard, Icon, Button, FormField, TextSpan],
 })
 export class TeacherQuizManagementPage implements OnInit {
+  readonly #modalService = inject(ModalService);
   private quizManagementService = inject(QuizManagementService);
   page = signal(0);
 
   searchModel = signal(structuredClone(searchDefaultForm));
   searchForm = form(this.searchModel);
 
-  isQuestionFilterOpened = signal<boolean>(false);
   questionFilterModel = signal<QuestionFilter>(new QuestionFilter());
 
   isFilterActive = computed(() => {
@@ -89,9 +91,7 @@ export class TeacherQuizManagementPage implements OnInit {
     this.getMoreQuestions();
   }
 
-  handleCloseFilterModal() {
-    this.isQuestionFilterOpened.set(false);
-  }
+
 
   handleNewFilter(questionFilter: QuestionFilter) {
     this.questionFilterModel.set(questionFilter);
@@ -118,7 +118,16 @@ export class TeacherQuizManagementPage implements OnInit {
   }
 
   openFilterModal() {
-    this.isQuestionFilterOpened.set(true);
+    const ref = this.#modalService.open<QuestionFilterModal, QuestionFilter>(
+      QuestionFilterModal,
+      { questionFilter: this.questionFilterModel() },
+      { title: 'Filters' }
+    );
+    ref.afterClosed.then((filter) => {
+      if (filter) {
+        this.handleNewFilter(filter);
+      }
+    });
   }
 
 }

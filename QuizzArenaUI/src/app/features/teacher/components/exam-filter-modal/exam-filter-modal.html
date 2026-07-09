@@ -1,35 +1,30 @@
-@if (isModalOpened()) {
-<qz-modal [isModalOpened]="isModalOpened()" (closedModalEvent)="toogleFilterModal()" [title]="'Filters'" [closeOnOverlayClick]="true"
-    [showCloseButton]="true" [showFooter]="false" >
-    <form class="p-3" (submit)="$event.preventDefault(); applyFilters()">
+<form class="p-3" (submit)="$event.preventDefault(); applyFilters()">
 
-        <div class="
-            flex flex-col gap-3
-            sm:flex-row
-        ">
-            <qz-text-input id="startDate" type="date" [formField]="filterForm.startDate" [label]="'Start Date'"
-                [for]="'startDate'" />
-            <qz-text-input id="endDate" type="date" [formField]="filterForm.endDate" [label]="'End Date'"
-                [for]="'endDate'" />
-        </div>
+    <div class="
+        flex flex-col gap-3
+        sm:flex-row
+    ">
+        <qz-text-input id="startDate" type="date" [formField]="filterForm.startDate" [label]="'Start Date'"
+            [for]="'startDate'" />
+        <qz-text-input id="endDate" type="date" [formField]="filterForm.endDate" [label]="'End Date'"
+            [for]="'endDate'" />
+    </div>
 
-        <div class="flex flex-col gap-2">
-            <span class="">State</span>
-            <div class="flex gap-4">
-                @for (option of stateOptions; track option.key) {
-                <qz-checkbox-input type="checkbox" [label]="option.label" [formField]="filterForm.states[option.key]" />
-                }
-            </div>
+    <div class="flex flex-col gap-2">
+        <span class="">State</span>
+        <div class="flex gap-4">
+            @for (option of stateOptions; track option.key) {
+            <qz-checkbox-input type="checkbox" [label]="option.label" [formField]="filterForm.states[option.key]" />
+            }
         </div>
+    </div>
 
-        <div class="flex gap-4 pt-6 justify-end">
-            <qz-button type="button" (click)="cleanFilters()" [variant]="'secondary'" [fullWidth]="true">
-                Clean
-            </qz-button>
-            <qz-button type="submit" [fullWidth]="true" [variant]="'primary'">
-                Apply FIlters
-            </qz-button>
-        </div>
-    </form>
-</qz-modal>
-}
+    <div class="flex gap-4 pt-6 justify-end">
+        <qz-button type="button" (click)="cleanFilters()" [variant]="'secondary'" [fullWidth]="true">
+            Clean
+        </qz-button>
+        <qz-button type="submit" [fullWidth]="true" [variant]="'primary'">
+            Apply FIlters
+        </qz-button>
+    </div>
+</form>

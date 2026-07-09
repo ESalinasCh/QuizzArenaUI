@@ -1,22 +1,20 @@
-import { ChangeDetectionStrategy, Component, input, linkedSignal, model, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, linkedSignal } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { ExamStatus } from '../../models/exam.model';
 import { TextInput } from "../../../../shared/molecules/text-input/text-input";
-import { ModalTemplateComponent } from '../../../../shared/organisms/modal-template/modal-template';
 import { form, FormField } from '@angular/forms/signals';
 import { CheckboxInputComponent } from "../../../../shared/molecules/checkbox-input/checkbox-input";
 import { ExamFormFilter } from '../../models/exam-form-filter';
+import { ModalRef } from '../../../../core/services/modal.service';
 
 @Component({
     selector: 'qz-exam-filter-modal',
-    imports: [Button, TextInput, ModalTemplateComponent, FormField, CheckboxInputComponent],
+    imports: [Button, TextInput, FormField, CheckboxInputComponent],
     templateUrl: './exam-filter-modal.html',
 })
 export class ExamFilterModal {
-    isModalOpened = model.required<boolean>();
+    readonly #modalRef = inject(ModalRef);
 
-    protected handleToogleModal = output<void>();
-    protected handleNewFilter = output<ExamFormFilter>();
     validFilter = input<ExamFormFilter>(new ExamFormFilter());
     protected filterModel = linkedSignal(() => ({ ...this.validFilter() }));
     protected filterForm = form<ExamFormFilter>(this.filterModel);
@@ -26,21 +24,15 @@ export class ExamFilterModal {
     ];
 
     protected applyFilters(): void {
-        this.handleNewFilter.emit({
-            endDate: this.filterModel().endDate,
-            startDate: this.filterModel().startDate,
-            states: this.filterModel().states,
-        });
-        this.toogleFilterModal();
+        this.#modalRef.close(this.filterModel());
     }
 
     protected cleanFilters(): void {
-        this.handleNewFilter.emit(new ExamFormFilter());
-        this.toogleFilterModal();
+        this.#modalRef.close(new ExamFormFilter());
     }
 
     protected toogleFilterModal() {
-        this.handleToogleModal.emit();
+        this.#modalRef.close();
     }
 
 }

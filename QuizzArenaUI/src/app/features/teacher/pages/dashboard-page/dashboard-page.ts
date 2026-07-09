@@ -12,15 +12,18 @@ import { Exam } from '../../models/exam.model';
 import { TextInput } from "../../../../shared/molecules/text-input/text-input";
 import { ExamFilterModal } from '../../components/exam-filter-modal/exam-filter-modal';
 import { ExamFormFilter } from '../../models/exam-form-filter';
-import { form, FormField } from '@angular/forms/signals';
 import { LinkText } from '../../../../shared/atoms/link-text/link-text';
+import { ModalService } from '../../../../core/services/modal.service';
+import { form, FormField } from '@angular/forms/signals';
+
 
 @Component({
   selector: 'qz-teacher-dashboard-page',
-  imports: [StatCard, ContentItem, Button, Icon, TextInput, ExamFilterModal, FormField, LinkText],
+  imports: [StatCard, ContentItem, Button, Icon, TextInput, FormField, LinkText],
   templateUrl: './dashboard-page.html',
 })
 export class TeacherDashboardPage {
+  readonly #modalService = inject(ModalService);
   readonly #authService = inject(AuthService);
   readonly #router = inject(Router);
   readonly #dashboardService = inject(TeacherDashboardService);
@@ -45,7 +48,7 @@ export class TeacherDashboardPage {
     return user?.name?.trim().split(' ')[0] || user?.username || $localize`:Teacher fallback display name:Teacher`;
   });
 
-  protected isFilterModalOpen = signal(false);
+
   searchFilter = signal(new ExamFormFilter());
 
   async uploadContent(): Promise<void> {
@@ -95,7 +98,16 @@ export class TeacherDashboardPage {
   }
 
   protected toggleFilterModal() {
-    this.isFilterModalOpen.update(value => !value);
+    const ref = this.#modalService.open<ExamFilterModal, ExamFormFilter>(
+      ExamFilterModal,
+      { validFilter: this.searchFilter() },
+      { title: 'Filters' }
+    );
+    ref.afterClosed.then((filter) => {
+      if (filter) {
+        this.getNewFilter(filter);
+      }
+    });
   }
 
   protected getNewFilter(newFilter: ExamFormFilter) {
