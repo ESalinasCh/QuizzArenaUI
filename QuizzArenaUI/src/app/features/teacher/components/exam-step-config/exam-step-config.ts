@@ -1,4 +1,4 @@
-import { Component, computed, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AbstractControl, ReactiveFormsModule, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Button } from '../../../../shared/atoms/button/button';
@@ -17,6 +17,7 @@ function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
   selector: 'qz-exam-step-config',
   imports: [ReactiveFormsModule, Button],
   templateUrl: './exam-step-config.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamStepConfig {
   next = output<ExamConfig>();
