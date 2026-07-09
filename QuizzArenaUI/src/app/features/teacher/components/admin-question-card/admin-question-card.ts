@@ -32,11 +32,12 @@ export class AdminQuestionCard {
     isDropdownOpened = signal(false);
 
     openInfoModal() {
-        this.#modalService.open(QuestionInfoModal, { question: this.question() });
+        this.#modalService.open(QuestionInfoModal, { question: this.question() }, { title: 'Information' });
     }
 
     openEditModal() {
-        const ref = this.#modalService.open<QuestionEditModal, Question>(QuestionEditModal, { question: this.question() });
+        const title = this.question().id === '' ? 'Create' : 'Edit';
+        const ref = this.#modalService.open<QuestionEditModal, Question>(QuestionEditModal, { question: this.question() }, { title });
         ref.afterClosed.then((question) => {
             if (question) {
                 this.handleNewQuestion(question);
@@ -45,7 +46,7 @@ export class AdminQuestionCard {
     }
 
     openDeleteModal() {
-        const ref = this.#modalService.open<QuestionDeleteModal, string>(QuestionDeleteModal, { question: this.question() });
+        const ref = this.#modalService.open<QuestionDeleteModal, string>(QuestionDeleteModal, { question: this.question() }, { title: 'Delete' });
         ref.afterClosed.then((id) => {
             if (id) {
                 this.handleDeleteQuestion(id);

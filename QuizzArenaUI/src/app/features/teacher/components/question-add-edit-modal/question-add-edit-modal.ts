@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, output, signal } from "@angular/core";
-import { ModalTemplateComponent } from "../../../../shared/organisms/modal-template/modal-template";
+import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, signal } from "@angular/core";
 import { ItemContainer } from "../../../../shared/atoms/item-container/item-container";
 import { SelectInput } from "../../../../shared/molecules/select-input/select-input";
 import { TYPE_OPTIONS_MOCK } from "../../mocks/typeQuestionOptions.mock";
@@ -25,30 +24,26 @@ const changeOptionCorrectStatus = (currentOptions: Option[], selectedOption: Opt
     selector: 'qz-question-add-edit-modal',
     templateUrl: './question-add-edit-modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ModalTemplateComponent, ItemContainer, SelectInput, TextareaInput, TextSpan, FormField, Button],
+    imports: [ItemContainer, SelectInput, TextareaInput, TextSpan, FormField, Button],
 })
 export class QuestionEditModal {
     readonly #modalRef = inject(ModalRef);
     question = input<Question>(new Question());
     formType = computed(() => this.question().id == '' ? 'Create' : 'Edit');
-    isModalOpened = input<boolean>(true);
-    closeModalEvent = output<void>();
 
-    questionModel = linkedSignal(() => { return this.isModalOpened() ? this.question() : this.question() });
+    questionModel = linkedSignal(() => this.question());
     questionForm = form(this.questionModel);
 
     states = signal(structuredClone(QUESTION_STATUS_RESPONSE));
     types = signal(structuredClone(TYPE_OPTIONS_MOCK));
     processJobs = signal(structuredClone(PROCESS_JOB_MOCK));
     optionsModel = linkedSignal(() => {
-        const options = structuredClone(OPTIONS_MOCK)
+        return structuredClone(OPTIONS_MOCK)
             .filter(opt => opt.questionId == this.question().id)
             .sort((a, b) => a.position - b.position);
-        return this.isModalOpened() ? options : options;
     });
 
     closeModal(result?: Question) {
-        this.closeModalEvent.emit();
         this.#modalRef.close(result);
     }
 
