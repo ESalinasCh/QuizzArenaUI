@@ -1,4 +1,4 @@
-import { ApplicationRef, createComponent, EnvironmentInjector, Service, Type, ComponentRef, Injector, EmbeddedViewRef, inject } from '@angular/core';
+import { ApplicationRef, createComponent, EnvironmentInjector, Service, Type, ComponentRef, Injector, EmbeddedViewRef, inject, TemplateRef } from '@angular/core';
 import { ModalTemplateComponent } from '../../shared/organisms/modal-template/modal-template';
 
 export interface ModalOptions {
@@ -12,15 +12,15 @@ export interface ModalOptions {
 
 export class ModalRef<T = unknown, R = unknown> {
   #shellRef!: ComponentRef<ModalTemplateComponent>;
-  instance!: T;
+  instance!: T | null;
   #resolveClose!: (value: R | undefined) => void;
   readonly afterClosed = new Promise<R | undefined>((resolve) => {
     this.#resolveClose = resolve;
   });
 
-  _initialize(shellRef: ComponentRef<ModalTemplateComponent>, componentRef: ComponentRef<T>): void {
+  _initialize(shellRef: ComponentRef<ModalTemplateComponent>, componentRef: ComponentRef<T> | null): void {
     this.#shellRef = shellRef;
-    this.instance = componentRef.instance;
+    this.instance = componentRef ? componentRef.instance : null;
   }
 
   close(result?: R): void {
@@ -35,7 +35,7 @@ export class ModalService {
   readonly #injector = inject(EnvironmentInjector);
 
   open<T, R = unknown>(
-    component: Type<T>,
+    content: Type<T> | TemplateRef<unknown>,
     inputs: Record<string, unknown> = {},
     options: ModalOptions = {}
   ): ModalRef<T, R> {
@@ -56,12 +56,12 @@ export class ModalService {
       elementInjector: modalRefInjector,
     });
 
-    if (options.title !== undefined) shellRef.setInput('title', options.title);
-    if (options.width !== undefined) shellRef.setInput('width', options.width);
-    if (options.maxWidth !== undefined) shellRef.setInput('maxWidth', options.maxWidth);
-    if (options.closeOnOverlayClick !== undefined) shellRef.setInput('closeOnOverlayClick', options.closeOnOverlayClick);
-    if (options.showCloseButton !== undefined) shellRef.setInput('showCloseButton', options.showCloseButton);
-    if (options.showFooter !== undefined) shellRef.setInput('showFooter', options.showFooter);
+    (Object.keys(options) as (keyof ModalOptions)[]).forEach(key => {
+      const value = options[key];
+      if (value !== undefined) {
+        shellRef.setInput(key, value);
+      }
+    });
 
     this.#appRef.attachView(shellRef.hostView);
 
@@ -75,16 +75,23 @@ export class ModalService {
       throw new Error('modalContentRef is not resolved');
     }
 
-    const componentRef = viewContainerRef.createComponent(component, {
-      environmentInjector: this.#injector,
-      injector: modalRefInjector,
-    });
+    let componentRef: ComponentRef<T> | null = null;
+
+    if (content instanceof TemplateRef) {
+      viewContainerRef.createEmbeddedView(content, {
+        $implicit: inputs,
+      });
+    } else {
+      componentRef = viewContainerRef.createComponent(content, {
+        environmentInjector: this.#injector,
+        injector: modalRefInjector,
+      });
+      Object.keys(inputs).forEach(key => {
+        componentRef!.setInput(key, inputs[key]);
+      });
+    }
 
     modalRef._initialize(shellRef, componentRef);
-
-    Object.keys(inputs).forEach(key => {
-      componentRef.setInput(key, inputs[key]);
-    });
 
     const subscription = shellRef.instance.closedModalEvent.subscribe(() => {
       modalRef.close();
