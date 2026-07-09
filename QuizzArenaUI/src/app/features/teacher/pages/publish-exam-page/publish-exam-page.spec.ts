@@ -20,9 +20,7 @@ describe('TeacherPublishExamPage', () => {
 
   beforeEach(() => {
     mockExamService = {
-      createExam: vi.fn().mockReturnValue(of({
-        id: 'exam-1', title: 'New Exam', description: '', status: 'published', questionIds: [], createdAt: '',
-      })),
+      publishExam: vi.fn().mockReturnValue(of(void 0)),
     };
 
     TestBed.configureTestingModule({
@@ -64,31 +62,22 @@ describe('TeacherPublishExamPage', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['/teacher/dashboard']);
   });
 
-  it('should call createExam and navigate to dashboard on onPublish', () => {
-    history.replaceState({
-      from: 'create',
-      title: 'Test Exam',
-      description: 'Desc',
-      classIds: ['c1'],
-      questionIds: ['q1'],
-    }, '');
+  it('should call publishExam and navigate to dashboard on onPublish', () => {
+    history.replaceState({ from: 'create', quizId: 'quiz-1', classIds: ['c1'] }, '');
     const fixture = TestBed.createComponent(TeacherPublishExamPage);
     fixture.detectChanges();
     const router = TestBed.inject(Router);
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     fixture.componentInstance.onPublish(MOCK_CONFIG);
-    expect(mockExamService.createExam).toHaveBeenCalledWith(expect.objectContaining({
-      title: 'Test Exam',
-      origin: 'manually_created',
-    }));
+    expect(mockExamService.publishExam).toHaveBeenCalledWith('quiz-1', 'c1', MOCK_CONFIG);
     expect(navigateSpy).toHaveBeenCalledWith(['/teacher/dashboard']);
   });
 
-  it('should not call createExam when history state has no title', () => {
+  it('should not call publishExam when history state has no quizId', () => {
     history.replaceState({}, '');
     const fixture = TestBed.createComponent(TeacherPublishExamPage);
     fixture.detectChanges();
     fixture.componentInstance.onPublish(MOCK_CONFIG);
-    expect(mockExamService.createExam).not.toHaveBeenCalled();
+    expect(mockExamService.publishExam).not.toHaveBeenCalled();
   });
 });

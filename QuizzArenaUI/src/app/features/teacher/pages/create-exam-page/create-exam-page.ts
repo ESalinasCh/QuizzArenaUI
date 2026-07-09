@@ -1,9 +1,11 @@
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { rxResource, takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
+import { Question } from '../../models/exam.model';
 
 type Step = 1 | 2;
 
@@ -20,35 +22,43 @@ export class TeacherCreateExamPage {
   readonly currentStep = signal<Step>(1);
 
   readonly #examInfo = signal<ExamInfoData | null>(null);
+  readonly #selectedClassIds = signal<string[]>([]);
 
   readonly #allClasses = toSignal(this.#examService.getClasses(), { initialValue: [] });
-  readonly #allQuestions = toSignal(this.#examService.getQuestions(), { initialValue: [] });
 
   readonly classes = this.#allClasses;
 
-  readonly filteredQuestions = computed(() => {
-    const info = this.#examInfo();
-    if (!info) return [];
-    return this.#allQuestions().filter(q => info.classIds.includes(q.sourceId));
+  readonly questionsResource = rxResource<Question[], { classIds: string[] }>({
+    params: () => ({ classIds: this.#selectedClassIds() }),
+    stream: ({ params }) => {
+      if (params.classIds.length === 0) return of([]);
+      return this.#examService.getQuestions(params.classIds);
+    }
   });
+
+  readonly filteredQuestions = computed(() => this.questionsResource.value() ?? []);
 
   onInfoNext(data: ExamInfoData): void {
     this.#examInfo.set(data);
+    this.#selectedClassIds.set(data.classIds);
     this.currentStep.set(2);
   }
 
   onQuestionsPublish(selectedIds: Set<string>): void {
     const info = this.#examInfo();
     if (!info) return;
-    void this.#router.navigate(['/teacher/exams/publish'], {
-      state: {
-        title: info.title,
-        description: info.description,
-        classIds: info.classIds,
-        questionIds: [...selectedIds],
-        from: 'create',
-      },
-    });
+    this.#examService
+      .saveDraftExam(info.title, info.description, [...selectedIds])
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe(exam =>
+        void this.#router.navigate(['/teacher/exams/publish'], {
+          state: {
+            quizId: exam.id,
+            classIds: info.classIds,
+            from: 'create',
+          },
+        }),
+      );
   }
 
   onQuestionsSaveToBank(selectedIds: Set<string>): void {

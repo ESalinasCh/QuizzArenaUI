@@ -6,10 +6,8 @@ import { ExamStepConfig } from '../../components/exam-step-config/exam-step-conf
 import { ExamConfig } from '../../models/exam.model';
 
 interface PendingExamState {
-  title: string;
-  description: string;
+  quizId: string;
   classIds: string[];
-  questionIds: string[];
   from?: 'create' | 'bank' | 'dashboard';
 }
 
@@ -38,17 +36,10 @@ export class TeacherPublishExamPage {
 
   onPublish(config: ExamConfig): void {
     const state = history.state as PendingExamState;
-    if (!state?.title) return;
+    if (!state?.quizId) return;
 
-    const origin = 'manually_created';
     this.#examService
-      .createExam({
-        title: state.title,
-        description: state.description,
-        origin,
-        questionIds: state.questionIds,
-        config,
-      })
+      .publishExam(state.quizId, state.classIds[0], config)
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe(() => void this.#router.navigate(['/teacher/dashboard']));
   }
