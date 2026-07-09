@@ -32,6 +32,7 @@ export const STUDENT_MATCH_ATTEMPTS_RESPONSE_MOCK: MatchAttemptSummaryResponse[]
     id: 'attempt-project-1-week-7',
     title: 'Clase Project I - Semana 7',
     courseName: 'Domain-Driven Design I',
+    startedAt: '2026-06-08',
     completedAt: '2026-06-08',
     score: 80,
     status: 'passed',
@@ -41,6 +42,7 @@ export const STUDENT_MATCH_ATTEMPTS_RESPONSE_MOCK: MatchAttemptSummaryResponse[]
     id: 'attempt-project-1-week-6',
     title: 'Clase Project I - Semana 6',
     courseName: 'Domain-Driven Design II',
+    startedAt: '2026-06-05',
     completedAt: '2026-06-05',
     score: 60,
     status: 'failed',
@@ -51,7 +53,7 @@ export const STUDENT_MATCH_ATTEMPTS_RESPONSE_MOCK: MatchAttemptSummaryResponse[]
 export const STUDENT_PLAY_RESPONSE_MOCKS: Record<string, CreatePlayResponse> = {
   'project-1-review': {
     matchId: 'project-1-review',
-    attemptId: 'attempt-project-1-review',
+    matchAttemptId: 'attempt-project-1-review',
     questions: [
       {
         id: 'q1',
@@ -107,7 +109,7 @@ export const STUDENT_PLAY_RESPONSE_MOCKS: Record<string, CreatePlayResponse> = {
   },
   'project-1-week-1': {
     matchId: 'project-1-week-1',
-    attemptId: 'attempt-project-1-week-1',
+    matchAttemptId: 'attempt-project-1-week-1',
     questions: [
       {
         id: 'q1',
@@ -219,7 +221,6 @@ export const STUDENT_SUBMIT_MATCH_ATTEMPT_RESPONSE_MOCKS: Record<string, SubmitM
     correctCount: 4,
     incorrectCount: 1,
     totalQuestions: 5,
-    message: 'Muy bien, Maria!',
     questions: [
       {
         id: 'q1',
@@ -269,7 +270,6 @@ export const STUDENT_SUBMIT_MATCH_ATTEMPT_RESPONSE_MOCKS: Record<string, SubmitM
     correctCount: 1,
     incorrectCount: 0,
     totalQuestions: 1,
-    message: 'Excelente trabajo!',
     questions: [
       {
         id: 'q1',

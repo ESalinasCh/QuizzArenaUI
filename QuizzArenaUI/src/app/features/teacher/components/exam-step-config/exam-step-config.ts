@@ -2,13 +2,6 @@ import { Component, computed, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AbstractControl, ReactiveFormsModule, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Button } from '../../../../shared/atoms/button/button';
-=======
-import { ChangeDetectionStrategy, Component, computed, output, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { AbstractControl, ReactiveFormsModule, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Button } from '../../../../shared/atoms/button/button';
-import { Icon } from '../../../../shared/atoms/icon/icon';
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
 import { ExamConfig } from '../../models/exam.model';
 
 function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
@@ -34,14 +27,6 @@ export class ExamStepConfig {
 
   readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
   readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
-
-  readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
-  readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
-
-  readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
-  readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
-
-  readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
   readonly createAriaLabel = $localize`:Exam step config create button aria label:Create exam`;
   readonly shuffleAriaLabel = $localize`:Exam step config shuffle button aria label:Random order`;
 

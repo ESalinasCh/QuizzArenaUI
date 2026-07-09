@@ -7,7 +7,7 @@ describe('TeacherQuizManagementPage', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.textContent).toContain('Quiz management');
-    expect(fixture.nativeElement.textContent).toContain('Quiz administration screens will be implemented here');
+    expect(fixture.nativeElement.innerHTML).toContain('Search your question here');
   });
 
   it('should render teacher label', () => {

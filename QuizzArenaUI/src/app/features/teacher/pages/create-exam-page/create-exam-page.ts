@@ -10,16 +10,6 @@ type Step = 1 | 2;
 @Component({
   selector: 'app-teacher-create-exam-page',
   imports: [ExamStepInfo, ExamStepQuestions],
-=======
-import { ExamStepConfig } from '../../components/exam-step-config/exam-step-config';
-import { ExamConfig } from '../../models/exam.model';
-
-type Step = 1 | 2;
-
-@Component({
-  selector: 'app-teacher-create-exam-page',
-  imports: [ExamStepInfo, ExamStepQuestions, ExamStepConfig],
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
   templateUrl: './create-exam-page.html',
 })
 export class TeacherCreateExamPage {

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { ModalTemplateComponent } from "../../../../shared/organisms/modal-template/modal-template";
-
+import { ModalRef } from "../../../../core/services/modal.service";
 
 @Component({
     selector: 'qz-question-info-modal',
@@ -9,9 +9,9 @@ import { ModalTemplateComponent } from "../../../../shared/organisms/modal-templ
     imports: [ModalTemplateComponent],
 })
 export class QuestionInfoModal {
-    handleToogleShowModal = output<void>();
-    
+    readonly #modalRef = inject(ModalRef);
+
     toogleShowModal() {
-        this.handleToogleShowModal.emit();
+        this.#modalRef.close();
     }
 }

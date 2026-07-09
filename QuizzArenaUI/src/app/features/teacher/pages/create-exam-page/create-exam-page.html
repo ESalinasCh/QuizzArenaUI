@@ -35,20 +35,6 @@
       [questions]="filteredQuestions()"
       (publish)="onQuestionsPublish($event)"
       (saveToBank)="onQuestionsSaveToBank($event)"
-=======
-  <!-- Paso 2: Preguntas -->
-  @if (currentStep() === 2) {
-    <qz-exam-step-questions
-      [questions]="filteredQuestions()"
-      (next)="onQuestionsNext($event)"
-      (back)="goBack()"
-    />
-  }
-
-  @if (currentStep() === 3) {
-    <qz-exam-step-config
-      (next)="onConfigNext($event)"
->>>>>>> 6a36d851 (feat(teacher): add exam creation flow)
       (back)="goBack()"
     />
   }
