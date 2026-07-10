@@ -1,6 +1,6 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { from, switchMap } from 'rxjs';
+import { catchError, EMPTY, from, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { SubmitMatchAttemptAnswerRequest } from '../../api/student-quiz.contract';
 import { StudentQuizService } from '../../services/student-quiz.service';
@@ -9,7 +9,7 @@ import { StudentQuizService } from '../../services/student-quiz.service';
   selector: 'qz-student-quiz-question-page',
   imports: [Icon],
   templateUrl: './quiz-question-page.html',
-
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentQuizQuestionPage {
   readonly #router = inject(Router);
@@ -82,15 +82,17 @@ export class StudentQuizQuestionPage {
             ]),
           ),
         ),
+        catchError(() => {
+          this.isSubmitting.set(false);
+
+          return EMPTY;
+        }),
       )
       .subscribe({
         next: navigated => {
           if (!navigated) {
             this.isSubmitting.set(false);
           }
-        },
-        error: () => {
-          this.isSubmitting.set(false);
         },
       });
   }

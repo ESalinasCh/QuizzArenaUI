@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { catchError, EMPTY } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth.service';
 import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
 import { AvailableQuizCard } from '../../components/available-quiz-card/available-quiz-card';
@@ -23,9 +24,12 @@ export class StudentQuizListPage {
   readonly recentQuizzesTitle = $localize`:Student dashboard recent quizzes section title:Recent Quizzes`;
   readonly studentFallbackName = $localize`:Student fallback display name:Student`;
 
-  readonly dashboard = toSignal(this.#studentQuizService.getDashboard(), {
-    initialValue: { availableQuizzes: [], recentQuizzes: [] },
-  });
+  readonly dashboard = toSignal(
+    this.#studentQuizService.getDashboard().pipe(catchError(() => EMPTY)),
+    {
+      initialValue: { availableQuizzes: [], recentQuizzes: [] },
+    },
+  );
 
   readonly displayName = computed(() => {
     const user = this.#authService.currentUser();

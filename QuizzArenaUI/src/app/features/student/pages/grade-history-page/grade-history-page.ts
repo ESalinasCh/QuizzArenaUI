@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { catchError, EMPTY } from 'rxjs';
 import { AttemptHistoryCard } from '../../../../shared/organisms/attempt-history-card/attempt-history-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
@@ -16,9 +17,12 @@ export class StudentGradeHistoryPage {
 
   readonly viewMode = signal<'cards' | 'table'>('cards');
   readonly viewLabel = $localize`:Attempt history view action label:View`;
-  readonly attempts = toSignal(this.#studentQuizService.getGradeHistory(), {
-    initialValue: [],
-  });
+  readonly attempts = toSignal(
+    this.#studentQuizService.getGradeHistory().pipe(catchError(() => EMPTY)),
+    {
+      initialValue: [],
+    },
+  );
 
   async viewAttempt(attemptId: string): Promise<void> {
     await this.#router.navigate(['/student/quizzes', attemptId, 'results'], {

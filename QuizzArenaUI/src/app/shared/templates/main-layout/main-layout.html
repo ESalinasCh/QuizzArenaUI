@@ -17,3 +17,13 @@
     </main>
   </div>
 </div>
+
+@if (apiErrorService.error(); as error) {
+  <qz-api-error-dialog
+    [isOpen]="true"
+    [message]="error.message"
+    [statusCode]="error.statusCode"
+    [actionLabel]="error.actionLabel"
+    (action)="handleApiErrorAction()"
+  />
+}
