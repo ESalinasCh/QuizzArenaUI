@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
 import {
   mapClassSourceResponse,
   mapCreateQuizResponse,
@@ -18,11 +17,11 @@ import {
 import { TEACHER_EXAM_ENDPOINTS } from '../api/teacher-exam.endpoints';
 import { TEACHER_CLASSES_RESPONSE_MOCK, TEACHER_EXAMS_MOCK } from '../mocks/teacher-exam.mock';
 import { ClassSource, CreateExamRequest, Exam, ExamConfig, Question } from '../models/exam.model';
+import { buildApiUrl } from '../../../core/utils/api-url.util';
 
 @Injectable({ providedIn: 'root' })
 export class TeacherExamService {
   readonly #http = inject(HttpClient);
-  readonly #api = environment.apiBaseUrl;
 
   getClasses(): Observable<ClassSource[]> {
     return of(TEACHER_CLASSES_RESPONSE_MOCK).pipe(
@@ -38,7 +37,7 @@ export class TeacherExamService {
       params = params.append('processingJobIds', id);
     });
     return this.#http
-      .get<QuestionResponse[]>(`${this.#api}${TEACHER_EXAM_ENDPOINTS.questions}`, { params })
+      .get<QuestionResponse[]>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.questions), { params })
       .pipe(map(questions => questions.map(mapQuestionResponse)));
   }
 
@@ -52,7 +51,7 @@ export class TeacherExamService {
       description: request.description,
       questionIds: request.questionIds,
     };
-    return this.#http.post<CreateQuizResponseBody>(`${this.#api}${TEACHER_EXAM_ENDPOINTS.exams}`, quizBody).pipe(
+    return this.#http.post<CreateQuizResponseBody>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), quizBody).pipe(
       switchMap(quiz => {
         const matchBody: CreateMatchRequestBody = {
           quizId: quiz.id,
@@ -65,7 +64,7 @@ export class TeacherExamService {
           shuffleOptions: request.config.shuffleOptions,
         };
         return this.#http
-          .post(`${this.#api}${TEACHER_EXAM_ENDPOINTS.matches}`, matchBody)
+          .post(buildApiUrl(TEACHER_EXAM_ENDPOINTS.matches), matchBody)
           .pipe(map(() => mapCreateQuizResponse(quiz)));
       }),
     );
@@ -74,7 +73,7 @@ export class TeacherExamService {
   saveDraftExam(title: string, description: string, questionIds: string[]): Observable<Exam> {
     const body: CreateExamRequestBody = { title, description, questionIds };
     return this.#http
-      .post<CreateQuizResponseBody>(`${this.#api}${TEACHER_EXAM_ENDPOINTS.exams}`, body)
+      .post<CreateQuizResponseBody>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), body)
       .pipe(map(mapCreateQuizResponse));
   }
 
@@ -90,7 +89,7 @@ export class TeacherExamService {
       shuffleOptions: config.shuffleOptions,
     };
     return this.#http
-      .post(`${this.#api}${TEACHER_EXAM_ENDPOINTS.matches}`, matchBody)
+      .post(buildApiUrl(TEACHER_EXAM_ENDPOINTS.matches), matchBody)
       .pipe(map(() => void 0));
   }
 }
