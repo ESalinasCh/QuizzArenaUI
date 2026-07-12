@@ -1,22 +1,39 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { ModalRef, ModalService } from '../services/modal.service';
+import { ApiErrorDialog } from '../../shared/molecules/api-error-dialog/api-error-dialog';
 import { mapHttpErrorToApiError } from './api-error.mapper';
-import { ApiErrorConfig, ApiErrorViewModel } from './api-error.model';
+import { ApiErrorConfig } from './api-error.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiErrorService {
-  readonly #error = signal<ApiErrorViewModel | null>(null);
-
-  readonly error = this.#error.asReadonly();
+  readonly #modalService = inject(ModalService);
+  #activeModal: ModalRef<ApiErrorDialog> | undefined;
 
   show(error: unknown, config?: ApiErrorConfig): void {
-    this.#error.set(mapHttpErrorToApiError(error, config));
-  }
+    if (this.#activeModal) {
+      return;
+    }
 
-  clear(): void {
-    this.#error.set(null);
-  }
+    const apiError = mapHttpErrorToApiError(error, config);
 
-  runAction(): void {
-    this.clear();
+    this.#activeModal = this.#modalService.open(
+      ApiErrorDialog,
+      {
+        message: apiError.message,
+        statusCode: apiError.statusCode,
+        actionLabel: apiError.actionLabel,
+      },
+      {
+        title: $localize`:API error dialog title:Something went wrong`,
+        width: '420px',
+        maxWidth: '90vw',
+        closeOnOverlayClick: true,
+        showCloseButton: true,
+      },
+    );
+
+    this.#activeModal.afterClosed.finally(() => {
+      this.#activeModal = undefined;
+    });
   }
 }

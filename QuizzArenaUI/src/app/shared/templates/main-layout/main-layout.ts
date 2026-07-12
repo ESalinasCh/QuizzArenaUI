@@ -2,14 +2,12 @@ import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ApiErrorService } from '../../../core/api-errors/api-error.service';
-import { ApiErrorDialog } from '../../molecules/api-error-dialog/api-error-dialog';
 import { Navbar } from '../../organisms/navbar/navbar';
 import { Sidebar } from '../../organisms/sidebar/sidebar';
 
 @Component({
   selector: 'qz-main-layout',
-  imports: [RouterOutlet, Navbar, Sidebar, ApiErrorDialog],
+  imports: [RouterOutlet, Navbar, Sidebar],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',
 })
@@ -17,7 +15,6 @@ export class MainLayout {
   readonly #activatedRoute = inject(ActivatedRoute);
   readonly #destroyRef = inject(DestroyRef);
   readonly #router = inject(Router);
-  protected readonly apiErrorService = inject(ApiErrorService);
 
   isSidebarOpen = signal<boolean>(false);
   isImmersiveRoute = signal<boolean>(false);
@@ -40,10 +37,6 @@ export class MainLayout {
 
   closeSidebar(): void {
     this.isSidebarOpen.set(false);
-  }
-
-  handleApiErrorAction(): void {
-    this.apiErrorService.runAction();
   }
 
   #getDeepestRouteData(): Record<string, unknown> {

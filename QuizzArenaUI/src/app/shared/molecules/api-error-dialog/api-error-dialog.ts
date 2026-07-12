@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ModalRef } from '../../../core/services/modal.service';
 import { Button } from '../../atoms/button/button';
 
 @Component({
@@ -8,9 +9,13 @@ import { Button } from '../../atoms/button/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApiErrorDialog {
-  readonly isOpen = input<boolean>(false);
+  readonly #modalRef = inject(ModalRef);
+
   readonly message = input<string>('');
   readonly statusCode = input<number | null>(null);
   readonly actionLabel = input<string>('');
-  readonly action = output<void>();
+
+  close(): void {
+    this.#modalRef.close();
+  }
 }
