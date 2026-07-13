@@ -1,7 +1,7 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { StudentQuizSessionPage } from './quiz-session-page';
 
@@ -65,5 +65,17 @@ describe('StudentQuizSessionPage', () => {
 
     fixture.componentInstance.beginQuiz();
     expect(navigateSpy).not.toHaveBeenCalled();
+  });
+
+  it('should show fallback content when quiz start fails', () => {
+    mockStudentQuizService.getQuizStart = vi.fn().mockReturnValue(
+      throwError(() => new Error('Quiz start failed')),
+    );
+
+    const fixture = TestBed.createComponent(StudentQuizSessionPage);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.quizLoadFailed()).toBe(true);
+    expect(fixture.nativeElement.textContent).toContain('Quiz unavailable');
   });
 });

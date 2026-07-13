@@ -2,6 +2,274 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="5990455144366596457" datatype="html">
+        <source>We could not complete this action. Please try again later.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="description">API error fallback message</note>
+      </trans-unit>
+      <trans-unit id="3441364443441265060" datatype="html">
+        <source>The request contains invalid data.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">API error bad request message</note>
+      </trans-unit>
+      <trans-unit id="6543886473127217819" datatype="html">
+        <source>Please review the submitted data.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="description">API error validation message</note>
+      </trans-unit>
+      <trans-unit id="3239589020047044075" datatype="html">
+        <source>Your session has expired. Please sign in again.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">API error unauthorized message</note>
+      </trans-unit>
+      <trans-unit id="7189048380135498679" datatype="html">
+        <source>You do not have permission to perform this action.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">API error forbidden message</note>
+      </trans-unit>
+      <trans-unit id="1178484467601613788" datatype="html">
+        <source>The requested resource was not found.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="description">API error not found message</note>
+      </trans-unit>
+      <trans-unit id="5784178707310184780" datatype="html">
+        <source>The request conflicts with the current state of the resource.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">API error conflict message</note>
+      </trans-unit>
+      <trans-unit id="2476526399251723621" datatype="html">
+        <source>Something went wrong on the server. Please try again later.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">API error internal server message</note>
+      </trans-unit>
+      <trans-unit id="3663891935404967440" datatype="html">
+        <source>The service is temporarily unavailable. Please try again later.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">API error service unavailable message</note>
+      </trans-unit>
+      <trans-unit id="6805493535234361557" datatype="html">
+        <source>The quiz was not found.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="description">API error match not found message</note>
+      </trans-unit>
+      <trans-unit id="4141461401413838077" datatype="html">
+        <source>This quiz is no longer available.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">API error match not available message</note>
+      </trans-unit>
+      <trans-unit id="3664531215550516741" datatype="html">
+        <source>This quiz is not active yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="description">API error match not active message</note>
+      </trans-unit>
+      <trans-unit id="3906330191137788030" datatype="html">
+        <source>You already have an active attempt for this quiz.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">API error active attempt exists message</note>
+      </trans-unit>
+      <trans-unit id="357265945876967553" datatype="html">
+        <source>The quiz attempt was not found.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="description">API error attempt not found message</note>
+      </trans-unit>
+      <trans-unit id="2059939137635414915" datatype="html">
+        <source>This attempt has already been submitted.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">API error attempt already submitted message</note>
+      </trans-unit>
+      <trans-unit id="1755526191010668994" datatype="html">
+        <source>The time for this attempt has expired.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <note priority="1" from="description">API error attempt expired message</note>
+      </trans-unit>
+      <trans-unit id="4751781431871077047" datatype="html">
+        <source>This attempt is not in progress.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <note priority="1" from="description">API error attempt not in progress message</note>
+      </trans-unit>
+      <trans-unit id="6144548872437738869" datatype="html">
+        <source>The question was not found.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <note priority="1" from="description">API error question not found message</note>
+      </trans-unit>
+      <trans-unit id="2963918557993568392" datatype="html">
+        <source>The selected option was not found.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="description">API error option not found message</note>
+      </trans-unit>
+      <trans-unit id="465974001369764958" datatype="html">
+        <source>Please select an answer before continuing.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="description">API error answer required message</note>
+      </trans-unit>
+      <trans-unit id="1636968649655402795" datatype="html">
+        <source>The submitted answers are invalid.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <note priority="1" from="description">API error invalid answer payload message</note>
+      </trans-unit>
+      <trans-unit id="7122576925458597298" datatype="html">
+        <source>The answer timestamp is required.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="description">API error answered at required message</note>
+      </trans-unit>
+      <trans-unit id="7573492656084268265" datatype="html">
+        <source>You have reached the maximum number of attempts for this quiz.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <note priority="1" from="description">API error max attempts reached message</note>
+      </trans-unit>
+      <trans-unit id="5988521934697839948" datatype="html">
+        <source>The course was not found.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">API error course not found message</note>
+      </trans-unit>
+      <trans-unit id="8806793291555112243" datatype="html">
+        <source>The question bank is empty.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <note priority="1" from="description">API error question bank empty message</note>
+      </trans-unit>
+      <trans-unit id="5939019564427741998" datatype="html">
+        <source>The quiz could not be created.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <note priority="1" from="description">API error quiz creation failed message</note>
+      </trans-unit>
+      <trans-unit id="5972160270253359212" datatype="html">
+        <source>The match could not be created.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <note priority="1" from="description">API error match creation failed message</note>
+      </trans-unit>
+      <trans-unit id="3349009112975948378" datatype="html">
+        <source>The exam configuration is invalid.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <note priority="1" from="description">API error invalid exam configuration message</note>
+      </trans-unit>
+      <trans-unit id="1988687144559361745" datatype="html">
+        <source>The exam could not be published.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="description">API error publish exam failed message</note>
+      </trans-unit>
+      <trans-unit id="4650776118145964319" datatype="html">
+        <source>The content could not be uploaded.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="description">API error content upload failed message</note>
+      </trans-unit>
+      <trans-unit id="4573179040549545620" datatype="html">
+        <source>The selected file type is not supported.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error-message.dictionary.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <note priority="1" from="description">API error unsupported file type message</note>
+      </trans-unit>
+      <trans-unit id="8998179362936748717" datatype="html">
+        <source>OK</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error.mapper.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="description">API error dialog default action</note>
+      </trans-unit>
+      <trans-unit id="960665565485640516" datatype="html">
+        <source>Something went wrong</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/api-errors/api-error.service.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="description">API error dialog title</note>
+      </trans-unit>
       <trans-unit id="8762257556328863715" datatype="html">
         <source>QuizArena illustration</source>
         <context-group purpose="location">
@@ -223,7 +491,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/grade-history-page/grade-history-page.ts</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <note priority="1" from="description">Recent quiz card view action</note>
       </trans-unit>
@@ -259,7 +527,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="description">Student fallback display name</note>
       </trans-unit>
@@ -475,7 +743,7 @@
         <source>Available Quizzes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="description">Student dashboard available quizzes section title</note>
       </trans-unit>
@@ -483,7 +751,7 @@
         <source>Recent Quizzes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="description">Student dashboard recent quizzes section title</note>
       </trans-unit>
@@ -1346,6 +1614,13 @@
           <context context-type="linenumber">14</context>
         </context-group>
         <note priority="1" from="description">Attempt exit dialog action</note>
+      <trans-unit id="2674751543961259085" datatype="html">
+        <source>Error code:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/molecules/api-error-dialog/api-error-dialog.html</context>
+          <context context-type="linenumber">8,11</context>
+        </context-group>
+        <note priority="1" from="description">API error dialog status code label</note>
       </trans-unit>
       <trans-unit id="2531042398197863879" datatype="html">
         <source><x id="questionCount" equiv-text="this.questionCount()"/> questions</source>

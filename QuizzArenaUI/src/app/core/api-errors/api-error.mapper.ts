@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { resolveApiErrorMessage } from './api-error-message.dictionary';
 import { ApiErrorConfig, ApiErrorResponse, ApiErrorViewModel } from './api-error.model';
 
 export function mapHttpErrorToApiError(
@@ -9,10 +10,7 @@ export function mapHttpErrorToApiError(
   const statusCode = getStatusCode(error, response);
 
   return {
-    message:
-      response?.message ??
-      config.fallbackMessage ??
-      $localize`:API error fallback message:We could not complete this action. Please try again later.`,
+    message: resolveApiErrorMessage(response?.code, config.fallbackMessage),
     statusCode,
     actionLabel: config.actionLabel ?? $localize`:API error dialog default action:OK`,
   };

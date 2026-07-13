@@ -2,7 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth.service';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { StudentExamListPage } from './exam-list-page';
@@ -126,6 +126,22 @@ describe('StudentExamListPage', () => {
         fixture.detectChanges();
 
         expect(fixture.nativeElement.textContent).not.toContain(
+            fixture.componentInstance.noExamsMessage
+        );
+    });
+
+    it('should render empty message when exams request fails', async () => {
+        (mockStudentQuizService.getMatches as ReturnType<typeof vi.fn>).mockReturnValue(
+            throwError(() => new Error('Exams failed'))
+        );
+
+        const fixture = TestBed.createComponent(StudentExamListPage);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.textContent).toContain(
             fixture.componentInstance.noExamsMessage
         );
     });
