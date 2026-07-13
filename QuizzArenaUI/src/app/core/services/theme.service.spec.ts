@@ -1,6 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 import { ThemeService } from './theme.service';
 
+function createLocalStorageMock(): Storage {
+  let store: Record<string, string> = {};
+  return {
+    getItem: (key: string) => store[key] ?? null,
+    setItem: (key: string, value: string) => {
+      store[key] = String(value);
+    },
+    removeItem: (key: string) => {
+      delete store[key];
+    },
+    clear: () => {
+      store = {};
+    },
+    key: (index: number) => Object.keys(store)[index] ?? null,
+    get length() {
+      return Object.keys(store).length;
+    },
+  } as Storage;
+}
+
 function mockMatchMedia(prefersDark: boolean): void {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
@@ -21,9 +41,13 @@ describe('ThemeService', () => {
   let service: ThemeService;
 
   beforeEach(() => {
-    localStorage.clear();
+    vi.stubGlobal('localStorage', createLocalStorageMock());
     document.documentElement.classList.remove('dark');
     mockMatchMedia(false);
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   describe('initialization', () => {

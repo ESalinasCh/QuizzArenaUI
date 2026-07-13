@@ -53,6 +53,7 @@ export const TEACHER_COURSES_RESPONSE_MOCK: CourseResponse[] = [
   { id: 'course-project-1', name: 'Project I' },
   { id: 'course-hexagonal', name: 'Arquitectura Hexagonal' },
   { id: 'course-ddd', name: 'Domain-Driven Design' },
+  { id: '10000000-0000-0000-0000-000000000002', name: 'Python Programming for Data Science' },
 ];
 
 export function buildUploadContentResponseMock(

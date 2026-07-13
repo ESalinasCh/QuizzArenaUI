@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable, forkJoin, map, of, tap, throwError } from 'rxjs';
-import { environment } from '../../../../environments/environment';
 import {
   AvailableMatchResponse,
   CreatePlayResponse,
@@ -28,11 +27,11 @@ import {
   StudentQuizStart,
   AvailableQuiz,
 } from '../models/student-quiz.model';
+import { buildApiUrl } from '../../../core/utils/api-url.util';
 
 @Injectable({ providedIn: 'root' })
 export class StudentQuizService {
   readonly #http = inject(HttpClient);
-  readonly #apiBaseUrl = environment.apiBaseUrl;
   readonly #activeQuizStart = signal<StudentQuizStart | undefined>(undefined);
   readonly #attemptMetadataCache = new Map<string, { title: string; subtitle: string }>();
   readonly #submitResultCache = new Map<string, SubmitMatchAttemptResponse>();
@@ -40,13 +39,13 @@ export class StudentQuizService {
   getDashboard(): Observable<StudentQuizDashboard> {
     return forkJoin({
       availableMatches: this.#http.get<AvailableMatchResponse[]>(
-        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
         {
           params: { status: 'active' },
         },
       ),
       matchAttempts: this.#http.get<MatchAttemptSummaryResponse[]>(
-        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts),
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts),
       ),
     }).pipe(
       map(({ availableMatches, matchAttempts }) =>
@@ -57,7 +56,7 @@ export class StudentQuizService {
 
   getMatches(filters: MatchFilters): Observable<AvailableQuiz[]> {
     return this.#http
-      .get<AvailableMatchResponse[]>(this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
+      .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
         params: { ...filters },
       })
       .pipe(map(availableMatches => mapStudentMatchesResponse(availableMatches)));
@@ -66,7 +65,7 @@ export class StudentQuizService {
   getGradeHistory(): Observable<AttemptHistoryCard[]> {
     return this.#http
       .get<MatchAttemptSummaryResponse[]>(
-        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts),
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts),
         {
           params: { matchmode: 'exam' },
         },
@@ -79,13 +78,13 @@ export class StudentQuizService {
 
     const quizStart = forkJoin({
       matches: this.#http.get<AvailableMatchResponse[]>(
-        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
         {
           params: { status: 'active' },
         },
       ),
       play: this.#http.post<CreatePlayResponse>(
-        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.plays),
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.plays),
         { matchId: quizId },
       ),
     }).pipe(
@@ -117,7 +116,7 @@ export class StudentQuizService {
   getMatchAttemptDetail(attemptId: string): Observable<StudentQuizReview> {
     return forkJoin({
       response: this.#http.get<MatchAttemptDetailResponse>(
-        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttemptDetail(attemptId)),
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttemptDetail(attemptId)),
       ),
       metadata: this.#getAttemptMetadata(attemptId),
     }).pipe(
@@ -145,7 +144,7 @@ export class StudentQuizService {
   ): Observable<SubmitMatchAttemptResponse> {
     return this.#http
       .post<SubmitMatchAttemptResponse>(
-        this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.submitMatchAttempt(attemptId)),
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.submitMatchAttempt(attemptId)),
         request,
       )
       .pipe(tap(response => this.#submitResultCache.set(response.attemptId, response)));
@@ -159,7 +158,7 @@ export class StudentQuizService {
     }
 
     return this.#http
-      .get<MatchAttemptSummaryResponse[]>(this.#buildUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts))
+      .get<MatchAttemptSummaryResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts))
       .pipe(
         map(attempts => {
           const attempt = attempts.find(item => item.id === attemptId);
@@ -171,10 +170,6 @@ export class StudentQuizService {
           return this.#mapAttemptSummaryToMetadata(attempt);
         }),
       );
-  }
-
-  #buildUrl(endpoint: string): string {
-    return `${this.#apiBaseUrl}${endpoint}`;
   }
 
   #mapAttemptSummaryToMetadata(attempt: MatchAttemptSummaryResponse): {
