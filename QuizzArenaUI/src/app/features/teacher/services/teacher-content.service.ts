@@ -21,12 +21,13 @@ export class TeacherContentService {
   }
 
   uploadContent(request: ContentUploadRequest): Observable<RecentContent> {
+    const formData = new FormData();
+    formData.append('Name', request.className);
+    formData.append('File', request.file);
+    formData.append('CourseId', request.subjectId);
+
     return this.#http
-      .post<UploadContentResponse>(buildApiUrl(TEACHER_CONTENT_ENDPOINTS.uploadContent), {
-        Name: request.className,
-        File: request.file,
-        CourseId: request.subjectId,
-      })
+      .post<UploadContentResponse>(buildApiUrl(TEACHER_CONTENT_ENDPOINTS.uploadContent), formData)
       .pipe(
         map(uploaded =>
           mapTeacherContentResponse({

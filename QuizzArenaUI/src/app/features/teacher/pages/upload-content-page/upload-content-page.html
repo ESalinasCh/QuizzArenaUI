@@ -61,6 +61,10 @@
     }
   </label>
 
+  @if (fileError(); as message) {
+    <p class="text-sm font-medium text-danger">{{ message }}</p>
+  }
+
   <form class="flex flex-col gap-4" (ngSubmit)="submit()">
     <h2 i18n="Upload content form section title" class="text-sm font-bold uppercase tracking-wide text-light-text dark:text-dark-text">
       Content details
@@ -205,6 +209,12 @@
       }
     </div>
 
+    @if (uploadError()) {
+      <p class="text-sm font-medium text-danger" i18n="Upload content error message">
+        Something went wrong uploading your content. Please try again.
+      </p>
+    }
+
     <qz-button
       size="large"
       variant="primary"
@@ -213,8 +223,12 @@
       [disabled]="!canSubmit()"
       [ariaLabel]="uploadContentAriaLabel"
     >
-      <qz-icon name="upload" class="h-5 w-5" />
-      <span i18n="Upload content submit button label">Upload Content</span>
+      @if (isUploading()) {
+        <span i18n="Upload content submit button loading label">Uploading...</span>
+      } @else {
+        <qz-icon name="upload" class="h-5 w-5" />
+        <span i18n="Upload content submit button label">Upload Content</span>
+      }
     </qz-button>
   </form>
 </section>
