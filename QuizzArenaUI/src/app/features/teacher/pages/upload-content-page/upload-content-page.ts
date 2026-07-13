@@ -7,7 +7,7 @@ import { TeacherContentService } from '../../services/teacher-content.service';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 
-const ACCEPTED_EXTENSIONS = ['.mp3', '.mp4', '.wav'];
+const ACCEPTED_EXTENSIONS = ['.mp3', '.mp4', '.wav', '.txt'];
 const DEFAULT_QUESTION_COUNT = 4;
 const MAX_FILE_SIZE_BYTES = 500_000_000;
 
