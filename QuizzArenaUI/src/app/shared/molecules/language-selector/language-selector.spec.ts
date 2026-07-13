@@ -87,7 +87,7 @@ describe('LanguageSelector', () => {
   it('should call switchTo with the correct language code on option click', () => {
     TestBed.configureTestingModule({ providers: [{ provide: LOCALE_ID, useValue: 'en' }] });
     const fixture = TestBed.createComponent(LanguageSelector);
-    const switchToSpy = vi.spyOn(fixture.componentInstance, 'switchTo').mockImplementation(() => {});
+    const switchToSpy = vi.spyOn(fixture.componentInstance, 'switchTo')
     fixture.componentInstance.toggle();
     fixture.detectChanges();
 
