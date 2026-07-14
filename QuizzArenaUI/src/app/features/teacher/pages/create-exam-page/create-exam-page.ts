@@ -1,7 +1,7 @@
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { rxResource, takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
+import { catchError, EMPTY, of } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
@@ -32,7 +32,7 @@ export class TeacherCreateExamPage {
     params: () => ({ classIds: this.#selectedClassIds() }),
     stream: ({ params }) => {
       if (params.classIds.length === 0) return of([]);
-      return this.#examService.getQuestions(params.classIds);
+      return this.#examService.getQuestions(params.classIds).pipe(catchError(() => of([])));
     }
   });
 
@@ -49,7 +49,10 @@ export class TeacherCreateExamPage {
     if (!info) return;
     this.#examService
       .saveDraftExam(info.title, info.description, [...selectedIds])
-      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .pipe(
+        catchError(() => EMPTY),
+        takeUntilDestroyed(this.#destroyRef),
+      )
       .subscribe(exam =>
         void this.#router.navigate(['/teacher/exams/publish'], {
           state: {
@@ -66,7 +69,10 @@ export class TeacherCreateExamPage {
     if (!info) return;
     this.#examService
       .saveDraftExam(info.title, info.description, [...selectedIds])
-      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .pipe(
+        catchError(() => EMPTY),
+        takeUntilDestroyed(this.#destroyRef),
+      )
       .subscribe(() => void this.#router.navigate(['/teacher/exams/bank']));
   }
 

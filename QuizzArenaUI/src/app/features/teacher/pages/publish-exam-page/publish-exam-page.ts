@@ -1,6 +1,7 @@
 ﻿import { Component, DestroyRef, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, EMPTY } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ExamStepConfig } from '../../components/exam-step-config/exam-step-config';
 import { ExamConfig } from '../../models/exam.model';
@@ -40,7 +41,10 @@ export class TeacherPublishExamPage {
 
     this.#examService
       .publishExam(state.quizId, state.classIds[0], config)
-      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .pipe(
+        catchError(() => EMPTY),
+        takeUntilDestroyed(this.#destroyRef),
+      )
       .subscribe(() => void this.#router.navigate(['/teacher/dashboard']));
   }
 }
