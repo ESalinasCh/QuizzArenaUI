@@ -100,6 +100,7 @@ export class TeacherQuestionBankPage implements OnInit {
   }
 
   handleNewQuestion(question: Question): void {
+    console.log(this.questions())
     this.#questionBankService.updateQuestion(question.id, question).pipe(
       take(1)
     ).subscribe({
@@ -108,13 +109,20 @@ export class TeacherQuestionBankPage implements OnInit {
           questionCollection.map(quest => {
             if (quest.id === question.id) {
               const updatedOptions = quest.options?.map(origOpt => {
-                const deltaOpt = question.options?.find(d => (d.optionId || d.id) === (origOpt.optionId || origOpt.id));
+                const deltaOpt = question.options?.find(d => d.position === origOpt.position);
                 return deltaOpt ? { ...origOpt, ...deltaOpt } : origOpt;
-              });
+              }) || [];
+
+              const newOptions = question.options?.filter(d =>
+                !updatedOptions.some(u => u.position === d.position)
+              ) || [];
+
+              const finalOptions = [...updatedOptions, ...newOptions].sort((a, b) => a.position - b.position);
+
               return {
                 ...quest,
                 ...question,
-                options: updatedOptions
+                options: finalOptions
               } as Question;
             }
             return quest;

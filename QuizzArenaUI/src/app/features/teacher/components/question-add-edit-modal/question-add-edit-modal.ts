@@ -5,13 +5,14 @@ import { TYPE_OPTIONS_MOCK } from "../../mocks/typeQuestionOptions.mock";
 import { TextareaInput } from "../../../../shared/molecules/textarea-input/textarea-input";
 import { TextSpan } from "../../../../shared/atoms/text-span/text-span";
 import { form, FormField } from "@angular/forms/signals";
-import { OPTIONS_MOCK } from "../../mocks/options.mock";
 import { QUESTION_STATUS_RESPONSE } from "../../mocks/questionStatusResponse.mock";
 import { Button } from "../../../../shared/atoms/button/button";
 import { PROCESS_JOB_MOCK } from "../../mocks/processJob.mock";
 import { Question } from "../../models/question";
 import { Option } from "../../models/options";
 import { ModalRef } from "../../../../core/services/modal.service";
+
+import { Icon } from "../../../../shared/atoms/icon/icon";
 
 const changeOptionCorrectStatus = (currentOptions: Option[], selectedOption: Option) => {
     return currentOptions.map(opt => ({
@@ -24,7 +25,7 @@ const changeOptionCorrectStatus = (currentOptions: Option[], selectedOption: Opt
     selector: 'qz-question-add-edit-modal',
     templateUrl: './question-add-edit-modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ItemContainer, SelectInput, TextareaInput, TextSpan, FormField, Button],
+    imports: [ItemContainer, SelectInput, TextareaInput, TextSpan, FormField, Button, Icon],
 })
 export class QuestionEditModal {
     readonly #modalRef = inject(ModalRef);
@@ -41,9 +42,7 @@ export class QuestionEditModal {
         if (this.question().options && this.question().options!.length > 0) {
             return structuredClone(this.question().options!);
         }
-        return structuredClone(OPTIONS_MOCK)
-            .filter(opt => opt.questionId == this.question().id)
-            .sort((a, b) => a.position - b.position);
+        return [];
     });
 
     originalQuestion = linkedSignal(() => {
@@ -51,8 +50,37 @@ export class QuestionEditModal {
     });
 
     originalOptions = linkedSignal(() => {
-        return structuredClone(this.optionsModel());
+        if (this.question().options && this.question().options!.length > 0) {
+            return structuredClone(this.question().options!);
+        }
+        return [];
     });
+
+    editingOptionPosition = signal<number | null>(null);
+
+    startEditingOption(option: Option) {
+        this.editingOptionPosition.set(option.position);
+    }
+
+    saveOptionDescription(option: Option, newDescription: string) {
+        this.optionsModel.update(opts => 
+            opts.map(o => o.position === option.position ? { ...o, description: newDescription } : o)
+        );
+        this.editingOptionPosition.set(null);
+    }
+
+    handleAddOption() {
+        const currentOpts = this.optionsModel();
+        const nextPosition = currentOpts.length > 0 ? Math.max(...currentOpts.map(o => o.position)) + 1 : 1;
+        const newOpt: Option = {
+            description: '',
+            isCorrect: false,
+            position: nextPosition,
+            questionId: this.question().id
+        };
+        this.optionsModel.update(opts => [...opts, newOpt]);
+        this.editingOptionPosition.set(nextPosition);
+    }
 
     closeModal(result?: any) {
         this.#modalRef.close(result);
@@ -122,9 +150,20 @@ export class QuestionEditModal {
                 }
 
                 if (hasChanges) {
-                    optDelta.optionId = currOpt.optionId || currOpt.id;
+                    optDelta.position = currOpt.position;
+                    if (currOpt.optionId || currOpt.id) {
+                        optDelta.optionId = currOpt.optionId || currOpt.id;
+                    }
                     changedOptions.push(optDelta);
                 }
+            } else {
+                // New option
+                changedOptions.push({
+                    position: currOpt.position,
+                    description: currOpt.description,
+                    isCorrect: currOpt.isCorrect,
+                    ...(currOpt.optionId || currOpt.id ? { optionId: currOpt.optionId || currOpt.id } : {})
+                });
             }
         });
 
