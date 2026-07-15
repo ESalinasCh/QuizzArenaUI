@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { StatusLabel, StatusLabelVariant } from '../../atoms/status-label/status-label';
 
 @Component({
   selector: 'qz-attempt-history-card',
   imports: [StatusLabel],
   templateUrl: './attempt-history-card.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AttemptHistoryCard {
   title = input.required<string>();

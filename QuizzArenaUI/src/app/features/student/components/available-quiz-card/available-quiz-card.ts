@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { StatusLabelVariant } from '../../../../shared/atoms/status-label/status-label';
 import { QuizCardMeta } from '../../../../shared/molecules/quiz-card-meta/quiz-card-meta';
 import { QuizCard } from '../../../../shared/organisms/quiz-card/quiz-card';
@@ -7,7 +7,6 @@ import { AvailableQuiz } from '../../models/student-quiz.model';
   selector: 'qz-available-quiz-card',
   imports: [QuizCard, QuizCardMeta],
   templateUrl: './available-quiz-card.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvailableQuizCard {
   quiz = input.required<AvailableQuiz>();

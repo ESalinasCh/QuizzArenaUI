@@ -2,8 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Option } from '../../features/teacher/models/options';
 
 @Pipe({
-  name: 'sortOptions',
-  standalone: true
+  name: 'sortOptions'
 })
 export class SortOptionsPipe implements PipeTransform {
   transform(options: Option[] | undefined | null): Option[] {

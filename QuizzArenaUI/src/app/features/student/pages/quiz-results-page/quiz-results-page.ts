@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, filter, map, shareReplay, switchMap } from 'rxjs';
@@ -10,7 +10,7 @@ import { StudentQuizService } from '../../services/student-quiz.service';
   selector: 'qz-student-quiz-results-page',
   imports: [Icon, StatCard],
   templateUrl: './quiz-results-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class StudentQuizResultsPage {
   readonly #route = inject(ActivatedRoute);

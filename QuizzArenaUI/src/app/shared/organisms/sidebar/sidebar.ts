@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
+﻿import { Component, inject, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { NavItem } from '../../molecules/nav-item/nav-item';
 import { Icon, IconName } from '../../atoms/icon/icon';
@@ -18,7 +18,6 @@ interface SidebarNavItem {
   imports: [NgClass, NavItem, Icon, Button],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Sidebar {
   readonly #themeService = inject(ThemeService);

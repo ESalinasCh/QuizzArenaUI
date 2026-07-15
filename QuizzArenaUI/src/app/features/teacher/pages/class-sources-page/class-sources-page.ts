@@ -1,14 +1,13 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { TextSpan } from '../../../../shared/atoms/text-span/text-span';
 import { ClassSourcesService, ClassSourceItem } from '../../services/class-sources.service';
 import { TeacherClassSourceCard } from '../../components/class-source-card/class-source-card';
-import { take } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'qz-teacher-class-sources-page',
   templateUrl: './class-sources-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
   imports: [TextSpan, TeacherClassSourceCard],
 })
 export class TeacherClassSourcesPage implements OnInit {

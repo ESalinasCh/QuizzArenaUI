@@ -13,7 +13,7 @@ import { FilterStatusOption } from '../../models/student-quiz.model';
   selector: 'qz-student-exam-list-page',
   imports: [AvailableQuizCard, SectionTitle, FilterTabs],
   templateUrl: './exam-list-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class StudentExamListPage {
   readonly #router = inject(Router);

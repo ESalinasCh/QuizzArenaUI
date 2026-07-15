@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, linkedSignal } from '@angular/core';
+import { Component, inject, input, linkedSignal } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { ExamStatus } from '../../models/exam.model';
 import { TextInput } from "../../../../shared/molecules/text-input/text-input";

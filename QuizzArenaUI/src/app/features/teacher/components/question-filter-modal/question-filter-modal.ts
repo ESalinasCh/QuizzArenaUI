@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, linkedSignal, OnInit, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, OnInit, signal } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { form, FormField } from '@angular/forms/signals';
 import { CheckboxInputComponent } from "../../../../shared/molecules/checkbox-input/checkbox-input";
@@ -13,7 +13,7 @@ import { ModalRef } from '../../../../core/services/modal.service';
     selector: 'qz-question-filter-modal',
     imports: [Button, FormField, CheckboxInputComponent, ItemContainer, TextSpan],
     templateUrl: './question-filter-modal.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class QuestionFilterModal implements OnInit {
     readonly #modalRef = inject(ModalRef);

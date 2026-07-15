@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -9,7 +9,7 @@ import { ClassSourceItem } from '../../services/class-sources.service';
 @Component({
   selector: 'qz-class-source-card',
   templateUrl: './class-source-card.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
   imports: [Icon, Button, TextSpan, RouterLink, DatePipe],
 })
 export class TeacherClassSourceCard {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 export type ItemContainerVariant = 'none' | 'success' | 'danger';
 
@@ -6,7 +6,7 @@ export type ItemContainerVariant = 'none' | 'success' | 'danger';
     selector: 'qz-item-container',
     imports: [],
     templateUrl: './item-container.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class ItemContainer {
     clickable = input(false);

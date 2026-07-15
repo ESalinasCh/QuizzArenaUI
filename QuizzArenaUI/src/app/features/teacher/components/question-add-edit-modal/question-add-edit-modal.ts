@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, signal } from "@angular/core";
+import { Component, computed, inject, input, linkedSignal, signal } from "@angular/core";
 import { ItemContainer } from "../../../../shared/atoms/item-container/item-container";
 import { SelectInput } from "../../../../shared/molecules/select-input/select-input";
 import { TYPE_OPTIONS_MOCK } from "../../mocks/typeQuestionOptions.mock";
@@ -27,7 +27,7 @@ const changeOptionCorrectStatus = (currentOptions: Option[], selectedOption: Opt
 @Component({
     selector: 'qz-question-add-edit-modal',
     templateUrl: './question-add-edit-modal.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+
     imports: [ItemContainer, SelectInput, TextareaInput, TextSpan, FormField, Button, Icon, SortOptionsPipe],
 })
 export class QuestionEditModal {

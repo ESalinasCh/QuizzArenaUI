@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 export type FeatureCardVariant = 'row' | 'card';
 
@@ -6,7 +6,6 @@ export type FeatureCardVariant = 'row' | 'card';
   selector: 'qz-feature-card',
   templateUrl: './feature-card.html',
   styleUrl: './feature-card.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeatureCard {
   imageSrc = input.required<string>();

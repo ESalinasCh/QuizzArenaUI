@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 type SpanVariant = 'default';
 type SpanBold = 'bold' | 'semibold' | 'none';
@@ -6,7 +6,6 @@ type SpanFontSize = 'default' | 'small' | 'base' | 'big' | 'gigant';
 @Component({
     selector: 'qz-text-span',
     templateUrl: './text-span.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextSpan {
     text = input<string>();
@@ -24,7 +23,7 @@ export class TextSpan {
         semibold: 'font-semibold',
         none: '',
     } as const;
-    
+
     fontSizes: Record<SpanFontSize, string> = {
         default: '',
         small: 'text-xs',

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, OnInit, signal } from '@angular/core';
 import { InputTextClearOption, TextInput } from "../../../../shared/molecules/text-input/text-input";
 import { Icon } from "../../../../shared/atoms/icon/icon";
 import { Button } from "../../../../shared/atoms/button/button";
@@ -21,7 +21,7 @@ const searchDefaultForm = { names: '' }
 @Component({
   selector: 'qz-teacher-question-bank-page',
   templateUrl: './question-bank-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
   imports: [TextInput, AdminQuestionCard, Icon, Button, FormField, TextSpan],
 })
 export class TeacherQuestionBankPage implements OnInit {

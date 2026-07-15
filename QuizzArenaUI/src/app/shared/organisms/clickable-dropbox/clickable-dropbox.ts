@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, input, output } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, output } from '@angular/core';
 
 type AlignDropbox = 'right' | 'left';
 
 @Component({
     selector: 'qz-clickable-dropbox',
     templateUrl: './clickable-dropbox.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [],
 })
 export class ClickableDropbox {
