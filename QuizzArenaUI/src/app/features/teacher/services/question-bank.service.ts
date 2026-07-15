@@ -33,8 +33,26 @@ export class QuestionBankService {
         return of(void 0);
     }
 
-    updateQuestion(id: string, question: Partial<Question>): Observable<void> {
-        return of(void 0);
+    updateQuestion(id: string, question: Partial<Question>): Observable<any> {
+        const body: any = {
+            questionId: question.id || id
+        };
+        if (question.content !== undefined) body.content = question.content;
+        if (question.justification !== undefined) body.justification = question.justification;
+        if (question.status !== undefined) body.status = question.status;
+        if (question.type !== undefined) body.type = question.type;
+        if (question.options !== undefined) {
+            body.options = question.options.map(opt => {
+                const optBody: any = {
+                    optionId: opt.optionId || opt.id
+                };
+                if (opt.description !== undefined) optBody.description = opt.description;
+                if (opt.isCorrect !== undefined) optBody.isCorrect = opt.isCorrect;
+                if (opt.position !== undefined) optBody.position = opt.position;
+                return optBody;
+            });
+        }
+        return this.#http.patch<any>(`${this.#api}/api/v1/questions`, body);
     }
 
     deleteQuestion(id: string): Observable<void> {

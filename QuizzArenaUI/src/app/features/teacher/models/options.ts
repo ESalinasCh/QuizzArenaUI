@@ -1,4 +1,6 @@
 export class Option {
+    id?: string;
+    optionId?: string;
     description: string;
     isCorrect: boolean;
     position: number;
@@ -11,3 +13,4 @@ export class Option {
         this.questionId = '';
     }
 }
+

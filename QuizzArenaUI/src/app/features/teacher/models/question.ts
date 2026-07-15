@@ -1,3 +1,5 @@
+import { Option } from './options';
+
 export type QuestionStatus = 'Draft' | 'Verified' | 'Disapproved';
 export type QuestionType = 'MultipleChoice' | 'SingleChoice';
 
@@ -10,6 +12,7 @@ export class Question {
     id: string;
     createdAt: Date;
     updatedAt: Date;
+    options?: Option[];
 
     constructor() {
         this.content = '';
@@ -20,5 +23,7 @@ export class Question {
         this.id = '';
         this.createdAt = new Date();
         this.updatedAt = new Date();
+        this.options = [];
     }
 }
+

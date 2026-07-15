@@ -100,9 +100,31 @@ export class TeacherQuestionBankPage implements OnInit {
   }
 
   handleNewQuestion(question: Question): void {
-    this.questions.update(questionCollection =>
-      questionCollection.map(quest => quest.id === question.id ? question : quest)
-    );
+    this.#questionBankService.updateQuestion(question.id, question).pipe(
+      take(1)
+    ).subscribe({
+      next: () => {
+        this.questions.update(questionCollection =>
+          questionCollection.map(quest => {
+            if (quest.id === question.id) {
+              const updatedOptions = quest.options?.map(origOpt => {
+                const deltaOpt = question.options?.find(d => (d.optionId || d.id) === (origOpt.optionId || origOpt.id));
+                return deltaOpt ? { ...origOpt, ...deltaOpt } : origOpt;
+              });
+              return {
+                ...quest,
+                ...question,
+                options: updatedOptions
+              } as Question;
+            }
+            return quest;
+          })
+        );
+      },
+      error: (err) => {
+        console.error('Error updating question', err);
+      }
+    });
   }
 
   handleDeleteQuestion(id: string): void {

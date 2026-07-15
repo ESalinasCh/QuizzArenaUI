@@ -38,12 +38,23 @@ export class QuestionEditModal {
     types = signal(structuredClone(TYPE_OPTIONS_MOCK));
     processJobs = signal(structuredClone(PROCESS_JOB_MOCK));
     optionsModel = linkedSignal(() => {
+        if (this.question().options && this.question().options!.length > 0) {
+            return structuredClone(this.question().options!);
+        }
         return structuredClone(OPTIONS_MOCK)
             .filter(opt => opt.questionId == this.question().id)
             .sort((a, b) => a.position - b.position);
     });
 
-    closeModal(result?: Question) {
+    originalQuestion = linkedSignal(() => {
+        return structuredClone(this.question());
+    });
+
+    originalOptions = linkedSignal(() => {
+        return structuredClone(this.optionsModel());
+    });
+
+    closeModal(result?: any) {
         this.#modalRef.close(result);
     }
 
@@ -59,7 +70,69 @@ export class QuestionEditModal {
 
     handleSubmitForm(event: Event) {
         event.preventDefault();
-        this.closeModal(this.questionModel());
+        
+        if (this.formType() === 'Create') {
+            const updated = {
+                ...this.questionModel(),
+                options: this.optionsModel()
+            };
+            this.closeModal(updated as Question);
+            return;
+        }
+
+        // Edit mode - Calculate Delta
+        const currentQuestion = this.questionModel();
+        const origQuestion = this.originalQuestion();
+
+        const delta: any = {
+            id: currentQuestion.id
+        };
+
+        if (currentQuestion.content !== origQuestion.content) {
+            delta.content = currentQuestion.content;
+        }
+        if (currentQuestion.justification !== origQuestion.justification) {
+            delta.justification = currentQuestion.justification;
+        }
+        if (currentQuestion.status !== origQuestion.status) {
+            delta.status = currentQuestion.status;
+        }
+        if (currentQuestion.type !== origQuestion.type) {
+            delta.type = currentQuestion.type;
+        }
+
+        // Compare Options
+        const currentOptions = this.optionsModel();
+        const origOptions = this.originalOptions();
+        const changedOptions: any[] = [];
+
+        currentOptions.forEach(currOpt => {
+            const origOpt = origOptions.find(o => o.position === currOpt.position);
+            if (origOpt) {
+                const optDelta: any = {};
+                let hasChanges = false;
+
+                if (currOpt.description !== origOpt.description) {
+                    optDelta.description = currOpt.description;
+                    hasChanges = true;
+                }
+                if (currOpt.isCorrect !== origOpt.isCorrect) {
+                    optDelta.isCorrect = currOpt.isCorrect;
+                    hasChanges = true;
+                }
+
+                if (hasChanges) {
+                    optDelta.optionId = currOpt.optionId || currOpt.id;
+                    changedOptions.push(optDelta);
+                }
+            }
+        });
+
+        if (changedOptions.length > 0) {
+            delta.options = changedOptions;
+        }
+
+        this.closeModal(delta);
     }
 
     handleCloseModal() {
