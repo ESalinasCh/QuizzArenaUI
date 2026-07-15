@@ -21,7 +21,7 @@
     <span i18n="Teacher dashboard create exam button label">Create Exam</span>
   </qz-button>
 
-  <div class="flex gap-3">
+  <!-- <div class="flex gap-3">
     <div class="flex-1 flex-col">
       <qz-text-input placeholder="Search Exams by title" [formField]="searchForm.text" (input)="search()" />
       @if (isClearSearchOptionAvailable()) {
@@ -32,9 +32,9 @@
       (click)="toggleFilterModal()">
       <qz-icon name="filter" class="w-5 h-5" />
     </qz-button>
-  </div>
+  </div> -->
 
-  @if (foundExams().length > 0) {
+  <!-- @if (foundExams().length > 0) {
   <div class="flex flex-col gap-4">
     <div class="flex items-center justify-between">
       <h2 i18n="Teacher dashboard created exams heading"
@@ -54,7 +54,7 @@
       }
     </div>
   </div>
-  }
+  } -->
 
   @if (draftExams().length > 0) {
   <div class="flex flex-col gap-4">
