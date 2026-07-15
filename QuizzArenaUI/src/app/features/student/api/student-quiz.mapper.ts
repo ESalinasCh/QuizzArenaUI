@@ -1,5 +1,6 @@
 import {
   AvailableMatchResponse,
+  CompleteExamAttemptResponse,
   CreatePlayResponse,
   MatchAttemptDetailResponse,
   MatchAttemptSummaryResponse,
@@ -11,6 +12,7 @@ import {
   RecentQuiz,
   RecentQuizStatus,
   StudentQuizDashboard,
+  StudentExamResult,
   StudentQuizReview,
   StudentQuizResultSummary,
   StudentQuizStart,
@@ -127,6 +129,25 @@ export function mapSubmitMatchAttemptResponse(
     incorrectCount: response.incorrectCount,
     totalQuestions: response.totalQuestions,
     message: $localize`:Student quiz result default message:Result submitted`,
+  };
+}
+
+export function mapCompleteExamAttemptResponse(
+  response: CompleteExamAttemptResponse,
+  metadata: Pick<StudentExamResult, 'title' | 'subtitle'>,
+): StudentExamResult {
+  return {
+    attemptId: response.attemptId,
+    title: metadata.title,
+    subtitle: metadata.subtitle,
+    answeredQuestions: response.answeredQuestions,
+    totalQuestions: response.totalQuestions,
+    answers: response.answers.map(answer => ({
+      id: answer.id,
+      number: answer.number,
+      text: answer.text,
+      selectedOptionId: answer.selectedOptionId,
+    })),
   };
 }
 

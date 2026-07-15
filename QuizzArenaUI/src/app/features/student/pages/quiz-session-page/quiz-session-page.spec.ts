@@ -43,17 +43,6 @@ describe('StudentQuizSessionPage', () => {
     expect(fixture.nativeElement.textContent).toContain('Prof A');
   });
 
-  it('should navigate back to /student/quizzes on goBack', async () => {
-    const fixture = TestBed.createComponent(StudentQuizSessionPage);
-    fixture.detectChanges();
-
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
-
-    await fixture.componentInstance.goBack();
-    expect(navigateSpy).toHaveBeenCalledWith(['/student/quizzes']);
-  });
-
   it('should navigate to questions page on beginQuiz', async () => {
     const fixture = TestBed.createComponent(StudentQuizSessionPage);
     fixture.detectChanges();

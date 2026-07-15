@@ -5,7 +5,7 @@ import { AvailableQuizCard } from '../../components/available-quiz-card/availabl
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { MatchFilters, MatchStatus } from '../../api/student-quiz.contract';
 import { FilterTabs } from '../../components/filter-tabs/filter-tabs';
-import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
+import { catchError, firstValueFrom, of } from 'rxjs';
 import { FilterStatusOption } from '../../models/student-quiz.model';
 
 @Component({
@@ -30,8 +30,9 @@ export class StudentExamListPage {
 
   readonly filters = signal<MatchFilters>({
     status: 'Pending',
+    mode: 'Exam',
   });
-  
+
   readonly availableExamsTitle = $localize`:Student available exams section title:Available Exams`;
   readonly recentExamsTitle = $localize`:Student recent exams section title:Recent Exams`;
   readonly studentFallbackName = $localize`:Student fallback display name:Student`;
@@ -39,11 +40,14 @@ export class StudentExamListPage {
 
   readonly exams = resource({
     params: () => this.filters(),
-    loader: ({params: filters}) => firstValueFrom(this.#studentQuizService.getMatches(filters)),
-  })
+    loader: ({ params: filters }) =>
+      firstValueFrom(
+        this.#studentQuizService.getMatches(filters).pipe(catchError(() => of([]))),
+      ),
+  });
 
-  async startQuiz(quizId: string): Promise<void> {
-    await this.#router.navigate(['/student/quizzes', quizId, 'start']);
+  async startQuiz(examId: string): Promise<void> {
+    await this.#router.navigate(['/student/exams', examId, 'start']);
   }
 
   protected changeStatus(status: MatchStatus) {

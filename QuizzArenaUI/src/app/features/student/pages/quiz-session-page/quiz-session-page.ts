@@ -30,10 +30,6 @@ export class StudentQuizSessionPage {
     return $localize`:Student quiz time limit label:Time limit ${minutes}:minutes: min`;
   });
 
-  async goBack(): Promise<void> {
-    await this.#router.navigate(['/student/quizzes']);
-  }
-
   async beginQuiz(): Promise<void> {
     const quizId = this.quiz()?.id;
 
