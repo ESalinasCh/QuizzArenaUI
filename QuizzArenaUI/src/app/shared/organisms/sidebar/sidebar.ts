@@ -68,6 +68,12 @@ export class Sidebar {
       routerLink: '/teacher/exams/bank',
       roles: ['teacher'],
     },
+    {
+      label: $localize`:Sidebar nav teacher grades label:Grades`,
+      icon: 'chart-bar',
+      routerLink: '/teacher/grades',
+      roles: ['teacher'],
+    },
   ];
 
   canShowItem(item: SidebarNavItem): boolean {

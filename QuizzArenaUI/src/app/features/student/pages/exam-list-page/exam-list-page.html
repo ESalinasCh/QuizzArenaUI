@@ -11,17 +11,13 @@
       [value]="filters().status"
       (valueChange)="changeStatus($event)">
     </qz-filter-tabs>
-
-    @if ((exams.value()?.length ?? 0) === 0) {
+        
+    @for (quiz of exams.value() ?? []; track quiz.id) {
+      <qz-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
+    } @empty {
       <h2 class="text-xl font-bold text-light-text flex justify-center dark:text-dark-text">
         {{ noExamsMessage }}
       </h2>
-    } @else {
-      <div class="flex flex-col gap-4">
-        @for (quiz of exams.value() ?? []; track quiz.id) {
-          <qz-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
-        }
-      </div>
     }
   </div>
 </section>

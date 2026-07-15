@@ -1,4 +1,5 @@
 import { ClassSourceResponse, ExamResponse, QuestionResponse } from '../api/teacher-exam.contract';
+import { GradeResponse } from '../api/teacher-grades.contract';
 
 export const TEACHER_CLASSES_RESPONSE_MOCK: ClassSourceResponse[] = [
   { id: 'aaaaaaaa-0000-0000-0000-000000000001', name: 'Desarrollo Web Full Stack' },
@@ -67,3 +68,54 @@ export function buildCreateExamResponseMock(
     createdAt: new Date().toISOString(),
   };
 }
+
+export const TEACHER_GRADES_MOCK: GradeResponse[] = [
+    {
+        id: "ca200000-0000-0000-0000-000000000002",
+        nickname: "max_attempt2",
+        status: "Completed",
+        score: 75.00,
+        userId: "37976960-c868-45d4-b3c2-4967cb46f4b0",
+        matchId: "b2222222-2222-2222-2222-222222222222",
+        otherAttempts: [
+            {
+                id: "ca200000-0000-0000-0000-000000000001",
+                nickname: "max_attempt1",
+                status: "Completed",
+                score: 60.00
+            },
+            {
+                id: "ca200000-0000-0000-0000-000000000003",
+                nickname: "user_attempt_01",
+                status: "Completed",
+                score: 50.00
+            }
+        ]
+    },
+    {
+        id: "ca200000-0000-0000-0000-000000000005",
+        nickname: "user_attempt_03",
+        status: "Timeout",
+        score: 60.00,
+        userId: "33333333-3333-3333-3333-333333333333",
+        matchId: "b2222222-2222-2222-2222-222222222222",
+        otherAttempts: [
+        ]
+    },
+    {
+        id: "ca200000-0000-0000-0000-000000000005",
+        nickname: "user_attempt_03",
+        status: "InProgress",
+        score: 60.00,
+        userId: "33333333-3333-3333-3333-333333333333",
+        matchId: "b2222222-2222-2222-2222-222222222222",
+        otherAttempts: [
+            {
+                id: "ca200000-0000-0000-0000-000000000004",
+                nickname: "user_attempt_02",
+                status: "Completed",
+                score: 50.00
+            }
+        ]
+    }
+]
