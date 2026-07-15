@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, OnInit, signal } from '@angular/core';
 import { InputTextClearOption, TextInput } from "../../../../shared/molecules/text-input/text-input";
 import { Icon } from "../../../../shared/atoms/icon/icon";
 import { Button } from "../../../../shared/atoms/button/button";
 import { form, FormField } from '@angular/forms/signals';
 import { QuestionFilterModal } from "../../components/question-filter-modal/question-filter-modal";
-import { QuizManagementService } from '../../services/quiz-management.service';
-import { map, take, tap } from 'rxjs';
+import { QuestionBankService } from '../../services/question-bank.service';
+import { finalize, map, take } from 'rxjs';
 import { TextSpan } from "../../../../shared/atoms/text-span/text-span";
 import { AdminQuestionCard } from '../../components/admin-question-card/admin-question-card';
 import { Question } from '../../models/question';
@@ -13,31 +13,35 @@ import { QuestionFilter } from '../../models/question-form-filter';
 import { ModalService } from '../../../../core/services/modal.service';
 import { ActivatedRoute } from '@angular/router';
 
-
 const defaultClearOptions: InputTextClearOption = {
   isActivated: false,
 }
 const searchDefaultForm = { names: '' }
 
 @Component({
-  selector: 'qz-teacher-quiz-management-page',
-  templateUrl: './quiz-management-page.html',
+  selector: 'qz-teacher-question-bank-page',
+  templateUrl: './question-bank-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TextInput, AdminQuestionCard, Icon, Button, FormField, TextSpan],
 })
-export class TeacherQuizManagementPage implements OnInit {
+export class TeacherQuestionBankPage implements OnInit {
   readonly #modalService = inject(ModalService);
   readonly #avRoute = inject(ActivatedRoute);
 
-  readonly #quizManagementService = inject(QuizManagementService);
+  readonly #questionBankService = inject(QuestionBankService);
   readonly processingJobsId = signal(this.#avRoute.snapshot.params['processing-job-id'])
 
   readonly page = signal(0);
   readonly searchModel = signal(structuredClone(searchDefaultForm));
   readonly searchForm = form(this.searchModel);
-  readonly questionFilterModel = signal<QuestionFilter>(new QuestionFilter());
+  readonly questionDefaultFilter = signal<QuestionFilter>(
+    { status: { Verified: true, Disapproved: false, Draft: false }, types: { MultipleChoice: true, SingleChoice: true } }
+  );
+  readonly questionFilterModel = signal<QuestionFilter>(structuredClone(this.questionDefaultFilter()));
 
   readonly questions = signal<Question[]>([]);
+  readonly isLoading = signal(false);
+  readonly hasMore = signal(true);
 
   readonly isFilterActive = computed(() => {
     const filter = this.questionFilterModel();
@@ -54,14 +58,29 @@ export class TeacherQuizManagementPage implements OnInit {
   }
 
   getMoreQuestions(): void {
-    this.#quizManagementService.getQuestions({
-      page: 1,
+    if (this.isLoading() || !this.hasMore()) {
+      return;
+    }
+
+    this.isLoading.set(true);
+    const nextPage = this.page() + 1;
+
+    this.#questionBankService.getQuestions({
+      page: nextPage,
       pageSize: 5,
       processingJobsIds: [this.processingJobsId()],
-      status: 'Verified',
-    }).pipe(take(1), map((res) => { console.log(res); return res })).subscribe({
+      status: "Verified",
+    }).pipe(
+      take(1),
+      map((res) => res),
+      finalize(() => this.isLoading.set(false))
+    ).subscribe({
       next: (response) => {
+        this.page.set(nextPage);
         this.questions.update(quizzes => [...quizzes, ...response]);
+        if (response.length < 5) {
+          this.hasMore.set(false);
+        }
       },
       error: () => {
         console.error('Error fetching questions');
@@ -72,6 +91,7 @@ export class TeacherQuizManagementPage implements OnInit {
   cleanQuestions(): void {
     this.questions.set([]);
     this.page.set(0);
+    this.hasMore.set(true);
     this.getMoreQuestions();
   }
 

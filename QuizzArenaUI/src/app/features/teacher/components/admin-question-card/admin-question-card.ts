@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { TextSpan } from '../../../../shared/atoms/text-span/text-span';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -10,11 +10,9 @@ import { QuestionDeleteModal } from '../question-delete-modal/question-delete-mo
 import { Question } from '../../models/question';
 import { ModalService } from '../../../../core/services/modal.service';
 
-
 @Component({
     selector: 'qz-admin-question-card',
     templateUrl: './admin-question-card.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         '(window:resize)': 'onResize()',
     },

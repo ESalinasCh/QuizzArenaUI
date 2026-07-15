@@ -27,8 +27,28 @@
         (deleteQuestionById)="handleDeleteQuestion($event)" />
       }
       @empty {
+      @if (!isLoading()) {
       <div class="flex justify-center items-center h-[50vh]">
         <qz-text-span [text]="'Not Found Questions'" />
+      </div>
+      }
+      }
+
+      @if (isLoading()) {
+      <div class="flex justify-center items-center py-4">
+        <qz-text-span [text]="'Loading questions...'" />
+      </div>
+      }
+
+      @if (hasMore() && questions().length > 0) {
+      <div class="flex justify-center mt-4">
+        <qz-button [variant]="'secondary'" (click)="getMoreQuestions()" [disabled]="isLoading()">
+          @if (isLoading()) {
+            <span>Loading...</span>
+          } @else {
+            <span>Load More</span>
+          }
+        </qz-button>
       </div>
       }
 

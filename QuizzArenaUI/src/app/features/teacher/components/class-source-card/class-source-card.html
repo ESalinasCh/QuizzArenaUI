@@ -1,0 +1,56 @@
+<div class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-4 gap-6">
+  <div class="flex items-center gap-4">
+    <div class="flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 text-primary">
+      @if (source().sourceType === 'Video') {
+        <qz-icon [name]="'play'" class="block !size-6" />
+      } @else {
+        <qz-icon [name]="'document'" class="block !size-6" />
+      }
+    </div>
+    <div class="flex flex-col gap-1">
+      <qz-text-span [bold]="'semibold'" [additionalCssClasses]="'text-lg text-light-text dark:text-dark-text'">
+        {{ source().name }}
+      </qz-text-span>
+      <div class="flex items-center gap-3 text-sm text-light-text/60 dark:text-dark-text/60">
+        <span class="flex items-center gap-1">
+          @if (source().status === 'Processed') {
+            <span class="text-green-600 flex items-center gap-1">
+              <qz-icon [name]="'check'" class="block !size-4" />
+              {{ source().status }}
+            </span>
+          } @else {
+            <span class="text-amber-500 flex items-center gap-1">
+              <qz-icon [name]="'clock'" class="block !size-4" />
+              {{ source().status }}
+            </span>
+          }
+        </span>
+        <span>•</span>
+        <span>Created: {{ source().createdAt | date:'shortDate' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2">
+    @if (source().status === 'Processed' && source().processingJobIds.length > 0) {
+      <qz-button 
+        size="small" 
+        variant="secondary" 
+        [routerLink]="['/teacher/class-sources/from-processing-job', source().processingJobIds[0]]"
+      >
+        <div class="flex items-center gap-1.5">
+          <qz-icon [name]="'question'" />
+          <span>View Questions</span>
+        </div>
+      </qz-button>
+    } @else {
+      <qz-button 
+        size="small" 
+        variant="secondary" 
+        [disabled]="true"
+      >
+        <span>Processing...</span>
+      </qz-button>
+    }
+  </div>
+</div>

@@ -1,9 +1,8 @@
-import { Service, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Question } from '../models/question';
-import { QUESTIONS_RESPONSE_MOCK } from '../mocks/questions.mock';
 
 export interface QuestionFilters {
     status?: 'Draft' | 'Verified' | 'Disapproved';
@@ -12,8 +11,8 @@ export interface QuestionFilters {
     pageSize?: number;
 }
 
-@Service()
-export class QuizManagementService {
+@Injectable({ providedIn: 'root' })
+export class QuestionBankService {
     readonly #http = inject(HttpClient);
     readonly #api = environment.apiBaseUrl;
 
@@ -30,10 +29,6 @@ export class QuizManagementService {
         return this.#http.get<Question[]>(`${this.#api}/api/v1/questions`, { params });
     }
 
-    // getQuestionsMock(): Observable<Question[]> {
-    //     return of(QUESTIONS_RESPONSE_MOCK);
-    // }
-
     addQuestion(question: Partial<Question>): Observable<void> {
         return of(void 0);
     }
@@ -46,4 +41,3 @@ export class QuizManagementService {
         return of(void 0);
     }
 }
-
