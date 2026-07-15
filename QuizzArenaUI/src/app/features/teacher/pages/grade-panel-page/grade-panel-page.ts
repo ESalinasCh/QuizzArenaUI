@@ -1,9 +1,8 @@
 import { Component, computed, inject, resource, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { GradeCard } from '../../../../shared/molecules/grade-card/grade-card';
-import { Grade, Match } from '../../models/exam.model';
-import { startWith, switchMap } from 'rxjs/operators';
+import { Match } from '../../models/exam.model';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { GradeAttemptFilters } from '../../api/teacher-grades.contract';
 
