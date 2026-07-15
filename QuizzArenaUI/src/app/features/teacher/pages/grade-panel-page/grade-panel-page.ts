@@ -1,10 +1,10 @@
-import { Component, computed, inject, resource, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, signal } from '@angular/core';
+import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { GradeCard } from '../../../../shared/molecules/grade-card/grade-card';
 import { Match } from '../../models/exam.model';
-import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { GradeAttemptFilters } from '../../api/teacher-grades.contract';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'qz-teacher-grade-panel-page',
@@ -25,19 +25,17 @@ export class TeacherGradePanelPage {
     PageSize: 10
   });
 
-  readonly grades = resource({
-    params: () => ({
-      matchId: this.selectedMatchId(),
-      filters: this.filters(),
-    }),
-    loader: async ({ params }) => {
+  readonly grades = rxResource({
+    params: () => {
+      const matchId = this.selectedMatchId();
+      return matchId ? { matchId, filters: this.filters() } : undefined;
+    },
+    stream: ({ params }) => {
       if (!params.matchId) {
-        return [];
+        return of([]);
       }
-      return firstValueFrom(
-        this.#examService.getGrades(params.matchId, params.filters),
-      );
-    }
+      return this.#examService.getGrades(params.matchId, params.filters);
+    },
   });
 
   readonly expandedGrade = signal<string | null>(null);
