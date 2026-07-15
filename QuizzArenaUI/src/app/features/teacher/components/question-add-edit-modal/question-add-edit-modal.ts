@@ -14,6 +14,8 @@ import { ModalRef } from "../../../../core/services/modal.service";
 
 import { Icon } from "../../../../shared/atoms/icon/icon";
 
+import { calculateQuestionDelta, QuestionDelta } from "./question-delta.utils";
+
 const changeOptionCorrectStatus = (currentOptions: Option[], selectedOption: Option) => {
     return currentOptions.map(opt => ({
         ...opt,
@@ -82,7 +84,7 @@ export class QuestionEditModal {
         this.editingOptionPosition.set(nextPosition);
     }
 
-    closeModal(result?: any) {
+    closeModal(result?: Question | QuestionDelta) {
         this.#modalRef.close(result);
     }
 
@@ -108,68 +110,12 @@ export class QuestionEditModal {
             return;
         }
 
-        // Edit mode - Calculate Delta
-        const currentQuestion = this.questionModel();
-        const origQuestion = this.originalQuestion();
-
-        const delta: any = {
-            id: currentQuestion.id
-        };
-
-        if (currentQuestion.content !== origQuestion.content) {
-            delta.content = currentQuestion.content;
-        }
-        if (currentQuestion.justification !== origQuestion.justification) {
-            delta.justification = currentQuestion.justification;
-        }
-        if (currentQuestion.status !== origQuestion.status) {
-            delta.status = currentQuestion.status;
-        }
-        if (currentQuestion.type !== origQuestion.type) {
-            delta.type = currentQuestion.type;
-        }
-
-        // Compare Options
-        const currentOptions = this.optionsModel();
-        const origOptions = this.originalOptions();
-        const changedOptions: any[] = [];
-
-        currentOptions.forEach(currOpt => {
-            const origOpt = origOptions.find(o => o.position === currOpt.position);
-            if (origOpt) {
-                const optDelta: any = {};
-                let hasChanges = false;
-
-                if (currOpt.description !== origOpt.description) {
-                    optDelta.description = currOpt.description;
-                    hasChanges = true;
-                }
-                if (currOpt.isCorrect !== origOpt.isCorrect) {
-                    optDelta.isCorrect = currOpt.isCorrect;
-                    hasChanges = true;
-                }
-
-                if (hasChanges) {
-                    optDelta.position = currOpt.position;
-                    if (currOpt.optionId || currOpt.id) {
-                        optDelta.optionId = currOpt.optionId || currOpt.id;
-                    }
-                    changedOptions.push(optDelta);
-                }
-            } else {
-                // New option
-                changedOptions.push({
-                    position: currOpt.position,
-                    description: currOpt.description,
-                    isCorrect: currOpt.isCorrect,
-                    ...(currOpt.optionId || currOpt.id ? { optionId: currOpt.optionId || currOpt.id } : {})
-                });
-            }
-        });
-
-        if (changedOptions.length > 0) {
-            delta.options = changedOptions;
-        }
+        const delta = calculateQuestionDelta(
+            this.questionModel(),
+            this.originalQuestion(),
+            this.optionsModel(),
+            this.originalOptions()
+        );
 
         this.closeModal(delta);
     }

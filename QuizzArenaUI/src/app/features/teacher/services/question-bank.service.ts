@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Question } from '../models/question';
+import { QuestionDelta } from '../components/question-add-edit-modal/question-delta.utils';
 
 export interface QuestionFilters {
     status?: 'Draft' | 'Verified' | 'Disapproved';
@@ -33,7 +34,7 @@ export class QuestionBankService {
         return of(void 0);
     }
 
-    updateQuestion(id: string, question: Partial<Question>): Observable<any> {
+    updateQuestion(id: string, question: QuestionDelta | Question): Observable<any> {
         const body: any = {
             questionId: question.id || id
         };
@@ -44,7 +45,7 @@ export class QuestionBankService {
         if (question.options !== undefined) {
             body.options = question.options.map(opt => {
                 const optBody: any = {
-                    optionId: opt.optionId || opt.id
+                    optionId: opt.optionId || ('id' in opt ? opt.id : undefined)
                 };
                 if (opt.description !== undefined) optBody.description = opt.description;
                 if (opt.isCorrect !== undefined) optBody.isCorrect = opt.isCorrect;
