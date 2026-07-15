@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StudentQuizService } from '../../services/student-quiz.service';
@@ -7,7 +7,6 @@ import { StudentQuizService } from '../../services/student-quiz.service';
   selector: 'qz-student-exam-results-page',
   imports: [Icon],
   templateUrl: './exam-results-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentExamResultsPage {
   readonly #router = inject(Router);

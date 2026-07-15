@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, EMPTY, from, of, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -8,7 +8,6 @@ import { StudentQuizService } from '../../services/student-quiz.service';
   selector: 'qz-student-exam-question-page',
   imports: [Icon],
   templateUrl: './exam-question-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentExamQuestionPage {
   readonly #router = inject(Router);

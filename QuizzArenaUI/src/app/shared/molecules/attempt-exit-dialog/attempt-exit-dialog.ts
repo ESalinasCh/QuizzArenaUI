@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ModalRef } from '../../../core/services/modal.service';
 
 @Component({
   selector: 'qz-attempt-exit-dialog',
   templateUrl: './attempt-exit-dialog.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AttemptExitDialog {
   readonly #modalRef = inject(ModalRef);
