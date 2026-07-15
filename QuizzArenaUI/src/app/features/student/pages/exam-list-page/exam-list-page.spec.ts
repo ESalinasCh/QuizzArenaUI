@@ -43,6 +43,7 @@ describe('StudentExamListPage', () => {
 
         expect(mockStudentQuizService.getMatches).toHaveBeenCalledWith({
             status: 'Pending',
+            mode: 'Exam',
         });
     });
 
@@ -75,10 +76,11 @@ describe('StudentExamListPage', () => {
 
         expect(mockStudentQuizService.getMatches).toHaveBeenCalledWith({
             status: 'Active',
+            mode: 'Exam',
         });
     });
 
-    it('should navigate to start quiz', async () => {
+    it('should navigate to start exam', async () => {
         const fixture = TestBed.createComponent(StudentExamListPage);
 
         const router = TestBed.inject(Router);
@@ -87,7 +89,7 @@ describe('StudentExamListPage', () => {
         await fixture.componentInstance.startQuiz('quiz-id');
 
         expect(navigateSpy).toHaveBeenCalledWith([
-            '/student/quizzes',
+            '/student/exams',
             'quiz-id',
             'start',
         ]);

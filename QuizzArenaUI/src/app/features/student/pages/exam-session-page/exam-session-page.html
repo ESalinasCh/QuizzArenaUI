@@ -1,6 +1,6 @@
 <section class="min-h-screen bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text">
   <div class="mx-auto flex min-h-screen w-full max-w-[430px] flex-col px-6 pb-10 pt-4 sm:max-w-[520px] sm:px-8">
-    @if (quiz(); as quizData) {
+    @if (exam(); as examData) {
       <div class="flex flex-1 flex-col items-center justify-center gap-8 pb-10 pt-12">
         <div
           class="flex h-40 w-40 items-center justify-center rounded-full bg-purple-light text-5xl dark:bg-dark-surface-alt"
@@ -11,10 +11,10 @@
 
         <div class="text-center">
           <h1 class="text-[40px] font-extrabold leading-none tracking-normal text-light-text dark:text-white sm:text-5xl">
-            {{ quizData.title }}
+            {{ examData.title }}
           </h1>
           <p class="mt-1 text-2xl font-medium leading-tight text-purple dark:text-purple-dark">
-            {{ quizData.subtitle }}
+            {{ examData.subtitle }}
           </p>
         </div>
 
@@ -23,21 +23,21 @@
         >
           <p>
             <span aria-hidden="true">&#128214;</span>
-            <ng-container i18n="Student quiz start question count">
-              {{ quizData.questionCount }} questions
+            <ng-container i18n="Student exam start question count">
+              {{ examData.questionCount }} questions
             </ng-container>
           </p>
-          <p>&#128104;&#8205;&#127979; {{ quizData.professorName }}</p>
+          <p>&#128104;&#8205;&#127979; {{ examData.professorName }}</p>
           <p>&#9201;&#65039; {{ timeLimitLabel() }}</p>
         </div>
 
         <button
           type="button"
           class="mt-4 flex h-[74px] w-full items-center justify-center gap-2 rounded-2xl bg-purple px-5 text-xl font-bold text-white shadow-button transition hover:bg-primary active:scale-[0.98]"
-          (click)="beginQuiz()"
+          (click)="beginExam()"
         >
           <qz-icon name="play" class="h-5 w-5 fill-white" />
-          <ng-container i18n="Student quiz start button">Start</ng-container>
+          <ng-container i18n="Student exam start button">Start exam</ng-container>
         </button>
       </div>
     }

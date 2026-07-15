@@ -32,6 +32,71 @@
         <target>Empezar</target>
         <note priority="1" from="description">Available quiz card start action</note>
       </trans-unit>
+      <trans-unit id="7114647831010941378" datatype="html">
+        <source>Back to available exams</source>
+        <target>Volver a examenes disponibles</target>
+        <note priority="1" from="description">Student exam start page back button aria label</note>
+      </trans-unit>
+      <trans-unit id="5539097211548480304" datatype="html">
+        <source>Start exam</source>
+        <target>Empezar examen</target>
+        <note priority="1" from="description">Student exam start button</note>
+      </trans-unit>
+      <trans-unit id="5267725781322904219" datatype="html">
+        <source>Back to exam start</source>
+        <target>Volver al inicio del examen</target>
+        <note priority="1" from="description">Student exam questions back button aria label</note>
+      </trans-unit>
+      <trans-unit id="5185525110286650868" datatype="html">
+        <source> Exam completed </source>
+        <target> Examen completado </target>
+        <note priority="1" from="description">Student exam results section title</note>
+      </trans-unit>
+      <trans-unit id="409630857607825304" datatype="html">
+        <source>Answered <x id="answered" equiv-text="answered"/> of <x id="total" equiv-text="total"/></source>
+        <target>Respondidas <x id="answered" equiv-text="answered"/> de <x id="total" equiv-text="total"/></target>
+        <note priority="1" from="description">Student exam answered progress label</note>
+      </trans-unit>
+      <trans-unit id="2989993227483411785" datatype="html">
+        <source>Back to exams</source>
+        <target>Volver a examenes</target>
+        <note priority="1" from="description">Student exam back to exams button</note>
+      </trans-unit>
+      <trans-unit id="4515089192065317416" datatype="html">
+        <source> Something went wrong uploading your content. Please try again. </source>
+        <target> Ocurrio un problema al subir tu contenido. Intentalo nuevamente. </target>
+        <note priority="1" from="description">Upload content error message</note>
+      </trans-unit>
+      <trans-unit id="1245343823699368872" datatype="html">
+        <source>Uploading...</source>
+        <target>Subiendo...</target>
+        <note priority="1" from="description">Upload content submit button loading label</note>
+      </trans-unit>
+      <trans-unit id="2693311329420305317" datatype="html">
+        <source>Invalid file format. Accepted formats: <x id="extensions" equiv-text="ACCEPTED_EXTENSIONS.join(&apos;, &apos;)"/>.</source>
+        <target>Formato de archivo invalido. Formatos aceptados: <x id="extensions" equiv-text="ACCEPTED_EXTENSIONS.join(&apos;, &apos;)"/>.</target>
+        <note priority="1" from="description">Invalid file format error</note>
+      </trans-unit>
+      <trans-unit id="4711550783173588276" datatype="html">
+        <source>File is too large. Maximum size is 500MB.</source>
+        <target>El archivo es demasiado grande. El tamano maximo es 500MB.</target>
+        <note priority="1" from="description">File too large error</note>
+      </trans-unit>
+      <trans-unit id="127522161212821820" datatype="html">
+        <source>Attempt in progress</source>
+        <target>Intento en curso</target>
+        <note priority="1" from="description">Attempt exit dialog title</note>
+      </trans-unit>
+      <trans-unit id="8029274747439152024" datatype="html">
+        <source>You cannot leave while this attempt is in progress. Please complete it first.</source>
+        <target>No puedes salir mientras este intento esta en curso. Completalo primero.</target>
+        <note priority="1" from="description">Attempt exit dialog message</note>
+      </trans-unit>
+      <trans-unit id="4471303034208403082" datatype="html">
+        <source>Continue attempt</source>
+        <target>Continuar intento</target>
+        <note priority="1" from="description">Attempt exit dialog action</note>
+      </trans-unit>
       <trans-unit id="3955868613858648955" datatype="html">
         <source>Available</source>
         <target>Disponible</target>
