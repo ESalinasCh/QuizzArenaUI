@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -12,7 +12,7 @@ import { StudentQuizService } from '../../services/student-quiz.service';
   selector: 'qz-student-quiz-list-page',
   imports: [AvailableQuizCard, QuizAccessForm, RecentQuizCard, SectionTitle],
   templateUrl: './quiz-list-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class StudentQuizListPage {
   readonly #authService = inject(AuthService);

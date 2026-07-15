@@ -13,7 +13,7 @@ class MockContentComponent {
 
 @Component({
   selector: 'qz-test-parent',
-  standalone: true,
+
   template: `
     <ng-template #myTemplate let-data>
       <div>Template Content: {{ data.value }}</div>
@@ -70,11 +70,11 @@ describe('ModalService', () => {
     });
 
     modalRef.close('Payload');
-    
+
     await new Promise(resolve => setTimeout(resolve, 0));
 
     expect(resolvedValue).toBe('Payload');
-    
+
     const overlay = document.querySelector('.modal-overlay');
     expect(overlay).toBeNull();
   });
@@ -88,7 +88,7 @@ describe('ModalService', () => {
 
     const overlay = document.querySelector('.modal-overlay');
     expect(overlay).toBeTruthy();
-    
+
     modalRef.close();
 
     await new Promise(resolve => setTimeout(resolve, 0));
@@ -100,7 +100,7 @@ describe('ModalService', () => {
   it('should open a TemplateRef and render its content', () => {
     const parentFixture = TestBed.createComponent(TestParentComponent);
     parentFixture.detectChanges();
-    
+
     const templateRef = parentFixture.componentInstance.template;
     expect(templateRef).toBeTruthy();
 

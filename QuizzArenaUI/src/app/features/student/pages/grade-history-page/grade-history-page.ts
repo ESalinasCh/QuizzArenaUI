@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { AttemptHistoryCard } from '../../../../shared/organisms/attempt-history-card/attempt-history-card';
@@ -8,7 +8,7 @@ import { StudentQuizService } from '../../services/student-quiz.service';
   selector: 'qz-student-grade-history-page',
   imports: [AttemptHistoryCard],
   templateUrl: './grade-history-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class StudentGradeHistoryPage {
   readonly #router = inject(Router);

@@ -1,0 +1,10 @@
+<span [class]="`
+    stext-inherit
+    ${variants[variant()]}
+    ${bolds[bold()]}
+    ${fontSizes[fontSize()]}
+    ${additionalCssClasses()}
+`">
+    {{ text() }}
+    <ng-content></ng-content>
+</span>

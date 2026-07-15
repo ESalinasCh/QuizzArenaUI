@@ -1,13 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info';
 
 @Component({
   selector: 'app-badge',
-  standalone: true,
   imports: [],
   templateUrl: './badge.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Badge {
   readonly label = input.required<string>();

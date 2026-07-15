@@ -1,95 +1,106 @@
 <section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
-  <h1 i18n="Teacher dashboard welcome heading" class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
+  <h1 i18n="Teacher dashboard welcome heading"
+    class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
     Welcome, {{ displayName() }}
   </h1>
 
   <div class="mx-auto flex w-full max-w-[480px] justify-center gap-4">
-    <qz-stat-card
-      [label]="quizzesLabel"
-      [value]="dashboard().quizCount"
-      variant="blue"
-    />
-    <qz-stat-card
-      [label]="publishedLabel"
-      [value]="dashboard().publishedCount"
-      variant="green"
-    />
+    <qz-stat-card [label]="quizzesLabel" [value]="dashboard().quizCount" variant="blue" />
+    <qz-stat-card [label]="publishedLabel" [value]="dashboard().publishedCount" variant="green" />
   </div>
 
-  <qz-button
-    size="large"
-    variant="primary"
-    [fullWidth]="true"
-    (click)="uploadContent()"
-    [ariaLabel]="uploadContentAriaLabel"
-  >
+  <qz-button size="large" variant="primary" [fullWidth]="true" (click)="uploadContent()"
+    [ariaLabel]="uploadContentAriaLabel">
     <qz-icon name="upload" class="w-5 h-5" />
     <span i18n="Teacher dashboard upload button label">Upload Content</span>
   </qz-button>
 
-  <qz-button
-    size="large"
-    variant="secondary"
-    [fullWidth]="true"
-    (click)="createExam()"
-    [ariaLabel]="createExamAriaLabel"
-  >
+  <qz-button size="large" variant="secondary" [fullWidth]="true" (click)="createExam()"
+    [ariaLabel]="createExamAriaLabel">
     <qz-icon name="quiz" class="w-5 h-5" />
     <span i18n="Teacher dashboard create exam button label">Create Exam</span>
   </qz-button>
 
-  @if (draftExams().length > 0) {
-    <div class="flex flex-col gap-4">
-      <div class="flex items-center justify-between">
-        <h2 i18n="Teacher dashboard created exams heading" class="text-base font-bold text-light-text dark:text-dark-text">
-          Created Exams
-        </h2>
-        <button
-          type="button"
-          i18n="Teacher dashboard view exam bank link"
-          class="text-sm font-medium text-primary hover:underline"
-          (click)="goToExamBank()"
-        >
-          View Exam Bank
-        </button>
-      </div>
-      <div class="flex flex-col gap-3">
-        @for (exam of draftExams(); track exam.id) {
-          <div class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3">
-            <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ exam.title }}</span>
-            <qz-button
-              size="small"
-              variant="primary"
-              (click)="publishExam(exam)"
-              [ariaLabel]="publishExamAriaLabel"
-            >
-              <span i18n="Teacher dashboard publish exam button label">Publish</span>
-            </qz-button>
-          </div>
-        }
-      </div>
+  <!-- <div class="flex gap-3">
+    <div class="flex-1 flex-col">
+      <qz-text-input placeholder="Search Exams by title" [formField]="searchForm.text" (input)="search()" />
+      @if (isClearSearchOptionAvailable()) {
+      <qz-link-text class="mt-12" [text]="'Clear'" (click)="clear()" />
+      }
     </div>
+    <qz-button class="flex-0" size="large" variant="secondary" [fullWidth]="true" [ariaLabel]="createExamAriaLabel"
+      (click)="toggleFilterModal()">
+      <qz-icon name="filter" class="w-5 h-5" />
+    </qz-button>
+  </div> -->
+
+  <!-- @if (foundExams().length > 0) {
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center justify-between">
+      <h2 i18n="Teacher dashboard created exams heading"
+        class="text-base font-bold text-light-text dark:text-dark-text">
+        Found Exams
+      </h2>
+    </div>
+    <div class="flex flex-col gap-3">
+      @for (exam of foundExams(); track exam.id) {
+      <div
+        class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3">
+        <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ exam.title }}</span>
+        <qz-button size="small" variant="primary" [ariaLabel]="publishExamAriaLabel">
+          <span>Check</span>
+        </qz-button>
+      </div>
+      }
+    </div>
+  </div>
+  } -->
+
+  @if (draftExams().length > 0) {
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center justify-between">
+      <h2 i18n="Teacher dashboard created exams heading"
+        class="text-base font-bold text-light-text dark:text-dark-text">
+        Created Exams
+      </h2>
+      <button type="button" i18n="Teacher dashboard view exam bank link"
+        class="text-sm font-medium text-primary hover:underline" (click)="goToExamBank()">
+        View Exam Bank
+      </button>
+    </div>
+    <div class="flex flex-col gap-3">
+      @for (exam of draftExams(); track exam.id) {
+      <div
+        class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3">
+        <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ exam.title }}</span>
+        <qz-button size="small" variant="primary" (click)="publishExam(exam)" [ariaLabel]="publishExamAriaLabel">
+          <span i18n="Teacher dashboard publish exam button label">Publish</span>
+        </qz-button>
+      </div>
+      }
+    </div>
+  </div>
   }
 
   @if (publishedExams().length > 0) {
-    <div class="flex flex-col gap-4">
-      <h2 i18n="Teacher dashboard published exams heading" class="text-base font-bold text-light-text dark:text-dark-text">
-        Published Exams
-      </h2>
-      <div class="flex flex-col gap-3">
-        @for (exam of publishedExams(); track exam.id) {
-          <div class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3">
-            <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ exam.title }}</span>
-            <span
-              i18n="Teacher dashboard published badge"
-              class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-400"
-            >
-              Published
-            </span>
-          </div>
-        }
+  <div class="flex flex-col gap-4">
+    <h2 i18n="Teacher dashboard published exams heading"
+      class="text-base font-bold text-light-text dark:text-dark-text">
+      Published Exams
+    </h2>
+    <div class="flex flex-col gap-3">
+      @for (exam of publishedExams(); track exam.id) {
+      <div
+        class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3">
+        <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ exam.title }}</span>
+        <span i18n="Teacher dashboard published badge"
+          class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-400">
+          Published
+        </span>
       </div>
+      }
     </div>
+  </div>
   }
 
   <div class="flex flex-col gap-4">
@@ -99,11 +110,7 @@
 
     <div class="flex flex-col gap-3">
       @for (item of dashboard().recentContent; track item.id) {
-        <app-content-item
-          [title]="item.title"
-          [status]="item.status"
-          [info]="item.info"
-        />
+      <app-content-item [title]="item.title" [status]="item.status" [info]="item.info" />
       }
     </div>
   </div>

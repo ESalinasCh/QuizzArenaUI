@@ -51,7 +51,7 @@ describe('TeacherExamService', () => {
 
     const req = httpMock.expectOne(r => r.url.includes('/questions'));
     expect(req.request.params.get('status')).toBe('Verified');
-    expect(req.request.params.getAll('processingJobIds')).toContain('aaaaaaaa-0000-0000-0000-000000000001');
+    expect(req.request.params.getAll('processingJobsIds')).toContain('aaaaaaaa-0000-0000-0000-000000000001');
     req.flush(mockResponse);
   });
 

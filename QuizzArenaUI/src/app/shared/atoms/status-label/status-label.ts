@@ -1,12 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 export type StatusLabelVariant = 'success' | 'info' | 'warning' | 'danger';
 
 @Component({
   selector: 'qz-status-label',
-  standalone: true,
   templateUrl: './status-label.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusLabel {
   label = input.required<string>();

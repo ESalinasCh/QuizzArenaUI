@@ -1,0 +1,35 @@
+<qz-item-container>
+    <qz-text-span [bold]="'semibold'">
+        {{ question().content }}
+    </qz-text-span>
+</qz-item-container>
+
+<qz-item-container>
+    <div class="flex justify-between">
+        <qz-text-span [bold]="'semibold'">Date Creation: </qz-text-span>
+        <div>{{ question().createdAt | date:'dd/MM/yyyy' }}</div>
+    </div>
+</qz-item-container>
+<qz-item-container>
+    <div class="flex justify-between">
+        <qz-text-span [bold]="'semibold'">Processing Job Id: </qz-text-span>
+        <div class="break-all pl-6">{{ question().processingJobId }}</div>
+    </div>
+</qz-item-container>
+<qz-item-container>
+    <div class="flex justify-between">
+        <qz-text-span [bold]="'semibold'">Status: </qz-text-span>
+        <div>{{ question().status }}</div>
+    </div>
+</qz-item-container>
+<qz-item-container>
+    <qz-text-span [bold]="'semibold'">Justification: </qz-text-span>
+    <div>{{ question().justification }}</div>
+</qz-item-container>
+<qz-item-container>
+    <div class="flex justify-end">
+        <qz-button [size]="'small'" [variant]="'secondary'" (click)="handleCloseModalEvent()">
+            Close
+        </qz-button>
+    </div>
+</qz-item-container>

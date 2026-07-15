@@ -17,6 +17,7 @@ function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
   selector: 'qz-exam-step-config',
   imports: [ReactiveFormsModule, Button],
   templateUrl: './exam-step-config.html',
+
 })
 export class ExamStepConfig {
   next = output<ExamConfig>();

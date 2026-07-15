@@ -1,0 +1,80 @@
+<form class="flex flex-col gap-3 p-3" (submit)="handleSubmitForm($event)">
+    <qz-textarea-input [label]="'Question'" [formField]="questionForm.content"></qz-textarea-input>
+    <qz-select-input [label]="'Status'" [formField]="questionForm.status">
+        @for (state of states(); track $index) {
+        <option [value]="state.key">
+            {{ state.label }}
+        </option>
+        }
+    </qz-select-input>
+    <qz-select-input [label]="'Question'" [formField]="questionForm.type">
+        @for (type of types(); track $index) {
+        <option [value]="type.key">
+            {{ type.label }}
+        </option>
+        }
+    </qz-select-input>
+    <qz-text-span [bold]="'semibold'" [fontSize]="'small'">
+        Answers
+    </qz-text-span>
+    <div class="flex flex-col gap-4">
+        @for (option of optionsModel() | sortOptions; track option.position) {
+        <div class="flex items-center gap-2 w-full">
+            @if (editingOptionPosition() === option.position) {
+            <div class="flex items-center gap-2 w-full">
+                <div class="flex-1">
+                    <input type="text" [value]="option.description" #optionInput
+                        (keyup.enter)="saveOptionDescription(option, optionInput.value)"
+                        class="flex-1 px-3 py-2 border rounded-lg bg-light-surface dark:bg-dark-surface border-light-border dark:border-dark-border text-light-text dark:text-dark-text outline-none focus:border-primary w-full"
+                        placeholder="Write option description..." />
+                </div>
+                <div class="flex-0">
+                    <qz-button [type]="'button'" [fullWidth]="true" variant="secondary"
+                        (click)="saveOptionDescription(option, optionInput.value)">
+                        <qz-icon [name]="'check'" />
+                    </qz-button>
+                </div>
+            </div>
+            } @else {
+            <div class="flex-1">
+                <qz-item-container [clickable]="true" [variant]="option.isCorrect ? 'success' : 'danger'"
+                    (click)="handleChangeCorrectAnswer(option)">
+                    {{ option.description || '(Empty option, click edit to write)' }}
+                </qz-item-container>
+            </div>
+            <div class="flex-0 flex gap-2">
+                <qz-button [type]="'button'" [fullWidth]="true" variant="secondary"
+                    (click)="startEditingOption(option)">
+                    <qz-icon [name]="'edit'" />
+                </qz-button>
+                <!-- <qz-button [type]="'button'" [fullWidth]="true" variant="danger">
+                    <qz-icon [name]="'trash'" />
+                </qz-button> -->
+            </div>
+            }
+        </div>
+        }
+        <!-- <div class="flex justify-start mt-1">
+            <qz-button [type]="'button'" size="small" variant="secondary" (click)="handleAddOption()">
+                <div class="flex items-center gap-1.5">
+                    <qz-icon [name]="'plus'" />
+                    <span>Add Answer Option</span>
+                </div>
+            </qz-button>
+        </div> -->
+    </div>
+    <qz-textarea-input [label]="'Justification'" [formField]="questionForm.justification"></qz-textarea-input>
+    @if (validationError()) {
+        <div class="mt-4 px-3 py-2 bg-red-100 border border-red-300 text-red-700 rounded-lg">
+            <qz-text-span [fontSize]="'small'">{{ validationError() }}</qz-text-span>
+        </div>
+    }
+    <div class="flex justify-between gap-3 flex-wrap mt-12">
+        <qz-button [type]="'button'" [fullWidth]="true" [variant]="'secondary'" (click)="handleCancelButton()">
+            Cancel
+        </qz-button>
+        <qz-button [type]="'submit'" [fullWidth]="true" [variant]="'primary'">
+            Submit
+        </qz-button>
+    </div>
+</form>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, LOCALE_ID, inject, signal } from '@angular/core';
+import { Component, LOCALE_ID, inject, signal } from '@angular/core';
 import { Icon } from '../../atoms/icon/icon';
 
 interface Language {
@@ -11,7 +11,6 @@ interface Language {
   imports: [Icon],
   templateUrl: './language-selector.html',
   styleUrl: './language-selector.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LanguageSelector {
   readonly #localeId = inject(LOCALE_ID);

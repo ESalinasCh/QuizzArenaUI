@@ -1,0 +1,73 @@
+<div
+    class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3 gap-6">
+    <div class="flex flex-col gap-2">
+        <qz-text-span [bold]="'none'" [additionalCssClasses]="'block flex items-center gap-1'">
+            @switch (question().status) {
+            @case ('Verified') {
+            <div class="text-green-600 flex items-center">
+                <qz-icon [name]="'check'" class="block !size-5" />
+            </div>
+            <div class="text-green-600">
+                {{ question().status }}
+            </div>
+            }
+            @case ('Disapproved') {
+            <div class="text-red-600 flex items-center">
+                <qz-icon [name]="'close'" class="block !size-5" />
+            </div>
+            <div class="text-red-600">
+                {{ question().status }}
+            </div>
+            }
+            @case ('Draft') {
+            <div class="text-amber-400 flex items-center">
+                <qz-icon [name]="'document'" class="block !size-5" />
+            </div>
+            <div class="text-amber-400">
+                {{ question().status }}
+            </div>
+            }
+            }
+        </qz-text-span>
+        <qz-text-span [bold]="'none'">
+            Type: {{ question().type }}
+        </qz-text-span>
+        <qz-text-span [bold]="'semibold'">
+            {{ question()?.content || '' }}
+        </qz-text-span>
+    </div>
+    <div class="flex gap-3">
+        @if(isMobile()) {
+        <div>
+            <qz-button size="small" variant="secondary" [fullWidth]="true"
+                (click)="!isDropdownOpened() ? handleToggleDropdown(true):''">
+                <qz-icon [name]="'ellipsis-vertical'"></qz-icon>
+            </qz-button>
+            @if (isDropdownOpened()) {
+            <qz-clickable-dropbox [align]="'left'" (closed)="handleToggleDropdown(false)">
+                <qz-item-container [clickable]="true" [additionalClasses]="'pr-8'" (click)="openInfoModal()">
+                    Information
+                </qz-item-container>
+                <qz-item-container [clickable]="true" (click)="openEditModal()">
+                    Edit
+                </qz-item-container>
+                <qz-item-container [clickable]="true" (click)="openDeleteModal()">
+                    Delete
+                </qz-item-container>
+            </qz-clickable-dropbox>
+            }
+        </div>
+        }
+        @else {
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openInfoModal()">
+            <qz-icon [name]="'question'"></qz-icon>
+        </qz-button>
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openEditModal()">
+            <qz-icon [name]="'edit'"></qz-icon>
+        </qz-button>
+        <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openDeleteModal()">
+            <qz-icon [name]="'trash'"></qz-icon>
+        </qz-button>
+        }
+</div>
+

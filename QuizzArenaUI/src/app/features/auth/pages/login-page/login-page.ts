@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { FeatureCard } from '../../../../shared/molecules/feature-card/feature-card';
@@ -14,11 +14,9 @@ export interface LoginFeature {
 
 @Component({
   selector: 'qz-login-page',
-  standalone: true,
   imports: [Button, Icon, FeatureCard, LanguageSelector],
   templateUrl: './login-page.html',
   styleUrl: './login-page.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPage {
   readonly #authService = inject(AuthService);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs';
@@ -9,7 +9,7 @@ import { StudentQuizService } from '../../services/student-quiz.service';
   selector: 'qz-student-quiz-session-page',
   imports: [Icon],
   templateUrl: './quiz-session-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class StudentQuizSessionPage {
   readonly #route = inject(ActivatedRoute);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
@@ -13,7 +13,7 @@ import { FilterStatusOption } from '../../models/student-quiz.model';
   selector: 'qz-student-exam-list-page',
   imports: [AvailableQuizCard, SectionTitle, FilterTabs],
   templateUrl: './exam-list-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class StudentExamListPage {
   readonly #router = inject(Router);

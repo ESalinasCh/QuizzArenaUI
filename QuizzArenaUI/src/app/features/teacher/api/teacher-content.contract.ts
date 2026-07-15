@@ -27,3 +27,11 @@ export interface UploadContentResponse {
   status: ContentStatusResponse;
   createdAt: string;
 }
+
+export interface UploadContentResponse {
+  id: string;
+  title: string;
+  courseId: string;
+  status: ContentStatusResponse;
+  createdAt: string;
+}

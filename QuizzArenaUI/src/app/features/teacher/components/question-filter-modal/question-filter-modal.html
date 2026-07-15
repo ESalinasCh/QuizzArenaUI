@@ -1,0 +1,36 @@
+<form class="flex-col" (submit)="$event.preventDefault(); applyFilters()">
+    <qz-item-container>
+        <div class="flex flex-col gap-2">
+            <qz-text-span [bold]="'semibold'" [fontSize]="'base'">State</qz-text-span>
+            <div class="flex gap-4">
+                @for (option of statusOptions(); track option.key) {
+                <qz-checkbox-input type="checkbox" [label]="option.label"
+                    [formField]="questionFilterForm.status[option.key]" />
+                }
+            </div>
+        </div>
+    </qz-item-container>
+
+    <qz-item-container>
+        <div class="flex flex-col gap-2">
+            <qz-text-span [bold]="'semibold'" [fontSize]="'base'">Type</qz-text-span>
+            <div class="flex gap-4">
+                @for (option of typeOptions(); track option.key) {
+                <qz-checkbox-input type="checkbox" [label]="option.label"
+                    [formField]="questionFilterForm.types[option.key]" />
+                }
+            </div>
+        </div>
+    </qz-item-container>
+
+    <qz-item-container>
+        <div class="flex gap-4 pt-6 justify-end">
+            <qz-button type="button" (click)="cleanFilters()" [variant]="'secondary'" [fullWidth]="true">
+                Clean
+            </qz-button>
+            <qz-button type="submit" [fullWidth]="true" [variant]="'primary'">
+                Apply FIlters
+            </qz-button>
+        </div>
+    </qz-item-container>
+</form>

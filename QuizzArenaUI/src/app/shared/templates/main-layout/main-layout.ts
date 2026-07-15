@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -10,7 +10,6 @@ import { Sidebar } from '../../organisms/sidebar/sidebar';
   imports: [RouterOutlet, Navbar, Sidebar],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayout {
   readonly #activatedRoute = inject(ActivatedRoute);

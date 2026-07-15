@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-role-redirect-page',
-  standalone: true,
+
   template: '',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoleRedirectPage implements OnInit {
   readonly #authService = inject(AuthService);

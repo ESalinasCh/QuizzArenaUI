@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 export type ButtonSize = 'large' | 'medium' | 'small' | 'icon' | 'action';
 export type ButtonVariant =
@@ -12,10 +12,10 @@ export type ButtonType = 'button' | 'submit' | 'reset';
 
 @Component({
   selector: 'qz-button',
-  standalone: true,
+
   templateUrl: './button.html',
   styleUrl: './button.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class Button {
   readonly size = input<ButtonSize>('medium');
@@ -24,6 +24,7 @@ export class Button {
   readonly disabled = input<boolean>(false);
   readonly fullWidth = input<boolean>(false);
   readonly ariaLabel = input<string | null>(null);
+  readonly additionalClasses = input('');
 
   readonly buttonClasses = computed(() =>
     [

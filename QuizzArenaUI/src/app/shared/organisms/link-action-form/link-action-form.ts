@@ -1,13 +1,11 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Icon, IconName } from '../../atoms/icon/icon';
 
 @Component({
   selector: 'qz-link-action-form',
-  standalone: true,
   imports: [FormsModule, Icon],
   templateUrl: './link-action-form.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LinkActionForm {
   placeholder = input.required<string>();
