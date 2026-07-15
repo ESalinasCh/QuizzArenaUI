@@ -56,7 +56,7 @@ export class QuestionBankService {
         return this.#http.patch<any>(`${this.#api}/api/v1/questions`, body);
     }
 
-    deleteQuestion(id: string): Observable<void> {
-        return of(void 0);
+    deleteQuestion(id: string): Observable<any> {
+        return this.#http.delete<any>(`${this.#api}/api/v1/questions/${id}`);
     }
 }

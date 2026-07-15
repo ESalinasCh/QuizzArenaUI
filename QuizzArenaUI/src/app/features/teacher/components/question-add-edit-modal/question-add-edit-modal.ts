@@ -15,6 +15,7 @@ import { ModalRef } from "../../../../core/services/modal.service";
 import { Icon } from "../../../../shared/atoms/icon/icon";
 
 import { calculateQuestionDelta, QuestionDelta } from "./question-delta.utils";
+import { SortOptionsPipe } from "../../../../shared/pipes/sort-options.pipe";
 
 const changeOptionCorrectStatus = (currentOptions: Option[], selectedOption: Option) => {
     return currentOptions.map(opt => ({
@@ -27,7 +28,7 @@ const changeOptionCorrectStatus = (currentOptions: Option[], selectedOption: Opt
     selector: 'qz-question-add-edit-modal',
     templateUrl: './question-add-edit-modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ItemContainer, SelectInput, TextareaInput, TextSpan, FormField, Button, Icon],
+    imports: [ItemContainer, SelectInput, TextareaInput, TextSpan, FormField, Button, Icon, SortOptionsPipe],
 })
 export class QuestionEditModal {
     readonly #modalRef = inject(ModalRef);
@@ -65,7 +66,7 @@ export class QuestionEditModal {
     }
 
     saveOptionDescription(option: Option, newDescription: string) {
-        this.optionsModel.update(opts => 
+        this.optionsModel.update(opts =>
             opts.map(o => o.position === option.position ? { ...o, description: newDescription } : o)
         );
         this.editingOptionPosition.set(null);
@@ -84,11 +85,14 @@ export class QuestionEditModal {
         this.editingOptionPosition.set(nextPosition);
     }
 
+    validationError = signal<string | null>(null);
+
     closeModal(result?: Question | QuestionDelta) {
         this.#modalRef.close(result);
     }
 
     handleChangeCorrectAnswer(selectedOption: Option) {
+        this.validationError.set(null);
         this.optionsModel.update(currentOptions => {
             return changeOptionCorrectStatus(currentOptions, selectedOption);
         });
@@ -100,7 +104,22 @@ export class QuestionEditModal {
 
     handleSubmitForm(event: Event) {
         event.preventDefault();
-        
+
+        const correctCount = this.optionsModel().filter(o => o.isCorrect).length;
+        const qType = this.questionModel().type;
+
+        if (qType === 'SingleChoice' && correctCount !== 1) {
+            this.validationError.set('A Single Choice question must have exactly 1 correct answer option.');
+            return;
+        }
+
+        if (qType === 'MultipleChoice' && correctCount < 1) {
+            this.validationError.set('A Multiple Choice question must have at least 1 correct answer option.');
+            return;
+        }
+
+        this.validationError.set(null);
+
         if (this.formType() === 'Create') {
             const updated = {
                 ...this.questionModel(),

@@ -48,6 +48,10 @@ export class TeacherQuestionBankPage implements OnInit {
     return Object.values(filter.status).some(v => v) || Object.values(filter.types).some(v => v);
   });
 
+  readonly filteredQuestions = computed(() => {
+    return this.mockTextFilter(this.searchModel().names);
+  });
+
   readonly clearOptions = linkedSignal<InputTextClearOption>(() => ({
     isActivated: !!this.searchModel().names,
     text: this.searchModel().names ? 'Clear Text' : undefined,
@@ -100,7 +104,6 @@ export class TeacherQuestionBankPage implements OnInit {
   }
 
   handleNewQuestion(question: Question): void {
-    console.log(this.questions())
     this.#questionBankService.updateQuestion(question.id, question).pipe(
       take(1)
     ).subscribe({
@@ -136,9 +139,18 @@ export class TeacherQuestionBankPage implements OnInit {
   }
 
   handleDeleteQuestion(id: string): void {
-    this.questions.update(questionCollection =>
-      questionCollection.filter(quest => quest.id !== id)
-    );
+    this.#questionBankService.deleteQuestion(id).pipe(
+      take(1)
+    ).subscribe({
+      next: () => {
+        this.questions.update(questionCollection =>
+          questionCollection.filter(quest => quest.id !== id)
+        );
+      },
+      error: (err) => {
+        console.error('Error deleting question', err);
+      }
+    });
   }
 
   handleClearClick(): void {
@@ -158,5 +170,16 @@ export class TeacherQuestionBankPage implements OnInit {
         this.handleNewFilter(filter);
       }
     });
+  }
+
+  mockTextFilter(text: string): Question[] {
+    const searchText = text.toLowerCase().trim();
+    if (!searchText) {
+      return this.questions();
+    }
+    return this.questions().filter(q =>
+      q.content.toLowerCase().includes(searchText) ||
+      q.justification?.toLowerCase().includes(searchText)
+    );
   }
 }
