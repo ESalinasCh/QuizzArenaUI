@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, resource, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
 import { AvailableQuizCard } from '../../components/available-quiz-card/available-quiz-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { MatchFilters, MatchStatus } from '../../api/student-quiz.contract';
 import { FilterTabs } from '../../components/filter-tabs/filter-tabs';
-import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
+import { catchError, of } from 'rxjs';
 import { FilterStatusOption } from '../../models/student-quiz.model';
 
 @Component({
@@ -30,20 +31,22 @@ export class StudentExamListPage {
 
   readonly filters = signal<MatchFilters>({
     status: 'Pending',
+    mode: 'Exam',
   });
-  
+
   readonly availableExamsTitle = $localize`:Student available exams section title:Available Exams`;
   readonly recentExamsTitle = $localize`:Student recent exams section title:Recent Exams`;
   readonly studentFallbackName = $localize`:Student fallback display name:Student`;
   readonly noExamsMessage = $localize`:Student no exams message:You don't have any exams.`;
 
-  readonly exams = resource({
+  readonly exams = rxResource({
     params: () => this.filters(),
-    loader: ({params: filters}) => firstValueFrom(this.#studentQuizService.getMatches(filters)),
-  })
+    stream: ({ params: filters }) =>
+      this.#studentQuizService.getMatches(filters).pipe(catchError(() => of([]))),
+  });
 
-  async startQuiz(quizId: string): Promise<void> {
-    await this.#router.navigate(['/student/quizzes', quizId, 'start']);
+  async startQuiz(examId: string): Promise<void> {
+    await this.#router.navigate(['/student/exams', examId, 'start']);
   }
 
   protected changeStatus(status: MatchStatus) {

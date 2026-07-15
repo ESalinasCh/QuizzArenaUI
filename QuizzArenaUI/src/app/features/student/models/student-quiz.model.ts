@@ -94,6 +94,22 @@ export interface StudentQuizResultSummary {
   message: string;
 }
 
+export interface StudentExamAnswer {
+  id: string;
+  number: number;
+  text: string;
+  selectedOptionId: string | null;
+}
+
+export interface StudentExamResult {
+  attemptId: string;
+  title: string;
+  subtitle: string;
+  answeredQuestions: number;
+  totalQuestions: number;
+  answers: StudentExamAnswer[];
+}
+
 export interface FilterStatusOption {
   label: string;
   value: MatchStatus;

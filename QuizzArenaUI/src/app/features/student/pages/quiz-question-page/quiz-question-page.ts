@@ -40,17 +40,6 @@ export class StudentQuizQuestionPage {
     return ((this.questionIndex() + 1) / total) * 100;
   });
 
-  async goBack(): Promise<void> {
-    const quizId = this.quiz()?.id;
-
-    if (!quizId) {
-      await this.#router.navigate(['/student/quizzes']);
-      return;
-    }
-
-    await this.#router.navigate(['/student/quizzes', quizId, 'start']);
-  }
-
   selectOption(optionId: string): void {
     this.selectedOptionId.set(optionId);
   }

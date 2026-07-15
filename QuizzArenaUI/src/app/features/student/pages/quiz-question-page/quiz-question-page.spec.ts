@@ -57,7 +57,7 @@ describe('StudentQuizQuestionPage', () => {
       b => b.textContent?.trim().includes('A') && b.textContent?.trim().includes('B'),
     );
     expect(optionButtons.length).toBe(0);
-    expect(buttons.length).toBe(4);
+    expect(buttons.length).toBe(3);
   });
 
   it('should select option on selectOption', () => {
@@ -111,27 +111,4 @@ describe('StudentQuizQuestionPage', () => {
     expect(fixture.componentInstance.questionIndex()).toBe(0);
   });
 
-  it('should navigate back on goBack', async () => {
-    const fixture = TestBed.createComponent(StudentQuizQuestionPage);
-    fixture.detectChanges();
-
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
-
-    await fixture.componentInstance.goBack();
-    expect(navigateSpy).toHaveBeenCalledWith(['/student/quizzes', 'quiz-1', 'start']);
-  });
-
-  it('should navigate to quiz list if no quiz loaded on goBack', async () => {
-    mockStudentQuizService.getActiveQuizStart = vi.fn().mockReturnValue(undefined);
-
-    const fixture = TestBed.createComponent(StudentQuizQuestionPage);
-    fixture.detectChanges();
-
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
-
-    await fixture.componentInstance.goBack();
-    expect(navigateSpy).toHaveBeenCalledWith(['/student/quizzes']);
-  });
 });

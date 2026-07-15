@@ -3,16 +3,19 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Observable, forkJoin, map, of, tap, throwError } from 'rxjs';
 import {
   AvailableMatchResponse,
+  CompleteExamAttemptResponse,
   CreatePlayResponse,
   MatchAttemptDetailResponse,
   MatchAttemptSummaryResponse,
   MatchFilters,
   SubmitMatchAttemptRequest,
   SubmitMatchAttemptResponse,
+  TrackExamAnswerResponse,
 } from '../api/student-quiz.contract';
 import { STUDENT_QUIZ_ENDPOINTS } from '../api/student-quiz.endpoints';
 import {
   mapAttemptHistoryCardResponse,
+  mapCompleteExamAttemptResponse,
   mapMatchAttemptDetailResponse,
   mapQuizStartResponse,
   mapStudentDashboardResponse,
@@ -26,6 +29,7 @@ import {
   StudentQuizResultSummary,
   StudentQuizStart,
   AvailableQuiz,
+  StudentExamResult,
 } from '../models/student-quiz.model';
 import { buildApiUrl } from '../../../core/utils/api-url.util';
 
@@ -33,6 +37,8 @@ import { buildApiUrl } from '../../../core/utils/api-url.util';
 export class StudentQuizService {
   readonly #http = inject(HttpClient);
   readonly #activeQuizStart = signal<StudentQuizStart | undefined>(undefined);
+  readonly #activeExamStart = signal<StudentQuizStart | undefined>(undefined);
+  readonly #completedExamResult = signal<StudentExamResult | undefined>(undefined);
   readonly #attemptMetadataCache = new Map<string, { title: string; subtitle: string }>();
   readonly #submitResultCache = new Map<string, SubmitMatchAttemptResponse>();
 
@@ -41,7 +47,10 @@ export class StudentQuizService {
       availableMatches: this.#http.get<AvailableMatchResponse[]>(
         buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
         {
-          params: { status: 'active' },
+          params: {
+            status: 'active',
+            mode: 'Solo',
+          },
         },
       ),
       matchAttempts: this.#http.get<MatchAttemptSummaryResponse[]>(
@@ -113,6 +122,78 @@ export class StudentQuizService {
   getActiveQuizStart(): StudentQuizStart | undefined {
     return this.#activeQuizStart();
   }
+
+  getExamStart(examId: string): Observable<StudentQuizStart> {
+    return forkJoin({
+      matches: this.#http.get<AvailableMatchResponse[]>(
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
+        {
+          params: { status: 'Active', mode: 'Exam' },
+        },
+      ),
+      play: this.#http.post<CreatePlayResponse>(
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.plays),
+        { matchId: examId },
+      ),
+    }).pipe(
+      map(({ matches, play }) => {
+        const match = matches.find(item => item.id === examId);
+
+        if (!match) {
+          throw new Error(`No exam found for match ${examId}`);
+        }
+
+        const mappedExamStart = mapQuizStartResponse(match, play);
+        this.#activeExamStart.set(mappedExamStart);
+
+        if (mappedExamStart.attemptId) {
+          this.#attemptMetadataCache.set(mappedExamStart.attemptId, {
+            title: mappedExamStart.title,
+            subtitle: mappedExamStart.subtitle,
+          });
+        }
+
+        return mappedExamStart;
+      }),
+    );
+  }
+
+  getActiveExamStart(): StudentQuizStart | undefined {
+    return this.#activeExamStart();
+  }
+
+  trackExamAnswer(
+    attemptId: string,
+    questionId: string,
+    selectedOptionId: string,
+  ): Observable<TrackExamAnswerResponse> {
+    return this.#http.put<TrackExamAnswerResponse>(
+      buildApiUrl(STUDENT_QUIZ_ENDPOINTS.trackExamAnswer(attemptId, questionId)),
+      { selectedOptionId },
+    );
+  }
+
+  completeExamAttempt(attemptId: string): Observable<StudentExamResult> {
+    return forkJoin({
+      response: this.#http.post<CompleteExamAttemptResponse>(
+        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.completeExamAttempt(attemptId)),
+        null,
+      ),
+      metadata: this.#getAttemptMetadata(attemptId),
+    }).pipe(
+      map(({ response, metadata }) => {
+        const result = mapCompleteExamAttemptResponse(response, metadata);
+        this.#completedExamResult.set(result);
+
+        return result;
+      }),
+    );
+  }
+
+  getCompletedExamResult(): StudentExamResult | undefined {
+    return this.#completedExamResult();
+  }
+
   getMatchAttemptDetail(attemptId: string): Observable<StudentQuizReview> {
     return forkJoin({
       response: this.#http.get<MatchAttemptDetailResponse>(

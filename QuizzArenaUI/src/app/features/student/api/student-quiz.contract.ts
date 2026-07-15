@@ -80,6 +80,29 @@ export interface SubmitMatchAttemptRequest {
   answers: SubmitMatchAttemptAnswerRequest[];
 }
 
+export interface TrackExamAnswerRequest {
+  selectedOptionId: string;
+}
+
+export interface TrackExamAnswerResponse {
+  answeredQuestions: number;
+  totalQuestions: number;
+}
+
+export interface CompletedExamAnswerResponse {
+  id: string;
+  number: number;
+  text: string;
+  selectedOptionId: string | null;
+}
+
+export interface CompleteExamAttemptResponse {
+  attemptId: string;
+  answeredQuestions: number;
+  totalQuestions: number;
+  answers: CompletedExamAnswerResponse[];
+}
+
 export interface SubmittedQuestionResultResponse {
   id: string;
   number: number;
