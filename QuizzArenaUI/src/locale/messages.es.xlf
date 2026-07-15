@@ -1115,15 +1115,15 @@
         <target> Calificaciones</target>
         <note priority="1" from="description">Grade panel page heading</note>
       </trans-unit>
-      <trans-unit id="1167941620562826948" datatype="html">
-        <source> Select a exam </source>
+      <trans-unit id="7587660891560207554" datatype="html">
+        <source> Select an exam </source>
         <target> Seleccionar un examen</target>
-        <note priority="1" from="description">Grade panel exam selector label</note>
+        <note priority="1" from="description">Grade panel match selector label</note>
       </trans-unit>
-      <trans-unit id="1241418821961229942" datatype="html">
-        <source>Select a exam</source>
+      <trans-unit id="2589392812577576994" datatype="html">
+        <source>Select an exam</source>
         <target>Seleccionar un examen</target>
-        <note priority="1" from="description">Grade panel exam selector aria label</note>
+        <note priority="1" from="description">Grade panel match selector aria label</note>
       </trans-unit>
       <trans-unit id="3785306318642979309" datatype="html">
         <source>You don&apos;t have any grades.</source>
