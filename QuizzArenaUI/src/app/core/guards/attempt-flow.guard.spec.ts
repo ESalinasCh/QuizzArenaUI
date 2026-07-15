@@ -41,13 +41,26 @@ describe('attemptFlowGuard', () => {
   it('should block navigation when next state is not available', async () => {
     await expect(runGuard('/student/exams/exam-1/questions')).resolves.toBe(false);
   });
+
+  it('should allow leaving when the current page marks the attempt flow as safe to leave', async () => {
+    await expect(
+      runGuard('/student/exams/exam-1/start', '/student/exams', {
+        canLeaveAttemptFlow: () => true,
+      }),
+    ).resolves.toBe(true);
+    expect(modalService.open).not.toHaveBeenCalled();
+  });
 });
 
-function runGuard(currentUrl: string, nextUrl?: string): Promise<boolean> {
+function runGuard(
+  currentUrl: string,
+  nextUrl?: string,
+  component: { canLeaveAttemptFlow?: () => boolean } = {},
+): Promise<boolean> {
   return TestBed.runInInjectionContext(() =>
     Promise.resolve(
       attemptFlowGuard(
-        {},
+        component,
         {} as never,
         { url: currentUrl } as RouterStateSnapshot,
         nextUrl

@@ -39,6 +39,14 @@ export class StudentExamSessionPage {
     return $localize`:Student exam time limit label:Time limit ${minutes}:minutes: min`;
   });
 
+  canLeaveAttemptFlow(): boolean {
+    return this.examLoadFailed();
+  }
+
+  async goToExams(): Promise<void> {
+    await this.#router.navigate(['/student/exams']);
+  }
+
   async beginExam(): Promise<void> {
     const examId = this.exam()?.id;
 

@@ -78,4 +78,16 @@ describe('StudentQuizSessionPage', () => {
     expect(fixture.componentInstance.quizLoadFailed()).toBe(true);
     expect(fixture.nativeElement.textContent).toContain('Quiz unavailable');
   });
+
+  it('should navigate to quiz list from fallback action', async () => {
+    const fixture = TestBed.createComponent(StudentQuizSessionPage);
+    fixture.detectChanges();
+
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+    await fixture.componentInstance.goToQuizzes();
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/student/quizzes']);
+  });
 });

@@ -13,12 +13,20 @@ interface AttemptRoute {
   step: AttemptRouteStep;
 }
 
-export const attemptFlowGuard: CanDeactivateFn<unknown> = (
-  _component,
+interface AttemptFlowPage {
+  canLeaveAttemptFlow?: () => boolean;
+}
+
+export const attemptFlowGuard: CanDeactivateFn<AttemptFlowPage> = (
+  component,
   _currentRoute,
   currentState,
   nextState,
 ) => {
+  if (component.canLeaveAttemptFlow?.()) {
+    return true;
+  }
+
   const currentRoute = parseAttemptRoute(currentState.url);
   const nextRoute = parseAttemptRoute(nextState?.url);
 

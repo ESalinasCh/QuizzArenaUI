@@ -507,7 +507,7 @@
         <source>Available Exams</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <note priority="1" from="description">Student available exams section title</note>
       </trans-unit>
@@ -515,7 +515,7 @@
         <source>Recent Exams</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="description">Student recent exams section title</note>
       </trans-unit>
@@ -523,7 +523,7 @@
         <source>Student</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
@@ -535,7 +535,7 @@
         <source>You don&apos;t have any exams.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">40</context>
         </context-group>
         <note priority="1" from="description">Student no exams message</note>
       </trans-unit>
@@ -599,7 +599,11 @@
         <source>Back to exams</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-results-page/exam-results-page.html</context>
-          <context context-type="linenumber">42,46</context>
+          <context context-type="linenumber">42,45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.html</context>
+          <context context-type="linenumber">56,59</context>
         </context-group>
         <note priority="1" from="description">Student exam back to exams button</note>
       </trans-unit>
@@ -631,6 +635,22 @@
         </context-group>
         <note priority="1" from="description">Student exam start button</note>
       </trans-unit>
+      <trans-unit id="4480567030969725687" datatype="html">
+        <source> Exam unavailable </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.html</context>
+          <context context-type="linenumber">46,48</context>
+        </context-group>
+        <note priority="1" from="description">Student exam start fallback title</note>
+      </trans-unit>
+      <trans-unit id="4682451606089533576" datatype="html">
+        <source> We could not load this exam right now. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.html</context>
+          <context context-type="linenumber">49,52</context>
+        </context-group>
+        <note priority="1" from="description">Student exam start fallback message</note>
+      </trans-unit>
       <trans-unit id="3066208008327816783" datatype="html">
         <source>Time limit <x id="minutes" equiv-text="minutes"/> min</source>
         <context-group purpose="location">
@@ -639,7 +659,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.ts</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">40</context>
         </context-group>
         <note priority="1" from="description">Student exam time limit label</note>
       </trans-unit>
@@ -823,6 +843,30 @@
         </context-group>
         <note priority="1" from="description">Student quiz correct answers stat label</note>
       </trans-unit>
+      <trans-unit id="7258563223298766851" datatype="html">
+        <source> Quiz unavailable </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
+          <context context-type="linenumber">46,48</context>
+        </context-group>
+        <note priority="1" from="description">Student quiz start fallback title</note>
+      </trans-unit>
+      <trans-unit id="4910483615627255520" datatype="html">
+        <source> We could not load this quiz right now. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
+          <context context-type="linenumber">49,52</context>
+        </context-group>
+        <note priority="1" from="description">Student quiz start fallback message</note>
+      </trans-unit>
+      <trans-unit id="3018649849742595725" datatype="html">
+        <source>Back to quizzes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
+          <context context-type="linenumber">56,59</context>
+        </context-group>
+        <note priority="1" from="description">Student quiz start fallback action</note>
+      </trans-unit>
       <trans-unit id="1669185263898985643" datatype="html">
         <source> Question </source>
         <context-group purpose="location">
@@ -1003,7 +1047,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/publish-exam-page/publish-exam-page.ts</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="description">Exam step config back button label</note>
       </trans-unit>
@@ -1591,6 +1635,14 @@
         </context-group>
         <note priority="1" from="description">Grade card other attempts section heading</note>
       </trans-unit>
+      <trans-unit id="2674751543961259085" datatype="html">
+        <source>Error code:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/molecules/api-error-dialog/api-error-dialog.html</context>
+          <context context-type="linenumber">8,11</context>
+        </context-group>
+        <note priority="1" from="description">API error dialog status code label</note>
+      </trans-unit>
       <trans-unit id="127522161212821820" datatype="html">
         <source>Attempt in progress</source>
         <context-group purpose="location">
@@ -1614,13 +1666,6 @@
           <context context-type="linenumber">14</context>
         </context-group>
         <note priority="1" from="description">Attempt exit dialog action</note>
-      <trans-unit id="2674751543961259085" datatype="html">
-        <source>Error code:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/molecules/api-error-dialog/api-error-dialog.html</context>
-          <context context-type="linenumber">8,11</context>
-        </context-group>
-        <note priority="1" from="description">API error dialog status code label</note>
       </trans-unit>
       <trans-unit id="2531042398197863879" datatype="html">
         <source><x id="questionCount" equiv-text="this.questionCount()"/> questions</source>

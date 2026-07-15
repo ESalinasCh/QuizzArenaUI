@@ -40,6 +40,14 @@ export class StudentQuizSessionPage {
     return $localize`:Student quiz time limit label:Time limit ${minutes}:minutes: min`;
   });
 
+  canLeaveAttemptFlow(): boolean {
+    return this.quizLoadFailed();
+  }
+
+  async goToQuizzes(): Promise<void> {
+    await this.#router.navigate(['/student/quizzes']);
+  }
+
   async beginQuiz(): Promise<void> {
     const quizId = this.quiz()?.id;
 

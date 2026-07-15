@@ -242,6 +242,16 @@
         <target>Respondidas <x id="answered" equiv-text="answered"/> de <x id="total" equiv-text="total"/></target>
         <note priority="1" from="description">Student exam answered progress label</note>
       </trans-unit>
+      <trans-unit id="4480567030969725687" datatype="html">
+        <source> Exam unavailable </source>
+        <target> Examen no disponible </target>
+        <note priority="1" from="description">Student exam start fallback title</note>
+      </trans-unit>
+      <trans-unit id="4682451606089533576" datatype="html">
+        <source> We could not load this exam right now. </source>
+        <target> No pudimos cargar este examen en este momento. </target>
+        <note priority="1" from="description">Student exam start fallback message</note>
+      </trans-unit>
       <trans-unit id="2989993227483411785" datatype="html">
         <source>Back to exams</source>
         <target>Volver a examenes</target>

@@ -67,6 +67,57 @@ describe('ApiErrorService', () => {
     expect(modalService.open).toHaveBeenCalledTimes(1);
   });
 
+  it('should map backend errors array format', () => {
+    const error = new HttpErrorResponse({
+      status: 400,
+      error: {
+        errors: [
+          {
+            code: 'INVALID_OPERATION',
+            message: 'Match has expired',
+          },
+        ],
+        status: 400,
+      },
+    });
+
+    service.show(error);
+
+    expect(modalService.open.mock.calls[0][1]).toEqual(
+      expect.objectContaining({
+        message: 'Match has expired',
+        statusCode: 400,
+      }),
+    );
+  });
+
+  it('should render multiple backend errors in the same dialog message', () => {
+    const error = new HttpErrorResponse({
+      status: 400,
+      error: {
+        errors: [
+          {
+            code: 'VALIDATION_ERROR',
+            message: 'Validation failed',
+          },
+          {
+            code: 'INVALID_OPERATION',
+            message: 'Match has expired',
+          },
+        ],
+        status: 400,
+      },
+    });
+
+    service.show(error);
+
+    expect(modalService.open.mock.calls[0][1]).toEqual(
+      expect.objectContaining({
+        message: 'Please review the submitted data.\nMatch has expired',
+      }),
+    );
+  });
+
   it('should allow opening another modal after the active modal is closed', async () => {
     service.show(new HttpErrorResponse({ status: 500 }));
 
