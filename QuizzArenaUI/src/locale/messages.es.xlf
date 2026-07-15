@@ -57,11 +57,6 @@
         <target>Respondidas <x id="answered" equiv-text="answered"/> de <x id="total" equiv-text="total"/></target>
         <note priority="1" from="description">Student exam answered progress label</note>
       </trans-unit>
-      <trans-unit id="9069341127832625616" datatype="html">
-        <source>Selected option:</source>
-        <target>Opcion seleccionada:</target>
-        <note priority="1" from="description">Student exam selected option label</note>
-      </trans-unit>
       <trans-unit id="2989993227483411785" datatype="html">
         <source>Back to exams</source>
         <target>Volver a examenes</target>

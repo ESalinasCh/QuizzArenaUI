@@ -3,24 +3,15 @@ import { CanDeactivateFn } from '@angular/router';
 import { ModalService } from '../services/modal.service';
 import { AttemptExitDialog } from '../../shared/molecules/attempt-exit-dialog/attempt-exit-dialog';
 
-const ALLOWED_ATTEMPT_TRANSITIONS = [
-  {
-    from: /^\/student\/quizzes\/[^/]+\/start$/,
-    to: /^\/student\/quizzes\/[^/]+\/questions$/,
-  },
-  {
-    from: /^\/student\/quizzes\/[^/]+\/questions$/,
-    to: /^\/student\/quizzes\/[^/]+\/results$/,
-  },
-  {
-    from: /^\/student\/exams\/[^/]+\/start$/,
-    to: /^\/student\/exams\/[^/]+\/questions$/,
-  },
-  {
-    from: /^\/student\/exams\/[^/]+\/questions$/,
-    to: /^\/student\/exams\/[^/]+\/results$/,
-  },
-];
+const ATTEMPT_EXIT_DIALOG_WIDTH = 'min(90vw, 420px)';
+
+type AttemptRouteType = 'quizzes' | 'exams';
+type AttemptRouteStep = 'start' | 'questions' | 'results';
+
+interface AttemptRoute {
+  type: AttemptRouteType;
+  step: AttemptRouteStep;
+}
 
 export const attemptFlowGuard: CanDeactivateFn<unknown> = (
   _component,
@@ -28,21 +19,52 @@ export const attemptFlowGuard: CanDeactivateFn<unknown> = (
   currentState,
   nextState,
 ) => {
-  const currentUrl = normalizeUrl(currentState.url);
-  const nextUrl = normalizeUrl(nextState?.url);
-  const isAllowedTransition = ALLOWED_ATTEMPT_TRANSITIONS.some(
-    transition => transition.from.test(currentUrl) && transition.to.test(nextUrl),
-  );
+  const currentRoute = parseAttemptRoute(currentState.url);
+  const nextRoute = parseAttemptRoute(nextState?.url);
 
-  if (isAllowedTransition) {
+  if (isAllowedAttemptTransition(currentRoute, nextRoute)) {
     return true;
   }
 
   return showAttemptExitDialog();
 };
 
-function normalizeUrl(url: string | undefined): string {
-  return url?.split('?')[0] ?? '';
+function parseAttemptRoute(url: string | undefined): AttemptRoute | null {
+  const [area, type, id, step] = getRouteSegments(url);
+
+  if (area !== 'student' || !isAttemptRouteType(type) || !id || !isAttemptRouteStep(step)) {
+    return null;
+  }
+
+  return { type, step };
+}
+
+function getRouteSegments(url: string | undefined): string[] {
+  const routePath = url?.split('?')[0];
+
+  return routePath?.split('/').filter(Boolean) ?? [];
+}
+
+function isAttemptRouteType(value: string | undefined): value is AttemptRouteType {
+  return value === 'quizzes' || value === 'exams';
+}
+
+function isAttemptRouteStep(value: string | undefined): value is AttemptRouteStep {
+  return value === 'start' || value === 'questions' || value === 'results';
+}
+
+function isAllowedAttemptTransition(
+  currentRoute: AttemptRoute | null,
+  nextRoute: AttemptRoute | null,
+): boolean {
+  if (!currentRoute || !nextRoute || currentRoute.type !== nextRoute.type) {
+    return false;
+  }
+
+  return (
+    (currentRoute.step === 'start' && nextRoute.step === 'questions') ||
+    (currentRoute.step === 'questions' && nextRoute.step === 'results')
+  );
 }
 
 async function showAttemptExitDialog(): Promise<boolean> {
@@ -53,7 +75,7 @@ async function showAttemptExitDialog(): Promise<boolean> {
     {
       closeOnOverlayClick: false,
       showCloseButton: false,
-      width: 'min(90vw, 420px)',
+      width: ATTEMPT_EXIT_DIALOG_WIDTH,
     },
   );
 

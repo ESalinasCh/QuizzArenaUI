@@ -327,19 +327,11 @@
         </context-group>
         <note priority="1" from="description">Student exam answered question number</note>
       </trans-unit>
-      <trans-unit id="9069341127832625616" datatype="html">
-        <source>Selected option:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/student/pages/exam-results-page/exam-results-page.html</context>
-          <context context-type="linenumber">35,36</context>
-        </context-group>
-        <note priority="1" from="description">Student exam selected option label</note>
-      </trans-unit>
       <trans-unit id="2989993227483411785" datatype="html">
         <source>Back to exams</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-results-page/exam-results-page.html</context>
-          <context context-type="linenumber">47,51</context>
+          <context context-type="linenumber">42,46</context>
         </context-group>
         <note priority="1" from="description">Student exam back to exams button</note>
       </trans-unit>
