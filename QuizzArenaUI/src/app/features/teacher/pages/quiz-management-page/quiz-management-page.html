@@ -1,8 +1,9 @@
 <section class="mx-auto flex w-full max-w-5xl flex-col gap-5">
   <div class="flex flex-col gap-2">
     <p class="text-sm font-semibold text-primary">Teacher</p>
-    <h2 class="text-2xl font-bold text-light-text dark:text-dark-text">Quiz management</h2>
-
+    <h2 class="text-2xl font-bold text-light-text dark:text-dark-text">
+      Question Bank
+    </h2>
     <div class="flex gap-3">
       <div class="flex-8">
         <qz-text-input placeholder="Search your question here" [formField]="searchForm.names"
@@ -21,12 +22,11 @@
     </div>
 
     <div class="flex flex-col gap-3">
-      @if(questionsToShow().length > 0) {
-      @for (question of questionsToShow(); track question.id) {
-      <qz-admin-question-card [question]="question" (newQuestion)="handleNewQuestion($event)" (deleteQuestionById)="handleDeleteQuestion($event)" />
+      @for (question of questions(); track question.id) {
+      <qz-admin-question-card [question]="question" (newQuestion)="handleNewQuestion($event)"
+        (deleteQuestionById)="handleDeleteQuestion($event)" />
       }
-      }
-      @else {
+      @empty {
       <div class="flex justify-center items-center h-[50vh]">
         <qz-text-span [text]="'Not Found Questions'" />
       </div>
@@ -36,4 +36,3 @@
 
   </div>
 </section>
-

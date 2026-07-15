@@ -57,9 +57,9 @@ export class Sidebar {
       roles: ['teacher'],
     },
     {
-      label: $localize`:Sidebar nav teacher quizzes label:Quizzes`,
+      label: $localize`:Sidebar nav teacher class sources label:Class Sources`,
       icon: 'quiz',
-      routerLink: '/teacher/quizzes',
+      routerLink: '/teacher/class-sources',
       roles: ['teacher'],
     },
     {

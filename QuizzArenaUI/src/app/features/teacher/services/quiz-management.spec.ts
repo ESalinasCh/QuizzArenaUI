@@ -1,16 +1,20 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { QuizManagementService } from './quiz-management.service';
 
-import { QuizManagement } from './quiz-management';
-
-describe('QuizManagement', () => {
-  let service: QuizManagement;
+describe('QuizManagementService', () => {
+  let service: QuizManagementService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(QuizManagement);
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    });
+    service = TestBed.inject(QuizManagementService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 });
+
