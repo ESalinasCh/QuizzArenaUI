@@ -377,6 +377,41 @@
         <target>Las preguntas se mezclan en cada repaso</target>
         <note priority="1" from="description">Shuffle questions setting description</note>
       </trans-unit>
+      <trans-unit id="4515089192065317416" datatype="html">
+        <source> Something went wrong uploading your content. Please try again. </source>
+        <target> Algo salió mal al cargar tu contenido. Por favor, inténtalo de nuevo. </target>
+        <note priority="1" from="description">Upload content error message</note>
+      </trans-unit>
+      <trans-unit id="1245343823699368872" datatype="html">
+        <source>Uploading...</source>
+        <target>Cargando...</target>
+        <note priority="1" from="description">Upload content submit button loading label</note>
+      </trans-unit>
+      <trans-unit id="2693311329420305317" datatype="html">
+        <source>Invalid file format. Accepted formats: <x id="extensions" equiv-text="ACCEPTED_EXTENSIONS.join(&apos;, &apos;)"/>.</source>
+        <target>Formato de archivo inválido. Formatos aceptados: <x id="extensions" equiv-text="ACCEPTED_EXTENSIONS.join(&apos;, &apos;)"/>.</target>
+        <note priority="1" from="description">Invalid file format error</note>
+      </trans-unit>
+      <trans-unit id="4711550783173588276" datatype="html">
+        <source>File is too large. Maximum size is 500MB.</source>
+        <target>El archivo es demasiado grande. El tamaño máximo es de 500MB.</target>
+        <note priority="1" from="description">File too large error</note>
+      </trans-unit>
+      <trans-unit id="7403155387771709003" datatype="html">
+        <source> other attempts</source>
+        <target> otros intentos</target>
+        <note priority="1" from="description">Grade card other attempts count label</note>
+      </trans-unit>
+      <trans-unit id="3070436157519178124" datatype="html">
+        <source> Score </source>
+        <target> Nota </target>
+        <note priority="1" from="description">Grade card score label</note>
+      </trans-unit>
+      <trans-unit id="5944902043531534903" datatype="html">
+        <source> Other attempts </source>
+        <target> Otros intentos </target>
+        <note priority="1" from="description">Grade card other attempts section heading</note>
+      </trans-unit>
       <trans-unit id="4608015944298801142" datatype="html">
         <source>Switch to light mode</source>
         <target>Cambiar a modo claro</target>
@@ -814,6 +849,31 @@
         <source> questions</source>
         <target> preguntas</target>
         <note priority="1" from="description">Exam bank question count suffix</note>
+      </trans-unit>
+      <trans-unit id="4077369017576821458" datatype="html">
+        <source> Grades </source>
+        <target> Calificaciones</target>
+        <note priority="1" from="description">Grade panel page heading</note>
+      </trans-unit>
+      <trans-unit id="1167941620562826948" datatype="html">
+        <source> Select a exam </source>
+        <target> Seleccionar un examen</target>
+        <note priority="1" from="description">Grade panel exam selector label</note>
+      </trans-unit>
+      <trans-unit id="1241418821961229942" datatype="html">
+        <source>Select a exam</source>
+        <target>Seleccionar un examen</target>
+        <note priority="1" from="description">Grade panel exam selector aria label</note>
+      </trans-unit>
+      <trans-unit id="3785306318642979309" datatype="html">
+        <source>You don&apos;t have any grades.</source>
+        <target>No hay calificaciones.</target>
+        <note priority="1" from="description">Teacher no grades message</note>
+      </trans-unit>
+      <trans-unit id="1401467117049945528" datatype="html">
+        <source>Grades</source>
+        <target>Calificaciones</target>
+        <note priority="1" from="description">Sidebar nav teacher grades label</note>
       </trans-unit>
       <trans-unit id="6110229795058919586" datatype="html">
         <source> Your answer: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/> </source>

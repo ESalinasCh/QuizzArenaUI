@@ -39,3 +39,31 @@ export interface Exam {
   questionIds: string[];
   createdAt: string;
 }
+
+export type GradeStatus = 'InProgress' | 'Completed' | 'Timeout';
+
+export interface Grade {
+  id: string;
+  nickname: string;
+  status: GradeStatus;
+  score: number;
+  userId: string;
+  matchId: string;
+  otherAttempts: Attempt[];
+}
+
+export interface Attempt {
+  id: string;
+  nickname: string;
+  status: GradeStatus;
+  score: number;
+}
+
+export interface Match {
+  id: string;
+  title: string;
+  courseName: string;
+  questionCount: number;
+  professorName: string;
+  duration: number;
+}

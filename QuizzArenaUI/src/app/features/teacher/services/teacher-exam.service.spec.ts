@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TeacherExamService } from './teacher-exam.service';
+import { mapMatchResponse } from '../api/teacher-grades.mapper';
 
 describe('TeacherExamService', () => {
   let service: TeacherExamService;
@@ -104,5 +105,50 @@ describe('TeacherExamService', () => {
       shuffleOptions: false,
     });
     req.flush({});
+  });
+
+  it('should call GET /grades with filters and return mapped grades', () => {
+    const mockResponse = [
+      {
+        id: 'grade-1',
+        nickname: 'alice',
+        status: 'Completed',
+        score: 95,
+        userId: 'user-1',
+        matchId: 'match-1',
+        otherAttempts: [{ id: 'attempt-1', nickname: 'bob', status: 'Completed', score: 80 }],
+      },
+    ];
+
+    service.getGrades('match-1', { Page: 1, PageSize: 20 }).subscribe(grades => {
+      expect(grades).toEqual(mockResponse);
+    });
+
+    const req = httpMock.expectOne(r => r.url.includes('/grades'));
+    expect(req.request.params.get('Page')).toBe("1");
+    expect(req.request.params.get('PageSize')).toBe("20");
+    req.flush(mockResponse);
+  });
+
+  it('should call GET /matches and return mapped matches', () => {
+    const mockResponse = [
+      {
+        id: 'match-1',
+        title: 'Midterm',
+        courseName: 'Math',
+        questionCount: 10,
+        professorName: 'Dr. Smith',
+        duration: 45,
+        createdAt: '2026-07-10T00:00:00.000Z',
+      },
+    ];
+
+    service.getMatches().subscribe(matches => {
+      expect(matches).toEqual(mockResponse.map(mapMatchResponse));
+    });
+
+    const req = httpMock.expectOne(r => r.url.includes('/matches'));
+    expect(req.request.method).toBe('GET');
+    req.flush(mockResponse);
   });
 });

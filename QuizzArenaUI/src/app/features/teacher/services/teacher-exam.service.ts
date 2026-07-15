@@ -14,10 +14,12 @@ import {
   CreateQuizResponseBody,
   QuestionResponse,
 } from '../api/teacher-exam.contract';
-import { TEACHER_EXAM_ENDPOINTS } from '../api/teacher-exam.endpoints';
-import { TEACHER_CLASSES_RESPONSE_MOCK, TEACHER_EXAMS_MOCK } from '../mocks/teacher-exam.mock';
-import { ClassSource, CreateExamRequest, Exam, ExamConfig, Question } from '../models/exam.model';
 import { buildApiUrl } from '../../../core/utils/api-url.util';
+import { TEACHER_EXAM_ENDPOINTS, TEACHER_GRADES_ENDPOINTS } from '../api/teacher-exam.endpoints';
+import { TEACHER_CLASSES_RESPONSE_MOCK, TEACHER_EXAMS_MOCK } from '../mocks/teacher-exam.mock';
+import { ClassSource, CreateExamRequest, Exam, ExamConfig, Grade, Match, Question } from '../models/exam.model';
+import { GradeAttemptFilters, GradeResponse, MatchResponse } from '../api/teacher-grades.contract';
+import { mapGradeResponse, mapMatchResponse } from '../api/teacher-grades.mapper';
 
 @Injectable({ providedIn: 'root' })
 export class TeacherExamService {
@@ -91,5 +93,19 @@ export class TeacherExamService {
     return this.#http
       .post(buildApiUrl(TEACHER_EXAM_ENDPOINTS.matches), matchBody)
       .pipe(map(() => void 0));
+  }
+
+  getGrades(matchId?: string, filters: GradeAttemptFilters = {}): Observable<Grade[]> {
+    return this.#http
+      .get<GradeResponse[]>(buildApiUrl(TEACHER_GRADES_ENDPOINTS.grades(matchId || '')), {
+        params: { ...filters },
+      })
+      .pipe(map(grades => grades.map(mapGradeResponse)));
+  }
+
+  getMatches(): Observable<Match[]> {
+    return this.#http
+      .get<MatchResponse[]>(buildApiUrl(TEACHER_GRADES_ENDPOINTS.matches))
+      .pipe(map(matches => matches.map(mapMatchResponse)));
   }
 }

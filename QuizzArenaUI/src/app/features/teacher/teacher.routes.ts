@@ -5,6 +5,7 @@ import { TeacherUploadContentPage } from './pages/upload-content-page/upload-con
 import { TeacherCreateExamPage } from './pages/create-exam-page/create-exam-page';
 import { TeacherPublishExamPage } from './pages/publish-exam-page/publish-exam-page';
 import { TeacherExamBankPage } from './pages/exam-bank-page/exam-bank-page';
+import { TeacherGradePanelPage } from './pages/grade-panel-page/grade-panel-page';
 
 export const teacherRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
@@ -14,4 +15,5 @@ export const teacherRoutes: Routes = [
   { path: 'exams/create', component: TeacherCreateExamPage },
   { path: 'exams/publish', component: TeacherPublishExamPage },
   { path: 'exams/bank', component: TeacherExamBankPage },
+  { path: 'grades', component: TeacherGradePanelPage },
 ];

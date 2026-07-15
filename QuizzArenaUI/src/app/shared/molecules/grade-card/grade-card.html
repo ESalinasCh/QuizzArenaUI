@@ -1,0 +1,63 @@
+<div class="rounded-xl border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface">
+    <div class="px-5 py-4 flex justify-between items-center">
+        <div>
+            <h2 class="font-semibold text-lg text-light-text dark:text-dark-text">
+                {{ grade().nickname }}
+            </h2>
+
+            <div class="flex items-center gap-3 mt-2">
+                <qz-grade-status-label [status]="grade().status" />
+
+                @if (grade().otherAttempts.length) {
+                <button class="flex items-center gap-2 text-sm text-primary hover:underline" (click)="onToggle()">
+                    <span>
+                        {{ grade().otherAttempts.length }}
+                        <ng-container i18n="Grade card other attempts count label"> other attempts</ng-container>
+                    </span>
+                    <span class="inline-block transition-transform duration-200" [class.rotate-90]="expanded()">
+                        &gt;
+                    </span>
+                </button>
+                }
+            </div>
+        </div>
+
+        <div class="text-right">
+            <div class="text-3xl font-bold text-primary">
+                {{ grade().score }}
+            </div>
+            <div class="text-sm text-light-text-secondary dark:text-dark-text-secondary" i18n="Grade card score label">
+                Score
+            </div>
+        </div>
+    </div>
+    @if (expanded()) {
+    <div class="px-5 pb-4">
+        <div class="border-t border-light-border dark:border-dark-border pt-3">
+
+            <p class="text-light-text-secondary dark:text-dark-text-secondary text-sm mb-3"
+                i18n="Grade card other attempts section heading">
+                Other attempts
+            </p>
+
+            <div class="space-y-2">
+                @for (attempt of grade().otherAttempts; track attempt.id) {
+                <div
+                    class="rounded-lg border border-light-border dark:border-dark-border bg-light-bg dark:bg-dark-bg px-4 py-3 flex justify-between items-center">
+                    <div class="flex flex-col gap-1">
+                        <p class="text-light-text dark:text-dark-text text-sm font-semibold">
+                            {{ attempt.nickname }}
+                        </p>
+                        <qz-grade-status-label [status]="attempt.status" />
+                    </div>
+                    <span class="text-primary font-semibold">
+                        {{ attempt.score }}
+                    </span>
+                </div>
+                }
+            </div>
+
+        </div>
+    </div>
+    }
+</div>
