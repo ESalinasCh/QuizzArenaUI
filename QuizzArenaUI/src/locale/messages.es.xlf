@@ -975,6 +975,11 @@
         <target>Crear Examen</target>
         <note priority="1" from="description">Teacher dashboard create exam button label</note>
       </trans-unit>
+      <trans-unit id="2137572389480772140" datatype="html">
+        <source>Class Sources</source>
+        <target>Fuentes de clase</target>
+        <note priority="1" from="description">Sidebar nav teacher class sources label</note>
+      </trans-unit>
       <trans-unit id="2587748736973980864" datatype="html">
         <source>Exam Bank</source>
         <target>Banco de Exámenes</target>

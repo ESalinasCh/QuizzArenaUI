@@ -9,17 +9,17 @@ import { ContentItem } from '../../../../shared/molecules/content-item/content-i
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { Exam } from '../../models/exam.model';
-import { TextInput } from "../../../../shared/molecules/text-input/text-input";
+//import { TextInput } from "../../../../shared/molecules/text-input/text-input";
 import { ExamFilterModal } from '../../components/exam-filter-modal/exam-filter-modal';
 import { ExamFormFilter } from '../../models/exam-form-filter';
-import { LinkText } from '../../../../shared/atoms/link-text/link-text';
+// import { LinkText } from '../../../../shared/atoms/link-text/link-text';
 import { ModalService } from '../../../../core/services/modal.service';
-import { form, FormField } from '@angular/forms/signals';
+import { form } from '@angular/forms/signals';
 
 
 @Component({
   selector: 'qz-teacher-dashboard-page',
-  imports: [StatCard, ContentItem, Button, Icon, TextInput, FormField, LinkText],
+  imports: [StatCard, ContentItem, Button, Icon],
   templateUrl: './dashboard-page.html',
 })
 export class TeacherDashboardPage {
