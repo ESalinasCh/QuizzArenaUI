@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:i18n",
+  "outputDirectory": "dist/QuizzArenaUI/browser",
+  "redirects": [{ "source": "/", "destination": "/en/", "permanent": false }],
+  "rewrites": [
+    { "source": "/en/(.*)", "destination": "/en/index.html" },
+    { "source": "/es/(.*)", "destination": "/es/index.html" }
+  ]
+}
