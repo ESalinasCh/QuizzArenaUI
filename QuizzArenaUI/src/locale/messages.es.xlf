@@ -2,6 +2,191 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" target-language="es" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="5990455144366596457" datatype="html">
+        <source>We could not complete this action. Please try again later.</source>
+        <target>No pudimos completar esta accion. Intentalo de nuevo mas tarde.</target>
+        <note priority="1" from="description">API error fallback message</note>
+      </trans-unit>
+      <trans-unit id="3441364443441265060" datatype="html">
+        <source>The request contains invalid data.</source>
+        <target>La solicitud contiene datos invalidos.</target>
+        <note priority="1" from="description">API error bad request message</note>
+      </trans-unit>
+      <trans-unit id="6543886473127217819" datatype="html">
+        <source>Please review the submitted data.</source>
+        <target>Revisa los datos enviados.</target>
+        <note priority="1" from="description">API error validation message</note>
+      </trans-unit>
+      <trans-unit id="3239589020047044075" datatype="html">
+        <source>Your session has expired. Please sign in again.</source>
+        <target>Tu sesion ha expirado. Inicia sesion nuevamente.</target>
+        <note priority="1" from="description">API error unauthorized message</note>
+      </trans-unit>
+      <trans-unit id="7189048380135498679" datatype="html">
+        <source>You do not have permission to perform this action.</source>
+        <target>No tienes permisos para realizar esta accion.</target>
+        <note priority="1" from="description">API error forbidden message</note>
+      </trans-unit>
+      <trans-unit id="1178484467601613788" datatype="html">
+        <source>The requested resource was not found.</source>
+        <target>No se encontro el recurso solicitado.</target>
+        <note priority="1" from="description">API error not found message</note>
+      </trans-unit>
+      <trans-unit id="5784178707310184780" datatype="html">
+        <source>The request conflicts with the current state of the resource.</source>
+        <target>La solicitud entra en conflicto con el estado actual del recurso.</target>
+        <note priority="1" from="description">API error conflict message</note>
+      </trans-unit>
+      <trans-unit id="2476526399251723621" datatype="html">
+        <source>Something went wrong on the server. Please try again later.</source>
+        <target>Ocurrio un problema en el servidor. Intentalo mas tarde.</target>
+        <note priority="1" from="description">API error internal server message</note>
+      </trans-unit>
+      <trans-unit id="3663891935404967440" datatype="html">
+        <source>The service is temporarily unavailable. Please try again later.</source>
+        <target>El servicio no esta disponible temporalmente. Intentalo mas tarde.</target>
+        <note priority="1" from="description">API error service unavailable message</note>
+      </trans-unit>
+      <trans-unit id="6805493535234361557" datatype="html">
+        <source>The quiz was not found.</source>
+        <target>No se encontro el quiz.</target>
+        <note priority="1" from="description">API error match not found message</note>
+      </trans-unit>
+      <trans-unit id="4141461401413838077" datatype="html">
+        <source>This quiz is no longer available.</source>
+        <target>Este quiz ya no esta disponible.</target>
+        <note priority="1" from="description">API error match not available message</note>
+      </trans-unit>
+      <trans-unit id="3664531215550516741" datatype="html">
+        <source>This quiz is not active yet.</source>
+        <target>Este quiz aun no esta activo.</target>
+        <note priority="1" from="description">API error match not active message</note>
+      </trans-unit>
+      <trans-unit id="3906330191137788030" datatype="html">
+        <source>You already have an active attempt for this quiz.</source>
+        <target>Ya tienes un intento activo para este quiz.</target>
+        <note priority="1" from="description">API error active attempt exists message</note>
+      </trans-unit>
+      <trans-unit id="357265945876967553" datatype="html">
+        <source>The quiz attempt was not found.</source>
+        <target>No se encontro el intento del quiz.</target>
+        <note priority="1" from="description">API error attempt not found message</note>
+      </trans-unit>
+      <trans-unit id="2059939137635414915" datatype="html">
+        <source>This attempt has already been submitted.</source>
+        <target>Este intento ya fue enviado.</target>
+        <note priority="1" from="description">API error attempt already submitted message</note>
+      </trans-unit>
+      <trans-unit id="1755526191010668994" datatype="html">
+        <source>The time for this attempt has expired.</source>
+        <target>El tiempo para este intento ha expirado.</target>
+        <note priority="1" from="description">API error attempt expired message</note>
+      </trans-unit>
+      <trans-unit id="4751781431871077047" datatype="html">
+        <source>This attempt is not in progress.</source>
+        <target>Este intento no esta en progreso.</target>
+        <note priority="1" from="description">API error attempt not in progress message</note>
+      </trans-unit>
+      <trans-unit id="6144548872437738869" datatype="html">
+        <source>The question was not found.</source>
+        <target>No se encontro la pregunta.</target>
+        <note priority="1" from="description">API error question not found message</note>
+      </trans-unit>
+      <trans-unit id="2963918557993568392" datatype="html">
+        <source>The selected option was not found.</source>
+        <target>No se encontro la opcion seleccionada.</target>
+        <note priority="1" from="description">API error option not found message</note>
+      </trans-unit>
+      <trans-unit id="465974001369764958" datatype="html">
+        <source>Please select an answer before continuing.</source>
+        <target>Selecciona una respuesta antes de continuar.</target>
+        <note priority="1" from="description">API error answer required message</note>
+      </trans-unit>
+      <trans-unit id="1636968649655402795" datatype="html">
+        <source>The submitted answers are invalid.</source>
+        <target>Las respuestas enviadas son invalidas.</target>
+        <note priority="1" from="description">API error invalid answer payload message</note>
+      </trans-unit>
+      <trans-unit id="7122576925458597298" datatype="html">
+        <source>The answer timestamp is required.</source>
+        <target>La fecha de respuesta es requerida.</target>
+        <note priority="1" from="description">API error answered at required message</note>
+      </trans-unit>
+      <trans-unit id="7573492656084268265" datatype="html">
+        <source>You have reached the maximum number of attempts for this quiz.</source>
+        <target>Alcanzaste el numero maximo de intentos para este quiz.</target>
+        <note priority="1" from="description">API error max attempts reached message</note>
+      </trans-unit>
+      <trans-unit id="5988521934697839948" datatype="html">
+        <source>The course was not found.</source>
+        <target>No se encontro el curso.</target>
+        <note priority="1" from="description">API error course not found message</note>
+      </trans-unit>
+      <trans-unit id="8806793291555112243" datatype="html">
+        <source>The question bank is empty.</source>
+        <target>El banco de preguntas esta vacio.</target>
+        <note priority="1" from="description">API error question bank empty message</note>
+      </trans-unit>
+      <trans-unit id="5939019564427741998" datatype="html">
+        <source>The quiz could not be created.</source>
+        <target>No se pudo crear el quiz.</target>
+        <note priority="1" from="description">API error quiz creation failed message</note>
+      </trans-unit>
+      <trans-unit id="5972160270253359212" datatype="html">
+        <source>The match could not be created.</source>
+        <target>No se pudo crear el match.</target>
+        <note priority="1" from="description">API error match creation failed message</note>
+      </trans-unit>
+      <trans-unit id="3349009112975948378" datatype="html">
+        <source>The exam configuration is invalid.</source>
+        <target>La configuracion del examen es invalida.</target>
+        <note priority="1" from="description">API error invalid exam configuration message</note>
+      </trans-unit>
+      <trans-unit id="1988687144559361745" datatype="html">
+        <source>The exam could not be published.</source>
+        <target>No se pudo publicar el examen.</target>
+        <note priority="1" from="description">API error publish exam failed message</note>
+      </trans-unit>
+      <trans-unit id="4650776118145964319" datatype="html">
+        <source>The content could not be uploaded.</source>
+        <target>No se pudo subir el contenido.</target>
+        <note priority="1" from="description">API error content upload failed message</note>
+      </trans-unit>
+      <trans-unit id="4573179040549545620" datatype="html">
+        <source>The selected file type is not supported.</source>
+        <target>El tipo de archivo seleccionado no es compatible.</target>
+        <note priority="1" from="description">API error unsupported file type message</note>
+      </trans-unit>
+      <trans-unit id="8998179362936748717" datatype="html">
+        <source>OK</source>
+        <target>Aceptar</target>
+        <note priority="1" from="description">API error dialog default action</note>
+      </trans-unit>
+      <trans-unit id="960665565485640516" datatype="html">
+        <source>Something went wrong</source>
+        <target>Algo salio mal</target>
+        <note priority="1" from="description">API error dialog title</note>
+      </trans-unit>
+      <trans-unit id="2674751543961259085" datatype="html">
+        <source>Error code:</source>
+        <target>Codigo de error:</target>
+        <note priority="1" from="description">API error dialog status code label</note>
+      </trans-unit>
+      <trans-unit id="7258563223298766851" datatype="html">
+        <source> Quiz unavailable </source>
+        <target> Quiz no disponible </target>
+        <note priority="1" from="description">Student quiz start fallback title</note>
+      </trans-unit>
+      <trans-unit id="4910483615627255520" datatype="html">
+        <source> We could not load this quiz right now. </source>
+        <target> No pudimos cargar este quiz en este momento. </target>
+        <note priority="1" from="description">Student quiz start fallback message</note>
+      </trans-unit>
+      <trans-unit id="3018649849742595725" datatype="html">
+        <source>Back to quizzes</source>
+        <target>Volver a quizzes</target>
+        <note priority="1" from="description">Student quiz start fallback action</note>
+      </trans-unit>
       <trans-unit id="8762257556328863715" datatype="html">
         <source>QuizArena illustration</source>
         <target>QuizArena ilustración</target>
@@ -56,6 +241,16 @@
         <source>Answered <x id="answered" equiv-text="answered"/> of <x id="total" equiv-text="total"/></source>
         <target>Respondidas <x id="answered" equiv-text="answered"/> de <x id="total" equiv-text="total"/></target>
         <note priority="1" from="description">Student exam answered progress label</note>
+      </trans-unit>
+      <trans-unit id="4480567030969725687" datatype="html">
+        <source> Exam unavailable </source>
+        <target> Examen no disponible </target>
+        <note priority="1" from="description">Student exam start fallback title</note>
+      </trans-unit>
+      <trans-unit id="4682451606089533576" datatype="html">
+        <source> We could not load this exam right now. </source>
+        <target> No pudimos cargar este examen en este momento. </target>
+        <note priority="1" from="description">Student exam start fallback message</note>
       </trans-unit>
       <trans-unit id="2989993227483411785" datatype="html">
         <source>Back to exams</source>
@@ -780,6 +975,11 @@
         <target>Crear Examen</target>
         <note priority="1" from="description">Teacher dashboard create exam button label</note>
       </trans-unit>
+      <trans-unit id="2137572389480772140" datatype="html">
+        <source>Class Sources</source>
+        <target>Fuentes de clase</target>
+        <note priority="1" from="description">Sidebar nav teacher class sources label</note>
+      </trans-unit>
       <trans-unit id="2587748736973980864" datatype="html">
         <source>Exam Bank</source>
         <target>Banco de Exámenes</target>
@@ -920,15 +1120,15 @@
         <target> Calificaciones</target>
         <note priority="1" from="description">Grade panel page heading</note>
       </trans-unit>
-      <trans-unit id="1167941620562826948" datatype="html">
-        <source> Select a exam </source>
+      <trans-unit id="7587660891560207554" datatype="html">
+        <source> Select an exam </source>
         <target> Seleccionar un examen</target>
-        <note priority="1" from="description">Grade panel exam selector label</note>
+        <note priority="1" from="description">Grade panel match selector label</note>
       </trans-unit>
-      <trans-unit id="1241418821961229942" datatype="html">
-        <source>Select a exam</source>
+      <trans-unit id="2589392812577576994" datatype="html">
+        <source>Select an exam</source>
         <target>Seleccionar un examen</target>
-        <note priority="1" from="description">Grade panel exam selector aria label</note>
+        <note priority="1" from="description">Grade panel match selector aria label</note>
       </trans-unit>
       <trans-unit id="3785306318642979309" datatype="html">
         <source>You don&apos;t have any grades.</source>

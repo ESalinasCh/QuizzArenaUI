@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, filter, map, shareReplay, switchMap } from 'rxjs';
+import { catchError, EMPTY, filter, map, shareReplay, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
@@ -36,12 +36,14 @@ export class StudentQuizResultsPage {
           ? this.#studentQuizService.getMatchAttemptResultSummary(attemptId)
           : EMPTY,
       ),
+      catchError(() => EMPTY),
     ),
   );
 
   readonly review = toSignal(
     this.#attemptId$.pipe(
       switchMap(attemptId => this.#studentQuizService.getMatchAttemptDetail(attemptId)),
+      catchError(() => EMPTY),
     ),
   );
 

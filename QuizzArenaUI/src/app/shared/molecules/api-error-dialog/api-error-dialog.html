@@ -1,0 +1,16 @@
+<div class="p-6 text-center">
+  <p class="whitespace-pre-line text-base font-medium text-light-text-secondary dark:text-dark-text-secondary">
+    {{ message() }}
+  </p>
+
+  @if (statusCode(); as status) {
+    <p class="mt-4 text-sm font-semibold text-danger dark:text-danger-text-dark">
+      <ng-container i18n="API error dialog status code label">Error code:</ng-container>
+      {{ status }}
+    </p>
+  }
+
+  <qz-button class="mt-6 block" size="large" [fullWidth]="true" (click)="close()">
+    {{ actionLabel() }}
+  </qz-button>
+</div>

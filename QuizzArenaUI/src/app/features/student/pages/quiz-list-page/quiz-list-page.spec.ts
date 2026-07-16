@@ -2,7 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth.service';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { StudentQuizListPage } from './quiz-list-page';
@@ -116,5 +116,20 @@ describe('StudentQuizListPage', () => {
 
     await fixture.componentInstance.goToQuizFromLink('simple-id');
     expect(navigateSpy).toHaveBeenCalledWith(['/student/quizzes', 'simple-id', 'start']);
+  });
+
+  it('should keep empty dashboard when dashboard request fails', () => {
+    mockStudentQuizService.getDashboard = vi.fn().mockReturnValue(
+      throwError(() => new Error('Dashboard failed')),
+    );
+    (mockAuthService.currentUser as unknown as ReturnType<typeof vi.fn>).mockReturnValue(null);
+
+    const fixture = TestBed.createComponent(StudentQuizListPage);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.dashboard()).toEqual({
+      availableQuizzes: [],
+      recentQuizzes: [],
+    });
   });
 });

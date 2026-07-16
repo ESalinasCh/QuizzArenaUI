@@ -1,7 +1,7 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { StudentGradeHistoryPage } from './grade-history-page';
 
@@ -95,5 +95,16 @@ describe('StudentGradeHistoryPage', () => {
       ['/student/quizzes', 'attempt-1', 'results'],
       { queryParams: { view: 'details' } },
     );
+  });
+
+  it('should keep an empty attempt list when grade history request fails', () => {
+    mockStudentQuizService.getGradeHistory = vi.fn().mockReturnValue(
+      throwError(() => new Error('Grade history failed')),
+    );
+
+    const fixture = TestBed.createComponent(StudentGradeHistoryPage);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.attempts()).toEqual([]);
   });
 });

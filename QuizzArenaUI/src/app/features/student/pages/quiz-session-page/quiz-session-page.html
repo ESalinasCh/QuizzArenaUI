@@ -40,6 +40,22 @@
           <ng-container i18n="Student quiz start button">Start</ng-container>
         </button>
       </div>
+    } @else if (quizLoadFailed()) {
+      <div class="flex flex-1 flex-col items-center justify-center gap-5 text-center">
+        <h1 class="text-3xl font-extrabold text-light-text dark:text-white" i18n="Student quiz start fallback title">
+          Quiz unavailable
+        </h1>
+        <p class="max-w-xs text-base font-medium text-light-text-secondary dark:text-dark-text-secondary" i18n="Student quiz start fallback message">
+          We could not load this quiz right now.
+        </p>
+        <button
+          type="button"
+          class="mt-2 flex h-12 w-full max-w-xs items-center justify-center rounded-xl bg-primary px-5 text-base font-bold text-white shadow-button transition hover:bg-primary-hover active:scale-[0.98]"
+          (click)="goToQuizzes()"
+        >
+          <ng-container i18n="Student quiz start fallback action">Back to quizzes</ng-container>
+        </button>
+      </div>
     }
   </div>
 </section>

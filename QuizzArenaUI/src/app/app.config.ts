@@ -14,6 +14,7 @@ import {
 import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { routes } from './app.routes';
+import { apiErrorInterceptor } from './core/interceptors/api-error.interceptor';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
 import { APP_CONFIG, AppConfig } from './core/config/app-config';
@@ -43,7 +44,7 @@ export function createAppConfig(config: AppConfig): ApplicationConfig {
         withNavigationErrorHandler(handleNavigationError),
         withRouterConfig({ resolveNavigationPromiseOnError: true }),
       ),
-      provideHttpClient(withXhr(), withInterceptors([authInterceptor])),
+      provideHttpClient(withXhr(), withInterceptors([authInterceptor, apiErrorInterceptor])),
       provideOAuthClient(),
       provideAppInitializer(() => {
         const oAuthService = inject(OAuthService);

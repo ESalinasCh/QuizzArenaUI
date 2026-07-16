@@ -1,7 +1,7 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { StudentQuizQuestionPage } from './quiz-question-page';
 
@@ -100,6 +100,23 @@ describe('StudentQuizQuestionPage', () => {
         expect.objectContaining({ questionId: 'q2', selectedOptionId: 'q2-a' }),
       ],
     });
+  });
+
+  it('should stop submitting when submit fails', () => {
+    mockStudentQuizService.submitMatchAttempt = vi.fn().mockReturnValue(
+      throwError(() => new Error('Submit failed')),
+    );
+
+    const fixture = TestBed.createComponent(StudentQuizQuestionPage);
+    fixture.detectChanges();
+
+    fixture.componentInstance.selectOption('q1-a');
+    fixture.componentInstance.confirmAnswer();
+
+    fixture.componentInstance.selectOption('q2-a');
+    fixture.componentInstance.confirmAnswer();
+
+    expect(fixture.componentInstance.isSubmitting()).toBe(false);
   });
 
   it('should not confirm if no option selected', () => {

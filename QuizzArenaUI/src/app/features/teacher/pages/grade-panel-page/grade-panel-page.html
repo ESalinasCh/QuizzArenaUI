@@ -7,15 +7,15 @@
     class="flex flex-col gap-3 rounded-2xl border border-light-border-strong bg-light-surface p-4 shadow-sm dark:border-dark-border-strong dark:bg-dark-surface-alt">
     <label for="match-select" i18n="Grade panel match selector label"
       class="text-sm font-semibold text-light-text dark:text-dark-text">
-      Select a exam
+      Select an exam
     </label>
 
     <div class="relative">
       <select id="match-select" [value]="selectedMatchId()" (change)="onMatchChange($any($event.target).value)"
         class="h-12 w-full rounded-xl border border-light-border-strong bg-light-surface px-4 pr-10 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
-        i18n-aria-label="Grade panel match selector aria label" aria-label="Select a exam">
+        i18n-aria-label="Grade panel match selector aria label" aria-label="Select an exam">
         <option value="" disabled selected hidden>
-          Select a exam
+          Select an exam
         </option>
         @for (match of matches(); track match.id) {
         <option [value]="match.id">{{ match.title }}</option>
