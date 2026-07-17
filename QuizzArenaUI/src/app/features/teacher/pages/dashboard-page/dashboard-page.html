@@ -40,6 +40,13 @@
     </div>
   </div>
 
+  <qz-stats-card
+    [quizCount]="dashboard().quizCount"
+    [publishedCount]="dashboard().publishedCount"
+    [quizzesLabel]="quizzesLabel"
+    [publishedLabel]="publishedLabel"
+  />
+
   <!-- Main Grid Layout (2 Columns on Desktop) -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     
@@ -120,12 +127,6 @@
     </div>
 
     <div class="flex flex-col gap-6">
-      <qz-stats-card
-        [quizCount]="dashboard().quizCount"
-        [publishedCount]="dashboard().publishedCount"
-        [quizzesLabel]="quizzesLabel"
-        [publishedLabel]="publishedLabel"
-      />
 
       <!-- Recent Content list -->
       <div class="clean-card p-6 flex flex-col gap-4">
