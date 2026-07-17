@@ -56,7 +56,7 @@ describe('Button', () => {
     fixture.componentRef.setInput('size', 'large');
     fixture.detectChanges();
     const buttonEl: HTMLButtonElement = fixture.debugElement.query(By.css('button')).nativeElement;
-    expect(buttonEl.classList.contains('h-12')).toBe(true);
+    expect(buttonEl.classList.contains('min-h-[48px]')).toBe(true);
   });
 
   it('should apply variant classes correctly', () => {
