@@ -1,0 +1,11 @@
+<div class="clean-card col-span-full p-10 flex flex-col items-center justify-center text-center">
+  <div class="w-12 h-12 rounded-xl bg-light-surface-alt dark:bg-dark-surface-alt flex items-center justify-center text-primary mb-3">
+    <qz-icon [name]="icon()" class="w-6 h-6" />
+  </div>
+  <h3 class="text-sm font-bold text-light-text dark:text-dark-text">
+    {{ title() }}
+  </h3>
+  <p class="text-xs text-light-text-secondary dark:text-dark-text-secondary mt-1 max-w-xs">
+    {{ description() }}
+  </p>
+</div>

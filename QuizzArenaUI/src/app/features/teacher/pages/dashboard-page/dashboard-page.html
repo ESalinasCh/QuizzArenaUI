@@ -1,6 +1,5 @@
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 pb-12 select-none">
   
-  <!-- Header: Welcome Banner & Actions -->
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-light-border dark:border-dark-border pb-6 flex-wrap">
     <div>
       <h1 i18n="Teacher dashboard welcome heading"
@@ -12,7 +11,6 @@
       </p>
     </div>
     
-    <!-- Action buttons: Touch targets optimized for mobile, elegant on desktop -->
     <div class="flex flex-col sm:flex-row items-stretch gap-3 w-full lg:w-auto">
       <qz-button 
         size="large" 
@@ -40,7 +38,6 @@
     </div>
   </div>
 
-  <!-- Main Grid Layout (2 Columns on Desktop) -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     
     <qz-stats-card
@@ -51,7 +48,6 @@
       class="lg:col-start-3 lg:row-start-1 lg:col-span-1"
     />
 
-    <!-- Left Column: Exams and Content (2/3 width) -->
     <div class="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:row-span-2 flex flex-col gap-8">
       
       @if (draftExams().length > 0) {
@@ -116,21 +112,17 @@
       }
 
       @if (draftExams().length === 0 && publishedExams().length === 0) {
-        <div class="clean-card p-10 flex flex-col items-center justify-center text-center">
-          <div class="w-12 h-12 rounded-xl bg-light-surface-alt dark:bg-dark-surface-alt flex items-center justify-center text-light-text-secondary dark:text-dark-text-secondary mb-3">
-            <qz-icon name="quiz" class="w-6 h-6" />
-          </div>
-          <h3 class="text-sm font-bold text-light-text dark:text-dark-text">No exams created yet</h3>
-          <p class="text-xs text-light-text-secondary dark:text-dark-text-secondary mt-1 max-w-xs">Upload contents or use the quick creator tool to get started.</p>
-        </div>
+        <qz-empty-state 
+          [icon]="'quiz'" 
+          title="No exams created yet" 
+          description="Upload contents or use the quick creator tool to get started." 
+        />
       }
 
     </div>
 
-    <!-- Right Column: Recent Activity (starts below stats card on desktop) -->
     <div class="lg:col-span-1 lg:col-start-3 lg:row-start-2 flex flex-col gap-6">
 
-      <!-- Recent Content list -->
       <div class="clean-card p-6 flex flex-col gap-4">
         <h2 i18n="Teacher dashboard recent content heading" class="text-sm font-bold text-light-text dark:text-dark-text flex items-center gap-2">
           <qz-icon name="clock" class="w-4 h-4 text-primary" />

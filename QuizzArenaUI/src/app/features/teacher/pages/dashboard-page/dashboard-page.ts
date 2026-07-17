@@ -15,11 +15,12 @@ import { ExamFormFilter } from '../../models/exam-form-filter';
 // import { LinkText } from '../../../../shared/atoms/link-text/link-text';
 import { ModalService } from '../../../../core/services/modal.service';
 import { form } from '@angular/forms/signals';
+import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
 
 
 @Component({
   selector: 'qz-teacher-dashboard-page',
-  imports: [ContentItem, Button, Icon, StatsCard],
+  imports: [ContentItem, Button, Icon, StatsCard, EmptyState],
   templateUrl: './dashboard-page.html',
 })
 export class TeacherDashboardPage {

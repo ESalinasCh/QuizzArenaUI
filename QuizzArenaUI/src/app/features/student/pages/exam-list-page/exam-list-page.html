@@ -1,6 +1,5 @@
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 pb-12 select-none">
   
-  <!-- Header -->
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-light-border dark:border-dark-border pb-5">
     <div>
       <h1 i18n="Student exams" class="text-2xl font-black text-light-text dark:text-dark-text sm:text-3xl tracking-tight">
@@ -10,13 +9,10 @@
     </div>
   </div>
 
-  <!-- Bento Box Layout Split-grid -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     
-    <!-- Left column: Main Exams list (2/3 width) -->
     <div class="lg:col-span-2 flex flex-col gap-6">
       
-      <!-- Filter and section title -->
       <div class="clean-card p-4 flex flex-col sm:flex-row items-center justify-between gap-4 bg-light-surface-alt dark:bg-dark-surface-alt">
         <qz-section-title [title]="availableExamsTitle" icon="sparkles" />
         <div class="w-full sm:w-auto">
@@ -28,35 +24,25 @@
         </div>
       </div>
 
-      <!-- Exam Cards Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         @for (quiz of exams.value() ?? []; track quiz.id) {
           <div class="clean-card overflow-hidden hover:scale-[1.02] duration-300 transition-all">
             <qz-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
           </div>
         } @empty {
-          <div class="clean-card col-span-full p-12 flex flex-col items-center justify-center text-center">
-            <div class="w-12 h-12 rounded-xl bg-light-surface-alt dark:bg-dark-surface-alt flex items-center justify-center text-primary mb-3">
-              <qz-icon name="quiz" class="w-6 h-6" />
-            </div>
-            <h3 class="text-sm font-bold text-light-text dark:text-dark-text">
-              {{ noExamsMessage }}
-            </h3>
-            <p class="text-xs text-light-text-secondary dark:text-dark-text-secondary mt-1 max-w-xs">There are no evaluations matching the selected category right now.</p>
-          </div>
+          <qz-empty-state 
+            [icon]="'quiz'" 
+            [title]="noExamsMessage" 
+            description="There are no evaluations matching the selected category right now." 
+          />
         }
       </div>
 
     </div>
 
-    <!-- Right column: Rules and helper (1/3 width) -->
     <div class="flex flex-col gap-6">
-      <div class="clean-card p-6 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/10 dark:to-purple-950/10 border border-indigo-100/30 dark:border-indigo-950/20">
-        <h3 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 flex items-center gap-1.5">
-          <qz-icon name="document" class="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-          Evaluation Guidelines
-        </h3>
-        <ul class="text-xs text-indigo-950/70 dark:text-indigo-200/70 mt-3 space-y-2.5">
+      <qz-info-card [icon]="'document'" title="Evaluation Guidelines">
+        <ul class="space-y-2.5">
           <li class="flex items-start gap-2">
             <span class="text-indigo-500">•</span>
             <span>Exams have a set timeframe and limit. Make sure your internet connection is stable.</span>
@@ -70,7 +56,7 @@
             <span>Once submitted, you cannot change your answers.</span>
           </li>
         </ul>
-      </div>
+      </qz-info-card>
     </div>
 
   </div>

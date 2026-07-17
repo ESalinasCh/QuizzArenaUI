@@ -9,10 +9,12 @@ import { QuizAccessForm } from '../../components/quiz-access-form/quiz-access-fo
 import { RecentQuizCard } from '../../components/recent-quiz-card/recent-quiz-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { Icon } from '../../../../shared/atoms/icon/icon';
+import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
+import { InfoCard } from '../../../../shared/molecules/info-card/info-card';
 
 @Component({
   selector: 'qz-student-quiz-list-page',
-  imports: [AvailableQuizCard, QuizAccessForm, RecentQuizCard, SectionTitle, Icon],
+  imports: [AvailableQuizCard, QuizAccessForm, RecentQuizCard, SectionTitle, Icon, EmptyState, InfoCard],
   templateUrl: './quiz-list-page.html',
 })
 export class StudentQuizListPage {
