@@ -33,7 +33,7 @@
           <qz-empty-state 
             [icon]="'quiz'" 
             [title]="noExamsMessage" 
-            description="There are no evaluations matching the selected category right now." 
+            [description]="noExamsMatchingMessage" 
           />
         }
       </div>
@@ -41,19 +41,19 @@
     </div>
 
     <div class="flex flex-col gap-6">
-      <qz-info-card [icon]="'document'" title="Evaluation Guidelines">
+      <qz-info-card [icon]="'document'" [title]="evaluationGuidelinesTitle">
         <ul class="space-y-2.5">
           <li class="flex items-start gap-2">
             <span class="text-indigo-500">•</span>
-            <span>Exams have a set timeframe and limit. Make sure your internet connection is stable.</span>
+            <span i18n="Student evaluation guideline 1">Exams have a set timeframe and limit. Make sure your internet connection is stable.</span>
           </li>
           <li class="flex items-start gap-2">
             <span class="text-indigo-500">•</span>
-            <span>Answers are saved automatically as you progress.</span>
+            <span i18n="Student evaluation guideline 2">Answers are saved automatically as you progress.</span>
           </li>
           <li class="flex items-start gap-2">
             <span class="text-indigo-500">•</span>
-            <span>Once submitted, you cannot change your answers.</span>
+            <span i18n="Student evaluation guideline 3">Once submitted, you cannot change your answers.</span>
           </li>
         </ul>
       </qz-info-card>

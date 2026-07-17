@@ -25,6 +25,11 @@ export class StudentQuizListPage {
   readonly availableQuizzesTitle = $localize`:Student dashboard available quizzes section title:Available Quizzes`;
   readonly recentQuizzesTitle = $localize`:Student dashboard recent quizzes section title:Recent Quizzes`;
   readonly studentFallbackName = $localize`:Student fallback display name:Student`;
+  readonly noQuizzesAvailableTitle = $localize`:Student no quizzes available title:No quizzes available`;
+  readonly noQuizzesAvailableDescription = $localize`:Student no quizzes available description:Ask your teacher to share a quiz or upload class materials.`;
+  readonly noHistoryTitle = $localize`:Student no history title:No history`;
+  readonly noHistoryDescription = $localize`:Student no history description:Complete your first quiz to see your history here.`;
+  readonly proTipTitle = $localize`:Student pro tip title:Pro Tip`;
 
   readonly dashboard = toSignal(
     this.#studentQuizService.getDashboard().pipe(catchError(() => EMPTY)),

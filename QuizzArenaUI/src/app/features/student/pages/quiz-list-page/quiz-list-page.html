@@ -24,8 +24,8 @@
           } @empty {
             <qz-empty-state 
               [icon]="'sparkles'" 
-              title="No quizzes available" 
-              description="Ask your teacher to share a quiz or upload class materials." 
+              [title]="noQuizzesAvailableTitle" 
+              [description]="noQuizzesAvailableDescription" 
             />
           }
         </div>
@@ -42,8 +42,8 @@
           } @empty {
             <qz-empty-state 
               [icon]="'clock'" 
-              title="No history" 
-              description="Complete your first quiz to see your history here." 
+              [title]="noHistoryTitle" 
+              [description]="noHistoryDescription" 
             />
           }
         </div>
@@ -56,13 +56,13 @@
       <div class="clean-card p-6 flex flex-col gap-4">
         <h2 class="text-base font-bold text-light-text dark:text-dark-text flex items-center gap-2">
           <qz-icon name="link" class="w-4 h-4 text-primary" />
-          Enter Code or Link
+          <span i18n="Student link access panel title">Enter Code or Link</span>
         </h2>
         <qz-quiz-access-form (submitQuizLink)="goToQuizFromLink($event)" />
       </div>
 
-      <qz-info-card [icon]="'sparkles'" title="Pro Tip">
-        <p class="leading-relaxed">
+      <qz-info-card [icon]="'sparkles'" [title]="proTipTitle">
+        <p i18n="Student pro tip body" class="leading-relaxed">
           Consistent reviews help double retention rates. Check your previous attempts to review incorrect answers and learn faster.
         </p>
       </qz-info-card>

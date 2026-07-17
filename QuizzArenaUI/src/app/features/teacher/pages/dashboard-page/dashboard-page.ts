@@ -35,6 +35,8 @@ export class TeacherDashboardPage {
   protected readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
   protected readonly createExamAriaLabel = $localize`:Create exam button aria label:Create exam`;
   protected readonly publishExamAriaLabel = $localize`:Dashboard publish exam button aria label:Publish exam`;
+  protected readonly noExamsCreatedTitle = $localize`:Teacher no exams created title:No exams created yet`;
+  protected readonly noExamsCreatedDescription = $localize`:Teacher no exams created description:Upload contents or use the quick creator tool to get started.`;
   protected readonly dashboard = toSignal(this.#dashboardService.getDashboard(), {
     initialValue: { quizCount: 0, publishedCount: 0, recentContent: [] },
   });

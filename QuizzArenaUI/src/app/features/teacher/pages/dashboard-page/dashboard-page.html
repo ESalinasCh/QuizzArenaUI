@@ -114,8 +114,8 @@
       @if (draftExams().length === 0 && publishedExams().length === 0) {
         <qz-empty-state 
           [icon]="'quiz'" 
-          title="No exams created yet" 
-          description="Upload contents or use the quick creator tool to get started." 
+          [title]="noExamsCreatedTitle" 
+          [description]="noExamsCreatedDescription" 
         />
       }
 

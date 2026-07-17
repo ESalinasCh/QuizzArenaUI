@@ -39,6 +39,8 @@ export class StudentExamListPage {
   readonly recentExamsTitle = $localize`:Student recent exams section title:Recent Exams`;
   readonly studentFallbackName = $localize`:Student fallback display name:Student`;
   readonly noExamsMessage = $localize`:Student no exams message:You don't have any exams.`;
+  readonly noExamsMatchingMessage = $localize`:Student no exams matching category message:There are no evaluations matching the selected category right now.`;
+  readonly evaluationGuidelinesTitle = $localize`:Student evaluation guidelines title:Evaluation Guidelines`;
 
   readonly exams = rxResource({
     params: () => this.filters(),
