@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
 import { TeacherDashboardService } from '../../services/teacher-dashboard.service';
 import { TeacherExamService } from '../../services/teacher-exam.service';
-import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
+import { StatsCard } from '../../../../shared/organisms/stats-card/stats-card';
 import { ContentItem } from '../../../../shared/molecules/content-item/content-item';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -19,7 +19,7 @@ import { form } from '@angular/forms/signals';
 
 @Component({
   selector: 'qz-teacher-dashboard-page',
-  imports: [StatCard, ContentItem, Button, Icon],
+  imports: [ContentItem, Button, Icon, StatsCard],
   templateUrl: './dashboard-page.html',
 })
 export class TeacherDashboardPage {

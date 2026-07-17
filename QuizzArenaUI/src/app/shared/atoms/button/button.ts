@@ -31,34 +31,34 @@ export class Button {
       this.#baseClasses,
       this.#sizeClasses[this.size()],
       this.#variantClasses[this.variant()],
-      this.fullWidth() ? 'w-full' : '',
+      this.fullWidth() ? 'w-full' : 'w-full sm:w-auto',
     ]
       .filter(Boolean)
       .join(' '),
   );
 
   readonly #baseClasses =
-    'inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 ' +
+    'inline-flex items-center justify-center gap-2 font-bold transition-all duration-300 ' +
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ' +
     'focus-visible:ring-offset-light-bg dark:focus-visible:ring-offset-dark-bg ' +
     'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-60 ' +
-    'active:scale-[0.98]';
+    'hover:scale-[1.01] active:scale-[0.98]';
 
   readonly #sizeClasses: Record<ButtonSize, string> = {
-    large: 'h-12 w-[354px] max-w-full rounded-button px-6 text-base',
-    medium: 'h-11 w-[320px] max-w-full rounded-[10px] px-5 text-sm',
-    small: 'h-10 w-[160px] max-w-full rounded-lg px-4 text-sm',
+    large: 'min-h-[48px] sm:min-h-[44px] rounded-xl px-6 text-base tracking-wide',
+    medium: 'min-h-[44px] sm:min-h-[40px] rounded-lg px-5 text-sm tracking-wide',
+    small: 'min-h-[38px] sm:min-h-[34px] rounded-md px-4 text-xs tracking-wide',
     icon: 'h-10 w-10 rounded-button text-lg',
     action: 'h-10 w-[94px] rounded-[10px] px-3 text-sm',
   };
 
   readonly #variantClasses: Record<ButtonVariant, string> = {
     primary:
-      'bg-primary text-white shadow-button hover:bg-primary-hover hover:shadow-card-hover',
+      'bg-primary text-white shadow-md shadow-indigo-600/10 hover:bg-primary-hover hover:shadow-lg hover:shadow-indigo-600/20',
 
     secondary:
-      'border border-light-border bg-light-surface-alt text-light-text hover:border-primary hover:bg-primary-light hover:text-primary ' +
-      'dark:border-dark-border dark:bg-dark-surface-alt dark:text-dark-text dark:hover:border-primary dark:hover:bg-dark-border dark:hover:text-white',
+      'border border-light-border bg-light-surface text-light-text hover:border-indigo-200 hover:bg-indigo-50/20 ' +
+      'dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-indigo-900 dark:hover:bg-indigo-950/20',
 
     success:
       'bg-success-bg-light text-success-text-light hover:bg-success hover:text-white ' +

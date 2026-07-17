@@ -1,27 +1,88 @@
-<section class="mx-auto flex w-full max-w-180 flex-col gap-6 pb-6">
-  <h1 i18n="Student dashboard welcome heading" class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
-    Welcome, {{ displayName() }} &#128075;
-  </h1>
-
-  <qz-quiz-access-form (submitQuizLink)="goToQuizFromLink($event)" />
-
-  <div class="flex flex-col gap-4">
-    <qz-section-title [title]="availableQuizzesTitle" icon="sparkles" />
-
-    <div class="flex flex-col gap-4">
-      @for (quiz of dashboard().availableQuizzes; track quiz.id) {
-        <qz-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
-      }
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 pb-12 select-none">
+  
+  <!-- Header with welcome msg -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-light-border dark:border-dark-border pb-5">
+    <div>
+      <h1 i18n="Student dashboard welcome heading" class="text-2xl font-black text-light-text dark:text-dark-text sm:text-3xl tracking-tight">
+        Welcome back, {{ displayName() }} 👋
+      </h1>
+      <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary mt-1">Ready to test your knowledge? Choose or join a session below.</p>
     </div>
   </div>
 
-  <div class="flex flex-col gap-4">
-    <qz-section-title [title]="recentQuizzesTitle" icon="clock" />
+  <!-- Bento Box Layout Split-grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- Left column: Main Quizzes grid (2/3 width) -->
+    <div class="lg:col-span-2 flex flex-col gap-8">
+      
+      <!-- Available Quizzes Section -->
+      <div class="flex flex-col gap-4">
+        <qz-section-title [title]="availableQuizzesTitle" icon="sparkles" />
 
-    <div class="flex flex-col gap-4">
-      @for (quiz of dashboard().recentQuizzes; track quiz.id) {
-        <qz-recent-quiz-card [quiz]="quiz" (viewResults)="viewResults($event)" />
-      }
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          @for (quiz of dashboard().availableQuizzes; track quiz.id) {
+            <div class="clean-card overflow-hidden hover:scale-[1.02] duration-300 transition-all">
+              <qz-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
+            </div>
+          } @empty {
+            <div class="clean-card col-span-full p-10 flex flex-col items-center justify-center text-center">
+              <div class="w-12 h-12 rounded-xl bg-light-surface-alt dark:bg-dark-surface-alt flex items-center justify-center text-primary mb-3">
+                <qz-icon name="sparkles" class="w-6 h-6" />
+              </div>
+              <h3 class="text-sm font-bold text-light-text dark:text-dark-text">No quizzes available</h3>
+              <p class="text-xs text-light-text-secondary dark:text-dark-text-secondary mt-1 max-w-xs">Ask your teacher to share a quiz or upload class materials.</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Recent Quizzes Section -->
+      <div class="flex flex-col gap-4">
+        <qz-section-title [title]="recentQuizzesTitle" icon="clock" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          @for (quiz of dashboard().recentQuizzes; track quiz.id) {
+            <div class="clean-card overflow-hidden hover:scale-[1.02] duration-300 transition-all">
+              <qz-recent-quiz-card [quiz]="quiz" (viewResults)="viewResults($event)" />
+            </div>
+          } @empty {
+            <div class="clean-card col-span-full p-8 flex flex-col items-center justify-center text-center">
+              <div class="w-12 h-12 rounded-xl bg-light-surface-alt dark:bg-dark-surface-alt flex items-center justify-center text-light-text-secondary dark:text-dark-text-secondary mb-3">
+                <qz-icon name="clock" class="w-6 h-6" />
+              </div>
+              <h3 class="text-sm font-bold text-light-text dark:text-dark-text">No history</h3>
+              <p class="text-xs text-light-text-secondary dark:text-dark-text-secondary mt-1">Complete your first quiz to see your history here.</p>
+            </div>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right column: Access quiz by link / Quick Stats (1/3 width) -->
+    <div class="flex flex-col gap-6">
+      
+      <!-- Link Access Panel -->
+      <div class="clean-card p-6 flex flex-col gap-4">
+        <h2 class="text-base font-bold text-light-text dark:text-dark-text flex items-center gap-2">
+          <qz-icon name="link" class="w-4 h-4 text-primary" />
+          Enter Code or Link
+        </h2>
+        <qz-quiz-access-form (submitQuizLink)="goToQuizFromLink($event)" />
+      </div>
+
+      <!-- Motivation / Helper Panel -->
+      <div class="clean-card p-6 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/10 dark:to-purple-950/10 border border-indigo-100/30 dark:border-indigo-950/20">
+        <h3 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 flex items-center gap-1.5">
+          <qz-icon name="sparkles" class="w-4 h-4 text-indigo-600 dark:text-indigo-450" />
+          Pro Tip
+        </h3>
+        <p class="text-xs text-indigo-950/70 dark:text-indigo-200/70 mt-2 leading-relaxed">
+          Consistent reviews help double retention rates. Check your previous attempts to review incorrect answers and learn faster.
+        </p>
+      </div>
+
     </div>
   </div>
 </section>

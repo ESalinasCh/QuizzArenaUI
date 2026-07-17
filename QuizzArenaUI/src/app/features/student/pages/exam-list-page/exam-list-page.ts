@@ -8,12 +8,12 @@ import { MatchFilters, MatchStatus } from '../../api/student-quiz.contract';
 import { FilterTabs } from '../../components/filter-tabs/filter-tabs';
 import { catchError, of } from 'rxjs';
 import { FilterStatusOption } from '../../models/student-quiz.model';
+import { Icon } from '../../../../shared/atoms/icon/icon';
 
 @Component({
   selector: 'qz-student-exam-list-page',
-  imports: [AvailableQuizCard, SectionTitle, FilterTabs],
+  imports: [AvailableQuizCard, SectionTitle, FilterTabs, Icon],
   templateUrl: './exam-list-page.html',
-
 })
 export class StudentExamListPage {
   readonly #router = inject(Router);
