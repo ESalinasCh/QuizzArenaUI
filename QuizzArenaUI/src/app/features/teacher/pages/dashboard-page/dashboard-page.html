@@ -40,18 +40,19 @@
     </div>
   </div>
 
-  <qz-stats-card
-    [quizCount]="dashboard().quizCount"
-    [publishedCount]="dashboard().publishedCount"
-    [quizzesLabel]="quizzesLabel"
-    [publishedLabel]="publishedLabel"
-  />
-
   <!-- Main Grid Layout (2 Columns on Desktop) -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     
+    <qz-stats-card
+      [quizCount]="dashboard().quizCount"
+      [publishedCount]="dashboard().publishedCount"
+      [quizzesLabel]="quizzesLabel"
+      [publishedLabel]="publishedLabel"
+      class="lg:col-start-3 lg:row-start-1 lg:col-span-1"
+    />
+
     <!-- Left Column: Exams and Content (2/3 width) -->
-    <div class="lg:col-span-2 flex flex-col gap-8">
+    <div class="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:row-span-2 flex flex-col gap-8">
       
       @if (draftExams().length > 0) {
         <div class="clean-card p-6 flex flex-col gap-4">
@@ -126,7 +127,8 @@
 
     </div>
 
-    <div class="flex flex-col gap-6">
+    <!-- Right Column: Recent Activity (starts below stats card on desktop) -->
+    <div class="lg:col-span-1 lg:col-start-3 lg:row-start-2 flex flex-col gap-6">
 
       <!-- Recent Content list -->
       <div class="clean-card p-6 flex flex-col gap-4">
