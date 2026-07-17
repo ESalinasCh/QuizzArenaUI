@@ -1145,6 +1145,91 @@
         <target> Tu respuesta: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/> </target>
         <note priority="1" from="description">Quiz results your answer label</note>
       </trans-unit>
+      <trans-unit id="1617137158704146740" datatype="html">
+        <source> Create, publish and evaluate your students&apos; performance instantly. </source>
+        <target> Crea, publica y evalúa el rendimiento de tus estudiantes al instante. </target>
+        <note priority="1" from="description">Login mobile subtitle</note>
+      </trans-unit>
+      <trans-unit id="5772900291399515221" datatype="html">
+        <source>Exams have a set timeframe and limit. Make sure your internet connection is stable.</source>
+        <target>Los exámenes tienen un plazo de tiempo y límite de intentos establecido. Asegúrate de tener una conexión estable a internet.</target>
+        <note priority="1" from="description">Student evaluation guideline 1</note>
+      </trans-unit>
+      <trans-unit id="443596894489368652" datatype="html">
+        <source>Answers are saved automatically as you progress.</source>
+        <target>Las respuestas se guardan automáticamente a medida que avanzas.</target>
+        <note priority="1" from="description">Student evaluation guideline 2</note>
+      </trans-unit>
+      <trans-unit id="9217478403094514417" datatype="html">
+        <source>Once submitted, you cannot change your answers.</source>
+        <target>Una vez enviado, no podrás cambiar tus respuestas.</target>
+        <note priority="1" from="description">Student evaluation guideline 3</note>
+      </trans-unit>
+      <trans-unit id="8899821278756395056" datatype="html">
+        <source>There are no evaluations matching the selected category right now.</source>
+        <target>No hay evaluaciones que coincidan con la categoría seleccionada en este momento.</target>
+        <note priority="1" from="description">Student no exams matching category message</note>
+      </trans-unit>
+      <trans-unit id="8546130222135264275" datatype="html">
+        <source>Evaluation Guidelines</source>
+        <target>Directrices de Evaluación</target>
+        <note priority="1" from="description">Student evaluation guidelines title</note>
+      </trans-unit>
+      <trans-unit id="9201298413923751402" datatype="html">
+        <source>No quizzes available</source>
+        <target>No hay cuestionarios disponibles</target>
+        <note priority="1" from="description">Student no quizzes available title</note>
+      </trans-unit>
+      <trans-unit id="2340385785847145227" datatype="html">
+        <source>Ask your teacher to share a quiz or upload class materials.</source>
+        <target>Pídele a tu profesor que comparta un cuestionario o suba material de clase.</target>
+        <note priority="1" from="description">Student no quizzes available description</note>
+      </trans-unit>
+      <trans-unit id="2673780555623604676" datatype="html">
+        <source>No history</source>
+        <target>Sin historial</target>
+        <note priority="1" from="description">Student no history title</note>
+      </trans-unit>
+      <trans-unit id="7901851269022897995" datatype="html">
+        <source>Complete your first quiz to see your history here.</source>
+        <target>Completa tu primer cuestionario para ver tu historial aquí.</target>
+        <note priority="1" from="description">Student no history description</note>
+      </trans-unit>
+      <trans-unit id="8295881548956175680" datatype="html">
+        <source>Pro Tip</source>
+        <target>Consejo Profesional</target>
+        <note priority="1" from="description">Student pro tip title</note>
+      </trans-unit>
+      <trans-unit id="5615144960373383664" datatype="html">
+        <source>Enter Code or Link</source>
+        <target>Ingresar código o enlace</target>
+        <note priority="1" from="description">Student link access panel title</note>
+      </trans-unit>
+      <trans-unit id="4112003894380000412" datatype="html">
+        <source> Consistent reviews help double retention rates. Check your previous attempts to review incorrect answers and learn faster. </source>
+        <target> Repasar de forma constante ayuda a duplicar la retención. Revisa tus intentos anteriores para repasar las respuestas incorrectas y aprender más rápido. </target>
+        <note priority="1" from="description">Student pro tip body</note>
+      </trans-unit>
+      <trans-unit id="8337446925210598541" datatype="html">
+        <source>No exams created yet</source>
+        <target>Aún no se han creado exámenes</target>
+        <note priority="1" from="description">Teacher no exams created title</note>
+      </trans-unit>
+      <trans-unit id="3102045255551864772" datatype="html">
+        <source>Upload contents or use the quick creator tool to get started.</source>
+        <target>Sube contenidos o usa la herramienta de creación rápida para comenzar.</target>
+        <note priority="1" from="description">Teacher no exams created description</note>
+      </trans-unit>
+      <trans-unit id="4357809237592017007" datatype="html">
+        <source><x id="START_TAG_QZ_ICON" ctype="x-qz_icon" equiv-text="&lt;qz-icon name=&quot;clock&quot; class=&quot;w-4 h-4 text-primary&quot; /&gt;"/><x id="CLOSE_TAG_QZ_ICON" ctype="x-qz_icon" equiv-text="&lt;qz-icon name=&quot;clock&quot; class=&quot;w-4 h-4 text-primary&quot; /&gt;"/> Recent Activity </source>
+        <target><x id="START_TAG_QZ_ICON" ctype="x-qz_icon" equiv-text="&lt;qz-icon name=&quot;clock&quot; class=&quot;w-4 h-4 text-primary&quot; /&gt;"/><x id="CLOSE_TAG_QZ_ICON" ctype="x-qz_icon" equiv-text="&lt;qz-icon name=&quot;clock&quot; class=&quot;w-4 h-4 text-primary&quot; /&gt;"/> Actividad Reciente </target>
+        <note priority="1" from="description">Teacher dashboard recent content heading</note>
+      </trans-unit>
+      <trans-unit id="2453142225616430507" datatype="html">
+        <source> Active </source>
+        <target> Activo </target>
+        <note priority="1" from="description">Teacher dashboard published badge</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
