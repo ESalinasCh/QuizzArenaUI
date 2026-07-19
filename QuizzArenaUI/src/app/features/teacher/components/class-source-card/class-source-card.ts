@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { Button } from '../../../../shared/atoms/button/button';
 import { TextSpan } from '../../../../shared/atoms/text-span/text-span';
-import { ClassSourceItem } from '../../services/class-sources.service';
+import { TeacherClassSource } from '../../models/class-source.model';
 
 @Component({
   selector: 'qz-class-source-card',
@@ -13,5 +13,5 @@ import { ClassSourceItem } from '../../services/class-sources.service';
   imports: [Icon, Button, TextSpan, RouterLink, DatePipe],
 })
 export class TeacherClassSourceCard {
-  readonly source = input.required<ClassSourceItem>();
+  readonly source = input.required<TeacherClassSource>();
 }

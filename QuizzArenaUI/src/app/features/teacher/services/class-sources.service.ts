@@ -1,26 +1,19 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
+import { TeacherClassSource } from '../models/class-source.model';
 
-export interface ClassSourceItem {
-  id: string;
-  name: string;
-  status: string;
-  sourceType: string;
-  createdAt: string;
-  processingJobIds: string[];
-}
 
-const MOCK_CLASS_SOURCES: ClassSourceItem[] = [
+const MOCK_CLASS_SOURCES: TeacherClassSource[] = [
   {
     id: 'classsource-uuid-1',
     name: 'Clase Project I - Semana 1',
-    status: 'Processed',
+    status: 'Completed',
     sourceType: 'Video',
     createdAt: '2026-06-01T10:00:00Z',
-    processingJobIds: [
+    processingJobsIds: [
       'aaaaaaaa-0000-0000-0000-000000000001',
       'aaaaaaaa-0000-0000-0000-000000000001',
       'aaaaaaaa-0000-0000-0000-000000000001'
@@ -29,10 +22,10 @@ const MOCK_CLASS_SOURCES: ClassSourceItem[] = [
   {
     id: 'classsource-uuid-2',
     name: 'Clase Project I - Semana 2',
-    status: 'Processed',
+    status: 'Processing',
     sourceType: 'Document',
     createdAt: '2026-06-08T10:00:00Z',
-    processingJobIds: [
+    processingJobsIds: [
       'aaaaaaaa-0000-0000-0000-000000000002'
     ]
   },
@@ -42,7 +35,7 @@ const MOCK_CLASS_SOURCES: ClassSourceItem[] = [
     status: 'Processing',
     sourceType: 'Video',
     createdAt: '2026-06-15T10:00:00Z',
-    processingJobIds: []
+    processingJobsIds: []
   }
 ];
 
@@ -51,10 +44,11 @@ export class ClassSourcesService {
   readonly #http = inject(HttpClient);
   readonly #api = environment.apiBaseUrl;
 
-  getClassSources(): Observable<ClassSourceItem[]> {
-    return this.#http.get<ClassSourceItem[]>(`${this.#api}/api/v1/class-sources`).pipe(
+  getClassSources(): Observable<TeacherClassSource[]> {
+    return this.#http.get<TeacherClassSource[]>(`${this.#api}/api/v1/users/me/class-sources`).pipe(
+      tap((resp) => console.log('Response: ', resp)),
       catchError(() => {
-        console.warn('API /api/v1/class-sources failed, falling back to mock data');
+        console.warn('API /api/v1/users/me/class-sources failed, falling back to mock data');
         return of(MOCK_CLASS_SOURCES);
       })
     );

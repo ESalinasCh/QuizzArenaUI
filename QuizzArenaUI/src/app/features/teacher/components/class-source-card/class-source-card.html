@@ -1,28 +1,30 @@
-<div class="flex flex-col sm:flex-row sm:items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border p-4 gap-4">
+<div
+  class="flex flex-col sm:flex-row sm:items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border p-4 gap-4">
   <div class="flex items-center gap-4 flex-1">
     <div class="flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 text-primary shrink-0">
       @if (source().sourceType === 'Video') {
-        <qz-icon [name]="'play'" class="block !size-6" />
+      <qz-icon [name]="'play'" class="block !size-6" />
       } @else {
-        <qz-icon [name]="'document'" class="block !size-6" />
+      <qz-icon [name]="'document'" class="block !size-6" />
       }
     </div>
     <div class="flex flex-col gap-1 min-w-0">
-      <qz-text-span [bold]="'semibold'" [additionalCssClasses]="'text-lg text-light-text dark:text-dark-text truncate block'">
+      <qz-text-span [bold]="'semibold'"
+        [additionalCssClasses]="'text-lg text-light-text dark:text-dark-text truncate block'">
         {{ source().name }}
       </qz-text-span>
       <div class="flex items-center gap-3 text-sm text-light-text/60 dark:text-dark-text/60">
         <span class="flex items-center gap-1">
-          @if (source().status === 'Processed') {
-            <span class="text-green-600 flex items-center gap-1">
-              <qz-icon [name]="'check'" class="block !size-4" />
-              {{ source().status }}
-            </span>
+          @if (source().status === 'Completed') {
+          <span class="text-green-600 flex items-center gap-1">
+            <qz-icon [name]="'check'" class="block !size-4" />
+            {{ source().status }}
+          </span>
           } @else {
-            <span class="text-amber-500 flex items-center gap-1">
-              <qz-icon [name]="'clock'" class="block !size-4" />
-              {{ source().status }}
-            </span>
+          <span class="text-amber-500 flex items-center gap-1">
+            <qz-icon [name]="'clock'" class="block !size-4" />
+            {{ source().status }}
+          </span>
           }
         </span>
         <span>•</span>
@@ -32,27 +34,23 @@
   </div>
 
   <div class="flex items-center justify-end w-full sm:w-auto shrink-0">
-    @if (source().status === 'Processed' && source().processingJobIds.length > 0) {
-      <qz-button 
-        size="small" 
-        variant="primary" 
-        [routerLink]="['/teacher/class-sources/from-processing-job', source().processingJobIds[0]]"
-        class="w-full sm:w-auto"
-      >
-        <div class="flex items-center gap-1.5 whitespace-nowrap justify-center">
-          <qz-icon [name]="'question'" />
-          <span>View Questions</span>
-        </div>
-      </qz-button>
+    @if (
+    source().status === 'Completed' &&
+    source().processingJobsIds &&
+    source().processingJobsIds.length > 0
+    ) {
+    <qz-button size="small" variant="primary"
+      [routerLink]="['/teacher/class-sources/from-processing-job', source().processingJobsIds[0]]"
+      class="w-full sm:w-auto">
+      <div class="flex items-center gap-1.5 whitespace-nowrap justify-center">
+        <qz-icon [name]="'question'" />
+        <span>View Questions</span>
+      </div>
+    </qz-button>
     } @else {
-      <qz-button 
-        size="small" 
-        variant="secondary" 
-        [disabled]="true"
-        class="w-full sm:w-auto"
-      >
-        <span class="whitespace-nowrap justify-center flex w-full">Processing...</span>
-      </qz-button>
+    <qz-button size="small" variant="secondary" [disabled]="true" class="w-full sm:w-auto">
+      <span class="whitespace-nowrap justify-center flex w-full">Processing...</span>
+    </qz-button>
     }
   </div>
 </div>
