@@ -47,21 +47,10 @@
                     (click)="startEditingOption(option)">
                     <qz-icon [name]="'edit'" />
                 </qz-button>
-                <!-- <qz-button [type]="'button'" [fullWidth]="true" variant="danger">
-                    <qz-icon [name]="'trash'" />
-                </qz-button> -->
             </div>
             }
         </div>
         }
-        <!-- <div class="flex justify-start mt-1">
-            <qz-button [type]="'button'" size="small" variant="secondary" (click)="handleAddOption()">
-                <div class="flex items-center gap-1.5">
-                    <qz-icon [name]="'plus'" />
-                    <span>Add Answer Option</span>
-                </div>
-            </qz-button>
-        </div> -->
     </div>
     <qz-textarea-input [label]="'Justification'" [formField]="questionForm.justification"></qz-textarea-input>
     @if (validationError()) {

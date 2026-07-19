@@ -40,7 +40,7 @@ describe('TeacherDashboardPage', () => {
     (mockAuthService.currentUser as unknown as ReturnType<typeof vi.fn>).mockReturnValue(null);
     const fixture = TestBed.createComponent(TeacherDashboardPage);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('qz-stat-card, [data-testid="stat-card"], .stat')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('qz-stats-card, qz-stat-card, [data-testid="stat-card"], .stat')).toBeTruthy();
   });
 
   it('should render recent content list', () => {

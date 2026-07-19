@@ -1,17 +1,13 @@
 <div class="min-h-screen bg-light-bg flex flex-col lg:flex-row">
 
-  <!-- Left panel: desktop only -->
   <div class="login-panel hidden lg:flex lg:w-1/2 flex-col relative overflow-hidden">
 
-    <!-- Decorative circles -->
     <div class="absolute top-[-80px] left-[-80px] w-72 h-72 rounded-full opacity-10 bg-white"></div>
     <div class="absolute bottom-[-60px] right-[-60px] w-56 h-56 rounded-full opacity-10 bg-white"></div>
     <div class="absolute top-1/2 right-[-40px] w-32 h-32 rounded-full opacity-10 bg-white"></div>
 
-    <!-- Content -->
     <div class="relative flex flex-col h-full p-12 z-10">
 
-      <!-- Logo -->
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
           <qz-icon name="quiz" class="w-6 h-6 text-white" />
@@ -19,7 +15,6 @@
         <span class="text-2xl font-bold text-white">QuizArena</span>
       </div>
 
-      <!-- Illustration -->
       <div class="flex-1 flex items-center justify-center py-8">
         <img
           src="images/login/login-illustration.svg"
@@ -28,7 +23,6 @@
           class="w-full max-w-md drop-shadow-xl" />
       </div>
 
-      <!-- Tagline -->
       <div class="mb-8">
         <h2 i18n="Login desktop tagline" class="text-3xl font-bold text-white leading-tight">
           Generate quizzes with artificial intelligence
@@ -38,7 +32,6 @@
         </p>
       </div>
 
-      <!-- Feature list -->
       <div class="flex flex-col gap-3">
         @for (feature of features; track feature.title) {
           <qz-feature-card
@@ -53,38 +46,48 @@
     </div>
   </div>
 
-  <!-- Right panel: login content -->
-  <div class="flex-1 flex flex-col items-center justify-center px-6 py-10 overflow-y-auto">
+  <div class="flex-1 flex flex-col items-center justify-center px-6 py-10 overflow-y-auto relative bg-gradient-to-b from-slate-50/50 to-white dark:from-dark-bg dark:to-dark-surface-alt">
+    <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-indigo-300/20 dark:bg-indigo-950/10 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/2 -left-40 w-96 h-96 rounded-full bg-purple-300/10 dark:bg-purple-950/10 blur-3xl pointer-events-none"></div>
 
-    <div class="w-full flex justify-end px-2 mb-2">
+    <div class="w-full flex justify-end px-2 mb-4 relative z-10">
       <qz-language-selector />
     </div>
 
-    <div class="w-full max-w-sm flex flex-col items-center gap-6">
+    <div class="w-full max-w-sm flex flex-col items-center gap-6 relative z-10">
 
       <div class="lg:hidden w-full flex items-center justify-center py-4">
         <img
           src="images/login/login-illustration.svg"
           i18n-alt="Login illustration alt text"
           alt="QuizArena illustration"
-          class="w-72 max-w-full" />
+          class="w-72 max-w-full drop-shadow-xl" />
       </div>
 
-      <div class="w-full rounded-2xl bg-purple-light px-6 py-4 text-center">
-        <h1 class="text-3xl font-bold text-purple">QuizArena</h1>
+      <div class="w-full clean-card p-6 flex flex-col items-center justify-center border border-indigo-150/40 dark:border-slate-800 bg-white dark:bg-slate-900/90 shadow-sm hover:scale-[1.01] transition-transform duration-300">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-2">
+          <qz-icon name="quiz" class="w-6 h-6" />
+        </div>
+        <h1 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white">QuizArena</h1>
+        <p class="text-xs text-slate-400 dark:text-slate-500 mt-1 uppercase tracking-widest font-semibold">Assessment Portal</p>
       </div>
 
-      <div class="text-center px-2">
-        <p i18n="Login mobile tagline" class="text-base font-semibold text-light-text leading-snug">
+      <div class="text-center px-4">
+        <p i18n="Login mobile tagline" class="text-base font-bold text-slate-800 dark:text-slate-200 leading-snug">
           Generate quizzes from your classes using artificial intelligence
         </p>
-        <p i18n="Login mobile subtitle" class="text-sm text-light-text-secondary mt-1 leading-snug">
-          Create, publish and evaluate your students' performance instantly
+        <p i18n="Login mobile subtitle" class="text-xs text-slate-450 dark:text-slate-500 mt-2 leading-relaxed">
+          Create, publish and evaluate your students' performance instantly.
         </p>
       </div>
 
       <div class="flex flex-col items-center gap-3 w-full">
-        <qz-button variant="primary" size="large" [fullWidth]="true" (click)="signIn()">
+        <qz-button 
+          variant="primary" 
+          size="large" 
+          [fullWidth]="true" 
+          (click)="signIn()"
+          class="w-full h-12 sm:h-11 min-h-[48px] rounded-xl flex items-center justify-center font-bold text-sm tracking-wide transition-all duration-300 hover:scale-[1.02] shadow-md shadow-indigo-600/10">
           <ng-container i18n="Login CTA button">Get started</ng-container>
         </qz-button>
       </div>

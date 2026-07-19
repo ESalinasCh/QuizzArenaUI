@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
 import { TeacherDashboardService } from '../../services/teacher-dashboard.service';
 import { TeacherExamService } from '../../services/teacher-exam.service';
-import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
+import { StatsCard } from '../../../../shared/organisms/stats-card/stats-card';
 import { ContentItem } from '../../../../shared/molecules/content-item/content-item';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -15,11 +15,12 @@ import { ExamFormFilter } from '../../models/exam-form-filter';
 // import { LinkText } from '../../../../shared/atoms/link-text/link-text';
 import { ModalService } from '../../../../core/services/modal.service';
 import { form } from '@angular/forms/signals';
+import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
 
 
 @Component({
   selector: 'qz-teacher-dashboard-page',
-  imports: [StatCard, ContentItem, Button, Icon],
+  imports: [ContentItem, Button, Icon, StatsCard, EmptyState],
   templateUrl: './dashboard-page.html',
 })
 export class TeacherDashboardPage {
@@ -34,6 +35,8 @@ export class TeacherDashboardPage {
   protected readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
   protected readonly createExamAriaLabel = $localize`:Create exam button aria label:Create exam`;
   protected readonly publishExamAriaLabel = $localize`:Dashboard publish exam button aria label:Publish exam`;
+  protected readonly noExamsCreatedTitle = $localize`:Teacher no exams created title:No exams created yet`;
+  protected readonly noExamsCreatedDescription = $localize`:Teacher no exams created description:Upload contents or use the quick creator tool to get started.`;
   protected readonly dashboard = toSignal(this.#dashboardService.getDashboard(), {
     initialValue: { quizCount: 0, publishedCount: 0, recentContent: [] },
   });

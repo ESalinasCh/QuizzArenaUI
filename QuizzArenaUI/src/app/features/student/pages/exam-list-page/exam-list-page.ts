@@ -8,12 +8,13 @@ import { MatchFilters, MatchStatus } from '../../api/student-quiz.contract';
 import { FilterTabs } from '../../components/filter-tabs/filter-tabs';
 import { catchError, of } from 'rxjs';
 import { FilterStatusOption } from '../../models/student-quiz.model';
+import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
+import { InfoCard } from '../../../../shared/molecules/info-card/info-card';
 
 @Component({
   selector: 'qz-student-exam-list-page',
-  imports: [AvailableQuizCard, SectionTitle, FilterTabs],
+  imports: [AvailableQuizCard, SectionTitle, FilterTabs, EmptyState, InfoCard],
   templateUrl: './exam-list-page.html',
-
 })
 export class StudentExamListPage {
   readonly #router = inject(Router);
@@ -38,6 +39,8 @@ export class StudentExamListPage {
   readonly recentExamsTitle = $localize`:Student recent exams section title:Recent Exams`;
   readonly studentFallbackName = $localize`:Student fallback display name:Student`;
   readonly noExamsMessage = $localize`:Student no exams message:You don't have any exams.`;
+  readonly noExamsMatchingMessage = $localize`:Student no exams matching category message:There are no evaluations matching the selected category right now.`;
+  readonly evaluationGuidelinesTitle = $localize`:Student evaluation guidelines title:Evaluation Guidelines`;
 
   readonly exams = rxResource({
     params: () => this.filters(),

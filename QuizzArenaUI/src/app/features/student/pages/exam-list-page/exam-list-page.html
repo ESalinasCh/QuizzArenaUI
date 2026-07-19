@@ -1,23 +1,63 @@
-<section class="mx-auto flex w-full max-w-180 flex-col gap-6 pb-6">
-  <h1 i18n="Student exams" class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
-    Exams &#128075;
-  </h1>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 pb-12 select-none">
+  
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-light-border dark:border-dark-border pb-5">
+    <div>
+      <h1 i18n="Student exams" class="text-2xl font-black text-light-text dark:text-dark-text sm:text-3xl tracking-tight">
+        Exams 👋
+      </h1>
+      <p class="text-sm text-light-text-secondary dark:text-dark-text-secondary mt-1">Complete your evaluations and check your performance.</p>
+    </div>
+  </div>
 
-  <div class="flex flex-col gap-4">
-    <qz-section-title [title]="availableExamsTitle" icon="sparkles" />
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-2 flex flex-col gap-6">
+      
+      <div class="clean-card p-4 flex flex-col sm:flex-row items-center justify-between gap-4 bg-light-surface-alt dark:bg-dark-surface-alt">
+        <qz-section-title [title]="availableExamsTitle" icon="sparkles" />
+        <div class="w-full sm:w-auto">
+          <qz-filter-tabs
+            [options]="statusOptions"
+            [value]="filters().status"
+            (valueChange)="changeStatus($event)">
+          </qz-filter-tabs>
+        </div>
+      </div>
 
-    <qz-filter-tabs
-      [options]="statusOptions"
-      [value]="filters().status"
-      (valueChange)="changeStatus($event)">
-    </qz-filter-tabs>
-        
-    @for (quiz of exams.value() ?? []; track quiz.id) {
-      <qz-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
-    } @empty {
-      <h2 class="text-xl font-bold text-light-text flex justify-center dark:text-dark-text">
-        {{ noExamsMessage }}
-      </h2>
-    }
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        @for (quiz of exams.value() ?? []; track quiz.id) {
+          <div class="clean-card overflow-hidden hover:scale-[1.02] duration-300 transition-all">
+            <qz-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
+          </div>
+        } @empty {
+          <qz-empty-state 
+            [icon]="'quiz'" 
+            [title]="noExamsMessage" 
+            [description]="noExamsMatchingMessage" 
+          />
+        }
+      </div>
+
+    </div>
+
+    <div class="flex flex-col gap-6">
+      <qz-info-card [icon]="'document'" [title]="evaluationGuidelinesTitle">
+        <ul class="space-y-2.5">
+          <li class="flex items-start gap-2">
+            <span class="text-indigo-500">•</span>
+            <span i18n="Student evaluation guideline 1">Exams have a set timeframe and limit. Make sure your internet connection is stable.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-indigo-500">•</span>
+            <span i18n="Student evaluation guideline 2">Answers are saved automatically as you progress.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-indigo-500">•</span>
+            <span i18n="Student evaluation guideline 3">Once submitted, you cannot change your answers.</span>
+          </li>
+        </ul>
+      </qz-info-card>
+    </div>
+
   </div>
 </section>
