@@ -57,7 +57,6 @@ export class AdminQuestionCard {
     onResize() { this.width.set(window.innerWidth); }
 
     handleNewQuestion(question: Question) {
-        console.log(question)
         this.newQuestion.emit(question);
     }
 
