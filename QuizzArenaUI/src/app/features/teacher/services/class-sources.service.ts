@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { TeacherClassSource } from '../models/class-source.model';
 
@@ -46,7 +46,6 @@ export class ClassSourcesService {
 
   getClassSources(): Observable<TeacherClassSource[]> {
     return this.#http.get<TeacherClassSource[]>(`${this.#api}/api/v1/users/me/class-sources`).pipe(
-      tap((resp) => console.log('Response: ', resp)),
       catchError(() => {
         console.warn('API /api/v1/users/me/class-sources failed, falling back to mock data');
         return of(MOCK_CLASS_SOURCES);

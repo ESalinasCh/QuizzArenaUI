@@ -46,7 +46,7 @@
                     class="rounded-lg border border-light-border dark:border-dark-border bg-light-bg dark:bg-dark-bg px-4 py-3 flex justify-between items-center">
                     <div class="flex flex-col gap-1">
                         <p class="text-light-text dark:text-dark-text text-sm font-semibold">
-                            {{ attempt.nickname }}
+                            {{ attempt.nickname || 'Max' }}
                         </p>
                         <qz-grade-status-label [status]="attempt.status" />
                     </div>
