@@ -14,7 +14,7 @@ export const teacherRoutes: Routes = [
   { path: 'exams/create', component: TeacherCreateExamPage, pathMatch: 'full' },
   { path: 'exams/publish', component: TeacherPublishExamPage, pathMatch: 'full' },
   { path: 'exams/bank', component: TeacherExamBankPage },
-  { path: 'grades', component: TeacherGradePanelPage },
+  { path: 'exams/attempts', component: TeacherGradePanelPage },
   { path: 'class-sources', component: TeacherClassSourcesPage, pathMatch: 'full' },
   { path: 'class-sources/from-processing-job/:processing-job-id', component: TeacherQuestionBankPage, pathMatch: 'full' },
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },

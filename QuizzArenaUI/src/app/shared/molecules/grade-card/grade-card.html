@@ -4,10 +4,8 @@
             <h2 class="font-semibold text-lg text-light-text dark:text-dark-text">
                 {{ grade()?.nickname || 'Max' }}
             </h2>
-
             <div class="flex items-center gap-3 mt-2">
                 <qz-grade-status-label [status]="grade().status" />
-
                 @if (grade().otherAttempts.length) {
                 <button class="flex items-center gap-2 text-sm text-primary hover:underline" (click)="onToggle()">
                     <span>
@@ -21,13 +19,27 @@
                 }
             </div>
         </div>
-
-        <div class="text-right">
-            <div class="text-3xl font-bold text-primary">
-                {{ grade().score }}
+        <div class="flex items-start gap-2">
+            <div class="text-right">
+                <div class="text-3xl font-bold text-primary">
+                    {{ grade().score }}
+                </div>
+                <div class="text-sm text-light-text-secondary dark:text-dark-text-secondary"
+                    i18n="Grade card score label">
+                    Score
+                </div>
             </div>
-            <div class="text-sm text-light-text-secondary dark:text-dark-text-secondary" i18n="Grade card score label">
-                Score
+            <div class="relative">
+                <button #MenuButton class="p-2 rounded-lg hover:bg-light-bg dark:hover:bg-dark-bg" (click)="openMenu()">
+                    ⋮
+                </button>
+                @if (menuOpen()) {
+                <div class="absolute right-0 top-full mt-2 w-44 rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface shadow-lg z-50">
+                    <button class="w-full px-4 py-2 text-left text-red-500 hover:bg-light-bg dark:hover:bg-dark-bg" (click)="reset()">
+                        Reset attempts
+                    </button>
+                </div>
+                }
             </div>
         </div>
     </div>

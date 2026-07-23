@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, ElementRef, HostListener, input, output, signal, ViewChild } from '@angular/core';
 import { Grade } from '../../../features/teacher/models/exam.model';
 import { GradeStatusLabel } from '../../atoms/grade-status-label/grade-status-label';
 
@@ -8,12 +8,28 @@ import { GradeStatusLabel } from '../../atoms/grade-status-label/grade-status-la
     templateUrl: './grade-card.html',
 })
 export class GradeCard {
+    @ViewChild('MenuButton') botonRef!: ElementRef; 
+    menuOpen = signal(false);
     grade = input.required<Grade>();
     expanded = input<boolean>(false);
-
     toggleAttempts = output<string>();
+    resetAttempts = output<string>();
+    openMenu() {
+        this.menuOpen.update((open) => !open);
+    }
 
     onToggle(): void {
         this.toggleAttempts.emit(this.grade().id);
+    }
+
+    reset(): void {
+        this.resetAttempts.emit(this.grade().id);
+    }
+    
+    @HostListener('document:click', ['$event'])
+    clickFuera(event: Event) {
+        if (!this.botonRef.nativeElement.contains(event.target)) {
+            this.menuOpen.set(false);
+        }
     }
 }

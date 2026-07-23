@@ -4,11 +4,14 @@ import { provideRouter } from "@angular/router";
 import { LOCALE_ID } from "@angular/core";
 import { of } from "rxjs";
 import { Grade, Match } from "../../models/exam.model";
+import { ModalService } from "../../../../core/services/modal.service";
+import { ResetAttemptModal } from "../../components/reset-attempt-modal/reset-attempt-modal";
 import { TeacherGradePanelPage } from "./grade-panel-page";
 
 
 describe('TeacherGradePanelPage', () => {
     let mockExamService: Partial<TeacherExamService>;
+    let mockModalService: Partial<ModalService>;
 
     const mockMatches: Match[] = [
         {
@@ -58,11 +61,16 @@ describe('TeacherGradePanelPage', () => {
             getGrades: vi.fn().mockReturnValue(of(mockGrades)),
         };
 
+        mockModalService = {
+            open: vi.fn().mockReturnValue({ afterClosed: Promise.resolve(undefined) }),
+        };
+
         await TestBed.configureTestingModule({
             imports: [TeacherGradePanelPage],
             providers: [
                 provideRouter([]),
                 { provide: TeacherExamService, useValue: mockExamService },
+                { provide: ModalService, useValue: mockModalService },
                 { provide: LOCALE_ID, useValue: 'en' },
             ],
         }).compileComponents();
@@ -126,14 +134,14 @@ describe('TeacherGradePanelPage', () => {
     it('should expand grade attempts', () => {
         const fixture = TestBed.createComponent(TeacherGradePanelPage);
         fixture.componentInstance.toggleAttempts('grade-1');
-        expect(fixture.componentInstance.expandedGrade()).toBe('grade-1');
+        expect(fixture.componentInstance.expandedGrades()).toEqual(['grade-1']);
     });
 
     it('should collapse expanded grade', () => {
         const fixture = TestBed.createComponent(TeacherGradePanelPage);
         fixture.componentInstance.toggleAttempts('grade-1');
         fixture.componentInstance.toggleAttempts('grade-1');
-        expect(fixture.componentInstance.expandedGrade()).toBeNull();
+        expect(fixture.componentInstance.expandedGrades()).toEqual([]);
     });
 
     it('should display no grades message when there are no grades', async () => {
@@ -158,4 +166,52 @@ describe('TeacherGradePanelPage', () => {
         const cards = fixture.nativeElement.querySelectorAll('qz-grade-card');
         expect(cards.length).toBe(2);
     });
-})
+
+    it('should open the reset modal for the selected grade', () => {
+        mockModalService.open = vi.fn().mockReturnValue({ afterClosed: Promise.resolve(undefined) });
+        const fixture = TestBed.createComponent(TeacherGradePanelPage);
+        const component = fixture.componentInstance;
+        vi.spyOn(component.grades, 'value').mockReturnValue([mockGrades[0]] as Grade[]);
+
+        component.onResetAttempts('grade-1');
+
+        expect(mockModalService.open).toHaveBeenCalledWith(
+            ResetAttemptModal,
+            { attempt: mockGrades[0] },
+            { title: 'Reset Attempts' },
+        );
+    });
+
+    it('should reset attempts when modal returns a userId', async () => {
+        let resolveAfterClosed: (value: string | undefined) => void = () => {};
+        const afterClosed = new Promise<string | undefined>((resolve) => {
+            resolveAfterClosed = resolve;
+        });
+
+        mockModalService.open = vi.fn().mockReturnValue({ afterClosed });
+        mockExamService.resetAttempts = vi.fn().mockReturnValue(of(undefined));
+
+        const fixture = TestBed.createComponent(TeacherGradePanelPage);
+        const component = fixture.componentInstance;
+        const resetSpy = vi.spyOn(component as any, 'resetAttempts');
+
+        component.openResetModal(mockGrades[0]);
+        resolveAfterClosed('user-1');
+        await afterClosed;
+
+        expect(resetSpy).toHaveBeenCalledWith('user-1');
+    });
+
+    it('should reload grades after successful resetAttempts', async () => {
+        mockExamService.resetAttempts = vi.fn().mockReturnValue(of(undefined));
+        const fixture = TestBed.createComponent(TeacherGradePanelPage);
+        const component = fixture.componentInstance;
+        const reloadSpy = vi.spyOn(component.grades, 'reload');
+
+        component['resetAttempts']('user-1');
+        await Promise.resolve();
+
+        expect(mockExamService.resetAttempts).toHaveBeenCalledWith('user-1');
+        expect(reloadSpy).toHaveBeenCalled();
+    });
+});

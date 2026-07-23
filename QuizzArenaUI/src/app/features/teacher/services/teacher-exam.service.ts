@@ -108,4 +108,10 @@ export class TeacherExamService {
       .get<MatchResponse[]>(buildApiUrl(TEACHER_GRADES_ENDPOINTS.matches))
       .pipe(map(matches => matches.map(mapMatchResponse)));
   }
+
+  resetAttempts(id: string): Observable<void> {
+    return this.#http
+      .post(buildApiUrl(TEACHER_GRADES_ENDPOINTS.resetAttempts(id)), {})
+      .pipe(map(() => void 0));
+  }
 }

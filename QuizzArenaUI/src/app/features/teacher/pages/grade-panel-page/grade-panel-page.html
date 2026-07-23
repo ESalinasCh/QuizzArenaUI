@@ -1,6 +1,6 @@
 <section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
   <h1 i18n="Grade panel page heading" class="text-xl font-extrabold text-light-text dark:text-dark-text sm:text-2xl">
-    Grades
+    Exam grades
   </h1>
 
   <div
@@ -12,7 +12,7 @@
 
     <div class="relative">
       <select id="match-select" [value]="selectedMatchId()" (change)="onMatchChange($any($event.target).value)"
-        class="h-12 w-full rounded-xl border border-light-border-strong bg-light-surface px-4 pr-10 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
+        class="appearance-none h-12 w-full rounded-xl border border-light-border-strong bg-light-surface px-4 pr-10 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
         i18n-aria-label="Grade panel match selector aria label" aria-label="Select an exam">
         <option value="" disabled selected hidden>
           Select an exam
@@ -21,13 +21,17 @@
         <option [value]="match.id">{{ match.title }}</option>
         }
       </select>
+        <qz-icon
+          name="chevron-down"
+          class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-light-text dark:text-dark-text"
+        />
     </div>
   </div>
 
   <div class="flex flex-col space-y-3">
     @for (grade of grades.value() ?? []; track grade.id) {
-    <qz-grade-card [grade]="grade" [expanded]="expandedGrade() === grade.id"
-      (toggleAttempts)="toggleAttempts($event)" />
+    <qz-grade-card [grade]="grade" [expanded]="expandedGrades().includes(grade.id)"
+      (toggleAttempts)="toggleAttempts($event)" (resetAttempts)="onResetAttempts($event)" />
     } @empty {
     <h2 class="text-xl font-bold text-light-text flex justify-center dark:text-dark-text">
       {{ noGradesMessage }}
