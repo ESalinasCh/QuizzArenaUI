@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UploadContentResponse } from '../api/teacher-content.contract';
+import { CourseResponse, UploadContentResponse } from '../api/teacher-content.contract';
 import { mapCourseResponse, mapTeacherContentResponse } from '../api/teacher-content.mapper';
-import { TEACHER_COURSES_RESPONSE_MOCK } from '../mocks/teacher-content.mock';
 import { ContentUploadRequest, Subject } from '../models/content-upload.model';
 import { RecentContent } from '../models/teacher-dashboard.model';
 import { HttpClient } from '@angular/common/http';
@@ -15,9 +14,9 @@ export class TeacherContentService {
   readonly #http = inject(HttpClient);
 
   getSubjects(): Observable<Subject[]> {
-    return of(TEACHER_COURSES_RESPONSE_MOCK).pipe(
-      map(courses => courses.map(mapCourseResponse)),
-    );
+    return this.#http.get<CourseResponse[]>(buildApiUrl(TEACHER_CONTENT_ENDPOINTS.courses))
+      .pipe(map(courses => courses.map(mapCourseResponse)),
+      );
   }
 
   uploadContent(request: ContentUploadRequest): Observable<RecentContent> {
