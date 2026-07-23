@@ -27,7 +27,7 @@ export class GradeCard {
     }
     
     @HostListener('document:click', ['$event'])
-    clickFuera(event: Event) {
+    clickOutside(event: Event) {
         if (!this.botonRef.nativeElement.contains(event.target)) {
             this.menuOpen.set(false);
         }
