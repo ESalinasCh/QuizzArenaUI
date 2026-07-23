@@ -49,19 +49,25 @@
   </div>
 
   <qz-text-input id="enabledFrom" [formField]="matchForm.enabledFrom" [type]="'datetime-local'"
-    [label]="'Available from'"
-    [errorMessage]="isDirtyEnabledFrom() && !matchModel().enabledFrom ? 'Start date is required' : '' "
+    [label]="'Available from'" [errorMessage]="enabledFromError() || ''"
     [labeli18]="'Exam step config enabled from label'" [errori18]="'Exam step config enabled from required error'" />
 
   <qz-text-input id="enabledUntil" [formField]="matchForm.enabledUntil" [type]="'datetime-local'"
-    [label]="'Available until'"
-    [errorMessage]="isDirtyEnabledUntil() && !matchModel().enabledUntil ? 'End date is required' : '' "
+    [label]="'Available until'" [errorMessage]="enabledUntilError() || ''"
     [labeli18]="'Exam step config enabled until label'" [errori18]="'Exam step config enabled until required error'" />
 
-  @if (dateRangeInvalid()) {
+  @if (dateRangeError()) {
   <p>
     <qz-text-span [variant]="'danger'" [i18n]="'Exam step config date range error'">
-      End date must be after start date
+      {{ dateRangeError() }}
+    </qz-text-span>
+  </p>
+  }
+
+  @if (isMoreThanCurrentDateTime()) {
+  <p>
+    <qz-text-span [variant]="'danger'" [i18n]="'Exam step config date range error'">
+      {{ isMoreThanCurrentDateTime() }}
     </qz-text-span>
   </p>
   }

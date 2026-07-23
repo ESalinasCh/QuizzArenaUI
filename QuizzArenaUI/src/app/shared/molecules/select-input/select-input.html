@@ -1,7 +1,7 @@
 <qz-text-span [bold]="'semibold'" [fontSize]="'small'">
     {{ label() }}
 </qz-text-span>
-<select [value]="value()" [disabled]="disabled()" (input)="value.set($any($event.target).value)"
+<select [value]="value()" [disabled]="disabled()" (input)="value.set($any($event.target).value); touched.set(true); dirty.set(true)"
     (blur)="touched.set(true)"
     class="h-12 w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text">
     <ng-content></ng-content>

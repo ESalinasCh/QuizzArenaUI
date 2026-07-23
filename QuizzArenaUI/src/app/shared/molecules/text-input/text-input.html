@@ -3,7 +3,7 @@
     {{ label() }}
 </label>
 <input [type]="type()" [placeholder]="placeholder()" [value]="value()" [disabled]="disabled()"
-    (input)="value.set($any($event.target).value)" (blur)="touched.set(true)"
+    (input)="value.set($any($event.target).value); touched.set(true); dirty.set(true)" (blur)="touched.set(true)"
     class="h-12 w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text" />
 @if (errorMessage()) {
 <p class="text-sm text-danger text-error" i18n="{{ errori18() }}">{{ errorMessage() }}</p>

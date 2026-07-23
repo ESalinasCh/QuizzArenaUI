@@ -1,13 +1,11 @@
-import { Component, DestroyRef, inject, input, signal } from '@angular/core';
+import { Component, DestroyRef, inject, input } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { PublishQuizAsMatchForm } from '../../components/publish-quiz-as-match-form/publish-quiz-as-match-form';
-import { ExamConfig } from '../../models/exam.model';
 import { CreateMatchRequestBody } from '../../api/teacher-exam.contract';
-
 
 @Component({
   selector: 'qz-teacher-publish-exam-page',

@@ -1,7 +1,7 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { PublishQuizAsMatchForm } from './publish-quiz-as-match-form';
-import { ExamConfig } from '../../models/exam.model';
+import { CreateMatchRequestBody } from '../../api/teacher-exam.contract';
 
 describe('PublishQuizAsMatchForm', () => {
   beforeEach(() => {
@@ -14,15 +14,16 @@ describe('PublishQuizAsMatchForm', () => {
     const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
 
-    fixture.componentInstance.matchModel.update(m => ({ ...m, durationMinutes: 0 }));
+    fixture.componentInstance.matchModel.update(m => ({ ...m, durationMinutes: '0' }));
     fixture.componentInstance.submit();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('Duration is required');
+    expect(fixture.nativeElement.textContent).toContain('Duration must be at least 1 minute');
   });
 
   it('should show start date required error on empty submit', () => {
     const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
+    fixture.componentInstance.matchModel.update(m => ({ ...m, enabledFrom: '' }));
     fixture.detectChanges();
 
     fixture.componentInstance.submit();
@@ -37,8 +38,8 @@ describe('PublishQuizAsMatchForm', () => {
 
     fixture.componentInstance.matchModel.set({
       courseId: 'c1',
-      durationMinutes: 30,
-      maxRetries: 1,
+      durationMinutes: '30',
+      maxRetries: '1',
       enabledFrom: '2026-06-25T10:00',
       enabledUntil: '2026-06-24T10:00',
       shuffleQuestions: false,
@@ -72,17 +73,17 @@ describe('PublishQuizAsMatchForm', () => {
     expect(fixture.componentInstance.matchModel().shuffleOptions).toBe(false);
   });
 
-  it('should emit ExamConfig oonPublishlid submit', () => {
+  it('should emit CreateMatchRequestBody on valid submit', () => {
     const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
 
-    let emitted: ExamConfig | undefined;
-    fixture.componentInstance.next.subscribe((config: ExamConfig) => (emitted = config));
+    let emitted: CreateMatchRequestBody | undefined;
+    fixture.componentInstance.onSendMatchRequest.subscribe((req: CreateMatchRequestBody) => (emitted = req));
 
     fixture.componentInstance.matchModel.set({
-      courseId: 'c1',
-      durationMinutes: 45,
-      maxRetries: 2,
+      courseId: '10000000-0000-0000-0000-000000000001',
+      durationMinutes: '45',
+      maxRetries: '2',
       enabledFrom: '2026-06-25T10:00',
       enabledUntil: '2026-06-26T10:00',
       shuffleQuestions: true,
@@ -91,21 +92,24 @@ describe('PublishQuizAsMatchForm', () => {
     fixture.componentInstance.submit();
 
     expect(emitted).toEqual({
-      durationMinutes: 45,
-      maxRetries: 2,
-      shuffleQuestions: true,
+      quizId: '',
+      courseId: '10000000-0000-0000-0000-000000000001',
+      startedAt: '2026-06-25T10:00',
+      finishedAt: '2026-06-26T10:00',
+      timeMinutes: 45,
+      attemptsAmount: 2,
+      shuffleQuestion: true,
       shuffleOptions: false,
-      enabledFrom: '2026-06-25T10:00',
-      enabledUntil: '2026-06-2onPublish:00',
     });
   });
 
   it('should not emit when form is invalid', () => {
     const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
+    fixture.componentInstance.matchModel.update(m => ({ ...m, courseId: '' }));
     fixture.detectChanges();
 
     let emitted = false;
-    fixture.componentInstance.next.subscribe(() => (emitted = true));
+    fixture.componentInstance.onSendMatchRequest.subscribe(() => (emitted = true));
 
     fixture.componentInstance.submit();
     expect(emitted).toBe(false);

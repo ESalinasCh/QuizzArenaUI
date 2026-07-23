@@ -5,11 +5,10 @@ import { TeacherExamService } from '../../services/teacher-exam.service';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { Exam } from '../../models/exam.model';
-import { ItemContainer } from "../../../../shared/atoms/item-container/item-container";
 
 @Component({
   selector: 'qz-teacher-exam-bank-page',
-  imports: [Button, Icon, ItemContainer],
+  imports: [Button, Icon],
   templateUrl: './exam-bank-page.html',
 })
 export class TeacherExamBankPage {

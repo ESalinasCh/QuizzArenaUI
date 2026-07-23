@@ -6,6 +6,7 @@ import { TextInput } from "../../../../shared/molecules/text-input/text-input";
 import { TextSpan } from "../../../../shared/atoms/text-span/text-span";
 import { PublishMatchForm } from '../../models/publish-match-form.model';
 import { CreateMatchRequestBody } from '../../api/teacher-exam.contract';
+import { publishMatchSchema } from './publish-match-schema';
 
 interface CourseModel {
   id: string;
@@ -24,6 +25,8 @@ const defaultFormModel: PublishMatchForm = {
   shuffleOptions: false,
 };
 
+export const formSchema = publishMatchSchema;
+
 @Component({
   selector: 'qz-publish-quiz-as-match-form',
   imports: [Button, SelectInput, FormField, TextInput, TextSpan],
@@ -34,7 +37,7 @@ export class PublishQuizAsMatchForm {
   onBack = output<void>();
 
   readonly matchModel = signal<PublishMatchForm>(structuredClone(defaultFormModel));
-  readonly matchForm = form(this.matchModel);
+  readonly matchForm = form(this.matchModel, formSchema);
 
   readonly isSubmitted = signal(false);
   readonly isDirtyEnabledFrom = computed(() => this.matchForm.enabledFrom().touched());
@@ -65,42 +68,80 @@ export class PublishQuizAsMatchForm {
   readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
 
   readonly courseError = computed(() => {
-    const val = this.matchModel().courseId;
-    if (!val) return 'A course must be selected';
-    return null;
+    const field = this.matchForm.courseId();
+    const errs = field.errors();
+    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
+      ? (errs[0].message ?? 'A course must be selected')
+      : null;
   });
 
   readonly durationError = computed(() => {
-    const val = Number(this.matchModel().durationMinutes);
-    if (!val) return 'Duration is required';
-    if (val < 1) return 'Duration must be at least 1 minute';
-    return null;
+    const field = this.matchForm.durationMinutes();
+    const errs = field.errors();
+    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
+      ? (errs[0].message ?? 'Duration is required')
+      : null;
   });
 
   readonly retriesError = computed(() => {
-    const val = Number(this.matchModel().maxRetries);
-    if (!val || val <= 0) return 'Max retries is required';
-    return null;
+    const field = this.matchForm.maxRetries();
+    const errs = field.errors();
+    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
+      ? (errs[0].message ?? 'Max retries is required')
+      : null;
+  });
+
+  readonly enabledFromError = computed(() => {
+    const field = this.matchForm.enabledFrom();
+    const errs = field.errors();
+    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
+      ? (errs[0].message ?? 'Start date is required')
+      : null;
+  });
+
+  readonly enabledUntilError = computed(() => {
+    const field = this.matchForm.enabledUntil();
+    const errs = field.errors();
+    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
+      ? (errs[0].message ?? 'End date is required')
+      : null;
+  });
+
+  readonly dateRangeError = computed(() => {
+    const rootErrors = this.matchForm().errors();
+    const dateError = rootErrors.find(e => e.kind === 'date_range' || e.message === 'End date must be after start date');
+    const isInteraction = this.isSubmitted() ||
+      this.matchForm.enabledFrom().touched() || this.matchForm.enabledFrom().dirty() ||
+      this.matchForm.enabledUntil().touched() || this.matchForm.enabledUntil().dirty();
+    return isInteraction && dateError
+      ? (dateError.message ?? 'End date must be after start date')
+      : null;
   });
 
   readonly dateRangeInvalid = computed(() => {
-    const from = this.matchModel().enabledFrom;
-    const until = this.matchModel().enabledUntil;
-    if (from && until && new Date(until) <= new Date(from)) {
-      return true;
-    }
-    return false;
+    return this.dateRangeError() !== null;
   });
 
   readonly isFormValid = computed(() => {
-    const m = this.matchModel();
-    const durationMinutes = Number(m.durationMinutes);
-    const maxRetries = Number(m.maxRetries);
-    if (isNaN(durationMinutes) || durationMinutes < 1) return false;
-    if (maxRetries === null || maxRetries === undefined) return false;
-    if (!m.enabledFrom || !m.enabledUntil) return false;
-    if (this.dateRangeInvalid()) return false;
-    return true;
+    return this.matchForm().valid();
+  });
+
+  readonly isMoreThanCurrentDateTime = computed(() => {
+
+    if (
+      this.isSubmitted() ||
+      this.matchForm.enabledFrom().touched() || this.matchForm.enabledFrom().dirty() ||
+      this.matchForm.enabledUntil().touched() || this.matchForm.enabledUntil().dirty()
+    ) {
+      const now = new Date().getTime();
+      const enabledFrom = new Date(this.matchForm.enabledFrom().value()).getTime();
+      const enabledUntil = new Date(this.matchForm.enabledUntil().value()).getTime();
+      console.log('now', now)
+      console.log('enabledFrom', enabledFrom)
+      console.log('enabledUntil', enabledUntil)
+      return (enabledFrom <= now || enabledUntil <= now) ? 'Date must be greater than current date' : null;
+    }
+    return null;
   });
 
   toggleShuffleQuestions(): void {
