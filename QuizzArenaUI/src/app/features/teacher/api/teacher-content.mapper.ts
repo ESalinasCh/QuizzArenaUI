@@ -4,7 +4,7 @@ import {
   TeacherQuizStatsResponse,
 } from './teacher-content.contract';
 import { RecentContent, TeacherDashboard } from '../models/teacher-dashboard.model';
-import { Subject } from '../models/content-upload.model';
+import { Course } from '../models/content-upload.model';
 
 export function mapTeacherDashboardResponse(
   stats: TeacherQuizStatsResponse,
@@ -29,7 +29,7 @@ export function mapTeacherContentResponse(response: TeacherContentResponse): Rec
   };
 }
 
-export function mapCourseResponse(response: CourseResponse): Subject {
+export function mapCourseResponse(response: CourseResponse): Course {
   return {
     id: response.id,
     name: response.name,

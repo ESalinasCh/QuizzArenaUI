@@ -92,7 +92,7 @@
 
     <div class="flex flex-col gap-2">
       <label
-        for="subject"
+        for="course"
         i18n="Course field label"
         class="text-sm font-semibold text-light-text dark:text-dark-text"
       >
@@ -100,7 +100,7 @@
       </label>
       <div class="relative">
         <select
-          id="subject"
+          id="course"
           name="subjectId"
           [ngModel]="subjectId()"
           (ngModelChange)="subjectId.set($event)"
@@ -108,8 +108,8 @@
           [class.text-light-text-secondary]="subjectId() === ''"
         >
           <option value="" disabled i18n="Course select default option">Select a course</option>
-          @for (subject of subjects(); track subject.id) {
-            <option [value]="subject.id">{{ subject.name }}</option>
+          @for (course of subjects(); track course.id) {
+            <option [value]="course.id">{{ course.name }}</option>
           }
         </select>
         <qz-icon

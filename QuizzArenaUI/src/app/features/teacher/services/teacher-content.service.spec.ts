@@ -42,7 +42,7 @@ describe('TeacherContentService', () => {
 
     it('should GET the courses endpoint and map to subjects with id and name', () => {
       let subjects: { id: string; name: string }[] | undefined;
-      service.getSubjects().subscribe(result => (subjects = result));
+      service.getCourses().subscribe(result => (subjects = result));
 
       const req = httpMock.expectOne(coursesUrl);
       expect(req.request.method).toBe('GET');
@@ -56,7 +56,7 @@ describe('TeacherContentService', () => {
 
     it('should propagate an error when the request fails', () => {
       let error: unknown;
-      service.getSubjects().subscribe({
+      service.getCourses().subscribe({
         next: () => expect.unreachable('getSubjects should not emit on failure'),
         error: err => (error = err),
       });
