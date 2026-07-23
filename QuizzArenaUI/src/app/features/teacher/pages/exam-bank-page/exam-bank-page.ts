@@ -1,13 +1,11 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, debounced, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { Exam } from '../../models/exam.model';
 import { TextInput } from '../../../../shared/molecules/text-input/text-input';
-import { debounceTime, switchMap } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
 import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 @Component({
@@ -20,29 +18,25 @@ export class TeacherExamBankPage {
   readonly #examService = inject(TeacherExamService);
 
   readonly searchQuery = signal('');
+  readonly debouncedSearchQuery = debounced(this.searchQuery, 300);
   readonly limit = signal(DEFAULT_PAGE_SIZE);
 
   protected readonly createExamAriaLabel = $localize`:Exam bank create exam button aria label:Create exam`;
   protected readonly publishAriaLabel = $localize`:Exam bank publish button aria label:Publish exam`;
 
-  readonly visibleExams = toSignal(
-    combineLatest([
-      toObservable(this.searchQuery).pipe(debounceTime(300)),
-      toObservable(this.limit)
-    ]).pipe(
-      switchMap(([search, limit]) => 
-        this.#examService.getExams({ page: 1, pageSize: limit, search, status: 'draft' })
-      )
-    ),
-    { initialValue: [] }
-  );
-
-  readonly draftExams = this.visibleExams;
-
-  readonly hasMoreExams = computed(() => {
-    // If we received exactly the amount requested, assume there could be more
-    return this.visibleExams().length >= this.limit();
+  readonly examsResource = rxResource({
+    params: () => ({
+      search: this.debouncedSearchQuery.value() ?? '',
+      limit: this.limit(),
+    }),
+    stream: ({ params }) =>
+      this.#examService.getExams({ page: 1, pageSize: params.limit, search: params.search, status: 'draft' }),
   });
+
+  readonly draftExams = computed(() => this.examsResource.value() ?? []);
+  readonly visibleExams = this.draftExams;
+
+  readonly hasMoreExams = computed(() => this.draftExams().length >= this.limit());
 
   loadMore(): void {
     this.limit.update(l => l + DEFAULT_PAGE_SIZE);

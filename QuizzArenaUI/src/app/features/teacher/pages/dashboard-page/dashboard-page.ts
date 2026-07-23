@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
 import { TeacherDashboardService } from '../../services/teacher-dashboard.service';
 import { TeacherExamService } from '../../services/teacher-exam.service';
@@ -16,7 +16,6 @@ import { ExamFormFilter } from '../../models/exam-form-filter';
 import { ModalService } from '../../../../core/services/modal.service';
 import { form } from '@angular/forms/signals';
 import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
-import { switchMap } from 'rxjs/operators';
 import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 @Component({
@@ -46,19 +45,20 @@ export class TeacherDashboardPage {
   readonly publishedLimit = signal(DEFAULT_PAGE_SIZE);
   readonly recentLimit = signal(DEFAULT_PAGE_SIZE);
 
-  readonly draftExams = toSignal(
-    toObservable(this.draftLimit).pipe(
-      switchMap(limit => this.#examService.getExams({ page: 1, pageSize: limit, status: 'draft' }))
-    ),
-    { initialValue: [] }
-  );
+  readonly draftExamsResource = rxResource({
+    params: () => ({ limit: this.draftLimit() }),
+    stream: ({ params }) =>
+      this.#examService.getExams({ page: 1, pageSize: params.limit, status: 'draft' }),
+  });
 
-  readonly publishedExams = toSignal(
-    toObservable(this.publishedLimit).pipe(
-      switchMap(limit => this.#examService.getExams({ page: 1, pageSize: limit, status: 'published' }))
-    ),
-    { initialValue: [] }
-  );
+  readonly publishedExamsResource = rxResource({
+    params: () => ({ limit: this.publishedLimit() }),
+    stream: ({ params }) =>
+      this.#examService.getExams({ page: 1, pageSize: params.limit, status: 'published' }),
+  });
+
+  readonly draftExams = computed(() => this.draftExamsResource.value() ?? []);
+  readonly publishedExams = computed(() => this.publishedExamsResource.value() ?? []);
 
   readonly visibleDraftExams = this.draftExams;
   readonly hasMoreDraftExams = computed(() => this.draftExams().length >= this.draftLimit());

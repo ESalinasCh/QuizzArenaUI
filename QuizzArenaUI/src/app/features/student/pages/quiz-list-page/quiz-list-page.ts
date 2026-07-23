@@ -1,8 +1,6 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, debounced, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { toSignal, toObservable } from '@angular/core/rxjs-interop';
-import { catchError, EMPTY, combineLatest } from 'rxjs';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
 import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
 import { AvailableQuizCard } from '../../components/available-quiz-card/available-quiz-card';
@@ -37,7 +35,9 @@ export class StudentQuizListPage {
   readonly #studentQuizService = inject(StudentQuizService);
 
   readonly availableSearchQuery = signal('');
+  readonly debouncedAvailableSearch = debounced(this.availableSearchQuery, 300);
   readonly recentSearchQuery = signal('');
+  readonly debouncedRecentSearch = debounced(this.recentSearchQuery, 300);
   readonly availableLimit = signal(DEFAULT_PAGE_SIZE);
   readonly recentLimit = signal(DEFAULT_PAGE_SIZE);
 
@@ -50,39 +50,29 @@ export class StudentQuizListPage {
   readonly noHistoryDescription = $localize`:Student no history description:Complete your first quiz to see your history here.`;
   readonly proTipTitle = $localize`:Student pro tip title:Pro Tip`;
 
-  readonly visibleAvailableQuizzes = toSignal(
-    combineLatest([
-      toObservable(this.availableSearchQuery).pipe(debounceTime(300)),
-      toObservable(this.availableLimit)
-    ]).pipe(
-      switchMap(([search, limit]) =>
-        this.#studentQuizService.getAvailableQuizzes({ page: 1, pageSize: limit, search })
-      ),
-      catchError(() => EMPTY)
-    ),
-    { initialValue: [] }
-  );
-
-  readonly hasMoreAvailable = computed(() => {
-    return this.visibleAvailableQuizzes().length >= this.availableLimit();
+  readonly availableQuizzesResource = rxResource({
+    params: () => ({
+      search: this.debouncedAvailableSearch.value() ?? '',
+      limit: this.availableLimit(),
+    }),
+    stream: ({ params }) =>
+      this.#studentQuizService.getAvailableQuizzes({ page: 1, pageSize: params.limit, search: params.search }),
   });
 
-  readonly visibleRecentQuizzes = toSignal(
-    combineLatest([
-      toObservable(this.recentSearchQuery).pipe(debounceTime(300)),
-      toObservable(this.recentLimit)
-    ]).pipe(
-      switchMap(([search, limit]) =>
-        this.#studentQuizService.getRecentQuizzes({ page: 1, pageSize: limit, search })
-      ),
-      catchError(() => EMPTY)
-    ),
-    { initialValue: [] }
-  );
+  readonly visibleAvailableQuizzes = computed(() => this.availableQuizzesResource.value() ?? []);
+  readonly hasMoreAvailable = computed(() => this.visibleAvailableQuizzes().length >= this.availableLimit());
 
-  readonly hasMoreRecent = computed(() => {
-    return this.visibleRecentQuizzes().length >= this.recentLimit();
+  readonly recentQuizzesResource = rxResource({
+    params: () => ({
+      search: this.debouncedRecentSearch.value() ?? '',
+      limit: this.recentLimit(),
+    }),
+    stream: ({ params }) =>
+      this.#studentQuizService.getRecentQuizzes({ page: 1, pageSize: params.limit, search: params.search }),
   });
+
+  readonly visibleRecentQuizzes = computed(() => this.recentQuizzesResource.value() ?? []);
+  readonly hasMoreRecent = computed(() => this.visibleRecentQuizzes().length >= this.recentLimit());
 
   loadMoreAvailable(): void {
     this.availableLimit.update(limit => limit + DEFAULT_PAGE_SIZE);
@@ -94,7 +84,6 @@ export class StudentQuizListPage {
 
   readonly displayName = computed(() => {
     const user = this.#authService.currentUser();
-
     return user?.name?.split(' ')[0] ?? user?.username ?? this.studentFallbackName;
   });
 

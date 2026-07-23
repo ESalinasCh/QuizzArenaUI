@@ -17,7 +17,7 @@ import {
 } from '../api/teacher-exam.contract';
 import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
 import { TEACHER_EXAM_ENDPOINTS, TEACHER_GRADES_ENDPOINTS } from '../api/teacher-exam.endpoints';
-import { TEACHER_CLASSES_RESPONSE_MOCK, TEACHER_EXAMS_MOCK } from '../mocks/teacher-exam.mock';
+import { TEACHER_CLASSES_RESPONSE_MOCK } from '../mocks/teacher-exam.mock';
 import { ClassSource, CreateExamRequest, Exam, ExamConfig, Grade, Match, Question } from '../models/exam.model';
 import { GradeAttemptFilters, GradeResponse, MatchResponse } from '../api/teacher-grades.contract';
 import { mapGradeResponse, mapMatchResponse } from '../api/teacher-grades.mapper';
