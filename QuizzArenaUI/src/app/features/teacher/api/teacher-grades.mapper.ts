@@ -1,30 +1,30 @@
-import { Grade, Match } from "../models/exam.model";
-import { GradeResponse, MatchResponse } from "./teacher-grades.contract";
+import { Grade, Match } from '../models/exam.model';
+import { GradeResponse, MatchResponse } from './teacher-grades.contract';
 
-export function mapGradeResponse(response: GradeResponse): Grade {
-    return {
-        id: response.id,
-        nickname: response.nickname,
-        status: response.status,
-        score: response.score,
-        userId: response.userId,
-        matchId: response.matchId,
-        otherAttempts: response.otherAttempts.map(attempt => ({
-            id: attempt.id,
-            nickname: attempt.nickname,
-            status: attempt.status,
-            score: attempt.score
-        }))
-    };
+export function mapGradeResponse({ id, nickname, status, score, userId, matchId, otherAttempts }: GradeResponse): Grade {
+  return {
+    id,
+    nickname,
+    status,
+    score,
+    userId,
+    matchId,
+    otherAttempts: otherAttempts.map(({ id, nickname, status, score }) => ({
+      id,
+      nickname,
+      status,
+      score,
+    })),
+  };
 }
 
-export function mapMatchResponse(response: MatchResponse): Match {
-    return {
-        id: response.id,
-        title: response.title,
-        courseName: response.courseName,
-        questionCount: response.questionCount,
-        professorName: response.professorName,
-        duration: response.duration,
-    };
+export function mapMatchResponse({ id, title, courseName, questionCount, professorName, duration }: MatchResponse): Match {
+  return {
+    id,
+    title,
+    courseName,
+    questionCount,
+    professorName,
+    duration,
+  };
 }

@@ -7,31 +7,30 @@ import { RecentContent, TeacherDashboard } from '../models/teacher-dashboard.mod
 import { Subject } from '../models/content-upload.model';
 
 export function mapTeacherDashboardResponse(
-  stats: TeacherQuizStatsResponse,
+  { quizCount, publishedCount }: TeacherQuizStatsResponse,
   contents: TeacherContentResponse[],
 ): TeacherDashboard {
   return {
-    quizCount: stats.quizCount,
-    publishedCount: stats.publishedCount,
+    quizCount,
+    publishedCount,
     recentContent: contents.map(mapTeacherContentResponse),
   };
 }
 
-export function mapTeacherContentResponse(response: TeacherContentResponse): RecentContent {
+export function mapTeacherContentResponse(
+  { id, title, status, questionCount, processingMinutesRemaining }: TeacherContentResponse,
+): RecentContent {
   return {
-    id: response.id,
-    title: response.title,
-    status: response.status === 'processed' ? 'processed' : 'in-progress',
+    id,
+    title,
+    status: status === 'processed' ? 'processed' : 'in-progress',
     info:
-      response.status === 'processed'
-        ? `${response.questionCount ?? 0} preg.`
-        : `${response.processingMinutesRemaining ?? 0} min`,
+      status === 'processed'
+        ? `${questionCount ?? 0} preg.`
+        : `${processingMinutesRemaining ?? 0} min`,
   };
 }
 
-export function mapCourseResponse(response: CourseResponse): Subject {
-  return {
-    id: response.id,
-    name: response.name,
-  };
+export function mapCourseResponse({ id, name }: CourseResponse): Subject {
+  return { id, name };
 }

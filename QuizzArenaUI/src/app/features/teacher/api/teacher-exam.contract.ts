@@ -42,4 +42,5 @@ export interface ExamResponse {
   status: string;
   questionIds: string[];
   createdAt: string;
+  questions?: { questionId?: string; id?: string }[];
 }

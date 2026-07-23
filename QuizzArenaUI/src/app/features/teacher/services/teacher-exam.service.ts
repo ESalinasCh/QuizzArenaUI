@@ -13,6 +13,7 @@ import {
   CreateMatchRequestBody,
   CreateQuizResponseBody,
   QuestionResponse,
+  ExamResponse,
 } from '../api/teacher-exam.contract';
 import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
 import { TEACHER_EXAM_ENDPOINTS, TEACHER_GRADES_ENDPOINTS } from '../api/teacher-exam.endpoints';
@@ -50,7 +51,7 @@ export class TeacherExamService {
 
   getExams(filters?: QuizPagedRequest): Observable<Exam[]> {
     const params = buildHttpParams(filters);
-    return this.#http.get<any[]>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), { params }).pipe(
+    return this.#http.get<ExamResponse[]>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), { params }).pipe(
       map(exams => exams.map(mapExamResponse))
     );
   }
