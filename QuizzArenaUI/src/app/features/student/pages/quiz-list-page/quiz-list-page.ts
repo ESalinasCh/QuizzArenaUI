@@ -13,6 +13,7 @@ import { Icon } from '../../../../shared/atoms/icon/icon';
 import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
 import { InfoCard } from '../../../../shared/molecules/info-card/info-card';
 import { TextInput } from '../../../../shared/molecules/text-input/text-input';
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 import { Button } from '../../../../shared/atoms/button/button';
 
 @Component({
@@ -37,8 +38,8 @@ export class StudentQuizListPage {
 
   readonly availableSearchQuery = signal('');
   readonly recentSearchQuery = signal('');
-  readonly availableLimit = signal(6);
-  readonly recentLimit = signal(6);
+  readonly availableLimit = signal(DEFAULT_PAGE_SIZE);
+  readonly recentLimit = signal(DEFAULT_PAGE_SIZE);
 
   readonly availableQuizzesTitle = $localize`:Student dashboard available quizzes section title:Available Quizzes`;
   readonly recentQuizzesTitle = $localize`:Student dashboard recent quizzes section title:Recent Quizzes`;
@@ -84,11 +85,11 @@ export class StudentQuizListPage {
   });
 
   loadMoreAvailable(): void {
-    this.availableLimit.update(limit => limit + 6);
+    this.availableLimit.update(limit => limit + DEFAULT_PAGE_SIZE);
   }
 
   loadMoreRecent(): void {
-    this.recentLimit.update(limit => limit + 6);
+    this.recentLimit.update(limit => limit + DEFAULT_PAGE_SIZE);
   }
 
   readonly displayName = computed(() => {

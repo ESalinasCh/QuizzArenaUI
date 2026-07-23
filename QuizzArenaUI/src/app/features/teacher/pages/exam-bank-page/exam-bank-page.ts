@@ -8,6 +8,7 @@ import { Exam } from '../../models/exam.model';
 import { TextInput } from '../../../../shared/molecules/text-input/text-input';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 @Component({
   selector: 'qz-teacher-exam-bank-page',
@@ -19,7 +20,7 @@ export class TeacherExamBankPage {
   readonly #examService = inject(TeacherExamService);
 
   readonly searchQuery = signal('');
-  readonly limit = signal(6);
+  readonly limit = signal(DEFAULT_PAGE_SIZE);
 
   protected readonly createExamAriaLabel = $localize`:Exam bank create exam button aria label:Create exam`;
   protected readonly publishAriaLabel = $localize`:Exam bank publish button aria label:Publish exam`;
@@ -44,7 +45,7 @@ export class TeacherExamBankPage {
   });
 
   loadMore(): void {
-    this.limit.update(l => l + 6);
+    this.limit.update(l => l + DEFAULT_PAGE_SIZE);
   }
 
   async createExam(): Promise<void> {
