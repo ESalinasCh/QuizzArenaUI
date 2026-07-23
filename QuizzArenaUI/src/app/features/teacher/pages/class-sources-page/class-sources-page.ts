@@ -1,40 +1,46 @@
-import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed, debounced } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { TextSpan } from '../../../../shared/atoms/text-span/text-span';
 import { ClassSourcesService } from '../../services/class-sources.service';
 import { TeacherClassSourceCard } from '../../components/class-source-card/class-source-card';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TeacherClassSource } from '../../models/class-source.model';
+import { TextInput } from '../../../../shared/molecules/text-input/text-input';
+import { Button } from '../../../../shared/atoms/button/button';
+
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 @Component({
   selector: 'qz-teacher-class-sources-page',
   templateUrl: './class-sources-page.html',
-
-  imports: [TextSpan, TeacherClassSourceCard],
+  imports: [TextSpan, TeacherClassSourceCard, TextInput, Button],
 })
-export class TeacherClassSourcesPage implements OnInit {
+export class TeacherClassSourcesPage {
   readonly #classSourcesService = inject(ClassSourcesService);
-  readonly #destroyRef = inject(DestroyRef);
 
-  readonly classSources = signal<TeacherClassSource[]>([]);
-  readonly isLoading = signal(false);
+  readonly searchQuery = signal('');
+  readonly debouncedSearchQuery = debounced(this.searchQuery, 300);
+  readonly limit = signal(DEFAULT_PAGE_SIZE);
 
-  ngOnInit(): void {
-    this.loadClassSources();
-  }
+  readonly classSourcesResource = rxResource({
+    params: () => ({
+      search: this.debouncedSearchQuery.value() ?? '',
+      limit: this.limit()
+    }),
+    stream: ({ params }) => this.#classSourcesService.getClassSources({
+      page: 1,
+      pageSize: params.limit,
+      search: params.search
+    })
+  });
 
-  loadClassSources(): void {
-    this.isLoading.set(true);
-    this.#classSourcesService.getClassSources().pipe(
-      takeUntilDestroyed(this.#destroyRef)
-    ).subscribe({
-      next: (sources) => {
-        this.classSources.set(sources);
-        this.isLoading.set(false);
-      },
-      error: (err) => {
-        console.error('Error loading class sources', err);
-        this.isLoading.set(false);
-      }
-    });
+  readonly classSources = computed(() => this.classSourcesResource.value() ?? []);
+  readonly visibleClassSources = this.classSources;
+  readonly isLoading = computed(() => this.classSourcesResource.isLoading());
+
+  readonly hasMoreClassSources = computed(() => {
+    return this.classSources().length >= this.limit();
+  });
+
+  loadMore(): void {
+    this.limit.update(l => l + DEFAULT_PAGE_SIZE);
   }
 }

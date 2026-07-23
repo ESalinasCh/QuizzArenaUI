@@ -1,38 +1,38 @@
 import { ClassSource, Exam, Question } from '../models/exam.model';
 import { ClassSourceResponse, CreateQuizResponseBody, ExamResponse, QuestionResponse } from './teacher-exam.contract';
 
-export function mapClassSourceResponse(response: ClassSourceResponse): ClassSource {
-  return { id: response.id, name: response.name };
+export function mapClassSourceResponse({ id, name }: ClassSourceResponse): ClassSource {
+  return { id, name };
 }
 
-export function mapQuestionResponse(response: QuestionResponse): Question {
+export function mapQuestionResponse({ id, content, processingJobId }: QuestionResponse): Question {
   return {
-    id: response.id,
-    text: response.content,
+    id,
+    text: content,
     options: [],
-    sourceId: response.processingJobId,
+    sourceId: processingJobId,
     sourceName: '',
   };
 }
 
-export function mapExamResponse(response: ExamResponse): Exam {
+export function mapExamResponse({ id, title, description, status, questionIds, questions, createdAt }: ExamResponse): Exam {
   return {
-    id: response.id,
-    title: response.title,
-    description: response.description,
-    status: response.status === 'published' ? 'published' : 'draft',
-    questionIds: response.questionIds,
-    createdAt: response.createdAt,
+    id,
+    title,
+    description,
+    status: status === 'published' ? 'published' : 'draft',
+    questionIds: questionIds || (questions ? questions.map(q => q.questionId || q.id || '') : []) || [],
+    createdAt,
   };
 }
 
-export function mapCreateQuizResponse(response: CreateQuizResponseBody): Exam {
+export function mapCreateQuizResponse({ id, title, description, status, questions }: CreateQuizResponseBody): Exam {
   return {
-    id: response.id,
-    title: response.title,
-    description: response.description,
-    status: response.status === 'published' ? 'published' : 'draft',
-    questionIds: response.questions.map(q => q.questionId),
+    id,
+    title,
+    description,
+    status: status === 'published' ? 'published' : 'draft',
+    questionIds: questions.map(q => q.questionId),
     createdAt: new Date().toISOString(),
   };
 }

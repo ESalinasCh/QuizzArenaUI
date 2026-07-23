@@ -2,6 +2,7 @@ import { AvailableMatchResponse, CreatePlayResponse, MatchAttemptDetailResponse,
 import {
   mapAttemptHistoryCardResponse,
   mapAvailableMatchResponse,
+  mapCompleteExamAttemptResponse,
   mapMatchAttemptDetailResponse,
   mapMatchAttemptSummaryResponse,
   mapQuizStartResponse,
@@ -154,6 +155,43 @@ describe('student-quiz.mapper', () => {
       expect(result.scorePercentage).toBe(80);
       expect(result.correctCount).toBe(4);
       expect(result.message).toBe('Result submitted');
+    });
+  });
+
+  describe('mapCompleteExamAttemptResponse', () => {
+    it('merges response and metadata', () => {
+      const response = {
+        attemptId: 'att-10',
+        answeredQuestions: 3,
+        totalQuestions: 3,
+        answers: [
+          { id: 'a-1', number: 1, text: 'Q1?', selectedOptionId: 'opt-A' },
+          { id: 'a-2', number: 2, text: 'Q2?', selectedOptionId: 'opt-B' },
+        ],
+      };
+      const metadata = { title: 'Exam', subtitle: 'Chapter 3' };
+
+      const { mapCompleteExamAttemptResponse: mapFn } = { mapCompleteExamAttemptResponse };
+      const result = mapFn(response, metadata);
+
+      expect(result.attemptId).toBe('att-10');
+      expect(result.title).toBe('Exam');
+      expect(result.subtitle).toBe('Chapter 3');
+      expect(result.answeredQuestions).toBe(3);
+      expect(result.totalQuestions).toBe(3);
+    });
+
+    it('maps answers array preserving all fields', () => {
+      const response = {
+        attemptId: 'att-11',
+        answeredQuestions: 1,
+        totalQuestions: 1,
+        answers: [{ id: 'a-1', number: 1, text: 'Q?', selectedOptionId: 'opt-X' }],
+      };
+
+      const result = mapCompleteExamAttemptResponse(response, { title: 'T', subtitle: 'S' });
+
+      expect(result.answers[0]).toEqual({ id: 'a-1', number: 1, text: 'Q?', selectedOptionId: 'opt-X' });
     });
   });
 });

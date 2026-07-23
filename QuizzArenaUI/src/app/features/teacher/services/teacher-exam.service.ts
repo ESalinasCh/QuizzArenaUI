@@ -13,13 +13,19 @@ import {
   CreateMatchRequestBody,
   CreateQuizResponseBody,
   QuestionResponse,
+  ExamResponse,
 } from '../api/teacher-exam.contract';
-import { buildApiUrl } from '../../../core/utils/api-url.util';
+import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
 import { TEACHER_EXAM_ENDPOINTS, TEACHER_GRADES_ENDPOINTS } from '../api/teacher-exam.endpoints';
-import { TEACHER_CLASSES_RESPONSE_MOCK, TEACHER_EXAMS_MOCK } from '../mocks/teacher-exam.mock';
+import { TEACHER_CLASSES_RESPONSE_MOCK } from '../mocks/teacher-exam.mock';
 import { ClassSource, CreateExamRequest, Exam, ExamConfig, Grade, Match, Question } from '../models/exam.model';
 import { GradeAttemptFilters, GradeResponse, MatchResponse } from '../api/teacher-grades.contract';
 import { mapGradeResponse, mapMatchResponse } from '../api/teacher-grades.mapper';
+import { PagedRequest } from '../../../core/models/pagination.model';
+
+export interface QuizPagedRequest extends PagedRequest {
+  status?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class TeacherExamService {
@@ -43,8 +49,11 @@ export class TeacherExamService {
       .pipe(map(questions => questions.map(mapQuestionResponse)));
   }
 
-  getExams(): Observable<Exam[]> {
-    return of(TEACHER_EXAMS_MOCK).pipe(map(exams => exams.map(mapExamResponse)));
+  getExams(filters?: QuizPagedRequest): Observable<Exam[]> {
+    const params = buildHttpParams(filters);
+    return this.#http.get<ExamResponse[]>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), { params }).pipe(
+      map(exams => exams.map(mapExamResponse))
+    );
   }
 
   createExam(request: CreateExamRequest): Observable<Exam> {
