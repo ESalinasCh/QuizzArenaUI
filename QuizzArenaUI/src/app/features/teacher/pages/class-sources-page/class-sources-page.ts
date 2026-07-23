@@ -5,7 +5,6 @@ import { ClassSourcesService } from '../../services/class-sources.service';
 import { TeacherClassSourceCard } from '../../components/class-source-card/class-source-card';
 import { TextInput } from '../../../../shared/molecules/text-input/text-input';
 import { Button } from '../../../../shared/atoms/button/button';
-import { TeacherClassSource } from '../../models/class-source.model';
 
 import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
