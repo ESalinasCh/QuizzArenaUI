@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
 import { TeacherDashboardService } from '../../services/teacher-dashboard.service';
 import { TeacherExamService } from '../../services/teacher-exam.service';
@@ -16,7 +16,7 @@ import { ExamFormFilter } from '../../models/exam-form-filter';
 import { ModalService } from '../../../../core/services/modal.service';
 import { form } from '@angular/forms/signals';
 import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
-
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'qz-teacher-dashboard-page',
@@ -41,10 +41,44 @@ export class TeacherDashboardPage {
     initialValue: { quizCount: 0, publishedCount: 0, recentContent: [] },
   });
 
-  readonly #allExams = toSignal(this.#examService.getExams(), { initialValue: [] });
+  readonly draftLimit = signal(6);
+  readonly publishedLimit = signal(6);
+  readonly recentLimit = signal(6);
 
-  readonly draftExams = computed(() => this.#allExams().filter(e => e.status === 'draft'));
-  readonly publishedExams = computed(() => this.#allExams().filter(e => e.status === 'published'));
+  readonly draftExams = toSignal(
+    toObservable(this.draftLimit).pipe(
+      switchMap(limit => this.#examService.getExams({ page: 1, pageSize: limit, status: 'draft' }))
+    ),
+    { initialValue: [] }
+  );
+
+  readonly publishedExams = toSignal(
+    toObservable(this.publishedLimit).pipe(
+      switchMap(limit => this.#examService.getExams({ page: 1, pageSize: limit, status: 'published' }))
+    ),
+    { initialValue: [] }
+  );
+
+  readonly visibleDraftExams = this.draftExams;
+  readonly hasMoreDraftExams = computed(() => this.draftExams().length >= this.draftLimit());
+
+  readonly visiblePublishedExams = this.publishedExams;
+  readonly hasMorePublishedExams = computed(() => this.publishedExams().length >= this.publishedLimit());
+
+  readonly visibleRecentContent = computed(() => this.dashboard().recentContent.slice(0, this.recentLimit()));
+  readonly hasMoreRecentContent = computed(() => (this.dashboard().recentContent?.length || 0) > this.recentLimit());
+
+  loadMoreDrafts(): void {
+    this.draftLimit.update(l => l + 6);
+  }
+
+  loadMorePublished(): void {
+    this.publishedLimit.update(l => l + 6);
+  }
+
+  loadMoreRecent(): void {
+    this.recentLimit.update(l => l + 6);
+  }
 
   protected readonly displayName = computed(() => {
     const user = this.#authService.currentUser();
@@ -88,8 +122,8 @@ export class TeacherDashboardPage {
   isClearSearchOptionAvailable = signal(false);
 
   protected search() {
-    const text = this.searchModel().text;
-    const foundExams = this.#allExams().filter(exam => exam.title.includes(text));
+    const text = this.searchModel().text.toLowerCase();
+    const foundExams = [...this.draftExams(), ...this.publishedExams()].filter((exam: Exam) => exam.title.toLowerCase().includes(text));
     this.isClearSearchOptionAvailable.set(true);
     this.foundExams.set(foundExams);
   }
