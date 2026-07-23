@@ -183,7 +183,7 @@ describe('TeacherGradePanelPage', () => {
     });
 
     it('should reset attempts when modal returns a userId', async () => {
-        let resolveAfterClosed: (value: string | undefined) => void = () => {};
+        let resolveAfterClosed!: (value: string | undefined) => void;
         const afterClosed = new Promise<string | undefined>((resolve) => {
             resolveAfterClosed = resolve;
         });
@@ -193,13 +193,11 @@ describe('TeacherGradePanelPage', () => {
 
         const fixture = TestBed.createComponent(TeacherGradePanelPage);
         const component = fixture.componentInstance;
-        const resetSpy = vi.spyOn(component as any, 'resetAttempts');
 
         component.openResetModal(mockGrades[0]);
         resolveAfterClosed('user-1');
         await afterClosed;
-
-        expect(resetSpy).toHaveBeenCalledWith('user-1');
+        expect(mockExamService.resetAttempts).toHaveBeenCalledWith('user-1');
     });
 
     it('should reload grades after successful resetAttempts', async () => {
