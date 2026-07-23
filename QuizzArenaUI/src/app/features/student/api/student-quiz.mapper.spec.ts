@@ -122,6 +122,7 @@ describe('student-quiz.mapper', () => {
       expect(result.title).toBe('Quiz 1');
       expect(result.attemptId).toBe('attempt-1');
       expect(result.questions.length).toBe(1);
+      expect(result.questions[0].questionType).toBe('SingleChoice');
       expect(result.questions[0].options[0].label).toBe('A');
     });
   });
@@ -131,7 +132,7 @@ describe('student-quiz.mapper', () => {
       const response: MatchAttemptDetailResponse = {
         id: 'attempt-1', score: 80, status: 'passed',
         questions: [
-          { questionId: 'q1', content: 'Q1', selectedOptionId: 'q1-a', isCorrect: true, options: [{ id: 'q1-a', description: 'Answer A', isCorrect: true }] },
+          { questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [{ id: 'q1-a', description: 'Answer A', isCorrect: true }] },
         ],
       };
       const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
@@ -140,6 +141,29 @@ describe('student-quiz.mapper', () => {
       expect(result.title).toBe('Quiz 1');
       expect(result.questions[0].text).toBe('Q1');
       expect(result.questions[0].isCorrect).toBe(true);
+    });
+
+    it('should map multiple selected answers from attempt detail', () => {
+      const response: MatchAttemptDetailResponse = {
+        id: 'attempt-1', score: 80, status: 'passed',
+        questions: [
+          {
+            questionId: 'q1',
+            content: 'Q1',
+            selectedOptionIds: ['q1-a', 'q1-b'],
+            isCorrect: true,
+            options: [
+              { id: 'q1-a', description: 'Answer A', isCorrect: true },
+              { id: 'q1-b', description: 'Answer B', isCorrect: true },
+            ],
+          },
+        ],
+      };
+      const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
+
+      const result = mapMatchAttemptDetailResponse(response, metadata);
+
+      expect(result.questions[0].selectedAnswerLabel).toBe('Answer A, Answer B');
     });
   });
 
@@ -165,8 +189,8 @@ describe('student-quiz.mapper', () => {
         answeredQuestions: 3,
         totalQuestions: 3,
         answers: [
-          { id: 'a-1', number: 1, text: 'Q1?', selectedOptionId: 'opt-A' },
-          { id: 'a-2', number: 2, text: 'Q2?', selectedOptionId: 'opt-B' },
+          { id: 'a-1', number: 1, text: 'Q1?', selectedOptionIds: ['opt-A'] },
+          { id: 'a-2', number: 2, text: 'Q2?', selectedOptionIds: ['opt-B'] },
         ],
       };
       const metadata = { title: 'Exam', subtitle: 'Chapter 3' };
@@ -186,12 +210,12 @@ describe('student-quiz.mapper', () => {
         attemptId: 'att-11',
         answeredQuestions: 1,
         totalQuestions: 1,
-        answers: [{ id: 'a-1', number: 1, text: 'Q?', selectedOptionId: 'opt-X' }],
+        answers: [{ id: 'a-1', number: 1, text: 'Q?', selectedOptionIds: ['opt-X'] }],
       };
 
       const result = mapCompleteExamAttemptResponse(response, { title: 'T', subtitle: 'S' });
 
-      expect(result.answers[0]).toEqual({ id: 'a-1', number: 1, text: 'Q?', selectedOptionId: 'opt-X' });
+      expect(result.answers[0]).toEqual({ id: 'a-1', number: 1, text: 'Q?', selectedOptionIds: ['opt-X'] });
     });
   });
 });

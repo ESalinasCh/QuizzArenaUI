@@ -4,6 +4,7 @@ import {
   CreatePlayResponse,
   MatchAttemptDetailResponse,
   MatchAttemptSummaryResponse,
+  QuestionType,
   SubmitMatchAttemptResponse,
 } from './student-quiz.contract';
 import {
@@ -21,6 +22,7 @@ import {
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 const NEW_MATCH_THRESHOLD_DAYS = 2;
 const GRADE_HISTORY_PASSING_SCORE = 50;
+const DEFAULT_QUESTION_TYPE: QuestionType = 'SingleChoice';
 
 export function mapStudentDashboardResponse(
   availableMatches: AvailableMatchResponse[],
@@ -81,9 +83,10 @@ export function mapQuizStartResponse(
     professorName,
     questionCount,
     timeLimitMinutes: duration,
-    questions: questions.map(({ id, statement, options }) => ({
+    questions: questions.map(({ id, statement, questionType, options }) => ({
       id,
       statement,
+      questionType: questionType ?? DEFAULT_QUESTION_TYPE,
       options: options.map(({ id, label }) => ({ id, label })),
     })),
   };
@@ -98,16 +101,23 @@ export function mapMatchAttemptDetailResponse(
     title,
     subtitle,
     score,
-    questions: questions.map(({ questionId, content, options, selectedOptionId, isCorrect }, index) => {
-      const selectedOption = options.find(option => option.id === selectedOptionId);
+    questions: questions.map(({ questionId, content, options, selectedOptionIds, isCorrect }, index) => {
+      const optionDescriptionById = new Map(
+        options.map(option => [option.id, option.description]),
+      );
+
+      const selectedAnswerLabel = formatSelectedAnswerLabel(
+        selectedOptionIds
+          .map(optionId => optionDescriptionById.get(optionId))
+          .filter((description): description is string => Boolean(description)),
+      );
 
       return {
         id: questionId,
         number: index + 1,
         text: content,
-        selectedAnswerLabel:
-          selectedOption?.description ?? $localize`:Student quiz unanswered fallback:No answer`,
         isCorrect,
+        selectedAnswerLabel,
       };
     }),
   };
@@ -139,11 +149,11 @@ export function mapCompleteExamAttemptResponse(
     subtitle,
     answeredQuestions,
     totalQuestions,
-    answers: answers.map(({ id, number, text, selectedOptionId }) => ({
+    answers: answers.map(({ id, number, text, selectedOptionIds }) => ({
       id,
       number,
       text,
-      selectedOptionId,
+      selectedOptionIds,
     })),
   };
 }
@@ -192,4 +202,12 @@ function formatRelativeDate(value: string): string {
   const diffInDays = Math.max(1, Math.round(diffInMs / MILLISECONDS_PER_DAY));
 
   return $localize`:Recent quiz completed relative date:${diffInDays}:days: days ago`;
+}
+
+function formatSelectedAnswerLabel(selectedLabels: string[]): string {
+  if (!selectedLabels.length) {
+    return $localize`:Student quiz unanswered fallback:No answer`;
+  }
+
+  return selectedLabels.join(', ');
 }

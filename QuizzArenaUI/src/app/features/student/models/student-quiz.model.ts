@@ -1,4 +1,4 @@
-import { MatchStatus } from "../api/student-quiz.contract";
+import { MatchStatus, QuestionType } from "../api/student-quiz.contract";
 
 export type AvailableQuizStatus = 'available' | 'new';
 export type RecentQuizStatus = 'passed' | 'warning';
@@ -52,6 +52,7 @@ export interface QuizQuestionOption {
 export interface QuizQuestion {
   id: string;
   statement: string;
+  questionType: QuestionType;
   options: QuizQuestionOption[];
 }
 
@@ -98,7 +99,7 @@ export interface StudentExamAnswer {
   id: string;
   number: number;
   text: string;
-  selectedOptionId: string | null;
+  selectedOptionIds: string[];
 }
 
 export interface StudentExamResult {

@@ -15,7 +15,7 @@ export class StudentQuizQuestionPage {
   readonly #router = inject(Router);
   readonly #studentQuizService = inject(StudentQuizService);
 
-  readonly selectedOptionId = signal<string | null>(null);
+  readonly selectedOptionIds = signal<string[]>([]);
   readonly answers = signal<SubmitMatchAttemptAnswerRequest[]>([]);
   readonly isSubmitting = signal(false);
   readonly questionIndex = signal(0);
@@ -24,6 +24,20 @@ export class StudentQuizQuestionPage {
   readonly quiz = computed(() => this.#studentQuizService.getActiveQuizStart());
 
   readonly currentQuestion = computed(() => this.quiz()?.questions[this.questionIndex()]);
+  readonly selectionInstruction = computed(() => {
+    const questionType = this.currentQuestion()?.questionType;
+
+    if (questionType === 'MultipleChoice') {
+      return $localize`:Student multiple choice instruction:Select all correct answers`;
+    }
+
+    if (questionType === 'TrueFalse') {
+      return $localize`:Student true false instruction:Mark true or false`;
+    }
+
+    return $localize`:Student single choice instruction:Select one answer`;
+  });
+  readonly hasSelection = computed(() => this.selectedOptionIds().length > 0);
   readonly progressLabel = computed(() => {
     const current = this.questionIndex() + 1;
     const total = this.quiz()?.questions.length ?? 0;
@@ -40,26 +54,39 @@ export class StudentQuizQuestionPage {
     return ((this.questionIndex() + 1) / total) * 100;
   });
 
-  selectOption(optionId: string): void {
-    this.selectedOptionId.set(optionId);
+  isOptionSelected(optionId: string): boolean {
+    return this.selectedOptionIds().includes(optionId);
   }
 
-  confirmAnswer(): void {
-    const selectedOptionId = this.selectedOptionId();
-    const question = this.currentQuestion();
-
-    if (!selectedOptionId || !question || this.isSubmitting()) {
+  selectOption(optionId: string): void {
+    if (this.currentQuestion()?.questionType !== 'MultipleChoice') {
+      this.selectedOptionIds.set([optionId]);
       return;
     }
 
-    this.#saveAnswer(question.id, selectedOptionId);
+    this.selectedOptionIds.update(selectedOptionIds =>
+      selectedOptionIds.includes(optionId)
+        ? selectedOptionIds.filter(selectedOptionId => selectedOptionId !== optionId)
+        : [...selectedOptionIds, optionId],
+    );
+  }
+
+  confirmAnswer(): void {
+    const selectedOptionIds = this.selectedOptionIds();
+    const question = this.currentQuestion();
+
+    if (!selectedOptionIds.length || !question || this.isSubmitting()) {
+      return;
+    }
+
+    this.#saveAnswer(question.id, selectedOptionIds);
 
     const total = this.quiz()?.questions.length ?? 0;
     const nextIndex = this.questionIndex() + 1;
 
     if (nextIndex < total) {
       this.questionIndex.set(nextIndex);
-      this.selectedOptionId.set(null);
+      this.selectedOptionIds.set([]);
       return;
     }
 
@@ -97,10 +124,10 @@ export class StudentQuizQuestionPage {
       });
   }
 
-  #saveAnswer(questionId: string, selectedOptionId: string): void {
+  #saveAnswer(questionId: string, selectedOptionIds: string[]): void {
     this.answers.update(answers => [
       ...answers.filter(answer => answer.questionId !== questionId),
-      { questionId, selectedOptionId, answeredAt: new Date().toISOString() },
+      { questionId, selectedOptionIds, answeredAt: new Date().toISOString() },
     ]);
   }
 }

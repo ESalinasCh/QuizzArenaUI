@@ -13,7 +13,7 @@ export class StudentExamQuestionPage {
   readonly #router = inject(Router);
   readonly #studentQuizService = inject(StudentQuizService);
 
-  readonly selectedOptionId = signal<string | null>(null);
+  readonly selectedOptionIds = signal<string[]>([]);
   readonly isSubmitting = signal(false);
   readonly questionIndex = signal(0);
   readonly optionLetters = ['A', 'B', 'C', 'D'];
@@ -21,6 +21,20 @@ export class StudentExamQuestionPage {
   readonly exam = computed(() => this.#studentQuizService.getActiveExamStart());
 
   readonly currentQuestion = computed(() => this.exam()?.questions[this.questionIndex()]);
+  readonly selectionInstruction = computed(() => {
+    const questionType = this.currentQuestion()?.questionType;
+
+    if (questionType === 'MultipleChoice') {
+      return $localize`:Student multiple choice instruction:Select all correct answers`;
+    }
+
+    if (questionType === 'TrueFalse') {
+      return $localize`:Student true false instruction:Mark true or false`;
+    }
+
+    return $localize`:Student single choice instruction:Select one answer`;
+  });
+  readonly hasSelection = computed(() => this.selectedOptionIds().length > 0);
   readonly progressLabel = computed(() => {
     const current = this.questionIndex() + 1;
     const total = this.exam()?.questions.length ?? 0;
@@ -37,16 +51,29 @@ export class StudentExamQuestionPage {
     return ((this.questionIndex() + 1) / total) * 100;
   });
 
+  isOptionSelected(optionId: string): boolean {
+    return this.selectedOptionIds().includes(optionId);
+  }
+
   selectOption(optionId: string): void {
-    this.selectedOptionId.set(optionId);
+    if (this.currentQuestion()?.questionType !== 'MultipleChoice') {
+      this.selectedOptionIds.set([optionId]);
+      return;
+    }
+
+    this.selectedOptionIds.update(selectedOptionIds =>
+      selectedOptionIds.includes(optionId)
+        ? selectedOptionIds.filter(selectedOptionId => selectedOptionId !== optionId)
+        : [...selectedOptionIds, optionId],
+    );
   }
 
   confirmAnswer(): void {
-    const selectedOptionId = this.selectedOptionId();
+    const selectedOptionIds = this.selectedOptionIds();
     const question = this.currentQuestion();
     const attemptId = this.exam()?.attemptId;
 
-    if (!selectedOptionId || !question || !attemptId || this.isSubmitting()) {
+    if (!selectedOptionIds.length || !question || !attemptId || this.isSubmitting()) {
       return;
     }
 
@@ -56,7 +83,7 @@ export class StudentExamQuestionPage {
 
     this.isSubmitting.set(true);
     this.#studentQuizService
-      .trackExamAnswer(attemptId, question.id, selectedOptionId)
+      .trackExamAnswer(attemptId, question.id, selectedOptionIds)
       .pipe(
         switchMap(() => {
           if (!isLastQuestion) {
@@ -79,7 +106,7 @@ export class StudentExamQuestionPage {
         next: result => {
           if (result === 'next') {
             this.questionIndex.set(nextIndex);
-            this.selectedOptionId.set(null);
+            this.selectedOptionIds.set([]);
             this.isSubmitting.set(false);
             return;
           }
