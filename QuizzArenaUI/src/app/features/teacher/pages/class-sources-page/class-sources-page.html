@@ -1,14 +1,15 @@
 <section class="mx-auto flex w-full max-w-5xl flex-col gap-5">
   <div class="flex flex-col gap-2">
-    <p class="text-sm font-semibold text-primary">Teacher</p>
-    <h2 class="text-2xl font-bold text-light-text dark:text-dark-text">
+    <p i18n="Teacher role label" class="text-sm font-semibold text-primary">Teacher</p>
+    <h2 i18n="Teacher class sources page title" class="text-2xl font-bold text-light-text dark:text-dark-text">
       Class Sources
     </h2>
 
-    @if (classSources().length > 0) {
+    @if (classSources().length > 0 || searchQuery()) {
       <div class="w-full sm:max-w-md mt-2">
         <qz-text-input
           placeholder="Search class sources..."
+          i18n-placeholder="Class sources search placeholder"
           [value]="searchQuery()"
           (valueChange)="searchQuery.set($event)"
         />
@@ -21,21 +22,21 @@
       } @empty {
         @if (!isLoading()) {
           <div class="flex justify-center items-center h-[40vh]">
-            <qz-text-span [text]="'No Class Sources found'" />
+            <qz-text-span text="No Class Sources found" i18n-text="No class sources found label" />
           </div>
         }
       }
 
       @if (isLoading()) {
         <div class="flex justify-center items-center py-8">
-          <qz-text-span [text]="'Loading Class Sources...'" />
+          <qz-text-span text="Loading Class Sources..." i18n-text="Loading class sources label" />
         </div>
       }
     </div>
 
     @if (hasMoreClassSources()) {
       <div class="flex justify-center mt-4">
-        <qz-button variant="secondary" (click)="loadMore()">Load More</qz-button>
+        <qz-button variant="secondary" (click)="loadMore()" i18n="Class sources load more button">Load More</qz-button>
       </div>
     }
   </div>

@@ -7,6 +7,8 @@ import { TextInput } from '../../../../shared/molecules/text-input/text-input';
 import { Button } from '../../../../shared/atoms/button/button';
 import { TeacherClassSource } from '../../models/class-source.model';
 
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
+
 @Component({
   selector: 'qz-teacher-class-sources-page',
   templateUrl: './class-sources-page.html',
@@ -17,7 +19,7 @@ export class TeacherClassSourcesPage {
 
   readonly searchQuery = signal('');
   readonly debouncedSearchQuery = debounced(this.searchQuery, 300);
-  readonly limit = signal(6);
+  readonly limit = signal(DEFAULT_PAGE_SIZE);
 
   readonly classSourcesResource = rxResource({
     params: () => ({
@@ -40,6 +42,6 @@ export class TeacherClassSourcesPage {
   });
 
   loadMore(): void {
-    this.limit.update(l => l + 6);
+    this.limit.update(l => l + DEFAULT_PAGE_SIZE);
   }
 }

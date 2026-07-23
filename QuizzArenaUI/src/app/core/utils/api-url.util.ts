@@ -13,7 +13,7 @@ export function buildApiUrl(endpoint: string): string {
   return `${base}${endpoint}`;
 }
 
-export function buildHttpParams(obj?: Record<string, any>): HttpParams {
+export function buildHttpParams(obj?: Record<string, unknown>): HttpParams {
   let params = new HttpParams();
   if (!obj) return params;
 
@@ -22,10 +22,12 @@ export function buildHttpParams(obj?: Record<string, any>): HttpParams {
     if (value !== null && value !== undefined && value !== '') {
       if (Array.isArray(value)) {
         value.forEach(val => {
-          params = params.append(key, val.toString());
+          if (val !== null && val !== undefined) {
+            params = params.append(key, String(val));
+          }
         });
       } else {
-        params = params.set(key, value.toString());
+        params = params.set(key, String(value));
       }
     }
   });

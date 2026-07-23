@@ -17,6 +17,7 @@ import { ModalService } from '../../../../core/services/modal.service';
 import { form } from '@angular/forms/signals';
 import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
 import { switchMap } from 'rxjs/operators';
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 @Component({
   selector: 'qz-teacher-dashboard-page',
@@ -41,9 +42,9 @@ export class TeacherDashboardPage {
     initialValue: { quizCount: 0, publishedCount: 0, recentContent: [] },
   });
 
-  readonly draftLimit = signal(6);
-  readonly publishedLimit = signal(6);
-  readonly recentLimit = signal(6);
+  readonly draftLimit = signal(DEFAULT_PAGE_SIZE);
+  readonly publishedLimit = signal(DEFAULT_PAGE_SIZE);
+  readonly recentLimit = signal(DEFAULT_PAGE_SIZE);
 
   readonly draftExams = toSignal(
     toObservable(this.draftLimit).pipe(
@@ -69,15 +70,15 @@ export class TeacherDashboardPage {
   readonly hasMoreRecentContent = computed(() => (this.dashboard().recentContent?.length || 0) > this.recentLimit());
 
   loadMoreDrafts(): void {
-    this.draftLimit.update(l => l + 6);
+    this.draftLimit.update(l => l + DEFAULT_PAGE_SIZE);
   }
 
   loadMorePublished(): void {
-    this.publishedLimit.update(l => l + 6);
+    this.publishedLimit.update(l => l + DEFAULT_PAGE_SIZE);
   }
 
   loadMoreRecent(): void {
-    this.recentLimit.update(l => l + 6);
+    this.recentLimit.update(l => l + DEFAULT_PAGE_SIZE);
   }
 
   protected readonly displayName = computed(() => {

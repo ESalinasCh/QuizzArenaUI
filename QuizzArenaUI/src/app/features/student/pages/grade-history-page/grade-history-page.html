@@ -37,10 +37,11 @@
     </div>
   </header>
 
-  @if (attempts().length > 0) {
+  @if (attempts().length > 0 || searchQuery()) {
     <div class="w-full sm:max-w-md">
       <qz-text-input
         placeholder="Search exam or course..."
+        i18n-placeholder="Student grade history search placeholder"
         [value]="searchQuery()"
         (valueChange)="searchQuery.set($event)"
       />
@@ -116,7 +117,7 @@
 
   @if (hasMoreAttempts()) {
     <div class="flex justify-center mt-2">
-      <qz-button variant="secondary" size="small" (click)="loadMore()">Load More</qz-button>
+      <qz-button variant="secondary" size="small" (click)="loadMore()" i18n="Student grade history load more button">Load More</qz-button>
     </div>
   }
 </section>

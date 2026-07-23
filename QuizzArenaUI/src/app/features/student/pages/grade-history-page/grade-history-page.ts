@@ -5,6 +5,7 @@ import { AttemptHistoryCard } from '../../../../shared/organisms/attempt-history
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { TextInput } from '../../../../shared/molecules/text-input/text-input';
 import { Button } from '../../../../shared/atoms/button/button';
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 @Component({
   selector: 'qz-student-grade-history-page',
@@ -17,7 +18,7 @@ export class StudentGradeHistoryPage {
 
   readonly searchQuery = signal('');
   readonly debouncedSearchQuery = debounced(this.searchQuery, 300);
-  readonly limit = signal(6);
+  readonly limit = signal(DEFAULT_PAGE_SIZE);
 
   readonly viewMode = signal<'cards' | 'table'>('cards');
   readonly viewLabel = $localize`:Attempt history view action label:View`;
@@ -42,7 +43,7 @@ export class StudentGradeHistoryPage {
   });
 
   loadMore(): void {
-    this.limit.update(l => l + 6);
+    this.limit.update(l => l + DEFAULT_PAGE_SIZE);
   }
 
   async viewAttempt(attemptId: string): Promise<void> {
