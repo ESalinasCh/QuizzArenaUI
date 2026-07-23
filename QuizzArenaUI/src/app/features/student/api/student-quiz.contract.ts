@@ -6,6 +6,7 @@ export type MatchAttemptSummaryStatus = MatchAttemptDetailStatus | 'in-progress'
 export type MatchStatus = 'Active' | 'Pending' | 'Expired';
 
 export type MatchMode = 'Solo' | 'Multiple' | 'Exam';
+export type QuestionType = 'SingleChoice' | 'MultipleChoice' | 'TrueFalse';
 
 export interface AvailableMatchResponse {
   id: string;
@@ -37,7 +38,8 @@ export interface MatchAttemptDetailOptionResponse {
 export interface MatchAttemptDetailQuestionResponse {
   questionId: string;
   content: string;
-  selectedOptionId: string;
+  questionType?: QuestionType;
+  selectedOptionIds: string[];
   isCorrect: boolean;
   options: MatchAttemptDetailOptionResponse[];
 }
@@ -61,6 +63,7 @@ export interface PlayQuestionOptionResponse {
 export interface PlayQuestionResponse {
   id: string;
   statement: string;
+  questionType?: QuestionType;
   options: PlayQuestionOptionResponse[];
 }
 
@@ -72,7 +75,7 @@ export interface CreatePlayResponse {
 
 export interface SubmitMatchAttemptAnswerRequest {
   questionId: string;
-  selectedOptionId: string;
+  selectedOptionIds: string[];
   answeredAt: string;
 }
 
@@ -81,7 +84,7 @@ export interface SubmitMatchAttemptRequest {
 }
 
 export interface TrackExamAnswerRequest {
-  selectedOptionId: string;
+  selectedOptionIds: string[];
 }
 
 export interface TrackExamAnswerResponse {
@@ -93,7 +96,7 @@ export interface CompletedExamAnswerResponse {
   id: string;
   number: number;
   text: string;
-  selectedOptionId: string | null;
+  selectedOptionIds: string[];
 }
 
 export interface CompleteExamAttemptResponse {
@@ -107,8 +110,8 @@ export interface SubmittedQuestionResultResponse {
   id: string;
   number: number;
   text: string;
-  selectedOptionId: string;
-  correctOptionId: string;
+  selectedOptionIds: string[];
+  correctOptionIds: string[];
   isCorrect: boolean;
 }
 

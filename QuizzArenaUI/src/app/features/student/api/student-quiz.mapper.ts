@@ -4,6 +4,7 @@ import {
   CreatePlayResponse,
   MatchAttemptDetailResponse,
   MatchAttemptSummaryResponse,
+  QuestionType,
   SubmitMatchAttemptResponse,
 } from './student-quiz.contract';
 import {
@@ -21,6 +22,7 @@ import {
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 const NEW_MATCH_THRESHOLD_DAYS = 2;
 const GRADE_HISTORY_PASSING_SCORE = 50;
+const DEFAULT_QUESTION_TYPE: QuestionType = 'SingleChoice';
 
 export function mapStudentDashboardResponse(
   availableMatches: AvailableMatchResponse[],
@@ -84,6 +86,7 @@ export function mapQuizStartResponse(
     questions: play.questions.map(question => ({
       id: question.id,
       statement: question.statement,
+      questionType: question.questionType ?? DEFAULT_QUESTION_TYPE,
       options: question.options.map(option => ({
         id: option.id,
         label: option.label,
@@ -102,14 +105,17 @@ export function mapMatchAttemptDetailResponse(
     subtitle: metadata.subtitle,
     score: response.score,
     questions: response.questions.map((question, index) => {
-      const selectedOption = question.options.find(option => option.id === question.selectedOptionId);
+      const selectedAnswerLabel = formatSelectedAnswerLabel(
+        question.selectedOptionIds
+          .map(optionId => question.options.find(option => option.id === optionId)?.description)
+          .filter((description): description is string => Boolean(description)),
+      );
 
       return {
         id: question.questionId,
         number: index + 1,
         text: question.content,
-        selectedAnswerLabel:
-          selectedOption?.description ?? $localize`:Student quiz unanswered fallback:No answer`,
+        selectedAnswerLabel,
         isCorrect: question.isCorrect,
       };
     }),
@@ -146,7 +152,7 @@ export function mapCompleteExamAttemptResponse(
       id: answer.id,
       number: answer.number,
       text: answer.text,
-      selectedOptionId: answer.selectedOptionId,
+      selectedOptionIds: answer.selectedOptionIds,
     })),
   };
 }
@@ -195,4 +201,12 @@ function formatRelativeDate(value: string): string {
   const diffInDays = Math.max(1, Math.round(diffInMs / MILLISECONDS_PER_DAY));
 
   return $localize`:Recent quiz completed relative date:${diffInDays}:days: days ago`;
+}
+
+function formatSelectedAnswerLabel(selectedLabels: string[]): string {
+  if (!selectedLabels.length) {
+    return $localize`:Student quiz unanswered fallback:No answer`;
+  }
+
+  return selectedLabels.join(', ');
 }

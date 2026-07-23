@@ -121,6 +121,7 @@ describe('student-quiz.mapper', () => {
       expect(result.title).toBe('Quiz 1');
       expect(result.attemptId).toBe('attempt-1');
       expect(result.questions.length).toBe(1);
+      expect(result.questions[0].questionType).toBe('SingleChoice');
       expect(result.questions[0].options[0].label).toBe('A');
     });
   });
@@ -130,7 +131,7 @@ describe('student-quiz.mapper', () => {
       const response: MatchAttemptDetailResponse = {
         id: 'attempt-1', score: 80, status: 'passed',
         questions: [
-          { questionId: 'q1', content: 'Q1', selectedOptionId: 'q1-a', isCorrect: true, options: [{ id: 'q1-a', description: 'Answer A', isCorrect: true }] },
+          { questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [{ id: 'q1-a', description: 'Answer A', isCorrect: true }] },
         ],
       };
       const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
@@ -139,6 +140,29 @@ describe('student-quiz.mapper', () => {
       expect(result.title).toBe('Quiz 1');
       expect(result.questions[0].text).toBe('Q1');
       expect(result.questions[0].isCorrect).toBe(true);
+    });
+
+    it('should map multiple selected answers from attempt detail', () => {
+      const response: MatchAttemptDetailResponse = {
+        id: 'attempt-1', score: 80, status: 'passed',
+        questions: [
+          {
+            questionId: 'q1',
+            content: 'Q1',
+            selectedOptionIds: ['q1-a', 'q1-b'],
+            isCorrect: true,
+            options: [
+              { id: 'q1-a', description: 'Answer A', isCorrect: true },
+              { id: 'q1-b', description: 'Answer B', isCorrect: true },
+            ],
+          },
+        ],
+      };
+      const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
+
+      const result = mapMatchAttemptDetailResponse(response, metadata);
+
+      expect(result.questions[0].selectedAnswerLabel).toBe('Answer A, Answer B');
     });
   });
 

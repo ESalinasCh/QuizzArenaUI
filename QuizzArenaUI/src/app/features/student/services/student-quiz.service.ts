@@ -165,11 +165,11 @@ export class StudentQuizService {
   trackExamAnswer(
     attemptId: string,
     questionId: string,
-    selectedOptionId: string,
+    selectedOptionIds: string[],
   ): Observable<TrackExamAnswerResponse> {
     return this.#http.put<TrackExamAnswerResponse>(
       buildApiUrl(STUDENT_QUIZ_ENDPOINTS.trackExamAnswer(attemptId, questionId)),
-      { selectedOptionId },
+      { selectedOptionIds },
     );
   }
 

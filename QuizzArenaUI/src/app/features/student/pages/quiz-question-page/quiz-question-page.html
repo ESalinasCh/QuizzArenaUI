@@ -16,6 +16,9 @@
           <h1 class="text-xl font-bold leading-tight text-light-text dark:text-white">
             {{ question.statement }}
           </h1>
+          <p class="mt-3 text-sm font-semibold text-light-text-secondary dark:text-dark-text-secondary">
+            {{ selectionInstruction() }}
+          </p>
         </article>
 
         <p
@@ -29,7 +32,7 @@
           @for (option of question.options; track option.id; let index = $index) {
             <button
               type="button"
-              [class]="selectedOptionId() === option.id
+              [class]="isOptionSelected(option.id)
                 ? 'grid min-h-[78px] grid-cols-[28px_1fr] items-center gap-4 rounded-2xl border-2 border-primary bg-indigo-50/50 px-4 py-4 text-left shadow-md transition-all duration-300 transform scale-[1.01] dark:bg-slate-900/40 dark:shadow-none'
                 : 'grid min-h-[78px] grid-cols-[28px_1fr] items-center gap-4 rounded-2xl border-2 border-light-border bg-light-surface px-4 py-4 text-left shadow-sm transition-all duration-300 hover:border-indigo-200 hover:scale-[1.01] dark:border-dark-border dark:bg-dark-surface dark:shadow-none'"
               (click)="selectOption(option.id)"
@@ -47,7 +50,7 @@
         <button
           type="button"
           class="mt-2 flex h-[74px] w-full items-center justify-center gap-2 rounded-2xl bg-purple px-5 text-lg font-extrabold text-white shadow-button transition hover:bg-primary active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
-          [disabled]="!selectedOptionId() || isSubmitting()"
+          [disabled]="!hasSelection() || isSubmitting()"
           (click)="confirmAnswer()"
         >
           <ng-container i18n="Student quiz confirm answer button">Confirm answer</ng-container>

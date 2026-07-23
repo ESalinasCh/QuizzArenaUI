@@ -407,7 +407,7 @@
         <source>in progress</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <note priority="1" from="description">Recent quiz in progress label</note>
       </trans-unit>
@@ -415,23 +415,15 @@
         <source><x id="duration" equiv-text="response.duration"/> min</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="description">Attempt history duration label</note>
-      </trans-unit>
-      <trans-unit id="8251908569174605565" datatype="html">
-        <source>No answer</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">112</context>
-        </context-group>
-        <note priority="1" from="description">Student quiz unanswered fallback</note>
       </trans-unit>
       <trans-unit id="8179054508455181088" datatype="html">
         <source>Result submitted</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">141</context>
         </context-group>
         <note priority="1" from="description">Student quiz result default message</note>
       </trans-unit>
@@ -439,7 +431,7 @@
         <source>Passed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">166</context>
+          <context context-type="linenumber">179</context>
         </context-group>
         <note priority="1" from="description">Attempt history passed status label</note>
       </trans-unit>
@@ -447,7 +439,7 @@
         <source>Failed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">167</context>
+          <context context-type="linenumber">180</context>
         </context-group>
         <note priority="1" from="description">Attempt history failed status label</note>
       </trans-unit>
@@ -455,9 +447,17 @@
         <source><x id="days" equiv-text="diffInDays"/> days ago</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">197</context>
+          <context context-type="linenumber">210</context>
         </context-group>
         <note priority="1" from="description">Recent quiz completed relative date</note>
+      </trans-unit>
+      <trans-unit id="8251908569174605565" datatype="html">
+        <source>No answer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
+          <context context-type="linenumber">226</context>
+        </context-group>
+        <note priority="1" from="description">Student quiz unanswered fallback</note>
       </trans-unit>
       <trans-unit id="5162686434580248853" datatype="html">
         <source>Start</source>
@@ -587,11 +587,11 @@
         <source> Options </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-question-page/exam-question-page.html</context>
-          <context context-type="linenumber">25,28</context>
+          <context context-type="linenumber">28,31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-question-page/quiz-question-page.html</context>
-          <context context-type="linenumber">25,28</context>
+          <context context-type="linenumber">28,31</context>
         </context-group>
         <note priority="1" from="description">Student exam options section label</note>
       </trans-unit>
@@ -599,16 +599,16 @@
         <source>Confirm answer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-question-page/exam-question-page.html</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-question-page/quiz-question-page.html</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
         <note priority="1" from="description">Student exam confirm answer button</note>
       </trans-unit>
-      <trans-unit id="1130875928924169857" datatype="html">
-        <source>Question <x id="current" equiv-text="current"/> of <x id="total" equiv-text="total"/></source>
+      <trans-unit id="2844665636694588627" datatype="html">
+        <source>Select all correct answers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-question-page/exam-question-page.ts</context>
           <context context-type="linenumber">28</context>
@@ -616,6 +616,42 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-question-page/quiz-question-page.ts</context>
           <context context-type="linenumber">31</context>
+        </context-group>
+        <note priority="1" from="description">Student multiple choice instruction</note>
+      </trans-unit>
+      <trans-unit id="6601694636244761703" datatype="html">
+        <source>Mark true or false</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-question-page/exam-question-page.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-question-page/quiz-question-page.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="description">Student true false instruction</note>
+      </trans-unit>
+      <trans-unit id="4909320066951399145" datatype="html">
+        <source>Select one answer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-question-page/exam-question-page.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-question-page/quiz-question-page.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <note priority="1" from="description">Student single choice instruction</note>
+      </trans-unit>
+      <trans-unit id="1130875928924169857" datatype="html">
+        <source>Question <x id="current" equiv-text="current"/> of <x id="total" equiv-text="total"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-question-page/exam-question-page.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-question-page/quiz-question-page.ts</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="description">Student exam question progress label</note>
       </trans-unit>
@@ -643,11 +679,11 @@
         <source>Back to exams</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-results-page/exam-results-page.html</context>
-          <context context-type="linenumber">42,46</context>
+          <context context-type="linenumber">42,45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.html</context>
-          <context context-type="linenumber">56,59</context>
+          <context context-type="linenumber">56,58</context>
         </context-group>
         <note priority="1" from="description">Student exam back to exams button</note>
       </trans-unit>
@@ -735,7 +771,7 @@
         <source> Table mode </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/grade-history-page/grade-history-page.html</context>
-          <context context-type="linenumber">35,40</context>
+          <context context-type="linenumber">35,39</context>
         </context-group>
         <note priority="1" from="description">Grade history table mode toggle label</note>
       </trans-unit>
@@ -887,7 +923,7 @@
         <source> <x id="INTERPOLATION" equiv-text="{{ summaryData.correctCount }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ summaryData.totalQuestions }}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/> correct </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-results-page/quiz-results-page.html</context>
-          <context context-type="linenumber">44,46</context>
+          <context context-type="linenumber">44,45</context>
         </context-group>
         <note priority="1" from="description">Student quiz correct answers count</note>
       </trans-unit>
@@ -895,7 +931,7 @@
         <source>View answer details</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-results-page/quiz-results-page.html</context>
-          <context context-type="linenumber">66,70</context>
+          <context context-type="linenumber">66,69</context>
         </context-group>
         <note priority="1" from="description">Student quiz view answer details button</note>
       </trans-unit>
@@ -907,7 +943,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-results-page/quiz-results-page.html</context>
-          <context context-type="linenumber">137,141</context>
+          <context context-type="linenumber">137,140</context>
         </context-group>
         <note priority="1" from="description">Student quiz back home button</note>
       </trans-unit>
@@ -963,7 +999,7 @@
         <source>Back to quizzes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
-          <context context-type="linenumber">56,59</context>
+          <context context-type="linenumber">56,58</context>
         </context-group>
         <note priority="1" from="description">Student quiz start fallback action</note>
       </trans-unit>
@@ -1059,7 +1095,7 @@
         <source> Questions will be shown in a random order for each student </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">56,61</context>
+          <context context-type="linenumber">56,60</context>
         </context-group>
         <note priority="1" from="description">Exam step config shuffle questions description</note>
       </trans-unit>
@@ -1075,7 +1111,7 @@
         <source> Answer options will be shown in a random order for each student </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">73,77</context>
+          <context context-type="linenumber">73,76</context>
         </context-group>
         <note priority="1" from="description">Exam step config shuffle options description</note>
       </trans-unit>
@@ -1091,7 +1127,7 @@
         <source>Start date is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">94,99</context>
+          <context context-type="linenumber">94,98</context>
         </context-group>
         <note priority="1" from="description">Exam step config enabled from required error</note>
       </trans-unit>
@@ -1203,7 +1239,7 @@
         <source>Title must be at least 3 characters.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/components/exam-step-info/exam-step-info.html</context>
-          <context context-type="linenumber">22,28</context>
+          <context context-type="linenumber">22,27</context>
         </context-group>
         <note priority="1" from="description">Exam step info title minlength error</note>
       </trans-unit>
@@ -1235,7 +1271,7 @@
         <source> Select classes </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/components/exam-step-info/exam-step-info.html</context>
-          <context context-type="linenumber">45,48</context>
+          <context context-type="linenumber">45,47</context>
         </context-group>
         <note priority="1" from="description">Exam step info select classes label</note>
       </trans-unit>
@@ -1559,7 +1595,7 @@
         <source> Upload Content </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/upload-content-page/upload-content-page.html</context>
-          <context context-type="linenumber">14,19</context>
+          <context context-type="linenumber">14,18</context>
         </context-group>
         <note priority="1" from="description">Upload content page title</note>
       </trans-unit>
@@ -1583,7 +1619,7 @@
         <source> or drag a file </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/upload-content-page/upload-content-page.html</context>
-          <context context-type="linenumber">55,58</context>
+          <context context-type="linenumber">55,57</context>
         </context-group>
         <note priority="1" from="description">File drop zone drag hint</note>
       </trans-unit>
@@ -1655,7 +1691,7 @@
         <source>Questions per review session</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/upload-content-page/upload-content-page.html</context>
-          <context context-type="linenumber">151,154</context>
+          <context context-type="linenumber">151,153</context>
         </context-group>
         <note priority="1" from="description">Question count setting description</note>
       </trans-unit>
@@ -1695,7 +1731,7 @@
         <source> Something went wrong uploading your content. Please try again. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/upload-content-page/upload-content-page.html</context>
-          <context context-type="linenumber">214,219</context>
+          <context context-type="linenumber">214,218</context>
         </context-group>
         <note priority="1" from="description">Upload content error message</note>
       </trans-unit>
@@ -1767,7 +1803,7 @@
         <source> Score </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/molecules/grade-card/grade-card.html</context>
-          <context context-type="linenumber">30,32</context>
+          <context context-type="linenumber">30,31</context>
         </context-group>
         <note priority="1" from="description">Grade card score label</note>
       </trans-unit>
@@ -1815,7 +1851,7 @@
         <source>Toggle navigation sidebar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/organisms/navbar/navbar.html</context>
-          <context context-type="linenumber">5,8</context>
+          <context context-type="linenumber">5,7</context>
         </context-group>
         <note priority="1" from="description">Aria label to toggle navigation sidebar</note>
       </trans-unit>

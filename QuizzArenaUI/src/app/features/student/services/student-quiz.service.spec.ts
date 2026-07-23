@@ -121,7 +121,7 @@ describe('StudentQuizService', () => {
     it('should fetch attempt detail and combine with metadata', () => {
       const attemptMock: MatchAttemptDetailResponse = {
         id: 'attempt-1', score: 80, status: 'passed',
-        questions: [{ questionId: 'q1', content: 'Q1', selectedOptionId: 'q1-a', isCorrect: true, options: [] }],
+        questions: [{ questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [] }],
       };
 
       service.getMatchAttemptDetail('attempt-1').subscribe(review => {
@@ -145,7 +145,7 @@ describe('StudentQuizService', () => {
         answers: [
           {
             questionId: 'q1',
-            selectedOptionId: 'q1-a',
+            selectedOptionIds: ['q1-a'],
             answeredAt: '2026-06-30T00:00:00.000Z',
           },
         ],
@@ -159,6 +159,21 @@ describe('StudentQuizService', () => {
       const req = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.submitMatchAttempt('attempt-1')}`);
       expect(req.request.method).toBe('POST');
       req.flush(response);
+    });
+  });
+
+  describe('trackExamAnswer', () => {
+    it('should PUT selected option ids for an exam question', () => {
+      service.trackExamAnswer('attempt-1', 'q1', ['q1-a', 'q1-b']).subscribe(progress => {
+        expect(progress.answeredQuestions).toBe(1);
+      });
+
+      const req = httpTesting.expectOne(
+        `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.trackExamAnswer('attempt-1', 'q1')}`,
+      );
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body).toEqual({ selectedOptionIds: ['q1-a', 'q1-b'] });
+      req.flush({ answeredQuestions: 1, totalQuestions: 2 });
     });
   });
 

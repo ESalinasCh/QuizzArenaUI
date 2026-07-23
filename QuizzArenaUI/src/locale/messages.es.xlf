@@ -1230,6 +1230,21 @@
         <target> Activo </target>
         <note priority="1" from="description">Teacher dashboard published badge</note>
       </trans-unit>
+      <trans-unit id="2844665636694588627" datatype="html">
+        <source>Select all correct answers</source>
+        <target>Selecciona todas las respuestas correctas</target>
+        <note priority="1" from="description">Student multiple choice instruction</note>
+      </trans-unit>
+      <trans-unit id="6601694636244761703" datatype="html">
+        <source>Mark true or false</source>
+        <target>Marca verdadero o falso</target>
+        <note priority="1" from="description">Student true false instruction</note>
+      </trans-unit>
+      <trans-unit id="4909320066951399145" datatype="html">
+        <source>Select one answer</source>
+        <target>Selecciona una respuesta</target>
+        <note priority="1" from="description">Student single choice instruction</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>
