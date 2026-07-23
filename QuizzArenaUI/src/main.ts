@@ -2,6 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { createAppConfig } from './app/app.config';
 import { AppConfig } from './app/core/config/app-config';
 import { App } from './app/app';
+import { setRuntimeConfig } from './app/core/utils/api-url.util';
 
 // Load runtime configuration before bootstrapping so a single built artifact
 // can run in any environment (12-Factor: Config). The container renders
@@ -13,5 +14,8 @@ fetch('config.json', { cache: 'no-cache' })
     }
     return response.json() as Promise<AppConfig>;
   })
-  .then((config) => bootstrapApplication(App, createAppConfig(config)))
+  .then((config) => {
+    setRuntimeConfig(config);
+    return bootstrapApplication(App, createAppConfig(config));
+  })
   .catch((err) => console.error('Application bootstrap failed:', err));
