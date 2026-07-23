@@ -32,7 +32,9 @@ describe('GradeCard', () => {
     fixture.componentRef.setInput('grade', buildGrade(false));
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('button')).toBeNull();
+    const buttons = fixture.nativeElement.querySelectorAll('button');
+    expect(buttons.length).toBe(1);
+    expect(buttons[0].textContent).not.toContain('other attempts');
   });
 
   it('should emit the grade id when the attempts toggle is clicked', () => {
@@ -44,8 +46,39 @@ describe('GradeCard', () => {
     component.toggleAttempts.subscribe(id => {
       emittedId = id;
     });
-    const button = fixture.nativeElement.querySelector('button');
-    button.click();
+
+    const buttons = Array.from(
+      fixture.nativeElement.querySelectorAll('button') as NodeListOf<HTMLButtonElement>,
+    );
+    const toggleButton = buttons.find(button => button.textContent?.includes('other attempts'));
+
+    toggleButton?.click();
+    expect(emittedId).toBe('grade-1');
+  });
+
+  it('should open the menu and emit resetAttempts when reset is clicked', () => {
+    const fixture = TestBed.createComponent(GradeCard);
+    const component = fixture.componentInstance;
+    fixture.componentRef.setInput('grade', buildGrade());
+    fixture.detectChanges();
+
+    expect(component.menuOpen()).toBe(false);
+    const buttons = Array.from(
+      fixture.nativeElement.querySelectorAll('button') as NodeListOf<HTMLButtonElement>,
+    );
+    const menuButton = buttons.find(button => button.textContent?.trim() === '⋮');
+    menuButton?.click();
+    fixture.detectChanges();
+
+    expect(component.menuOpen()).toBe(true);
+    const buttonsAfterOpen = Array.from(fixture.nativeElement.querySelectorAll('button') as NodeListOf<HTMLButtonElement>);
+
+    const resetButton = buttonsAfterOpen.find(button => button.textContent?.trim() === 'Reset attempts');
+
+    let emittedId: string | undefined;
+    component.resetAttempts.subscribe(id => emittedId = id);
+    resetButton?.click();
+
     expect(emittedId).toBe('grade-1');
   });
 
@@ -59,6 +92,5 @@ describe('GradeCard', () => {
     expect(text).toContain('Other attempts');
     expect(text).toContain('Bob');
     expect(text).toContain('80');
-    expect(fixture.nativeElement.querySelectorAll('.rounded-lg').length).toBe(1);
   });
 });

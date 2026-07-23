@@ -1,0 +1,16 @@
+<qz-item-container>
+    Are you sure that you want to reset the attempt for this student?
+</qz-item-container>
+<qz-item-container>
+    {{ attempt().nickname }}
+</qz-item-container>
+<qz-item-container>
+    <div class="flex justify-between gap-3 flex-wrap">
+        <qz-button [fullWidth]="true" [variant]="'secondary'" (click)="handleCloseModalEvent()">
+            Cancel
+        </qz-button>
+        <qz-button [fullWidth]="true" [variant]="'danger'" (click)="handleResetClick()">
+            Reset
+        </qz-button>
+    </div>
+</qz-item-container>

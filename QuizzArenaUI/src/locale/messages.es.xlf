@@ -1116,8 +1116,8 @@
         <note priority="1" from="description">Exam bank question count suffix</note>
       </trans-unit>
       <trans-unit id="4077369017576821458" datatype="html">
-        <source> Grades </source>
-        <target> Calificaciones</target>
+        <source> Exam grades </source>
+        <target> Calificaciones de examen</target>
         <note priority="1" from="description">Grade panel page heading</note>
       </trans-unit>
       <trans-unit id="7587660891560207554" datatype="html">
@@ -1136,9 +1136,9 @@
         <note priority="1" from="description">Teacher no grades message</note>
       </trans-unit>
       <trans-unit id="1401467117049945528" datatype="html">
-        <source>Grades</source>
-        <target>Calificaciones</target>
-        <note priority="1" from="description">Sidebar nav teacher grades label</note>
+        <source>Exam Attempts</source>
+        <target>Intentos de examen</target>
+        <note priority="1" from="description">Sidebar nav teacher exam attempts label</note>
       </trans-unit>
       <trans-unit id="6110229795058919586" datatype="html">
         <source> Your answer: <x id="INTERPOLATION" equiv-text="{{ question.selectedAnswerLabel | truncate }}"/> </source>

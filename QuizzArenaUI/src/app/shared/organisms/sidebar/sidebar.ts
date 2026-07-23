@@ -68,9 +68,9 @@ export class Sidebar {
       roles: ['teacher'],
     },
     {
-      label: $localize`:Sidebar nav teacher grades label:Grades`,
-      icon: 'chart-bar',
-      routerLink: '/teacher/grades',
+      label: $localize`:Sidebar nav teacher exam attempts label:Exam Attempts`,
+      icon: 'document',
+      routerLink: '/teacher/exams/attempts',
       roles: ['teacher'],
     },
   ];

@@ -1508,7 +1508,7 @@
         <note priority="1" from="description">Exam bank question count label</note>
       </trans-unit>
       <trans-unit id="4077369017576821458" datatype="html">
-        <source> Grades </source>
+        <source> Exam grades </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/grade-panel-page/grade-panel-page.html</context>
           <context context-type="linenumber">3,7</context>
@@ -1892,12 +1892,12 @@
         <note priority="1" from="description">Sidebar nav teacher exam bank label</note>
       </trans-unit>
       <trans-unit id="1401467117049945528" datatype="html">
-        <source>Grades</source>
+        <source>Exam Attempts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/organisms/sidebar/sidebar.ts</context>
           <context context-type="linenumber">71</context>
         </context-group>
-        <note priority="1" from="description">Sidebar nav teacher grades label</note>
+        <note priority="1" from="description">Sidebar nav teacher exam attempts label</note>
       </trans-unit>
     </body>
   </file>
