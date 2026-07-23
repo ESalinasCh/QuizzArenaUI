@@ -29,7 +29,7 @@ export class TeacherUploadContentPage {
   protected readonly acceptedExtensions = ACCEPTED_EXTENSIONS.join(',');
   protected readonly acceptedExtensionsLabel = ACCEPTED_EXTENSIONS.join(' ');
 
-  protected readonly subjects = toSignal(this.#contentService.getSubjects(), {
+  protected readonly subjects = toSignal(this.#contentService.getCourses(), {
     initialValue: [],
   });
 

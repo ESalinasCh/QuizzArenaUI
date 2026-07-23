@@ -587,15 +587,15 @@
         <target>Ej: Clase DDD - Semana 3</target>
         <note priority="1" from="description">Class name field placeholder</note>
       </trans-unit>
-      <trans-unit id="5824724870331417188" datatype="html">
-        <source> Subject </source>
-        <target> Materia </target>
-        <note priority="1" from="description">Subject field label</note>
+      <trans-unit id="3932622653479222196" datatype="html">
+        <source> Course </source>
+        <target> Curso </target>
+        <note priority="1" from="description">Course field label</note>
       </trans-unit>
-      <trans-unit id="5862136156222281006" datatype="html">
-        <source>Select a subject</source>
-        <target>Selecciona una materia</target>
-        <note priority="1" from="description">Subject select default option</note>
+      <trans-unit id="4469647399240742846" datatype="html">
+        <source>Select a course</source>
+        <target>Selecciona un curso</target>
+        <note priority="1" from="description">Course select default option</note>
       </trans-unit>
       <trans-unit id="7232271435202706704" datatype="html">
         <source>Allow review</source>

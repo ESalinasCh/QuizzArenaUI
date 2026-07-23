@@ -92,24 +92,24 @@
 
     <div class="flex flex-col gap-2">
       <label
-        for="subject"
-        i18n="Subject field label"
+        for="course"
+        i18n="Course field label"
         class="text-sm font-semibold text-light-text dark:text-dark-text"
       >
-        Subject
+        Course
       </label>
       <div class="relative">
         <select
-          id="subject"
+          id="course"
           name="subjectId"
           [ngModel]="subjectId()"
           (ngModelChange)="subjectId.set($event)"
           class="h-12 w-full appearance-none rounded-xl border border-light-border-strong bg-light-surface px-4 pr-10 text-base text-light-text outline-none transition-colors focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text"
           [class.text-light-text-secondary]="subjectId() === ''"
         >
-          <option value="" disabled i18n="Subject select default option">Select a subject</option>
-          @for (subject of subjects(); track subject.id) {
-            <option [value]="subject.id">{{ subject.name }}</option>
+          <option value="" disabled i18n="Course select default option">Select a course</option>
+          @for (course of subjects(); track course.id) {
+            <option [value]="course.id">{{ course.name }}</option>
           }
         </select>
         <qz-icon

@@ -10,7 +10,7 @@ describe('TeacherUploadContentPage', () => {
 
   beforeEach(() => {
     mockContentService = {
-      getSubjects: vi.fn().mockReturnValue(of([
+      getCourses: vi.fn().mockReturnValue(of([
         { id: 'c1', name: 'Project I' },
         { id: 'c2', name: 'Hexagonal' },
       ])),
@@ -32,7 +32,7 @@ describe('TeacherUploadContentPage', () => {
     expect(fixture.nativeElement.textContent).toContain('Upload Content');
   });
 
-  it('should render subject options', () => {
+  it('should render course options', () => {
     const fixture = TestBed.createComponent(TeacherUploadContentPage);
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Project I');

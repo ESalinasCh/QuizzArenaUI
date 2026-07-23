@@ -4,6 +4,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TeacherContentService } from './teacher-content.service';
 import { buildApiUrl } from '../../../core/utils/api-url.util';
 import { TEACHER_CONTENT_ENDPOINTS } from '../api/teacher-content.endpoints';
+import { CourseResponse } from '../api/teacher-content.contract';
 import { ContentUploadRequest } from '../models/content-upload.model';
 
 describe('TeacherContentService', () => {
@@ -11,6 +12,7 @@ describe('TeacherContentService', () => {
   let httpMock: HttpTestingController;
 
   const uploadUrl = buildApiUrl(TEACHER_CONTENT_ENDPOINTS.uploadContent);
+  const coursesUrl = buildApiUrl(TEACHER_CONTENT_ENDPOINTS.courses);
 
   function buildRequest(overrides: Partial<ContentUploadRequest> = {}): ContentUploadRequest {
     return {
@@ -33,15 +35,37 @@ describe('TeacherContentService', () => {
   afterEach(() => httpMock.verify());
 
   describe('getSubjects', () => {
-    it('should return mapped subjects with id and name', () => {
-      service.getSubjects().subscribe(subjects => {
-        expect(subjects.length).toBeGreaterThan(0);
-        subjects.forEach(s => {
-          expect(s.id).toBeTruthy();
-          expect(s.name).toBeTruthy();
-        });
+    const coursesResponse: CourseResponse[] = [
+      { id: 'course-project-1', name: 'Project I' },
+      { id: 'course-hexagonal', name: 'Arquitectura Hexagonal' },
+    ];
+
+    it('should GET the courses endpoint and map to subjects with id and name', () => {
+      let subjects: { id: string; name: string }[] | undefined;
+      service.getCourses().subscribe(result => (subjects = result));
+
+      const req = httpMock.expectOne(coursesUrl);
+      expect(req.request.method).toBe('GET');
+      req.flush(coursesResponse);
+
+      expect(subjects).toEqual([
+        { id: 'course-project-1', name: 'Project I' },
+        { id: 'course-hexagonal', name: 'Arquitectura Hexagonal' },
+      ]);
+    });
+
+    it('should propagate an error when the request fails', () => {
+      let error: unknown;
+      service.getCourses().subscribe({
+        next: () => expect.unreachable('getSubjects should not emit on failure'),
+        error: err => (error = err),
       });
-      httpMock.expectNone(() => true);
+
+      httpMock
+        .expectOne(coursesUrl)
+        .flush('Server error', { status: 500, statusText: 'Internal Server Error' });
+
+      expect(error).toMatchObject({ status: 500 });
     });
   });
 
