@@ -16,8 +16,18 @@
       <div class="flex flex-col gap-4">
         <qz-section-title [title]="availableQuizzesTitle" icon="sparkles" />
 
+        @if (visibleAvailableQuizzes().length > 0 || availableSearchQuery() !== '') {
+          <div class="w-full sm:max-w-md">
+            <qz-text-input
+              placeholder="Search available quizzes..."
+              [value]="availableSearchQuery()"
+              (valueChange)="availableSearchQuery.set($event)"
+            />
+          </div>
+        }
+
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          @for (quiz of dashboard().availableQuizzes; track quiz.id) {
+          @for (quiz of visibleAvailableQuizzes(); track quiz.id) {
             <div class="clean-card overflow-hidden hover:scale-[1.02] duration-300 transition-all">
               <qz-available-quiz-card [quiz]="quiz" (startQuiz)="startQuiz($event)" />
             </div>
@@ -29,13 +39,29 @@
             />
           }
         </div>
+
+        @if (hasMoreAvailable()) {
+          <div class="flex justify-center mt-2">
+            <qz-button variant="secondary" (click)="loadMoreAvailable()">Load More</qz-button>
+          </div>
+        }
       </div>
 
       <div class="flex flex-col gap-4">
         <qz-section-title [title]="recentQuizzesTitle" icon="clock" />
 
+        @if (visibleRecentQuizzes().length > 0 || recentSearchQuery() !== '') {
+          <div class="w-full sm:max-w-md">
+            <qz-text-input
+              placeholder="Search recent quizzes..."
+              [value]="recentSearchQuery()"
+              (valueChange)="recentSearchQuery.set($event)"
+            />
+          </div>
+        }
+
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          @for (quiz of dashboard().recentQuizzes; track quiz.id) {
+          @for (quiz of visibleRecentQuizzes(); track quiz.id) {
             <div class="clean-card overflow-hidden hover:scale-[1.02] duration-300 transition-all">
               <qz-recent-quiz-card [quiz]="quiz" (viewResults)="viewResults($event)" />
             </div>
@@ -47,6 +73,12 @@
             />
           }
         </div>
+
+        @if (hasMoreRecent()) {
+          <div class="flex justify-center mt-2">
+            <qz-button variant="secondary" (click)="loadMoreRecent()">Load More</qz-button>
+          </div>
+        }
       </div>
 
     </div>
