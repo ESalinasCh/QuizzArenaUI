@@ -2,9 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
+import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
+import { PagedRequest } from '../../../core/models/pagination.model';
 import { TeacherClassSource } from '../models/class-source.model';
-
 
 const MOCK_CLASS_SOURCES: TeacherClassSource[] = [
   {
@@ -14,8 +14,6 @@ const MOCK_CLASS_SOURCES: TeacherClassSource[] = [
     sourceType: 'Video',
     createdAt: '2026-06-01T10:00:00Z',
     processingJobsIds: [
-      'aaaaaaaa-0000-0000-0000-000000000001',
-      'aaaaaaaa-0000-0000-0000-000000000001',
       'aaaaaaaa-0000-0000-0000-000000000001'
     ]
   },
@@ -42,10 +40,10 @@ const MOCK_CLASS_SOURCES: TeacherClassSource[] = [
 @Injectable({ providedIn: 'root' })
 export class ClassSourcesService {
   readonly #http = inject(HttpClient);
-  readonly #api = environment.apiBaseUrl;
 
-  getClassSources(): Observable<TeacherClassSource[]> {
-    return this.#http.get<TeacherClassSource[]>(`${this.#api}/api/v1/users/me/class-sources`).pipe(
+  getClassSources(filters?: PagedRequest): Observable<TeacherClassSource[]> {
+    const params = buildHttpParams(filters);
+    return this.#http.get<TeacherClassSource[]>(buildApiUrl('/api/v1/users/me/class-sources'), { params }).pipe(
       catchError(() => {
         console.warn('API /api/v1/users/me/class-sources failed, falling back to mock data');
         return of(MOCK_CLASS_SOURCES);

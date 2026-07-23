@@ -5,8 +5,18 @@
       Class Sources
     </h2>
 
+    @if (classSources().length > 0) {
+      <div class="w-full sm:max-w-md mt-2">
+        <qz-text-input
+          placeholder="Search class sources..."
+          [value]="searchQuery()"
+          (valueChange)="searchQuery.set($event)"
+        />
+      </div>
+    }
+
     <div class="flex flex-col gap-3 mt-4">
-      @for (source of classSources(); track source.id) {
+      @for (source of visibleClassSources(); track source.id) {
         <qz-class-source-card [source]="source" />
       } @empty {
         @if (!isLoading()) {
@@ -22,5 +32,11 @@
         </div>
       }
     </div>
+
+    @if (hasMoreClassSources()) {
+      <div class="flex justify-center mt-4">
+        <qz-button variant="secondary" (click)="loadMore()">Load More</qz-button>
+      </div>
+    }
   </div>
 </section>

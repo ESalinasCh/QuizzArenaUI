@@ -15,13 +15,13 @@ export function mapQuestionResponse(response: QuestionResponse): Question {
   };
 }
 
-export function mapExamResponse(response: ExamResponse): Exam {
+export function mapExamResponse(response: any): Exam {
   return {
     id: response.id,
     title: response.title,
     description: response.description,
     status: response.status === 'published' ? 'published' : 'draft',
-    questionIds: response.questionIds,
+    questionIds: response.questionIds || (response.questions ? response.questions.map((q: any) => q.questionId || q.id || q) : []) || [],
     createdAt: response.createdAt,
   };
 }
