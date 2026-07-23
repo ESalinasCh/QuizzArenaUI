@@ -15,12 +15,14 @@ interface CourseModel {
   teacherId: string;
 }
 
+import { getLocalDatetimeString, formatLocalToOffsetIso } from '../../../../core/utils/date-formatter.utils';
+
 const defaultFormModel: PublishMatchForm = {
   courseId: '',
   durationMinutes: '30',
   maxRetries: '1',
-  enabledFrom: new Date().toISOString().slice(0, 16),
-  enabledUntil: new Date().toISOString().slice(0, 16),
+  enabledFrom: getLocalDatetimeString(new Date()),
+  enabledUntil: getLocalDatetimeString(new Date(Date.now() + 60 * 60 * 1000)),
   shuffleQuestions: false,
   shuffleOptions: false,
 };
@@ -136,9 +138,6 @@ export class PublishQuizAsMatchForm {
       const now = new Date().getTime();
       const enabledFrom = new Date(this.matchForm.enabledFrom().value()).getTime();
       const enabledUntil = new Date(this.matchForm.enabledUntil().value()).getTime();
-      console.log('now', now)
-      console.log('enabledFrom', enabledFrom)
-      console.log('enabledUntil', enabledUntil)
       return (enabledFrom <= now || enabledUntil <= now) ? 'Date must be greater than current date' : null;
     }
     return null;
@@ -153,7 +152,6 @@ export class PublishQuizAsMatchForm {
   }
 
   submit(): void {
-    console.log(this.matchForm().value());
     this.isSubmitted.set(true);
     if (!this.isFormValid()) return;
 
@@ -162,8 +160,8 @@ export class PublishQuizAsMatchForm {
       {
         quizId: '',
         courseId: m.courseId,
-        startedAt: m.enabledFrom,
-        finishedAt: m.enabledUntil,
+        startedAt: formatLocalToOffsetIso(m.enabledFrom),
+        finishedAt: formatLocalToOffsetIso(m.enabledUntil),
         timeMinutes: Number(m.durationMinutes),
         attemptsAmount: Number(m.maxRetries),
         shuffleQuestion: m.shuffleQuestions,
