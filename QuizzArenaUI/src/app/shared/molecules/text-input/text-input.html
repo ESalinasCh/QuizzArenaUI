@@ -1,17 +1,13 @@
-<label [for]="for()" class="block" class="text-sm font-semibold text-light-text dark:text-dark-text">
+<label [for]="for()" class="block" class="text-sm font-semibold text-light-text dark:text-dark-text"
+    i18n="{{ labeli18() }}">
     {{ label() }}
 </label>
-<input
-    [type]="type()"
-    [placeholder]="placeholder()"
-    [value]="value()"
-    [disabled]="disabled()"
-    (input)="value.set($any($event.target).value)"
-    (blur)="touched.set(true)"
-    class="h-12 rounded-xl border border-light-border-strong bg-light-surface px-4 text-base text-light-text outline-none transition-colors placeholder:text-light-text-secondary focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-text-secondary w-full" />
+<input [type]="type()" [placeholder]="placeholder()" [value]="value()" [disabled]="disabled()"
+    (input)="value.set($any($event.target).value)" (blur)="touched.set(true)"
+    class="h-12 w-full rounded-lg border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface px-3 py-2 text-sm text-light-text dark:text-dark-text" />
+@if (errorMessage()) {
+<p class="text-sm text-danger text-error" i18n="{{ errori18() }}">{{ errorMessage() }}</p>
+}
 @if (clearOption().isActivated) {
-<qz-link-text
-    [text]="clearOption().text || ''"
-    (click)="handleClearClick()"
-/>
+<qz-link-text [text]="clearOption().text || ''" (click)="handleClearClick()" />
 }

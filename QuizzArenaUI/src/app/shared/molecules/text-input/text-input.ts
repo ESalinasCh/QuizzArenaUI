@@ -1,11 +1,13 @@
 import { Component, model, input, output } from '@angular/core';
-import { FormValueControl } from '@angular/forms/signals';
+import { FormValueControl, FormField } from '@angular/forms/signals';
 import { LinkText } from "../../atoms/link-text/link-text";
 
 export interface InputTextClearOption {
     isActivated: boolean;
     text?: string;
 }
+
+type InputType = 'text' | 'number' | 'email' | 'password' | 'search' | 'tel' | 'url' | 'date' | 'datetime-local';
 
 @Component({
     selector: 'qz-text-input',
@@ -18,9 +20,12 @@ export class TextInput implements FormValueControl<string> {
     label = input('');
     for = input('');
     placeholder = input('');
-    type = input('text');
+    type = input<InputType>('text');
 
     errorMessage = input('');
+
+    labeli18 = input<string>('');
+    errori18 = input<string>('');
 
     clearOptionListener = output<void>();
     clearOption = input<InputTextClearOption>({ isActivated: false, text: 'Clear' });

@@ -1,50 +1,50 @@
-﻿import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, input, signal } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
-import { ExamStepConfig } from '../../components/exam-step-config/exam-step-config';
+import { PublishQuizAsMatchForm } from '../../components/publish-quiz-as-match-form/publish-quiz-as-match-form';
 import { ExamConfig } from '../../models/exam.model';
+import { CreateMatchRequestBody } from '../../api/teacher-exam.contract';
 
-interface PendingExamState {
-  quizId: string;
-  classIds: string[];
-  from?: 'create' | 'bank' | 'dashboard';
-}
 
 @Component({
   selector: 'qz-teacher-publish-exam-page',
-  imports: [ExamStepConfig],
+  imports: [PublishQuizAsMatchForm],
   templateUrl: './publish-exam-page.html',
 })
 export class TeacherPublishExamPage {
+  readonly quizId = input<string>();
   readonly #router = inject(Router);
+  readonly #location = inject(Location);
   readonly #examService = inject(TeacherExamService);
   readonly #destroyRef = inject(DestroyRef);
+
 
   protected readonly backAriaLabel = $localize`:Publish exam page back button aria label:Back`;
 
   goBack(): void {
-    const from = (history.state as PendingExamState)?.from;
-    const route =
-      from === 'bank'
-        ? '/teacher/exams/bank'
-        : from === 'dashboard'
-          ? '/teacher/dashboard'
-          : '/teacher/exams/create';
-    void this.#router.navigate([route]);
+    if (window.history.length > 1) {
+      this.#location.back();
+    } else {
+      void this.#router.navigate(['/teacher/exams/bank']);
+    }
   }
 
-  onPublish(config: ExamConfig): void {
-    const state = history.state as PendingExamState;
-    if (!state?.quizId) return;
+  handleMatchRequest(
+    examToPublish: CreateMatchRequestBody
+  ): void {
+    const id = this.quizId();
+    if (!id) return;
+    examToPublish.quizId = id;
 
     this.#examService
-      .publishExam(state.quizId, state.classIds[0], config)
+      .publishExam(examToPublish)
       .pipe(
         catchError(() => EMPTY),
         takeUntilDestroyed(this.#destroyRef),
       )
-      .subscribe(() => void this.#router.navigate(['/teacher/dashboard']));
+      .subscribe(() => void this.goBack());
   }
 }

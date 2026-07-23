@@ -1,9 +1,9 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ExamStepConfig } from './exam-step-config';
+import { PublishQuizAsMatchForm } from './publish-quiz-as-match-form';
 import { ExamConfig } from '../../models/exam.model';
 
-describe('ExamStepConfig', () => {
+describe('PublishQuizAsMatchForm', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [{ provide: LOCALE_ID, useValue: 'en' }],
@@ -11,18 +11,18 @@ describe('ExamStepConfig', () => {
   });
 
   it('should show duration error when value is out of range', () => {
-    const fixture = TestBed.createComponent(ExamStepConfig);
+    const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
 
-    fixture.componentInstance.form.controls.durationMinutes.setValue(0);
+    fixture.componentInstance.matchModel.update(m => ({ ...m, durationMinutes: 0 }));
     fixture.componentInstance.submit();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('Duration must be at least 1 minute');
+    expect(fixture.nativeElement.textContent).toContain('Duration is required');
   });
 
   it('should show start date required error on empty submit', () => {
-    const fixture = TestBed.createComponent(ExamStepConfig);
+    const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
 
     fixture.componentInstance.submit();
@@ -32,13 +32,18 @@ describe('ExamStepConfig', () => {
   });
 
   it('should show date range error when end date is before start date', () => {
-    const fixture = TestBed.createComponent(ExamStepConfig);
+    const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
 
-    fixture.componentInstance.form.controls.durationMinutes.setValue(30);
-    fixture.componentInstance.form.controls.maxRetries.setValue(1);
-    fixture.componentInstance.form.controls.enabledFrom.setValue('2026-06-25T10:00');
-    fixture.componentInstance.form.controls.enabledUntil.setValue('2026-06-24T10:00');
+    fixture.componentInstance.matchModel.set({
+      courseId: 'c1',
+      durationMinutes: 30,
+      maxRetries: 1,
+      enabledFrom: '2026-06-25T10:00',
+      enabledUntil: '2026-06-24T10:00',
+      shuffleQuestions: false,
+      shuffleOptions: false,
+    });
     fixture.componentInstance.submit();
     fixture.detectChanges();
 
@@ -46,39 +51,43 @@ describe('ExamStepConfig', () => {
   });
 
   it('should toggle shuffleQuestions independently', () => {
-    const fixture = TestBed.createComponent(ExamStepConfig);
+    const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.shuffleQuestions()).toBe(false);
+    expect(fixture.componentInstance.matchModel().shuffleQuestions).toBe(false);
     fixture.componentInstance.toggleShuffleQuestions();
-    expect(fixture.componentInstance.shuffleQuestions()).toBe(true);
+    expect(fixture.componentInstance.matchModel().shuffleQuestions).toBe(true);
     fixture.componentInstance.toggleShuffleQuestions();
-    expect(fixture.componentInstance.shuffleQuestions()).toBe(false);
+    expect(fixture.componentInstance.matchModel().shuffleQuestions).toBe(false);
   });
 
   it('should toggle shuffleOptions independently', () => {
-    const fixture = TestBed.createComponent(ExamStepConfig);
+    const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.shuffleOptions()).toBe(false);
+    expect(fixture.componentInstance.matchModel().shuffleOptions).toBe(false);
     fixture.componentInstance.toggleShuffleOptions();
-    expect(fixture.componentInstance.shuffleOptions()).toBe(true);
+    expect(fixture.componentInstance.matchModel().shuffleOptions).toBe(true);
     fixture.componentInstance.toggleShuffleOptions();
-    expect(fixture.componentInstance.shuffleOptions()).toBe(false);
+    expect(fixture.componentInstance.matchModel().shuffleOptions).toBe(false);
   });
 
-  it('should emit ExamConfig on valid submit', () => {
-    const fixture = TestBed.createComponent(ExamStepConfig);
+  it('should emit ExamConfig oonPublishlid submit', () => {
+    const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
 
     let emitted: ExamConfig | undefined;
     fixture.componentInstance.next.subscribe((config: ExamConfig) => (emitted = config));
 
-    fixture.componentInstance.form.controls.durationMinutes.setValue(45);
-    fixture.componentInstance.form.controls.maxRetries.setValue(2);
-    fixture.componentInstance.form.controls.enabledFrom.setValue('2026-06-25T10:00');
-    fixture.componentInstance.form.controls.enabledUntil.setValue('2026-06-26T10:00');
-    fixture.componentInstance.toggleShuffleQuestions();
+    fixture.componentInstance.matchModel.set({
+      courseId: 'c1',
+      durationMinutes: 45,
+      maxRetries: 2,
+      enabledFrom: '2026-06-25T10:00',
+      enabledUntil: '2026-06-26T10:00',
+      shuffleQuestions: true,
+      shuffleOptions: false,
+    });
     fixture.componentInstance.submit();
 
     expect(emitted).toEqual({
@@ -87,12 +96,12 @@ describe('ExamStepConfig', () => {
       shuffleQuestions: true,
       shuffleOptions: false,
       enabledFrom: '2026-06-25T10:00',
-      enabledUntil: '2026-06-26T10:00',
+      enabledUntil: '2026-06-2onPublish:00',
     });
   });
 
   it('should not emit when form is invalid', () => {
-    const fixture = TestBed.createComponent(ExamStepConfig);
+    const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
 
     let emitted = false;

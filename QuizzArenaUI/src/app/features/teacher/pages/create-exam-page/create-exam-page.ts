@@ -54,13 +54,7 @@ export class TeacherCreateExamPage {
         takeUntilDestroyed(this.#destroyRef),
       )
       .subscribe(exam =>
-        void this.#router.navigate(['/teacher/exams/publish'], {
-          state: {
-            quizId: exam.id,
-            classIds: info.classIds,
-            from: 'create',
-          },
-        }),
+        void this.#router.navigate(['/teacher/exams/publish', exam.id]),
       );
   }
 

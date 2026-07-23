@@ -39,7 +39,7 @@ export interface ExamResponse {
   id: string;
   title: string;
   description: string;
-  status: string;
+  status: 'draft' | 'published' | 'archived';
   questionIds: string[];
   createdAt: string;
 }

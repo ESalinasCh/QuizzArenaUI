@@ -1,14 +1,15 @@
-﻿import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { Exam } from '../../models/exam.model';
+import { ItemContainer } from "../../../../shared/atoms/item-container/item-container";
 
 @Component({
   selector: 'qz-teacher-exam-bank-page',
-  imports: [Button, Icon],
+  imports: [Button, Icon, ItemContainer],
   templateUrl: './exam-bank-page.html',
 })
 export class TeacherExamBankPage {
@@ -27,14 +28,6 @@ export class TeacherExamBankPage {
   }
 
   publishExam(exam: Exam): void {
-    void this.#router.navigate(['/teacher/exams/publish'], {
-      state: {
-        title: exam.title,
-        description: exam.description,
-        classIds: [],
-        questionIds: exam.questionIds,
-        from: 'bank',
-      },
-    });
+    void this.#router.navigate(['/teacher/exams/publish', exam.id]);
   }
 }

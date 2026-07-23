@@ -79,19 +79,11 @@ export class TeacherExamService {
       .pipe(map(mapCreateQuizResponse));
   }
 
-  publishExam(quizId: string, courseId: string, config: ExamConfig): Observable<void> {
-    const matchBody: CreateMatchRequestBody = {
-      quizId,
-      courseId,
-      startedAt: config.enabledFrom,
-      finishedAt: config.enabledUntil,
-      timeMinutes: config.durationMinutes,
-      attemptsAmount: config.maxRetries,
-      shuffleQuestion: config.shuffleQuestions,
-      shuffleOptions: config.shuffleOptions,
-    };
+  publishExam(
+    request: CreateMatchRequestBody
+  ): Observable<void> {
     return this.#http
-      .post(buildApiUrl(TEACHER_EXAM_ENDPOINTS.matches), matchBody)
+      .post(buildApiUrl(TEACHER_EXAM_ENDPOINTS.matches), request)
       .pipe(map(() => void 0));
   }
 
