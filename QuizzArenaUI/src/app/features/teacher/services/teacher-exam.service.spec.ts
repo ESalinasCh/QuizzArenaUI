@@ -86,7 +86,7 @@ describe('TeacherExamService', () => {
     req.flush(quizResponse);
   });
 
-  it('should call POST /matches on publishExam with correct body', () => {
+  it('should call POST /matches on saveMatch with correct body and return id', () => {
     const matchBody = {
       quizId: 'quiz-1',
       courseId: 'course-1',
@@ -98,13 +98,13 @@ describe('TeacherExamService', () => {
       shuffleOptions: false,
     };
 
-    service.publishExam(matchBody).subscribe(result => {
-      expect(result).toBeUndefined();
+    service.saveMatch(matchBody).subscribe(result => {
+      expect(result).toEqual({ id: 'match-1' });
     });
 
     const req = httpMock.expectOne(r => r.url.includes('/matches'));
     expect(req.request.body).toEqual(matchBody);
-    req.flush({});
+    req.flush({ id: 'match-1' });
   });
 
   it('should call GET /grades with filters and return mapped grades', () => {

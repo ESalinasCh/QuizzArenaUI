@@ -13,6 +13,7 @@ import {
   CreateMatchRequestBody,
   CreateQuizResponseBody,
   QuestionResponse,
+  SaveMatchResponse,
 } from '../api/teacher-exam.contract';
 import { buildApiUrl } from '../../../core/utils/api-url.util';
 import { TEACHER_EXAM_ENDPOINTS, TEACHER_GRADES_ENDPOINTS } from '../api/teacher-exam.endpoints';
@@ -58,6 +59,7 @@ export class TeacherExamService {
         const matchBody: CreateMatchRequestBody = {
           quizId: quiz.id,
           courseId: request.classIds[0],
+          questionsAmount: 8,
           startedAt: request.config.enabledFrom,
           finishedAt: request.config.enabledUntil,
           timeMinutes: request.config.durationMinutes,
@@ -79,12 +81,19 @@ export class TeacherExamService {
       .pipe(map(mapCreateQuizResponse));
   }
 
-  publishExam(
-    request: CreateMatchRequestBody
+  activateMatchAsActiveExam(
+    matchId: string
   ): Observable<void> {
     return this.#http
-      .post(buildApiUrl(TEACHER_EXAM_ENDPOINTS.matches), request)
+      .post(buildApiUrl(TEACHER_EXAM_ENDPOINTS.activeExams(matchId)), {})
       .pipe(map(() => void 0));
+  }
+
+  saveMatch(
+    request: CreateMatchRequestBody
+  ): Observable<SaveMatchResponse> {
+    return this.#http
+      .post<SaveMatchResponse>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.matches), request);
   }
 
   getGrades(matchId?: string, filters: GradeAttemptFilters = {}): Observable<Grade[]> {

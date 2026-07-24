@@ -3,6 +3,13 @@ export function getLocalDatetimeString(date: Date = new Date()): string {
   return new Date(date.getTime() - tzOffset).toISOString().slice(0, 16);
 }
 
+export function formatLocalToUtcIso(localDatetimeStr: string): string {
+  if (!localDatetimeStr) return '';
+  const date = new Date(localDatetimeStr);
+  if (isNaN(date.getTime())) return localDatetimeStr;
+  return date.toISOString();
+}
+
 export function formatLocalToOffsetIso(localDatetimeStr: string): string {
   if (!localDatetimeStr) return '';
   const base = localDatetimeStr.length === 16 ? `${localDatetimeStr}:00` : localDatetimeStr;

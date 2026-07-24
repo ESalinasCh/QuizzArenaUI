@@ -94,8 +94,8 @@ describe('PublishQuizAsMatchForm', () => {
     expect(emitted).toEqual({
       quizId: '',
       courseId: '10000000-0000-0000-0000-000000000001',
-      startedAt: expect.stringMatching(/^2026-06-25T10:00:00[+-]\d{2}:\d{2}$/),
-      finishedAt: expect.stringMatching(/^2026-06-26T10:00:00[+-]\d{2}:\d{2}$/),
+      startedAt: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
+      finishedAt: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
       timeMinutes: 45,
       attemptsAmount: 2,
       shuffleQuestion: true,

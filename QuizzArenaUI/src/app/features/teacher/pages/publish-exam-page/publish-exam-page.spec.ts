@@ -8,6 +8,8 @@ import { TeacherExamService } from '../../services/teacher-exam.service';
 import { CreateMatchRequestBody } from '../../api/teacher-exam.contract';
 import { TeacherPublishExamPage } from './publish-exam-page';
 
+import { TeacherContentService } from '../../services/teacher-content.service';
+
 const MOCK_MATCH_REQUEST: CreateMatchRequestBody = {
   quizId: 'quiz-1',
   courseId: 'course-1',
@@ -21,17 +23,23 @@ const MOCK_MATCH_REQUEST: CreateMatchRequestBody = {
 
 describe('TeacherPublishExamPage', () => {
   let mockExamService: Partial<TeacherExamService>;
+  let mockContentService: Partial<TeacherContentService>;
   let location: Location;
 
   beforeEach(() => {
     mockExamService = {
-      publishExam: vi.fn().mockReturnValue(of(void 0)),
+      saveMatch: vi.fn().mockReturnValue(of({ id: 'match-1' })),
+      activateMatchAsActiveExam: vi.fn().mockReturnValue(of(void 0)),
+    };
+    mockContentService = {
+      getCourses: vi.fn().mockReturnValue(of([])),
     };
 
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
         { provide: TeacherExamService, useValue: mockExamService },
+        { provide: TeacherContentService, useValue: mockContentService },
         { provide: LOCALE_ID, useValue: 'en' },
       ],
     });
@@ -48,7 +56,7 @@ describe('TeacherPublishExamPage', () => {
     expect(backSpy).toHaveBeenCalled();
   });
 
-  it('should call publishExam and goBack on handleMatchRequest when quizId is provided', () => {
+  it('should call saveMatch, activateMatchAsActiveExam and goBack on handleMatchRequest', () => {
     vi.spyOn(window.history, 'length', 'get').mockReturnValue(2);
     const backSpy = vi.spyOn(location, 'back');
     const fixture = TestBed.createComponent(TeacherPublishExamPage);
@@ -56,14 +64,15 @@ describe('TeacherPublishExamPage', () => {
     fixture.detectChanges();
 
     fixture.componentInstance.handleMatchRequest(MOCK_MATCH_REQUEST);
-    expect(mockExamService.publishExam).toHaveBeenCalledWith(MOCK_MATCH_REQUEST);
+    expect(mockExamService.saveMatch).toHaveBeenCalledWith(expect.objectContaining({ quizId: '30000000-0000-0000-0000-000000000001' }));
+    expect(mockExamService.activateMatchAsActiveExam).toHaveBeenCalledWith('match-1');
     expect(backSpy).toHaveBeenCalled();
   });
 
-  it('should not call publishExam when quizId is missing', () => {
+  it('should use temporary quizId when input is missing', () => {
     const fixture = TestBed.createComponent(TeacherPublishExamPage);
     fixture.detectChanges();
     fixture.componentInstance.handleMatchRequest({ ...MOCK_MATCH_REQUEST });
-    expect(mockExamService.publishExam).not.toHaveBeenCalled();
+    expect(mockExamService.saveMatch).toHaveBeenCalledWith(expect.objectContaining({ quizId: '30000000-0000-0000-0000-000000000001' }));
   });
 });

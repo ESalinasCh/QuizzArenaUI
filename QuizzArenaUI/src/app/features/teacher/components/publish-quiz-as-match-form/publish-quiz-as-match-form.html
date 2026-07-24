@@ -1,4 +1,5 @@
 <form class="flex flex-col gap-6" (submit)="$event.preventDefault(); submit()">
+  @if(courses().length > 0){
   <qz-select-input [label]="'Select Course'" [formField]="matchForm.courseId" [errorMessage]="courseError() || ''">
     <option value="" disabled>-- Select a course --</option>
     @for (course of courses(); track course.id) {
@@ -7,6 +8,14 @@
     </option>
     }
   </qz-select-input>
+  }
+  @else {
+  <p>
+    <qz-text-span>
+      Courses are loading ..
+    </qz-text-span>
+  </p>
+  }
 
   <qz-text-input [label]="'Duration (minutes)'" id="durationMinutes" [type]="'number'"
     [formField]="matchForm.durationMinutes" [errorMessage]="durationError() || ''"

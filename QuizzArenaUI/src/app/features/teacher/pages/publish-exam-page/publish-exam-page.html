@@ -12,7 +12,7 @@
       Publish Quizz as an Exam
     </h1>
   </header>
-
-  <qz-publish-quiz-as-match-form (onSendMatchRequest)="handleMatchRequest($event)" (onBack)="goBack()" />
+  <qz-publish-quiz-as-match-form [courses]="coursesResource.value() ?? []"
+    (onSendMatchRequest)="handleMatchRequest($event)" [quizId]="quizId() || ''" (onBack)="goBack()" />
 
 </section>

@@ -1,11 +1,12 @@
 import { Component, DestroyRef, inject, input } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, EMPTY } from 'rxjs';
+import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, EMPTY, switchMap } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { PublishQuizAsMatchForm } from '../../components/publish-quiz-as-match-form/publish-quiz-as-match-form';
 import { CreateMatchRequestBody } from '../../api/teacher-exam.contract';
+import { TeacherContentService } from '../../services/teacher-content.service';
 
 @Component({
   selector: 'qz-teacher-publish-exam-page',
@@ -18,9 +19,13 @@ export class TeacherPublishExamPage {
   readonly #location = inject(Location);
   readonly #examService = inject(TeacherExamService);
   readonly #destroyRef = inject(DestroyRef);
-
+  readonly #teacherContentService = inject(TeacherContentService);
 
   protected readonly backAriaLabel = $localize`:Publish exam page back button aria label:Back`;
+
+  readonly coursesResource = rxResource({
+    stream: () => this.#teacherContentService.getCourses(),
+  });
 
   goBack(): void {
     if (window.history.length > 1) {
@@ -33,13 +38,10 @@ export class TeacherPublishExamPage {
   handleMatchRequest(
     examToPublish: CreateMatchRequestBody
   ): void {
-    const id = this.quizId();
-    if (!id) return;
-    examToPublish.quizId = id;
-
     this.#examService
-      .publishExam(examToPublish)
+      .saveMatch(examToPublish)
       .pipe(
+        switchMap(resp => this.#examService.activateMatchAsActiveExam(resp.id)),
         catchError(() => EMPTY),
         takeUntilDestroyed(this.#destroyRef),
       )

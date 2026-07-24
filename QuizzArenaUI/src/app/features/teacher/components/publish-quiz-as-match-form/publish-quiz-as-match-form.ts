@@ -1,4 +1,4 @@
-import { Component, computed, output, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
 import { Button } from '../../../../shared/atoms/button/button';
 import { SelectInput } from '../../../../shared/molecules/select-input/select-input';
@@ -7,22 +7,17 @@ import { TextSpan } from "../../../../shared/atoms/text-span/text-span";
 import { PublishMatchForm } from '../../models/publish-match-form.model';
 import { CreateMatchRequestBody } from '../../api/teacher-exam.contract';
 import { publishMatchSchema } from './publish-match-schema';
+import { getLocalDatetimeString, formatLocalToUtcIso } from '../../../../core/utils/date-formatter.utils';
 
-interface CourseModel {
-  id: string;
-  name: string;
-  description: string;
-  teacherId: string;
-}
+import { Course } from '../../models/content-upload.model';
 
-import { getLocalDatetimeString, formatLocalToOffsetIso } from '../../../../core/utils/date-formatter.utils';
-
+const hour = 60 * 60 * 1000;
 const defaultFormModel: PublishMatchForm = {
   courseId: '',
   durationMinutes: '30',
   maxRetries: '1',
-  enabledFrom: getLocalDatetimeString(new Date()),
-  enabledUntil: getLocalDatetimeString(new Date(Date.now() + 60 * 60 * 1000)),
+  enabledFrom: getLocalDatetimeString(new Date(Date.now() + hour)),
+  enabledUntil: getLocalDatetimeString(new Date(Date.now() + 2 * hour)),
   shuffleQuestions: false,
   shuffleOptions: false,
 };
@@ -37,6 +32,8 @@ export const formSchema = publishMatchSchema;
 export class PublishQuizAsMatchForm {
   onSendMatchRequest = output<CreateMatchRequestBody>();
   onBack = output<void>();
+  courses = input<Course[]>([]);
+  quizId = input<string>('');
 
   readonly matchModel = signal<PublishMatchForm>(structuredClone(defaultFormModel));
   readonly matchForm = form(this.matchModel, formSchema);
@@ -44,27 +41,6 @@ export class PublishQuizAsMatchForm {
   readonly isSubmitted = signal(false);
   readonly isDirtyEnabledFrom = computed(() => this.matchForm.enabledFrom().touched());
   readonly isDirtyEnabledUntil = computed(() => this.matchForm.enabledUntil().touched());
-
-  readonly courses = signal<CourseModel[]>([
-    {
-      id: '10000000-0000-0000-0000-000000000001',
-      name: 'Fundamentos de Inteligencia Artificial',
-      description: 'Practical Python course focused on data analysis, visualization and Machine Learning.',
-      teacherId: '959d0300-4473-4198-b551-6c1c6fb214dc',
-    },
-    {
-      id: '10000000-0000-0000-0000-000000000002',
-      name: 'Python Programming for Data Science',
-      description: 'Practical Python course focused on data analysis, visualization and Machine Learning.',
-      teacherId: '959d0300-4473-4198-b551-6c1c6fb214dc',
-    },
-    {
-      id: '10000000-0000-0000-0000-000000000003',
-      name: 'Deep Learning Fundamentals',
-      description: 'Neural networks, CNN, RNN architectures and practical applications.',
-      teacherId: '959d0300-4473-4198-b551-6c1c6fb214dc',
-    },
-  ]);
 
   readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
   readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
@@ -154,14 +130,15 @@ export class PublishQuizAsMatchForm {
   submit(): void {
     this.isSubmitted.set(true);
     if (!this.isFormValid()) return;
+    const id = this.quizId();
 
     const m = this.matchModel();
     this.onSendMatchRequest.emit(
       {
-        quizId: '',
+        quizId: id,
         courseId: m.courseId,
-        startedAt: formatLocalToOffsetIso(m.enabledFrom),
-        finishedAt: formatLocalToOffsetIso(m.enabledUntil),
+        startedAt: formatLocalToUtcIso(m.enabledFrom),
+        finishedAt: formatLocalToUtcIso(m.enabledUntil),
         timeMinutes: Number(m.durationMinutes),
         attemptsAmount: Number(m.maxRetries),
         shuffleQuestion: m.shuffleQuestions,
