@@ -2,16 +2,23 @@ import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AuthService } from '../../../../core/services/auth.service';
 import { LoginPage } from './login-page';
+import { ThemeService } from '../../../../core/services/theme.service';
 
 describe('LoginPage', () => {
   let mockAuthService: Partial<AuthService>;
+  let mockThemeService: Partial<ThemeService>;
 
   beforeEach(() => {
     mockAuthService = { login: vi.fn() };
+    mockThemeService = {
+      currentTheme: vi.fn() as unknown as ThemeService['currentTheme'],
+      toggleTheme: vi.fn(),
+    };
 
     TestBed.configureTestingModule({
       providers: [
         { provide: AuthService, useValue: mockAuthService },
+        { provide: ThemeService, useValue: mockThemeService },
         { provide: LOCALE_ID, useValue: 'en' },
       ],
     });

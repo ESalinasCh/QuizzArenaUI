@@ -4,6 +4,7 @@ import { Icon } from '../../../../shared/atoms/icon/icon';
 import { FeatureCard } from '../../../../shared/molecules/feature-card/feature-card';
 import { LanguageSelector } from '../../../../shared/molecules/language-selector/language-selector';
 import { AuthService } from '../../../../core/services/auth.service';
+import { ThemeService } from '../../../../core/services/theme.service';
 
 export interface LoginFeature {
   imageSrc: string;
@@ -20,6 +21,8 @@ export interface LoginFeature {
 })
 export class LoginPage {
   readonly #authService = inject(AuthService);
+  readonly #themeService = inject(ThemeService);
+  currentTheme = this.#themeService.currentTheme;
 
   readonly features: LoginFeature[] = [
     {

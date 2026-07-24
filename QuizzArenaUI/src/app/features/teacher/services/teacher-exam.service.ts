@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import {
   mapClassSourceResponse,
   mapCreateQuizResponse,
@@ -100,18 +100,18 @@ export class TeacherExamService {
       .get<GradeResponse[]>(buildApiUrl(TEACHER_GRADES_ENDPOINTS.grades(matchId || '')), {
         params: { ...filters },
       })
-      .pipe(map(grades => grades.map(mapGradeResponse)));
+      .pipe(catchError(() => of([])),map(grades => grades.map(mapGradeResponse)));
   }
 
   getMatches(): Observable<Match[]> {
     return this.#http
       .get<MatchResponse[]>(buildApiUrl(TEACHER_GRADES_ENDPOINTS.matches))
-      .pipe(map(matches => matches.map(mapMatchResponse)));
+      .pipe(catchError(() => of([])), map(matches => matches.map(mapMatchResponse)));
   }
 
   resetAttempts(id: string): Observable<void> {
     return this.#http
       .post(buildApiUrl(TEACHER_GRADES_ENDPOINTS.resetAttempts(id)), {})
-      .pipe(map(() => void 0));
+      .pipe(catchError(() => of([])), map(() => void 0));
   }
 }

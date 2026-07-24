@@ -21,17 +21,18 @@
   @if (isOpen()) {
     <div
       role="listbox"
-      class="absolute right-0 top-full mt-1 z-50 w-36 rounded-card border border-light-border bg-light-surface shadow-card"
+      class="absolute right-0 top-full mt-1 z-100 w-36 rounded-card border border-light-border bg-light-surface shadow-card dark:border-dark-border dark:bg-dark-surface"
     >
       @for (lang of languages; track lang.code) {
         <button
           role="option"
           [attr.aria-selected]="lang.code === currentLanguage.code"
           (click)="switchTo(lang.code)"
-          class="w-full flex items-center px-4 py-2 text-sm text-left transition-colors duration-200 first:rounded-t-card last:rounded-b-card hover:bg-light-surface-alt"
+          class="w-full flex items-center px-4 py-2 text-sm text-left transition-colors duration-200 first:rounded-t-card last:rounded-b-card hover:bg-light-surface-alt dark:hover:bg-dark-surface-alt"
           [class.font-bold]="lang.code === currentLanguage.code"
           [class.text-primary]="lang.code === currentLanguage.code"
           [class.text-light-text]="lang.code !== currentLanguage.code"
+          [class.dark:text-dark-text]="lang.code !== currentLanguage.code"
         >{{ lang.label }}</button>
       }
     </div>
