@@ -1,83 +1,72 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { provideRouter } from '@angular/router';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { of } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
-import { ExamConfig } from '../../models/exam.model';
+import { CreateMatchRequestBody } from '../../api/teacher-exam.contract';
 import { TeacherPublishExamPage } from './publish-exam-page';
 
-const MOCK_CONFIG: ExamConfig = {
-  durationMinutes: 30,
-  maxRetries: 2,
-  shuffleQuestions: false,
+import { TeacherContentService } from '../../services/teacher-content.service';
+
+const MOCK_MATCH_REQUEST: CreateMatchRequestBody = {
+  quizId: 'quiz-1',
+  courseId: 'course-1',
+  startedAt: '2026-07-01T10:00',
+  finishedAt: '2026-07-31T10:00',
+  timeMinutes: 30,
+  attemptsAmount: 2,
+  shuffleQuestion: false,
   shuffleOptions: false,
-  enabledFrom: '2026-07-01T10:00',
-  enabledUntil: '2026-07-31T10:00',
+  questionsAmount: 0,
 };
 
 describe('TeacherPublishExamPage', () => {
   let mockExamService: Partial<TeacherExamService>;
+  let mockContentService: Partial<TeacherContentService>;
+  let location: Location;
 
   beforeEach(() => {
     mockExamService = {
-      publishExam: vi.fn().mockReturnValue(of(void 0)),
+      saveMatch: vi.fn().mockReturnValue(of({ id: 'match-1' })),
+      activateMatchAsActiveExam: vi.fn().mockReturnValue(of(void 0)),
+    };
+    mockContentService = {
+      getCourses: vi.fn().mockReturnValue(of([])),
     };
 
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
         { provide: TeacherExamService, useValue: mockExamService },
+        { provide: TeacherContentService, useValue: mockContentService },
         { provide: LOCALE_ID, useValue: 'en' },
       ],
     });
+
+    location = TestBed.inject(Location);
   });
 
-  it('should navigate to /teacher/exams/create on goBack when from is create', () => {
-    history.replaceState({ from: 'create', title: 'T', description: '', classIds: [], questionIds: [] }, '');
+  it('should call location.back on goBack when window history length is > 1', () => {
+    vi.spyOn(window.history, 'length', 'get').mockReturnValue(2);
+    const backSpy = vi.spyOn(location, 'back');
     const fixture = TestBed.createComponent(TeacherPublishExamPage);
     fixture.detectChanges();
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     fixture.componentInstance.goBack();
-    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/create']);
+    expect(backSpy).toHaveBeenCalled();
   });
 
-  it('should navigate to /teacher/exams/bank on goBack when from is bank', () => {
-    history.replaceState({ from: 'bank', title: 'T', description: '', classIds: [], questionIds: [] }, '');
+  it('should call saveMatch, activateMatchAsActiveExam and goBack on handleMatchRequest', () => {
+    vi.spyOn(window.history, 'length', 'get').mockReturnValue(2);
+    const backSpy = vi.spyOn(location, 'back');
     const fixture = TestBed.createComponent(TeacherPublishExamPage);
+    fixture.componentRef.setInput('quizId', 'quiz-1');
     fixture.detectChanges();
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
-    fixture.componentInstance.goBack();
-    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/bank']);
-  });
 
-  it('should navigate to /teacher/dashboard on goBack when from is dashboard', () => {
-    history.replaceState({ from: 'dashboard', title: 'T', description: '', classIds: [], questionIds: [] }, '');
-    const fixture = TestBed.createComponent(TeacherPublishExamPage);
-    fixture.detectChanges();
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
-    fixture.componentInstance.goBack();
-    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/dashboard']);
-  });
-
-  it('should call publishExam and navigate to dashboard on onPublish', () => {
-    history.replaceState({ from: 'create', quizId: 'quiz-1', classIds: ['c1'] }, '');
-    const fixture = TestBed.createComponent(TeacherPublishExamPage);
-    fixture.detectChanges();
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
-    fixture.componentInstance.onPublish(MOCK_CONFIG);
-    expect(mockExamService.publishExam).toHaveBeenCalledWith('quiz-1', 'c1', MOCK_CONFIG);
-    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/dashboard']);
-  });
-
-  it('should not call publishExam when history state has no quizId', () => {
-    history.replaceState({}, '');
-    const fixture = TestBed.createComponent(TeacherPublishExamPage);
-    fixture.detectChanges();
-    fixture.componentInstance.onPublish(MOCK_CONFIG);
-    expect(mockExamService.publishExam).not.toHaveBeenCalled();
+    fixture.componentInstance.handleMatchRequest(MOCK_MATCH_REQUEST);
+    expect(mockExamService.saveMatch).toHaveBeenCalledWith(MOCK_MATCH_REQUEST);
+    expect(mockExamService.activateMatchAsActiveExam).toHaveBeenCalledWith('match-1');
+    expect(backSpy).toHaveBeenCalled();
   });
 });

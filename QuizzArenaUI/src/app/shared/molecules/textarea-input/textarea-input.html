@@ -6,7 +6,7 @@
     [placeholder]="placeholder()"
     [value]="value()"
     [disabled]="disabled()"
-    (input)="value.set($any($event.target).value)"
+    (input)="value.set($any($event.target).value); touched.set(true); dirty.set(true)"
     (blur)="touched.set(true)"
     class="min-h-12 rounded-xl border border-light-border-strong bg-light-surface px-4 py-2 text-base text-light-text outline-none transition-colors placeholder:text-light-text-secondary focus:border-primary dark:border-dark-border-strong dark:bg-dark-bg dark:text-dark-text dark:placeholder:text-dark-text-secondary w-full" >
 </textarea>

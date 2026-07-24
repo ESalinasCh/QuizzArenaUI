@@ -46,18 +46,12 @@ describe('TeacherExamBankPage', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/create']);
   });
 
-  it('should navigate to publish with exam state on publishExam', () => {
+  it('should navigate to publish with exam id on publishExam', () => {
     const fixture = TestBed.createComponent(TeacherExamBankPage);
     fixture.detectChanges();
     const router = TestBed.inject(Router);
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     fixture.componentInstance.publishExam(MOCK_EXAMS[0]);
-    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/publish'], expect.objectContaining({
-      state: expect.objectContaining({
-        title: 'DDD Fundamentals',
-        questionIds: ['q1', 'q2'],
-        from: 'bank',
-      }),
-    }));
+    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/publish', 'exam-draft-1']);
   });
 });

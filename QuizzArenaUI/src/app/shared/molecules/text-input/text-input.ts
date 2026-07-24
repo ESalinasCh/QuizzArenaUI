@@ -7,6 +7,8 @@ export interface InputTextClearOption {
     text?: string;
 }
 
+type InputType = 'text' | 'number' | 'email' | 'password' | 'search' | 'tel' | 'url' | 'date' | 'datetime-local';
+
 @Component({
     selector: 'qz-text-input',
     templateUrl: './text-input.html',
@@ -18,15 +20,19 @@ export class TextInput implements FormValueControl<string> {
     label = input('');
     for = input('');
     placeholder = input('');
-    type = input('text');
+    type = input<InputType>('text');
 
     errorMessage = input('');
+
+    labeli18 = input<string>('');
+    errori18 = input<string>('');
 
     clearOptionListener = output<void>();
     clearOption = input<InputTextClearOption>({ isActivated: false, text: 'Clear' });
 
     disabled = model(false);
     touched = model(false);
+    dirty = model(false);
     invalid = model(false);
     required = model(false);
 

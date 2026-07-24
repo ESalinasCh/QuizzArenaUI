@@ -90,9 +90,7 @@ describe('TeacherCreateExamPage', () => {
     const router = TestBed.inject(Router);
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     fixture.componentInstance.onQuestionsPublish(new Set(['q1']));
-    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/publish'], expect.objectContaining({
-      state: expect.objectContaining({ quizId: 'draft-1', from: 'create' }),
-    }));
+    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/publish', 'draft-1']);
   });
 
   it('should not navigate on onQuestionsPublish when exam info is null', () => {

@@ -1,4 +1,4 @@
-﻿import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
@@ -27,14 +27,6 @@ export class TeacherExamBankPage {
   }
 
   publishExam(exam: Exam): void {
-    void this.#router.navigate(['/teacher/exams/publish'], {
-      state: {
-        title: exam.title,
-        description: exam.description,
-        classIds: [],
-        questionIds: exam.questionIds,
-        from: 'bank',
-      },
-    });
+    void this.#router.navigate(['/teacher/exams/publish', exam.id]);
   }
 }
