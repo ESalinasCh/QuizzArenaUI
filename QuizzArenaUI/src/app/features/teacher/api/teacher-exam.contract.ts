@@ -29,7 +29,7 @@ export interface CreateMatchRequestBody {
   courseId: string;
   startedAt: string;
   finishedAt: string;
-  questionsAmount?: number;
+  questionsAmount: number;
   timeMinutes: number;
   attemptsAmount: number;
   shuffleQuestion: boolean;

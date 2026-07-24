@@ -64,15 +64,8 @@ describe('TeacherPublishExamPage', () => {
     fixture.detectChanges();
 
     fixture.componentInstance.handleMatchRequest(MOCK_MATCH_REQUEST);
-    expect(mockExamService.saveMatch).toHaveBeenCalledWith(expect.objectContaining({ quizId: '30000000-0000-0000-0000-000000000001' }));
+    expect(mockExamService.saveMatch).toHaveBeenCalledWith(MOCK_MATCH_REQUEST);
     expect(mockExamService.activateMatchAsActiveExam).toHaveBeenCalledWith('match-1');
     expect(backSpy).toHaveBeenCalled();
-  });
-
-  it('should use temporary quizId when input is missing', () => {
-    const fixture = TestBed.createComponent(TeacherPublishExamPage);
-    fixture.detectChanges();
-    fixture.componentInstance.handleMatchRequest({ ...MOCK_MATCH_REQUEST });
-    expect(mockExamService.saveMatch).toHaveBeenCalledWith(expect.objectContaining({ quizId: '30000000-0000-0000-0000-000000000001' }));
   });
 });

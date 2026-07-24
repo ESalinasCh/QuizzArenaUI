@@ -39,6 +39,7 @@ describe('PublishQuizAsMatchForm', () => {
     fixture.componentInstance.matchModel.set({
       courseId: 'c1',
       durationMinutes: '30',
+      questionsAmount: '10',
       maxRetries: '1',
       enabledFrom: '2026-06-25T10:00',
       enabledUntil: '2026-06-24T10:00',
@@ -83,6 +84,7 @@ describe('PublishQuizAsMatchForm', () => {
     fixture.componentInstance.matchModel.set({
       courseId: '10000000-0000-0000-0000-000000000001',
       durationMinutes: '45',
+      questionsAmount: '10',
       maxRetries: '2',
       enabledFrom: '2026-06-25T10:00',
       enabledUntil: '2026-06-26T10:00',
@@ -94,6 +96,7 @@ describe('PublishQuizAsMatchForm', () => {
     expect(emitted).toEqual({
       quizId: '',
       courseId: '10000000-0000-0000-0000-000000000001',
+      questionsAmount: 10,
       startedAt: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
       finishedAt: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
       timeMinutes: 45,

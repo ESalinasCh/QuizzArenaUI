@@ -21,6 +21,10 @@
     [formField]="matchForm.durationMinutes" [errorMessage]="durationError() || ''"
     [labeli18]="'Exam step config duration label'" [errori18]="'Exam step config duration error'" />
 
+  <qz-text-input [label]="'Number of questions'" id="questionsAmount" [type]="'number'"
+    [formField]="matchForm.questionsAmount" [errorMessage]="questionsAmountError() || ''"
+    [labeli18]="'Exam step config questions amount label'" [errori18]="'Exam step config questions amount required error'" />
+
   <qz-text-input [label]="'Max retries'" id="maxRetries" [type]="'number'" [formField]="matchForm.maxRetries"
     [errorMessage]="retriesError() || ''" [labeli18]="'Exam step config retries label'"
     [errori18]="'Exam step config retries required error'" />

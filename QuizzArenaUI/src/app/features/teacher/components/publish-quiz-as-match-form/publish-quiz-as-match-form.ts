@@ -15,6 +15,7 @@ const hour = 60 * 60 * 1000;
 const defaultFormModel: PublishMatchForm = {
   courseId: '',
   durationMinutes: '30',
+  questionsAmount: '10',
   maxRetries: '1',
   enabledFrom: getLocalDatetimeString(new Date(Date.now() + hour)),
   enabledUntil: getLocalDatetimeString(new Date(Date.now() + 2 * hour)),
@@ -58,6 +59,14 @@ export class PublishQuizAsMatchForm {
     const errs = field.errors();
     return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
       ? (errs[0].message ?? 'Duration is required')
+      : null;
+  });
+
+  readonly questionsAmountError = computed(() => {
+    const field = this.matchForm.questionsAmount();
+    const errs = field.errors();
+    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
+      ? (errs[0].message ?? 'Number of questions is required')
       : null;
   });
 
@@ -130,13 +139,12 @@ export class PublishQuizAsMatchForm {
   submit(): void {
     this.isSubmitted.set(true);
     if (!this.isFormValid()) return;
-    const id = this.quizId();
-
     const m = this.matchModel();
     this.onSendMatchRequest.emit(
       {
-        quizId: id,
+        quizId: this.quizId(),
         courseId: m.courseId,
+        questionsAmount: Number(m.questionsAmount),
         startedAt: formatLocalToUtcIso(m.enabledFrom),
         finishedAt: formatLocalToUtcIso(m.enabledUntil),
         timeMinutes: Number(m.durationMinutes),
