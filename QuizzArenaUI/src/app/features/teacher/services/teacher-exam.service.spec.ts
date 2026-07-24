@@ -94,6 +94,7 @@ describe('TeacherExamService', () => {
       finishedAt: '2026-07-31',
       timeMinutes: 60,
       attemptsAmount: 1,
+      questionsAmount: 8,
       shuffleQuestion: true,
       shuffleOptions: false,
     };

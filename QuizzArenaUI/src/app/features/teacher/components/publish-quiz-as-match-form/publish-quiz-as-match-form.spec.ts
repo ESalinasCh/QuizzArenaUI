@@ -79,7 +79,7 @@ describe('PublishQuizAsMatchForm', () => {
     fixture.detectChanges();
 
     let emitted: CreateMatchRequestBody | undefined;
-    fixture.componentInstance.onSendMatchRequest.subscribe((req: CreateMatchRequestBody) => (emitted = req));
+    fixture.componentInstance.sendMatchRequest.subscribe((req: CreateMatchRequestBody) => (emitted = req));
 
     fixture.componentInstance.matchModel.set({
       courseId: '10000000-0000-0000-0000-000000000001',
@@ -112,7 +112,7 @@ describe('PublishQuizAsMatchForm', () => {
     fixture.detectChanges();
 
     let emitted = false;
-    fixture.componentInstance.onSendMatchRequest.subscribe(() => (emitted = true));
+    fixture.componentInstance.sendMatchRequest.subscribe(() => (emitted = true));
 
     fixture.componentInstance.submit();
     expect(emitted).toBe(false);

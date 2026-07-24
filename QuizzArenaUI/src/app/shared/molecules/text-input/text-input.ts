@@ -1,5 +1,5 @@
 import { Component, model, input, output } from '@angular/core';
-import { FormValueControl, FormField } from '@angular/forms/signals';
+import { FormValueControl } from '@angular/forms/signals';
 import { LinkText } from "../../atoms/link-text/link-text";
 
 export interface InputTextClearOption {

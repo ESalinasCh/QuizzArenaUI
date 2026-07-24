@@ -1,7 +1,7 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Location } from '@angular/common';
-import { provideRouter, Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { of } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
@@ -19,6 +19,7 @@ const MOCK_MATCH_REQUEST: CreateMatchRequestBody = {
   attemptsAmount: 2,
   shuffleQuestion: false,
   shuffleOptions: false,
+  questionsAmount: 0,
 };
 
 describe('TeacherPublishExamPage', () => {

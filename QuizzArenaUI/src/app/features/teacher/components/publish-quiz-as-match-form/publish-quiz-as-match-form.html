@@ -23,7 +23,8 @@
 
   <qz-text-input [label]="'Number of questions'" id="questionsAmount" [type]="'number'"
     [formField]="matchForm.questionsAmount" [errorMessage]="questionsAmountError() || ''"
-    [labeli18]="'Exam step config questions amount label'" [errori18]="'Exam step config questions amount required error'" />
+    [labeli18]="'Exam step config questions amount label'"
+    [errori18]="'Exam step config questions amount required error'" />
 
   <qz-text-input [label]="'Max retries'" id="maxRetries" [type]="'number'" [formField]="matchForm.maxRetries"
     [errorMessage]="retriesError() || ''" [labeli18]="'Exam step config retries label'"
@@ -86,7 +87,7 @@
   }
 
   <div class="flex gap-3">
-    <qz-button type="button" size="large" variant="secondary" [fullWidth]="true" (click)="onBack.emit()"
+    <qz-button type="button" size="large" variant="secondary" [fullWidth]="true" (click)="back.emit()"
       [ariaLabel]="backAriaLabel">
       <span i18n="Exam step config back button label">Back</span>
     </qz-button>

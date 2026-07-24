@@ -31,8 +31,8 @@ export const formSchema = publishMatchSchema;
   templateUrl: './publish-quiz-as-match-form.html',
 })
 export class PublishQuizAsMatchForm {
-  onSendMatchRequest = output<CreateMatchRequestBody>();
-  onBack = output<void>();
+  sendMatchRequest = output<CreateMatchRequestBody>();
+  back = output<void>();
   courses = input<Course[]>([]);
   quizId = input<string>('');
 
@@ -140,7 +140,7 @@ export class PublishQuizAsMatchForm {
     this.isSubmitted.set(true);
     if (!this.isFormValid()) return;
     const m = this.matchModel();
-    this.onSendMatchRequest.emit(
+    this.sendMatchRequest.emit(
       {
         quizId: this.quizId(),
         courseId: m.courseId,
