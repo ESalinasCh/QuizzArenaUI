@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { rxResource, takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY, of } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
+import { ClassSourcesService } from '../../services/class-sources.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
 import { Question } from '../../models/exam.model';
@@ -17,6 +18,7 @@ type Step = 1 | 2;
 export class TeacherCreateExamPage {
   readonly #router = inject(Router);
   readonly #examService = inject(TeacherExamService);
+  readonly #classSourcesService = inject(ClassSourcesService);
   readonly #destroyRef = inject(DestroyRef);
 
   readonly currentStep = signal<Step>(1);
@@ -24,15 +26,21 @@ export class TeacherCreateExamPage {
   readonly #examInfo = signal<ExamInfoData | null>(null);
   readonly #selectedClassIds = signal<string[]>([]);
 
-  readonly #allClasses = toSignal(this.#examService.getClasses(), { initialValue: [] });
+  readonly #classSources = toSignal(this.#classSourcesService.getClassSources(), { initialValue: [] });
 
-  readonly classes = this.#allClasses;
+  readonly classes = computed(() => this.#classSources().map(({ id, name }) => ({ id, name })));
 
-  readonly questionsResource = rxResource<Question[], { classIds: string[] }>({
-    params: () => ({ classIds: this.#selectedClassIds() }),
+  readonly questionsResource = rxResource<Question[], { processingJobIds: string[] }>({
+    params: () => {
+      const selectedIds = new Set(this.#selectedClassIds());
+      const processingJobIds = this.#classSources()
+        .filter(source => selectedIds.has(source.id))
+        .flatMap(source => source.processingJobsIds);
+      return { processingJobIds };
+    },
     stream: ({ params }) => {
-      if (params.classIds.length === 0) return of([]);
-      return this.#examService.getQuestions(params.classIds).pipe(catchError(() => of([])));
+      if (params.processingJobIds.length === 0) return of([]);
+      return this.#examService.getQuestions(params.processingJobIds).pipe(catchError(() => of([])));
     }
   });
 
