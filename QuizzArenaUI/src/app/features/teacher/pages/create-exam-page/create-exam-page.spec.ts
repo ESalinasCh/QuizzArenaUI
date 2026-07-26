@@ -3,11 +3,13 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
+import { ClassSourcesService } from '../../services/class-sources.service';
+import { TeacherClassSource } from '../../models/class-source.model';
 import { TeacherCreateExamPage } from './create-exam-page';
 
-const MOCK_CLASSES = [
-  { id: 'source-ddd-1', name: 'DDD - Semana 1' },
-  { id: 'source-hex-1', name: 'Hexagonal - Semana 1' },
+const MOCK_CLASS_SOURCES: TeacherClassSource[] = [
+  { id: 'source-ddd-1', name: 'DDD - Semana 1', status: 'Completed', sourceType: 'Document', createdAt: '2026-06-01T00:00:00Z', processingJobsIds: ['job-ddd-1'] },
+  { id: 'source-hex-1', name: 'Hexagonal - Semana 1', status: 'Completed', sourceType: 'Document', createdAt: '2026-06-01T00:00:00Z', processingJobsIds: ['job-hex-1'] },
 ];
 
 const MOCK_QUESTIONS = [
@@ -17,23 +19,37 @@ const MOCK_QUESTIONS = [
 
 describe('TeacherCreateExamPage', () => {
   let mockExamService: Partial<TeacherExamService>;
+  let mockClassSourcesService: Partial<ClassSourcesService>;
 
   beforeEach(() => {
     mockExamService = {
-      getClasses: vi.fn().mockReturnValue(of(MOCK_CLASSES)),
       getQuestions: vi.fn().mockReturnValue(of(MOCK_QUESTIONS)),
       saveDraftExam: vi.fn().mockReturnValue(of({
         id: 'draft-1', title: 'Test', description: '', status: 'draft', questionIds: ['q1'], createdAt: '',
       })),
     };
 
+    mockClassSourcesService = {
+      getClassSources: vi.fn().mockReturnValue(of(MOCK_CLASS_SOURCES)),
+    };
+
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
         { provide: TeacherExamService, useValue: mockExamService },
+        { provide: ClassSourcesService, useValue: mockClassSourcesService },
         { provide: LOCALE_ID, useValue: 'en' },
       ],
     });
+  });
+
+  it('should expose classes from ClassSourcesService as id/name pairs', () => {
+    const fixture = TestBed.createComponent(TeacherCreateExamPage);
+    fixture.detectChanges();
+    expect(fixture.componentInstance.classes()).toEqual([
+      { id: 'source-ddd-1', name: 'DDD - Semana 1' },
+      { id: 'source-hex-1', name: 'Hexagonal - Semana 1' },
+    ]);
   });
 
   it('should start on step 1', () => {
@@ -62,7 +78,7 @@ describe('TeacherCreateExamPage', () => {
     fixture.detectChanges();
     const filtered = fixture.componentInstance.filteredQuestions();
     expect(filtered.length).toBe(2);
-    expect(mockExamService.getQuestions).toHaveBeenCalledWith(['source-ddd-1']);
+    expect(mockExamService.getQuestions).toHaveBeenCalledWith(['job-ddd-1']);
   });
 
   it('should navigate to dashboard on goBack from step 1', () => {
