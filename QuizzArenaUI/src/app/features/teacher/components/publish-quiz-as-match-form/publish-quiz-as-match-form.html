@@ -1,0 +1,99 @@
+<form class="flex flex-col gap-6" (submit)="$event.preventDefault(); submit()">
+  @if(courses().length > 0){
+  <qz-select-input [label]="'Select Course'" [formField]="matchForm.courseId" [errorMessage]="courseError() || ''">
+    <option value="" disabled>-- Select a course --</option>
+    @for (course of courses(); track course.id) {
+    <option [value]="course.id">
+      {{ course.name }}
+    </option>
+    }
+  </qz-select-input>
+  }
+  @else {
+  <p>
+    <qz-text-span>
+      Courses are loading ..
+    </qz-text-span>
+  </p>
+  }
+
+  <qz-text-input [label]="'Duration (minutes)'" id="durationMinutes" [type]="'number'"
+    [formField]="matchForm.durationMinutes" [errorMessage]="durationError() || ''"
+    [labeli18]="'Exam step config duration label'" [errori18]="'Exam step config duration error'" />
+
+  <qz-text-input [label]="'Number of questions'" id="questionsAmount" [type]="'number'"
+    [formField]="matchForm.questionsAmount" [errorMessage]="questionsAmountError() || ''"
+    [labeli18]="'Exam step config questions amount label'"
+    [errori18]="'Exam step config questions amount required error'" />
+
+  <qz-text-input [label]="'Max retries'" id="maxRetries" [type]="'number'" [formField]="matchForm.maxRetries"
+    [errorMessage]="retriesError() || ''" [labeli18]="'Exam step config retries label'"
+    [errori18]="'Exam step config retries required error'" />
+
+  <div class="flex flex-col gap-4">
+    <label class="flex items-start gap-3 cursor-pointer">
+      <input type="checkbox" [checked]="matchModel().shuffleQuestions" (change)="toggleShuffleQuestions()"
+        class="mt-0.5 h-4 w-4 accent-primary" />
+      <span class="flex flex-col gap-0.5">
+        <span i18n="Exam step config shuffle questions label"
+          class="text-sm font-medium text-light-text dark:text-dark-text">
+          Shuffle questions
+        </span>
+        <span i18n="Exam step config shuffle questions description"
+          class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+          Questions will be shown in a random order for each student
+        </span>
+      </span>
+    </label>
+
+    <label class="flex items-start gap-3 cursor-pointer">
+      <input type="checkbox" [checked]="matchModel().shuffleOptions" (change)="toggleShuffleOptions()"
+        class="mt-0.5 h-4 w-4 accent-primary" />
+      <span class="flex flex-col gap-0.5">
+        <span i18n="Exam step config shuffle options label"
+          class="text-sm font-medium text-light-text dark:text-dark-text">
+          Shuffle options
+        </span>
+        <span i18n="Exam step config shuffle options description"
+          class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+          Answer options will be shown in a random order for each student
+        </span>
+      </span>
+    </label>
+  </div>
+
+  <qz-text-input id="enabledFrom" [formField]="matchForm.enabledFrom" [type]="'datetime-local'"
+    [label]="'Available from'" [errorMessage]="enabledFromError() || ''"
+    [labeli18]="'Exam step config enabled from label'" [errori18]="'Exam step config enabled from required error'" />
+
+  <qz-text-input id="enabledUntil" [formField]="matchForm.enabledUntil" [type]="'datetime-local'"
+    [label]="'Available until'" [errorMessage]="enabledUntilError() || ''"
+    [labeli18]="'Exam step config enabled until label'" [errori18]="'Exam step config enabled until required error'" />
+
+  @if (dateRangeError()) {
+  <p>
+    <qz-text-span [variant]="'danger'" [i18n]="'Exam step config date range error'">
+      {{ dateRangeError() }}
+    </qz-text-span>
+  </p>
+  }
+
+  @if (isMoreThanCurrentDateTime()) {
+  <p>
+    <qz-text-span [variant]="'danger'" [i18n]="'Exam step config date range error'">
+      {{ isMoreThanCurrentDateTime() }}
+    </qz-text-span>
+  </p>
+  }
+
+  <div class="flex gap-3">
+    <qz-button type="button" size="large" variant="secondary" [fullWidth]="true" (click)="back.emit()"
+      [ariaLabel]="backAriaLabel">
+      <span i18n="Exam step config back button label">Back</span>
+    </qz-button>
+    <qz-button type="submit" size="large" variant="primary" [fullWidth]="true" [ariaLabel]="publishAriaLabel">
+      <span i18n="Exam step config publish button label">Publish exam</span>
+    </qz-button>
+  </div>
+
+</form>

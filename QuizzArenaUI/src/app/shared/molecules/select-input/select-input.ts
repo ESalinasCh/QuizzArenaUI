@@ -23,6 +23,7 @@ export class SelectInput implements FormValueControl<string> {
 
     disabled = model(false);
     touched = model(false);
+    dirty = model(false);
     invalid = model(false);
     required = model(false);
 

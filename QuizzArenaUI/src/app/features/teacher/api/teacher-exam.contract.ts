@@ -29,6 +29,7 @@ export interface CreateMatchRequestBody {
   courseId: string;
   startedAt: string;
   finishedAt: string;
+  questionsAmount: number;
   timeMinutes: number;
   attemptsAmount: number;
   shuffleQuestion: boolean;
@@ -39,7 +40,14 @@ export interface ExamResponse {
   id: string;
   title: string;
   description: string;
-  status: string;
+  status: 'draft' | 'published' | 'archived';
   questionIds: string[];
   createdAt: string;
+}
+
+export interface SaveMatchResponse {
+  id: string;
+  quizId: string;
+  courseId: string;
+  status: string;
 }

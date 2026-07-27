@@ -8,6 +8,7 @@ import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/ht
 import {
   NavigationError,
   provideRouter,
+  withComponentInputBinding,
   withNavigationErrorHandler,
   withRouterConfig,
 } from '@angular/router';
@@ -41,6 +42,7 @@ export function createAppConfig(config: AppConfig): ApplicationConfig {
       provideBrowserGlobalErrorListeners(),
       provideRouter(
         routes,
+        withComponentInputBinding(),
         withNavigationErrorHandler(handleNavigationError),
         withRouterConfig({ resolveNavigationPromiseOnError: true }),
       ),

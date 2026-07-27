@@ -12,7 +12,7 @@ export const teacherRoutes: Routes = [
   { path: 'dashboard', component: TeacherDashboardPage, pathMatch: 'full' },
   { path: 'content/upload', component: TeacherUploadContentPage, pathMatch: 'full' },
   { path: 'exams/create', component: TeacherCreateExamPage, pathMatch: 'full' },
-  { path: 'exams/publish', component: TeacherPublishExamPage, pathMatch: 'full' },
+  { path: 'exams/publish/:quizId', component: TeacherPublishExamPage, pathMatch: 'full' },
   { path: 'exams/bank', component: TeacherExamBankPage },
   { path: 'exams/attempts', component: TeacherGradePanelPage },
   { path: 'class-sources', component: TeacherClassSourcesPage, pathMatch: 'full' },

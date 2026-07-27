@@ -20,36 +20,28 @@ export const TEACHER_QUESTIONS_RESPONSE_MOCK: QuestionResponse[] = [
 
 export const TEACHER_EXAMS_MOCK: ExamResponse[] = [
   {
-    id: 'exam-draft-1',
-    title: 'DDD Fundamentals',
-    description: 'Core DDD concepts quiz',
+    id: 'b314f532-51dc-43d3-9644-e898b3606e4b',
+    title: 'Linked List Basics Quiz',
+    description: 'Fundamentals of linked list concepts',
     status: 'draft',
-    questionIds: ['q1', 'q2', 'q3'],
-    createdAt: '2026-06-20T10:00:00.000Z',
+    questionIds: ['30000000-0000-0000-0000-000000000001', '30000000-0000-0000-0000-000000000002'],
+    createdAt: '2026-06-18T11:00:00.000Z',
   },
   {
-    id: 'exam-draft-2',
-    title: 'Hexagonal Architecture',
-    description: 'Ports and adapters concepts',
+    id: '95600f94-026d-400d-a0a9-2ad167980350',
+    title: 'Linked List Fundamentals Quiz',
+    description: 'Fundamentals of linked lists',
     status: 'draft',
-    questionIds: ['q7', 'q8'],
-    createdAt: '2026-06-22T14:30:00.000Z',
+    questionIds: ['30000000-0000-0000-0000-000000000003', '30000000-0000-0000-0000-000000000004'],
+    createdAt: '2026-06-18T11:00:00.000Z',
   },
   {
     id: 'exam-pub-1',
     title: 'DDD Week 1 Exam',
     description: 'First week assessment',
     status: 'published',
-    questionIds: ['q1', 'q2', 'q3', 'q4'],
+    questionIds: ['30000000-0000-0000-0000-000000000001'],
     createdAt: '2026-06-15T09:00:00.000Z',
-  },
-  {
-    id: 'exam-pub-2',
-    title: 'Domain Events & Repositories',
-    description: 'Second week assessment',
-    status: 'published',
-    questionIds: ['q5', 'q6'],
-    createdAt: '2026-06-18T11:00:00.000Z',
   },
 ];
 
@@ -70,52 +62,52 @@ export function buildCreateExamResponseMock(
 }
 
 export const TEACHER_GRADES_MOCK: GradeResponse[] = [
-    {
-        id: "ca200000-0000-0000-0000-000000000002",
-        nickname: "max_attempt2",
+  {
+    id: "ca200000-0000-0000-0000-000000000002",
+    nickname: "max_attempt2",
+    status: "Completed",
+    score: 75.00,
+    userId: "37976960-c868-45d4-b3c2-4967cb46f4b0",
+    matchId: "b2222222-2222-2222-2222-222222222222",
+    otherAttempts: [
+      {
+        id: "ca200000-0000-0000-0000-000000000001",
+        nickname: "max_attempt1",
         status: "Completed",
-        score: 75.00,
-        userId: "37976960-c868-45d4-b3c2-4967cb46f4b0",
-        matchId: "b2222222-2222-2222-2222-222222222222",
-        otherAttempts: [
-            {
-                id: "ca200000-0000-0000-0000-000000000001",
-                nickname: "max_attempt1",
-                status: "Completed",
-                score: 60.00
-            },
-            {
-                id: "ca200000-0000-0000-0000-000000000003",
-                nickname: "user_attempt_01",
-                status: "Completed",
-                score: 50.00
-            }
-        ]
-    },
-    {
-        id: "ca200000-0000-0000-0000-000000000005",
-        nickname: "user_attempt_03",
-        status: "Timeout",
-        score: 60.00,
-        userId: "33333333-3333-3333-3333-333333333333",
-        matchId: "b2222222-2222-2222-2222-222222222222",
-        otherAttempts: [
-        ]
-    },
-    {
-        id: "ca200000-0000-0000-0000-000000000005",
-        nickname: "user_attempt_03",
-        status: "InProgress",
-        score: 60.00,
-        userId: "33333333-3333-3333-3333-333333333333",
-        matchId: "b2222222-2222-2222-2222-222222222222",
-        otherAttempts: [
-            {
-                id: "ca200000-0000-0000-0000-000000000004",
-                nickname: "user_attempt_02",
-                status: "Completed",
-                score: 50.00
-            }
-        ]
-    }
+        score: 60.00
+      },
+      {
+        id: "ca200000-0000-0000-0000-000000000003",
+        nickname: "user_attempt_01",
+        status: "Completed",
+        score: 50.00
+      }
+    ]
+  },
+  {
+    id: "ca200000-0000-0000-0000-000000000005",
+    nickname: "user_attempt_03",
+    status: "Timeout",
+    score: 60.00,
+    userId: "33333333-3333-3333-3333-333333333333",
+    matchId: "b2222222-2222-2222-2222-222222222222",
+    otherAttempts: [
+    ]
+  },
+  {
+    id: "ca200000-0000-0000-0000-000000000005",
+    nickname: "user_attempt_03",
+    status: "InProgress",
+    score: 60.00,
+    userId: "33333333-3333-3333-3333-333333333333",
+    matchId: "b2222222-2222-2222-2222-222222222222",
+    otherAttempts: [
+      {
+        id: "ca200000-0000-0000-0000-000000000004",
+        nickname: "user_attempt_02",
+        status: "Completed",
+        score: 50.00
+      }
+    ]
+  }
 ]
