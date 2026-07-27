@@ -113,6 +113,12 @@ export class TeacherExamService {
       .pipe(map(() => void 0));
   }
 
+  unpublishMatch(matchId: string): Observable<void> {
+    return this.#http
+      .post(buildApiUrl(TEACHER_EXAM_ENDPOINTS.unpublishMatch(matchId)), {})
+      .pipe(map(() => void 0));
+  }
+
   saveMatch(
     request: CreateMatchRequestBody
   ): Observable<SaveMatchResponse> {

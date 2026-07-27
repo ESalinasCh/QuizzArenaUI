@@ -55,15 +55,13 @@ export interface QuizResponseAsExams {
   description: string;
   status: QuizStatus;
   origin: QuizOrigin;
-  questions: [
-    {
-      questionId: string;
-      position: number;
-      valueScore: number;
-      content: string;
-      type: string;
-    }
-  ]
+  questions: {
+    questionId: string;
+    position: number;
+    valueScore: number;
+    content: string;
+    type: string;
+  }[];
 }
 
 export interface SaveMatchResponse {

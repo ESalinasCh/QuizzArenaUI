@@ -178,4 +178,12 @@ describe('TeacherExamService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
   });
+
+  it('should call POST /matches/:id/unpublish on unpublishMatch', () => {
+    service.unpublishMatch('match-1').subscribe();
+
+    const req = httpMock.expectOne(r => r.url.includes('/matches/match-1/unpublish'));
+    expect(req.request.method).toBe('POST');
+    req.flush({});
+  });
 });

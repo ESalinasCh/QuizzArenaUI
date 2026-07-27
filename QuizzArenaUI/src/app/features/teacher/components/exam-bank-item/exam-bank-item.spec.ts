@@ -1,15 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExamBankItem } from './exam-bank-item';
-import { Exam } from '../../models/exam.model';
+import { QuizResponseAsExams } from '../../api/teacher-exam.contract';
 import { LOCALE_ID } from '@angular/core';
 
-const MOCK_EXAM: Exam = {
+const MOCK_QUIZ: QuizResponseAsExams = {
   id: 'exam-1',
   title: 'Test Exam',
   description: 'Desc',
   status: 'draft',
-  questionIds: ['q1', 'q2'],
-  createdAt: '2026-01-01',
+  origin: 'ManuallyCreated',
+  questions: [
+    { questionId: 'q1', position: 1, valueScore: 10, content: 'Q1', type: 'SingleChoice' }
+  ],
 };
 
 describe('ExamBankItem', () => {
@@ -23,7 +25,7 @@ describe('ExamBankItem', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExamBankItem);
-    fixture.componentRef.setInput('exam', MOCK_EXAM);
+    fixture.componentRef.setInput('quizAsExams', MOCK_QUIZ);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

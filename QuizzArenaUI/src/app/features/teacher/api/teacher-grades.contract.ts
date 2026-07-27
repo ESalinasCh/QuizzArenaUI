@@ -20,12 +20,19 @@ export interface AttemptResponse {
 
 export interface MatchResponse {
     id: string;
+    quizId?: string;
     title: string;
     courseName: string;
+    courseId?: string;
     questionCount: number;
     professorName: string;
     duration: number;
-    createdAt: string;
+    status?: MatchStatusResponse | string;
+    mode?: string;
+    startedAt?: string;
+    finishedAt?: string;
+    attemptsAmount?: number;
+    createdAt?: string;
 }
 
 export interface GradeAttemptFilters {

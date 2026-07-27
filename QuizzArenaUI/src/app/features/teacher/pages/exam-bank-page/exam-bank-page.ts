@@ -10,7 +10,7 @@ import { ExamBankItem } from '../../components/exam-bank-item/exam-bank-item';
 import { QuizResponseAsExams } from '../../api/teacher-exam.contract';
 @Component({
   selector: 'qz-teacher-exam-bank-page',
-  imports: [Button, Icon, ItemContainer, ExamBankItem],
+  imports: [Button, Icon, ItemContainer, ExamBankItem, MatchesForQuizPipe],
   templateUrl: './exam-bank-page.html',
 })
 export class TeacherExamBankPage {
@@ -45,5 +45,13 @@ export class TeacherExamBankPage {
 
   publishExam(exam: QuizResponseAsExams): void {
     void this.#router.navigate(['/teacher/exams/publish', exam.id]);
+  }
+
+  unpublishMatch(match: Match): void {
+    this.#examService.unpublishMatch(match.id).subscribe({
+      next: () => {
+        this.#refreshMatches.update(n => n + 1);
+      },
+    });
   }
 }
