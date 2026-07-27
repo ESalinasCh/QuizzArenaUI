@@ -1,3 +1,6 @@
+export type QuizStatus = 'draft' | 'published' | 'archived';
+export type QuizOrigin = 'AiGenerated' | 'ManuallyCreated';
+
 export interface ClassSourceResponse {
   id: string;
   name: string;
@@ -44,6 +47,23 @@ export interface ExamResponse {
   questionIds: string[];
   createdAt: string;
   questions?: { questionId?: string; id?: string }[];
+}
+
+export interface QuizResponseAsExams {
+  id: string;
+  title: string;
+  description: string;
+  status: QuizStatus;
+  origin: QuizOrigin;
+  questions: [
+    {
+      questionId: string;
+      position: number;
+      valueScore: number;
+      content: string;
+      type: string;
+    }
+  ]
 }
 
 export interface SaveMatchResponse {

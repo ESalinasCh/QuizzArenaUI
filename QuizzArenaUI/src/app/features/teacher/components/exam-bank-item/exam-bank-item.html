@@ -1,0 +1,23 @@
+<qz-item-container>
+  <div class="flex w-full">
+    <div class="flex-1 flex flex-col gap-0.5">
+      <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ quizAsExams().title }}</span>
+      <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+        {{ quizAsExams().questions.length }}
+        <ng-container i18n="Exam bank question count label">
+          questions
+        </ng-container>
+      </span>
+    </div>
+    <div class="flex-0">
+      <qz-button size="small" variant="primary" (click)="publish.emit()" [ariaLabel]="publishAriaLabel">
+        <span i18n="Exam bank publish button label">
+          Publish
+        </span>
+      </qz-button>
+    </div>
+  </div>
+  <qz-item-container [additionalClasses]="'mt-4 w-full'">
+    sdcsd
+  </qz-item-container>
+</qz-item-container>

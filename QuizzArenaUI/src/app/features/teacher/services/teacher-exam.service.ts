@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import {
   mapClassSourceResponse,
   mapCreateQuizResponse,
@@ -13,6 +13,8 @@ import {
   CreateMatchRequestBody,
   CreateQuizResponseBody,
   QuestionResponse,
+  QuizOrigin,
+  QuizResponseAsExams,
   SaveMatchResponse,
   ExamResponse,
 } from '../api/teacher-exam.contract';
@@ -26,6 +28,8 @@ import { PagedRequest } from '../../../core/models/pagination.model';
 
 export interface QuizPagedRequest extends PagedRequest {
   status?: string;
+}export interface QuizAsExamRequest extends PagedRequest {
+  origin?: QuizOrigin
 }
 
 @Injectable({ providedIn: 'root' })
@@ -53,6 +57,19 @@ export class TeacherExamService {
     return this.#http.get<ExamResponse[]>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), { params }).pipe(
       map(exams => exams.map(mapExamResponse))
     );
+  }
+
+  getQuizzesAsExams(
+    request: QuizAsExamRequest
+  ): Observable<QuizResponseAsExams[]> {
+    const params = buildHttpParams(request);
+    return this.#http
+      .get<QuizResponseAsExams[]>(
+        buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), { params }
+      )
+      .pipe(
+        tap(console.log)
+      );
   }
 
   createExam(request: CreateExamRequest): Observable<Exam> {
