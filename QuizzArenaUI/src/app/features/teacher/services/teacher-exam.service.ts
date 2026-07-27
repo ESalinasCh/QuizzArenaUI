@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import {
   mapClassSourceResponse,
   mapCreateQuizResponse,
@@ -67,9 +67,6 @@ export class TeacherExamService {
       .get<QuizResponseAsExams[]>(
         buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), { params }
       )
-      .pipe(
-        tap(console.log)
-      );
   }
 
   createExam(request: CreateExamRequest): Observable<Exam> {

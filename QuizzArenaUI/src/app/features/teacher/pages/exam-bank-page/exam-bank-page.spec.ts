@@ -64,4 +64,13 @@ describe('TeacherExamBankPage', () => {
     fixture.componentInstance.unpublishMatch(mockMatch);
     expect(mockExamService.unpublishMatch).toHaveBeenCalledWith('m1');
   });
+
+  it('should navigate to matches list on goToQuizMatches', async () => {
+    const fixture = TestBed.createComponent(TeacherExamBankPage);
+    fixture.detectChanges();
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+    await fixture.componentInstance.goToQuizMatches('exam-draft-1');
+    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/bank', 'exam-draft-1', 'matches']);
+  });
 });

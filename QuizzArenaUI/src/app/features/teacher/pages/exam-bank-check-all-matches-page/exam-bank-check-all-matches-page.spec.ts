@@ -6,6 +6,8 @@ import { ExamBankCheckAllMatchesPage } from './exam-bank-check-all-matches-page'
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { Match } from '../../models/exam.model';
 
+import { Location } from '@angular/common';
+
 const MOCK_MATCHES: Match[] = [
   { id: 'm1', quizId: 'quiz-1', title: 'Quiz 1 Match', courseName: 'AI Course', questionCount: 5, professorName: 'Prof', duration: 30, status: 'Active' },
 ];
@@ -44,5 +46,19 @@ describe('ExamBankCheckAllMatchesPage', () => {
     fixture.detectChanges();
     expect(mockExamService.getMatches).toHaveBeenCalledWith({ quizId: 'quiz-1' });
     expect(component.matches().length).toBe(1);
+  });
+
+  it('should call unpublishMatch service on unpublishMatch invocation', () => {
+    fixture.detectChanges();
+    component.unpublishMatch(MOCK_MATCHES[0]);
+    expect(mockExamService.unpublishMatch).toHaveBeenCalledWith('m1');
+  });
+
+  it('should trigger goBack navigation when window history length is > 1', () => {
+    vi.spyOn(window.history, 'length', 'get').mockReturnValue(2);
+    const location = TestBed.inject(Location);
+    const backSpy = vi.spyOn(location, 'back');
+    component.goBack();
+    expect(backSpy).toHaveBeenCalled();
   });
 });

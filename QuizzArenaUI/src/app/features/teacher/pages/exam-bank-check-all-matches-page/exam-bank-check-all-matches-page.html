@@ -23,16 +23,16 @@
           </div>
           <div
             class="flex flex-wrap items-center gap-x-2 gap-y-1 text-light-text-secondary dark:text-dark-text-secondary">
-            <span>Duration: {{ match.duration }} mins</span>
+            <span><ng-container i18n="Check all matches duration label">Duration:</ng-container> {{ match.duration }} <ng-container i18n="Check all matches duration unit">mins</ng-container></span>
             <span>•</span>
-            <span>{{ match.questionCount }} questions</span>
+            <span>{{ match.questionCount }} <ng-container i18n="Check all matches questions count unit">questions</ng-container></span>
             @if (match.startedAt) {
             <span>•</span>
-            <span>Start: {{ match.startedAt | date:'short' }}</span>
+            <span><ng-container i18n="Check all matches start date label">Start:</ng-container> {{ match.startedAt | date:'short' }}</span>
             }
             @if (match.finishedAt) {
             <span>•</span>
-            <span>End: {{ match.finishedAt | date:'short' }}</span>
+            <span><ng-container i18n="Check all matches end date label">End:</ng-container> {{ match.finishedAt | date:'short' }}</span>
             }
           </div>
         </div>
