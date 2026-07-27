@@ -33,10 +33,12 @@ export class TeacherExamService {
   }
 
   getQuestions(processingJobsIds: string[]): Observable<Question[]> {
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('status', 'Verified')
-      .set('pageSize', '100')
-      .set('processingJobIds', processingJobsIds.join(';'));
+      .set('pageSize', '100');
+    processingJobsIds.forEach(id => {
+      params = params.append('processingJobIds', id);
+    });
     return this.#http
       .get<QuestionResponse[]>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.questions), { params })
       .pipe(map(questions => questions.map(mapQuestionResponse)));
