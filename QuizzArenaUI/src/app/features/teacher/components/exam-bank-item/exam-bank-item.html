@@ -1,5 +1,5 @@
 <qz-item-container>
-  <div class="flex items-center justify-between w-full">
+  <div class="flex flex-col sm:flex-row justify-center sm:justify-between gap-1 w-full">
     <div class="flex flex-col gap-0.5">
       <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ quizAsExams().title }}</span>
       <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
@@ -9,8 +9,15 @@
         </ng-container>
       </span>
     </div>
-    <div class="flex-0">
-      <qz-button size="small" variant="primary" (click)="publish.emit()" [ariaLabel]="publishAriaLabel">
+    <div class="flex-0 flex gap-1 flex-col justify-center sm:flex-row sm:justify-between">
+      <qz-button size="small" [fullWidth]="true" variant="secondary" (click)="publish.emit()"
+        [ariaLabel]="publishAriaLabel">
+        <span>
+          Check Others
+        </span>
+      </qz-button>
+      <qz-button size="small" [fullWidth]="true" variant="primary" (click)="publish.emit()"
+        [ariaLabel]="publishAriaLabel">
         <span i18n="Exam bank publish button label">
           Publish
         </span>
@@ -20,36 +27,40 @@
 
   @if (matches().length > 0) {
   <div class="mt-4 flex flex-col gap-2 border-t border-light-border dark:border-dark-border pt-3 w-full">
-    <span class="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary" i18n="Exam bank matches section heading">
+    <span class="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary"
+      i18n="Exam bank matches section heading">
       Active Matches
     </span>
     <div class="flex flex-col gap-2">
       @for (match of matches(); track match.id) {
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between rounded-lg bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border p-3 text-xs gap-3">
-        <div class="flex flex-col gap-1">
-          <div class="flex items-center gap-2">
+      <div
+        class="flex flex-col justify-between rounded-lg bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border p-3 text-xs gap-3 sm:flex-row sm:items-center">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2 justify-between sm:justify-start">
             <span class="font-semibold text-light-text dark:text-dark-text">{{ match.courseName }}</span>
             @if (match.status) {
-              <qz-status-label [label]="match.status" [variant]="match.status | statusVariant" />
+            <qz-status-label [label]="match.status" [variant]="match.status | statusVariant" />
             }
           </div>
-          <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-light-text-secondary dark:text-dark-text-secondary">
+          <div
+            class="flex flex-wrap justify-between items-center gap-x-2 gap-y-1 text-light-text-secondary dark:text-dark-text-secondary">
             <span>Duration: {{ match.duration }} mins</span>
-            <span>•</span>
+            <span class="hidden sm:block">•</span>
             <span>{{ match.questionCount }} questions</span>
             @if (match.startedAt) {
-              <span>•</span>
-              <span>Start: {{ match.startedAt | date:'short' }}</span>
+            <span class="hidden sm:block">•</span>
+            <span>Start: {{ match.startedAt | date:'short' }}</span>
             }
             @if (match.finishedAt) {
-              <span>•</span>
-              <span>End: {{ match.finishedAt | date:'short' }}</span>
+            <span class="hidden sm:block">•</span>
+            <span>End: {{ match.finishedAt | date:'short' }}</span>
             }
           </div>
         </div>
         @if (match.status === 'Active' || match.status === 'Pending') {
-        <div class="flex shrink-0">
-          <qz-button size="small" variant="secondary" (click)="unpublishMatch.emit(match)" [ariaLabel]="unpublishAriaLabel">
+        <div class="flex w-full sm:w-auto">
+          <qz-button [fullWidth]="true" class="w-full" variant="secondary" (click)="unpublishMatch.emit(match)"
+            [ariaLabel]="unpublishAriaLabel">
             <span i18n="Unpublish match button label">Unpublish</span>
           </qz-button>
         </div>

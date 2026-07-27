@@ -12,12 +12,8 @@
 
   <div class="flex flex-col gap-3">
     @for (quiz of quizzesAsExams(); track quiz.id) {
-    <qz-exam-bank-item
-      [quizAsExams]="quiz"
-      [matches]="matches() | matchesForQuiz: quiz"
-      (publish)="publishExam(quiz)"
-      (unpublishMatch)="unpublishMatch($event)"
-    />
+    <qz-exam-bank-item [quizAsExams]="quiz" [matches]="matches() | matchesForQuiz: quiz" (publish)="publishExam(quiz)"
+      (unpublishMatch)="unpublishMatch($event)" />
     } @empty {
     <qz-item-container>
       <div class="flex flex-col items-center gap-4 py-12 text-center">
