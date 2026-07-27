@@ -1,0 +1,59 @@
+<section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
+  <header class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <qz-button size="small" variant="secondary" (click)="goBack()" [ariaLabel]="backAriaLabel">
+        <qz-icon name="arrow-left" class="w-4 h-4" />
+      </qz-button>
+      <h1 i18n="Check all matches heading" class="text-xl font-extrabold text-light-text dark:text-dark-text">
+        All Quiz Matches
+      </h1>
+    </div>
+  </header>
+
+  <div class="flex flex-col gap-3">
+    @for (match of matches(); track match.id) {
+    <qz-item-container>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between p-1 text-xs gap-3 w-full">
+        <div class="flex flex-col gap-1">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-sm text-light-text dark:text-dark-text">{{ match.courseName }}</span>
+            @if (match.status) {
+            <qz-status-label [label]="match.status" [variant]="match.status | statusVariant" />
+            }
+          </div>
+          <div
+            class="flex flex-wrap items-center gap-x-2 gap-y-1 text-light-text-secondary dark:text-dark-text-secondary">
+            <span>Duration: {{ match.duration }} mins</span>
+            <span>•</span>
+            <span>{{ match.questionCount }} questions</span>
+            @if (match.startedAt) {
+            <span>•</span>
+            <span>Start: {{ match.startedAt | date:'short' }}</span>
+            }
+            @if (match.finishedAt) {
+            <span>•</span>
+            <span>End: {{ match.finishedAt | date:'short' }}</span>
+            }
+          </div>
+        </div>
+        @if (match.status === 'Active') {
+        <div class="flex shrink-0">
+          <qz-button size="small" variant="secondary" (click)="unpublishMatch(match)" [ariaLabel]="unpublishAriaLabel">
+            <span i18n="Unpublish match button label">Unpublish</span>
+          </qz-button>
+        </div>
+        }
+      </div>
+    </qz-item-container>
+    } @empty {
+    <qz-item-container>
+      <div class="flex flex-col items-center gap-4 py-12 text-center">
+        <qz-icon name="quiz" class="h-12 w-12 text-light-text-secondary dark:text-dark-text-secondary opacity-40" />
+        <p i18n="Check all matches empty state" class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+          No matches found for this quiz.
+        </p>
+      </div>
+    </qz-item-container>
+    }
+  </div>
+</section>

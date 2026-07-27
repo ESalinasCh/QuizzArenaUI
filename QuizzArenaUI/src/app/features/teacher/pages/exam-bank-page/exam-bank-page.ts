@@ -34,6 +34,14 @@ export class TeacherExamBankPage {
     stream: ({ params }) =>
       this.#examService.getQuizzesAsExams({ page: 1, pageSize: params.limit, search: params.search, status: 'draft' }),
   });
+  readonly #allExams = toSignal(this.#examService.getQuizzesAsExams(), { initialValue: [] });
+  readonly #refreshMatches = signal(0);
+  readonly #allMatches = toSignal(
+    toObservable(this.#refreshMatches).pipe(
+      switchMap(() => this.#examService.getMatches({ status: 'Active' }))
+    ),
+    { initialValue: [] }
+  );
 
   loadMore(): void {
     this.limit.update(l => l + DEFAULT_PAGE_SIZE);
@@ -45,6 +53,10 @@ export class TeacherExamBankPage {
 
   publishExam(exam: QuizResponseAsExams): void {
     void this.#router.navigate(['/teacher/exams/publish', exam.id]);
+  }
+
+  async goToQuizMatches(quizId: string): Promise<void> {
+    await this.#router.navigate(['/teacher/exams/bank', quizId, 'matches']);
   }
 
   unpublishMatch(match: Match): void {

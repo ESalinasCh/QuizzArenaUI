@@ -186,4 +186,16 @@ describe('TeacherExamService', () => {
     expect(req.request.method).toBe('POST');
     req.flush({});
   });
+
+  it('should call GET /matches with optional filter query parameters when provided', () => {
+    service.getMatches({ code: 'CODE123', status: 'Active', mode: 'Exam', courseId: 'c-1', quizId: 'q-1' }).subscribe();
+
+    const req = httpMock.expectOne(r => r.url.includes('/matches'));
+    expect(req.request.params.get('code')).toBe('CODE123');
+    expect(req.request.params.get('status')).toBe('Active');
+    expect(req.request.params.get('mode')).toBe('Exam');
+    expect(req.request.params.get('courseId')).toBe('c-1');
+    expect(req.request.params.get('quizId')).toBe('q-1');
+    req.flush([]);
+  });
 });
