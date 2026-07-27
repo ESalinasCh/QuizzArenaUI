@@ -72,4 +72,74 @@ describe('QuestionEditModal', () => {
     expect(component.validationError()).toBeNull();
     expect(mockModalRef.close).toHaveBeenCalled();
   });
+
+  it('should close without result when canceling', () => {
+    component.handleCancelButton();
+
+    expect(mockModalRef.close).toHaveBeenCalledWith(undefined);
+  });
+
+  it('should close without result from close handler', () => {
+    component.handleCloseModal();
+
+    expect(mockModalRef.close).toHaveBeenCalledWith(undefined);
+  });
+
+  it('should add a new editable option', () => {
+    component.handleAddOption();
+
+    expect(component.optionsModel()).toContainEqual({
+      description: '',
+      isCorrect: false,
+      position: 3,
+      questionId: 'q-1'
+    });
+    expect(component.editingOptionPosition()).toBe(3);
+  });
+
+  it('should start editing an option', () => {
+    component.startEditingOption({ description: 'A', isCorrect: true, position: 1, questionId: 'q-1' });
+
+    expect(component.editingOptionPosition()).toBe(1);
+  });
+
+  it('should save option description and stop editing', () => {
+    const option = { description: 'A', isCorrect: true, position: 1, questionId: 'q-1' };
+
+    component.startEditingOption(option);
+    component.saveOptionDescription(option, 'Updated answer');
+
+    expect(component.optionsModel()[0].description).toBe('Updated answer');
+    expect(component.editingOptionPosition()).toBeNull();
+  });
+
+  it('should toggle selected option correct status and clear validation error', () => {
+    component.validationError.set('Previous error');
+
+    component.handleChangeCorrectAnswer({ description: 'B', isCorrect: false, position: 2, questionId: 'q-1' });
+
+    expect(component.validationError()).toBeNull();
+    expect(component.optionsModel()[1].isCorrect).toBe(true);
+  });
+
+  it('should submit created question with options', () => {
+    fixture.componentRef.setInput('question', {
+      ...new Question(),
+      content: 'New question',
+      type: 'SingleChoice',
+      options: [
+        { description: 'A', isCorrect: true, position: 1, questionId: '' },
+      ]
+    } as Question);
+    fixture.detectChanges();
+
+    component.handleSubmitForm(new Event('submit'));
+
+    expect(mockModalRef.close).toHaveBeenCalledWith(expect.objectContaining({
+      content: 'New question',
+      options: [
+        { description: 'A', isCorrect: true, position: 1, questionId: '' },
+      ]
+    }));
+  });
 });
