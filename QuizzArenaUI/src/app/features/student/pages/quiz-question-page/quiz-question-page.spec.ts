@@ -13,8 +13,8 @@ describe('StudentQuizQuestionPage', () => {
     matchId: 'quiz-1', attemptId: 'attempt-1',
     professorName: 'Prof A', questionCount: 2, timeLimitMinutes: 10,
     questions: [
-      { id: 'q1', statement: 'Question 1', options: [{ id: 'q1-a', label: 'A' }, { id: 'q1-b', label: 'B' }] },
-      { id: 'q2', statement: 'Question 2', options: [{ id: 'q2-a', label: 'A' }, { id: 'q2-b', label: 'B' }] },
+      { id: 'q1', statement: 'Question 1', questionType: 'SingleChoice' as const, options: [{ id: 'q1-a', label: 'A' }, { id: 'q1-b', label: 'B' }] },
+      { id: 'q2', statement: 'Question 2', questionType: 'SingleChoice' as const, options: [{ id: 'q2-a', label: 'A' }, { id: 'q2-b', label: 'B' }] },
     ],
   };
 
@@ -65,7 +65,27 @@ describe('StudentQuizQuestionPage', () => {
     fixture.detectChanges();
 
     fixture.componentInstance.selectOption('q1-a');
-    expect(fixture.componentInstance.selectedOptionId()).toBe('q1-a');
+    expect(fixture.componentInstance.selectedOptionIds()).toEqual(['q1-a']);
+  });
+
+  it('should toggle multiple choice options', () => {
+    mockStudentQuizService.getActiveQuizStart = vi.fn().mockReturnValue({
+      ...mockQuizStart,
+      questions: [
+        {
+          ...mockQuizStart.questions[0],
+          questionType: 'MultipleChoice',
+        },
+      ],
+    });
+    const fixture = TestBed.createComponent(StudentQuizQuestionPage);
+    fixture.detectChanges();
+
+    fixture.componentInstance.selectOption('q1-a');
+    fixture.componentInstance.selectOption('q1-b');
+    fixture.componentInstance.selectOption('q1-a');
+
+    expect(fixture.componentInstance.selectedOptionIds()).toEqual(['q1-b']);
   });
 
   it('should advance to next question on confirmAnswer', () => {
@@ -76,7 +96,7 @@ describe('StudentQuizQuestionPage', () => {
     fixture.componentInstance.confirmAnswer();
 
     expect(fixture.componentInstance.questionIndex()).toBe(1);
-    expect(fixture.componentInstance.selectedOptionId()).toBeNull();
+    expect(fixture.componentInstance.selectedOptionIds()).toEqual([]);
     expect(fixture.componentInstance.answers().length).toBe(1);
     expect(fixture.componentInstance.answers()[0].questionId).toBe('q1');
   });
@@ -96,8 +116,8 @@ describe('StudentQuizQuestionPage', () => {
 
     expect(mockStudentQuizService.submitMatchAttempt).toHaveBeenCalledWith('attempt-1', {
       answers: [
-        expect.objectContaining({ questionId: 'q1', selectedOptionId: 'q1-a' }),
-        expect.objectContaining({ questionId: 'q2', selectedOptionId: 'q2-a' }),
+        expect.objectContaining({ questionId: 'q1', selectedOptionIds: ['q1-a'] }),
+        expect.objectContaining({ questionId: 'q2', selectedOptionIds: ['q2-a'] }),
       ],
     });
   });
