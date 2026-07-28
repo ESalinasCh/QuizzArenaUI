@@ -32,127 +32,124 @@ export function mapStudentDashboardResponse(
   };
 }
 
-export function mapAvailableMatchResponse(response: AvailableMatchResponse): AvailableQuiz {
+export function mapAvailableMatchResponse({ id, title, questionCount, createdAt }: AvailableMatchResponse): AvailableQuiz {
   return {
-    id: response.id,
-    title: response.title,
-    questionCount: response.questionCount,
-    status: getAvailableMatchStatus(response.createdAt),
+    id,
+    title,
+    questionCount,
+    status: getAvailableMatchStatus(createdAt),
   };
 }
 
-export function mapMatchAttemptSummaryResponse(response: MatchAttemptSummaryResponse): RecentQuiz {
+export function mapMatchAttemptSummaryResponse({ id, title, score, completedAt, status }: MatchAttemptSummaryResponse): RecentQuiz {
   return {
-    id: response.id,
-    title: response.title,
-    score: response.score,
-    completedAtLabel: response.completedAt
-      ? formatRelativeDate(response.completedAt)
+    id,
+    title,
+    score,
+    completedAtLabel: completedAt
+      ? formatRelativeDate(completedAt)
       : $localize`:Recent quiz in progress label:in progress`,
-    status: mapRecentQuizStatus(response.status),
+    status: mapRecentQuizStatus(status),
   };
 }
 
 export function mapAttemptHistoryCardResponse(
-  response: MatchAttemptSummaryResponse,
+  { id, title, courseName, startedAt, duration, score }: MatchAttemptSummaryResponse,
 ): AttemptHistoryCard {
   return {
-    id: response.id,
-    title: response.title,
-    subtitle: response.courseName,
-    completedAtLabel: formatDisplayDate(response.startedAt),
-    durationLabel: $localize`:Attempt history duration label:${response.duration}:duration: min`,
-    scoreLabel: `${response.score}%`,
-    statusLabel: mapAttemptHistoryStatusLabel(response.score),
-    statusVariant: mapAttemptHistoryStatusVariant(response.score),
+    id,
+    title,
+    subtitle: courseName,
+    completedAtLabel: formatDisplayDate(startedAt),
+    durationLabel: $localize`:Attempt history duration label:${duration}:duration: min`,
+    scoreLabel: `${score}%`,
+    statusLabel: mapAttemptHistoryStatusLabel(score),
+    statusVariant: mapAttemptHistoryStatusVariant(score),
   };
 }
 
 export function mapQuizStartResponse(
-  match: AvailableMatchResponse,
-  play: CreatePlayResponse,
+  { id, title, courseName, professorName, questionCount, duration }: AvailableMatchResponse,
+  { matchId, matchAttemptId: attemptId, questions }: CreatePlayResponse,
 ): StudentQuizStart {
   return {
-    id: match.id,
-    matchId: play.matchId,
-    attemptId: play.matchAttemptId,
-    title: match.title,
-    subtitle: match.courseName,
-    professorName: match.professorName,
-    questionCount: match.questionCount,
-    timeLimitMinutes: match.duration,
-    questions: play.questions.map(question => ({
-      id: question.id,
-      statement: question.statement,
-      options: question.options.map(option => ({
-        id: option.id,
-        label: option.label,
-      })),
+    id,
+    matchId,
+    attemptId,
+    title,
+    subtitle: courseName,
+    professorName,
+    questionCount,
+    timeLimitMinutes: duration,
+    questions: questions.map(({ id, statement, options }) => ({
+      id,
+      statement,
+      options: options.map(({ id, label }) => ({ id, label })),
     })),
   };
 }
 
 export function mapMatchAttemptDetailResponse(
-  response: MatchAttemptDetailResponse,
-  metadata: Pick<StudentQuizReview, 'title' | 'subtitle'>,
+  { id, score, questions }: MatchAttemptDetailResponse,
+  { title, subtitle }: Pick<StudentQuizReview, 'title' | 'subtitle'>,
 ): StudentQuizReview {
   return {
-    id: response.id,
-    title: metadata.title,
-    subtitle: metadata.subtitle,
-    score: response.score,
-    questions: response.questions.map((question, index) => {
-      const selectedOption = question.options.find(option => option.id === question.selectedOptionId);
+    id,
+    title,
+    subtitle,
+    score,
+    questions: questions.map(({ questionId, content, options, selectedOptionId, isCorrect }, index) => {
+      const selectedOption = options.find(option => option.id === selectedOptionId);
 
       return {
-        id: question.questionId,
+        id: questionId,
         number: index + 1,
-        text: question.content,
+        text: content,
         selectedAnswerLabel:
           selectedOption?.description ?? $localize`:Student quiz unanswered fallback:No answer`,
-        isCorrect: question.isCorrect,
+        isCorrect,
       };
     }),
   };
 }
 
 export function mapSubmitMatchAttemptResponse(
-  response: SubmitMatchAttemptResponse,
-  metadata: Pick<StudentQuizResultSummary, 'title' | 'subtitle'>,
+  { attemptId, scorePercentage, correctCount, incorrectCount, totalQuestions }: SubmitMatchAttemptResponse,
+  { title, subtitle }: Pick<StudentQuizResultSummary, 'title' | 'subtitle'>,
 ): StudentQuizResultSummary {
   return {
-    attemptId: response.attemptId,
-    title: metadata.title,
-    subtitle: metadata.subtitle,
-    scorePercentage: response.scorePercentage,
-    correctCount: response.correctCount,
-    incorrectCount: response.incorrectCount,
-    totalQuestions: response.totalQuestions,
+    attemptId,
+    title,
+    subtitle,
+    scorePercentage,
+    correctCount,
+    incorrectCount,
+    totalQuestions,
     message: $localize`:Student quiz result default message:Result submitted`,
   };
 }
 
 export function mapCompleteExamAttemptResponse(
-  response: CompleteExamAttemptResponse,
-  metadata: Pick<StudentExamResult, 'title' | 'subtitle'>,
+  { attemptId, answeredQuestions, totalQuestions, answers }: CompleteExamAttemptResponse,
+  { title, subtitle }: Pick<StudentExamResult, 'title' | 'subtitle'>,
 ): StudentExamResult {
   return {
-    attemptId: response.attemptId,
-    title: metadata.title,
-    subtitle: metadata.subtitle,
-    answeredQuestions: response.answeredQuestions,
-    totalQuestions: response.totalQuestions,
-    answers: response.answers.map(answer => ({
-      id: answer.id,
-      number: answer.number,
-      text: answer.text,
-      selectedOptionId: answer.selectedOptionId,
+    attemptId,
+    title,
+    subtitle,
+    answeredQuestions,
+    totalQuestions,
+    answers: answers.map(({ id, number, text, selectedOptionId }) => ({
+      id,
+      number,
+      text,
+      selectedOptionId,
     })),
   };
 }
 
 export function mapStudentMatchesResponse(
-  availableExams: AvailableMatchResponse[]
+  availableExams: AvailableMatchResponse[],
 ): AvailableQuiz[] {
   return availableExams.map(mapAvailableMatchResponse);
 }

@@ -1,3 +1,4 @@
+import { PagedRequest } from "../../../core/models/pagination.model";
 import { AvailableQuizStatus } from "../models/student-quiz.model";
 
 export type MatchAttemptDetailStatus = 'passed' | 'failed';
@@ -131,7 +132,7 @@ export interface MatchResponse {
   status: AvailableQuizStatus;
 }
 
-export interface MatchFilters {
+export interface MatchFilters extends PagedRequest {
   code?: string;
   status: MatchStatus;
   mode?: MatchMode;

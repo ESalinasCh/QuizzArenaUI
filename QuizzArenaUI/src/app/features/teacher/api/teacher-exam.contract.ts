@@ -43,6 +43,7 @@ export interface ExamResponse {
   status: 'draft' | 'published' | 'archived';
   questionIds: string[];
   createdAt: string;
+  questions?: { questionId?: string; id?: string }[];
 }
 
 export interface SaveMatchResponse {

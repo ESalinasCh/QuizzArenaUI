@@ -16,7 +16,8 @@ describe('StudentQuizListPage', () => {
       currentUser: vi.fn() as unknown as AuthService['currentUser'],
     };
     mockStudentQuizService = {
-      getDashboard: vi.fn().mockReturnValue(of({ availableQuizzes: [], recentQuizzes: [] })),
+      getAvailableQuizzes: vi.fn().mockReturnValue(of([])),
+      getRecentQuizzes: vi.fn().mockReturnValue(of([])),
     };
 
     TestBed.configureTestingModule({
@@ -118,18 +119,19 @@ describe('StudentQuizListPage', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['/student/quizzes', 'simple-id', 'start']);
   });
 
-  it('should keep empty dashboard when dashboard request fails', () => {
-    mockStudentQuizService.getDashboard = vi.fn().mockReturnValue(
-      throwError(() => new Error('Dashboard failed')),
+  it('should keep empty lists when requests fail', () => {
+    mockStudentQuizService.getAvailableQuizzes = vi.fn().mockReturnValue(
+      throwError(() => new Error('Available quizzes failed')),
+    );
+    mockStudentQuizService.getRecentQuizzes = vi.fn().mockReturnValue(
+      throwError(() => new Error('Recent quizzes failed')),
     );
     (mockAuthService.currentUser as unknown as ReturnType<typeof vi.fn>).mockReturnValue(null);
 
     const fixture = TestBed.createComponent(StudentQuizListPage);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.dashboard()).toEqual({
-      availableQuizzes: [],
-      recentQuizzes: [],
-    });
+    expect(fixture.componentInstance.visibleAvailableQuizzes()).toEqual([]);
+    expect(fixture.componentInstance.visibleRecentQuizzes()).toEqual([]);
   });
 });

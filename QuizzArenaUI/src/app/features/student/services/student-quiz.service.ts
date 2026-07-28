@@ -21,6 +21,8 @@ import {
   mapStudentDashboardResponse,
   mapStudentMatchesResponse,
   mapSubmitMatchAttemptResponse,
+  mapAvailableMatchResponse,
+  mapMatchAttemptSummaryResponse,
 } from '../api/student-quiz.mapper';
 import {
   AttemptHistoryCard,
@@ -30,8 +32,10 @@ import {
   StudentQuizStart,
   AvailableQuiz,
   StudentExamResult,
+  RecentQuiz,
 } from '../models/student-quiz.model';
-import { buildApiUrl } from '../../../core/utils/api-url.util';
+import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
+import { PagedRequest } from '../../../core/models/pagination.model';
 
 @Injectable({ providedIn: 'root' })
 export class StudentQuizService {
@@ -63,21 +67,33 @@ export class StudentQuizService {
     );
   }
 
-  getMatches(filters: MatchFilters): Observable<AvailableQuiz[]> {
+  getAvailableQuizzes(filters?: PagedRequest): Observable<AvailableQuiz[]> {
+    const params = buildHttpParams(filters).set('status', 'active').set('mode', 'Solo');
     return this.#http
-      .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
-        params: { ...filters },
-      })
+      .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), { params })
+      .pipe(map(availableMatches => availableMatches.map(mapAvailableMatchResponse)));
+  }
+
+  getRecentQuizzes(filters?: PagedRequest): Observable<RecentQuiz[]> {
+    const params = buildHttpParams(filters);
+    return this.#http
+      .get<MatchAttemptSummaryResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts), { params })
+      .pipe(map(matchAttempts => matchAttempts.map(mapMatchAttemptSummaryResponse)));
+  }
+
+  getMatches(filters: MatchFilters): Observable<AvailableQuiz[]> {
+    const params = buildHttpParams(filters);
+    return this.#http
+      .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), { params })
       .pipe(map(availableMatches => mapStudentMatchesResponse(availableMatches)));
   }
 
-  getGradeHistory(): Observable<AttemptHistoryCard[]> {
+  getGradeHistory(filters?: PagedRequest): Observable<AttemptHistoryCard[]> {
+    const params = buildHttpParams(filters).set('matchmode', 'exam');
     return this.#http
       .get<MatchAttemptSummaryResponse[]>(
         buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts),
-        {
-          params: { matchmode: 'exam' },
-        },
+        { params },
       )
       .pipe(map(attempts => attempts.map(mapAttemptHistoryCardResponse)));
   }

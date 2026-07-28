@@ -30,12 +30,30 @@ describe('TeacherExamService', () => {
   });
 
   it('should return mapped exams including drafts and published', () => {
+    const mockResponse = [
+      { id: 'quiz-1', title: 'Draft Exam', description: '', status: 'draft', questionIds: ['q1'], createdAt: '2026-06-20T10:00:00.000Z' },
+      { id: 'quiz-2', title: 'Published Exam', description: '', status: 'published', questionIds: ['q2'], createdAt: '2026-06-21T10:00:00.000Z' },
+    ];
+
     service.getExams().subscribe(exams => {
-      expect(exams.length).toBeGreaterThan(0);
+      expect(exams.length).toBe(2);
       expect(exams.some(e => e.status === 'draft')).toBe(true);
       expect(exams.some(e => e.status === 'published')).toBe(true);
     });
-    httpMock.expectNone(() => true);
+
+    const req = httpMock.expectOne(r => r.url.includes('/users/me/quizzes'));
+    expect(req.request.method).toBe('GET');
+    req.flush(mockResponse);
+  });
+
+  it('should forward pagination filters as query params on getExams', () => {
+    service.getExams({ page: 1, pageSize: 6, search: 'ddd', status: 'draft' }).subscribe();
+
+    const req = httpMock.expectOne(r => r.url.includes('/users/me/quizzes'));
+    expect(req.request.params.get('pageSize')).toBe('6');
+    expect(req.request.params.get('search')).toBe('ddd');
+    expect(req.request.params.get('status')).toBe('draft');
+    req.flush([]);
   });
 
   it('should call GET /questions with correct params and return mapped questions', () => {

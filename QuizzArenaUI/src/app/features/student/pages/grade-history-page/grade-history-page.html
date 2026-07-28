@@ -37,9 +37,20 @@
     </div>
   </header>
 
+  @if (attempts().length > 0 || searchQuery()) {
+    <div class="w-full sm:max-w-md">
+      <qz-text-input
+        placeholder="Search exam or course..."
+        i18n-placeholder="Student grade history search placeholder"
+        [value]="searchQuery()"
+        (valueChange)="searchQuery.set($event)"
+      />
+    </div>
+  }
+
   @if (viewMode() === 'cards') {
     <div class="flex flex-col gap-4">
-      @for (attempt of attempts(); track attempt.id) {
+      @for (attempt of visibleAttempts(); track attempt.id) {
         <qz-attempt-history-card
           [title]="attempt.title"
           [subtitle]="attempt.subtitle"
@@ -68,7 +79,7 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-light-border dark:divide-dark-border">
-          @for (attempt of attempts(); track attempt.id) {
+          @for (attempt of visibleAttempts(); track attempt.id) {
             <tr class="text-light-text dark:text-dark-text">
               <td class="px-4 py-4 font-semibold">{{ attempt.title }}</td>
               <td class="px-4 py-4 text-light-muted dark:text-dark-muted">{{ attempt.subtitle }}</td>
@@ -101,6 +112,12 @@
           }
         </tbody>
       </table>
+    </div>
+  }
+
+  @if (hasMoreAttempts()) {
+    <div class="flex justify-center mt-2">
+      <qz-button variant="secondary" size="small" (click)="loadMore()" i18n="Student grade history load more button">Load More</qz-button>
     </div>
   }
 </section>

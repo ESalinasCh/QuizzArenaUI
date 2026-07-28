@@ -44,7 +44,9 @@ export class TeacherCreateExamPage {
     }
   });
 
-  readonly filteredQuestions = computed(() => this.questionsResource.value() ?? []);
+  readonly filteredQuestions = computed(() =>
+    this.questionsResource.hasValue() ? this.questionsResource.value() : [],
+  );
 
   onInfoNext(data: ExamInfoData): void {
     this.#examInfo.set(data);
