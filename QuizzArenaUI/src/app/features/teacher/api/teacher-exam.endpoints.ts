@@ -1,6 +1,6 @@
 export const TEACHER_EXAM_ENDPOINTS = {
   questions: '/api/v1/questions',
-  exams: '/api/v1/quizzes',
+  exams: '/api/v1/users/me/quizzes',
   matches: '/api/v1/matches',
   activeExams: (matchId: string) => `/api/v1/matches/${matchId}/publish`,
 } as const;
