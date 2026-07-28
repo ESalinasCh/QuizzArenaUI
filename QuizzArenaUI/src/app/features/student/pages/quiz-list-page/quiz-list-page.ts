@@ -59,7 +59,9 @@ export class StudentQuizListPage {
       this.#studentQuizService.getAvailableQuizzes({ page: 1, pageSize: params.limit, search: params.search }),
   });
 
-  readonly visibleAvailableQuizzes = computed(() => this.availableQuizzesResource.value() ?? []);
+  readonly visibleAvailableQuizzes = computed(() =>
+    this.availableQuizzesResource.hasValue() ? this.availableQuizzesResource.value() : [],
+  );
   readonly hasMoreAvailable = computed(() => this.visibleAvailableQuizzes().length >= this.availableLimit());
 
   readonly recentQuizzesResource = rxResource({
@@ -71,7 +73,9 @@ export class StudentQuizListPage {
       this.#studentQuizService.getRecentQuizzes({ page: 1, pageSize: params.limit, search: params.search }),
   });
 
-  readonly visibleRecentQuizzes = computed(() => this.recentQuizzesResource.value() ?? []);
+  readonly visibleRecentQuizzes = computed(() =>
+    this.recentQuizzesResource.hasValue() ? this.recentQuizzesResource.value() : [],
+  );
   readonly hasMoreRecent = computed(() => this.visibleRecentQuizzes().length >= this.recentLimit());
 
   loadMoreAvailable(): void {

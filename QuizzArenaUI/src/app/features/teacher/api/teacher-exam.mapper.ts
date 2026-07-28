@@ -21,7 +21,7 @@ export function mapExamResponse({ id, title, description, status, questionIds, q
     title,
     description,
     status: status === 'published' ? 'published' : 'draft',
-    questionIds: questionIds || (questions ? questions.map(q => q.questionId || q.id || '') : []) || [],
+    questionIds: questionIds?.length ? questionIds : (questions?.map(q => q.questionId || q.id || '') ?? []),
     createdAt,
   };
 }

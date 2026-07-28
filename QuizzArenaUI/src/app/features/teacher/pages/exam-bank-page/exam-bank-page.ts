@@ -33,7 +33,7 @@ export class TeacherExamBankPage {
       this.#examService.getExams({ page: 1, pageSize: params.limit, search: params.search, status: 'draft' }),
   });
 
-  readonly draftExams = computed(() => this.examsResource.value() ?? []);
+  readonly draftExams = computed(() => this.examsResource.hasValue() ? this.examsResource.value() : []);
   readonly visibleExams = this.draftExams;
 
   readonly hasMoreExams = computed(() => this.draftExams().length >= this.limit());

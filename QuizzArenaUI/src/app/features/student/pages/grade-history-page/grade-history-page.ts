@@ -35,7 +35,7 @@ export class StudentGradeHistoryPage {
     })
   });
 
-  readonly visibleAttempts = computed(() => this.attemptsResource.value() ?? []);
+  readonly visibleAttempts = computed(() => this.attemptsResource.hasValue() ? this.attemptsResource.value() : []);
   readonly attempts = this.visibleAttempts;
 
   readonly hasMoreAttempts = computed(() => {

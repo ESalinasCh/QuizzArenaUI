@@ -17,7 +17,7 @@ describe('TeacherExamBankPage', () => {
 
   beforeEach(() => {
     mockExamService = {
-      getExams: vi.fn().mockReturnValue(of(MOCK_EXAMS)),
+      getExams: vi.fn().mockReturnValue(of(MOCK_EXAMS.filter(e => e.status === 'draft'))),
     };
 
     TestBed.configureTestingModule({
@@ -32,6 +32,7 @@ describe('TeacherExamBankPage', () => {
   it('should show only draft exams', () => {
     const fixture = TestBed.createComponent(TeacherExamBankPage);
     fixture.detectChanges();
+    expect(mockExamService.getExams).toHaveBeenCalledWith(expect.objectContaining({ status: 'draft' }));
     const drafts = fixture.componentInstance.draftExams();
     expect(drafts.length).toBe(2);
     expect(drafts.every(e => e.status === 'draft')).toBe(true);

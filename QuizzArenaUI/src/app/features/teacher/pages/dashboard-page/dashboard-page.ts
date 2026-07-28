@@ -57,8 +57,10 @@ export class TeacherDashboardPage {
       this.#examService.getExams({ page: 1, pageSize: params.limit, status: 'published' }),
   });
 
-  readonly draftExams = computed(() => this.draftExamsResource.value() ?? []);
-  readonly publishedExams = computed(() => this.publishedExamsResource.value() ?? []);
+  readonly draftExams = computed(() => this.draftExamsResource.hasValue() ? this.draftExamsResource.value() : []);
+  readonly publishedExams = computed(() =>
+    this.publishedExamsResource.hasValue() ? this.publishedExamsResource.value() : [],
+  );
 
   readonly visibleDraftExams = this.draftExams;
   readonly hasMoreDraftExams = computed(() => this.draftExams().length >= this.draftLimit());

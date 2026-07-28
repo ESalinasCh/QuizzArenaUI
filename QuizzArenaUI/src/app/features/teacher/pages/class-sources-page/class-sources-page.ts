@@ -32,7 +32,9 @@ export class TeacherClassSourcesPage {
     })
   });
 
-  readonly classSources = computed(() => this.classSourcesResource.value() ?? []);
+  readonly classSources = computed(() =>
+    this.classSourcesResource.hasValue() ? this.classSourcesResource.value() : [],
+  );
   readonly visibleClassSources = this.classSources;
   readonly isLoading = computed(() => this.classSourcesResource.isLoading());
 
