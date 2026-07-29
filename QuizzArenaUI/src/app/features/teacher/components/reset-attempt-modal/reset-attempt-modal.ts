@@ -18,7 +18,10 @@ export class ResetAttemptModal {
     }
 
     handleResetClick() {
-        this.#modalRef.close(this.attempt().userId);
+        this.#modalRef.close({
+            matchId: this.attempt().matchId,
+            userId: this.attempt().userId,
+        });
     }
 
     handleCloseModalEvent() {

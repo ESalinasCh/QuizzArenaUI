@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { GradeCard } from '../../../../shared/molecules/grade-card/grade-card';
-import { Grade, Match } from '../../models/exam.model';
+import { Grade, Match, ResetAttemptResult } from '../../models/exam.model';
 import { GradeAttemptFilters } from '../../api/teacher-grades.contract';
 import { of } from 'rxjs';
 import { ModalService } from '../../../../core/services/modal.service';
@@ -64,16 +64,16 @@ export class TeacherGradePanelPage {
   }
 
   openResetModal(grade: Grade) {
-    const ref = this.#modalService.open<ResetAttemptModal, string>(ResetAttemptModal, { attempt: grade }, { title: 'Reset Attempts' });
-    ref.afterClosed.then((userId) => {
-      if (userId) {
-        this.resetAttempts(userId);
+    const ref = this.#modalService.open<ResetAttemptModal, ResetAttemptResult>(ResetAttemptModal, { attempt: grade }, { title: 'Reset Attempts' });
+    ref.afterClosed.then(result => {
+      if (result) {
+        this.resetAttempts(result.matchId, result.userId);
       }
     });
   }
 
-  private resetAttempts(userId: string): void {
-    this.#examService.resetAttempts(userId).subscribe({
+  private resetAttempts(matchId: string, userId: string): void {
+    this.#examService.resetAttempts(matchId, userId).subscribe({
       next: () => {
         this.grades.reload();
       }
