@@ -72,6 +72,8 @@ export interface CreatePlayResponse {
   matchId: string;
   matchAttemptId: string;
   questions: PlayQuestionResponse[];
+  totalQuestions: number;
+  answeredQuestions: number;
 }
 
 export interface SubmitMatchAttemptAnswerRequest {

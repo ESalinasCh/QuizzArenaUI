@@ -116,6 +116,8 @@ describe('student-quiz.mapper', () => {
         questions: [
           { id: 'q1', statement: 'Q1', options: [{ id: 'q1-a', label: 'A' }] },
         ],
+        totalQuestions: 1,
+        answeredQuestions: 0
       };
 
       const result = mapQuizStartResponse(match, play);

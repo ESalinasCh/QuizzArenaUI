@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, EMPTY, filter, map, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StudentQuizService } from '../../services/student-quiz.service';
+import { ThemeService } from '../../../../core/services/theme.service';
 
 @Component({
   selector: 'qz-student-exam-session-page',
@@ -14,6 +15,8 @@ export class StudentExamSessionPage {
   readonly #route = inject(ActivatedRoute);
   readonly #router = inject(Router);
   readonly #studentQuizService = inject(StudentQuizService);
+  readonly #themeService = inject(ThemeService);
+  currentTheme = this.#themeService.currentTheme;
 
   readonly examLoadFailed = signal(false);
 

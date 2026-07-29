@@ -15,13 +15,14 @@
       
       <div class="clean-card p-4 flex flex-col sm:flex-row items-center justify-between gap-4 bg-light-surface-alt dark:bg-dark-surface-alt">
         <qz-section-title [title]="availableExamsTitle" icon="sparkles" />
-        <div class="w-full sm:w-auto">
+        <!-- TODO: Kept for future use in case status filtering is needed again. -->
+        <!-- <div class="w-full sm:w-auto">
           <qz-filter-tabs
             [options]="statusOptions"
             [value]="filters().status"
             (valueChange)="changeStatus($event)">
           </qz-filter-tabs>
-        </div>
+        </div> -->
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

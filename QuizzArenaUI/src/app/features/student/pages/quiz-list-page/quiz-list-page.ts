@@ -70,7 +70,9 @@ export class StudentQuizListPage {
       limit: this.recentLimit(),
     }),
     stream: ({ params }) =>
-      this.#studentQuizService.getRecentQuizzes({ page: 1, pageSize: params.limit, search: params.search }),
+      this.#studentQuizService.getRecentQuizzes({
+        page: 1, pageSize: params.limit, search: params.search, matchmode: 'Solo',
+      }),
   });
 
   readonly visibleRecentQuizzes = computed(() =>

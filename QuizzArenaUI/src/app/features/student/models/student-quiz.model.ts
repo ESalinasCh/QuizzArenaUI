@@ -65,6 +65,8 @@ export interface StudentQuizStart {
   professorName: string;
   questionCount: number;
   timeLimitMinutes: number;
+  answeredQuestions: number;
+  totalQuestions: number;
   questions: QuizQuestion[];
 }
 
