@@ -12,7 +12,7 @@
 
   <div class="flex flex-col gap-3">
     @for (quiz of quizzesAsExams(); track quiz.id;) {
-    <qz-exam-bank-item [quizAsExams]="quiz" [matches]="matchesResource.value() | matchesForQuiz: quiz"
+    <qz-exam-bank-item [quizAsExams]="quiz" [matches]="quiz | matchesForQuiz: matchesResource.value()"
       (publish)="publishExam(quiz)" (checkOthers)="goToQuizMatches(quiz.id)"
       (unpublishMatch)="unpublishMatch($event)" />
     } @empty {@if (!quizzesAsExamsResource.isLoading()) {

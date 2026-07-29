@@ -51,13 +51,13 @@ describe('MatchesForQuizPipe', () => {
     expect(pipe).toBeTruthy();
   });
 
-  it('should return empty array if matches is null or undefined', () => {
-    expect(pipe.transform(null, mockQuiz)).toEqual([]);
-    expect(pipe.transform(undefined, mockQuiz)).toEqual([]);
+  it('should return empty array if matches is undefined', () => {
+    expect(pipe.transform(mockQuiz)).toEqual([]);
+    expect(pipe.transform(mockQuiz, undefined)).toEqual([]);
   });
 
   it('should filter matches by quizId or title prefix', () => {
-    const result = pipe.transform(mockMatches, mockQuiz);
+    const result = pipe.transform(mockQuiz, mockMatches);
     expect(result.length).toBe(2);
     expect(result.map(m => m.id)).toEqual(['m1', 'm2']);
   });

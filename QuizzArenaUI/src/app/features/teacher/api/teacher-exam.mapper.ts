@@ -1,5 +1,5 @@
 import { ClassSource, Exam, Question } from '../models/exam.model';
-import { ClassSourceResponse, CreateQuizResponseBody, ExamResponse, QuestionResponse, QuizResponseAsExams } from './teacher-exam.contract';
+import { ClassSourceResponse, CreateQuizResponseBody, ExamResponse, QuestionResponse } from './teacher-exam.contract';
 
 export function mapClassSourceResponse({ id, name }: ClassSourceResponse): ClassSource {
   return { id, name };

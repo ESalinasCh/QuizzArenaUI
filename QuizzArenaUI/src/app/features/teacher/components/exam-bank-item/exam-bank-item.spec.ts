@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExamBankItem } from './exam-bank-item';
 import { QuizResponseAsExams } from '../../api/teacher-exam.contract';
+import { Match } from '../../models/exam.model';
 import { LOCALE_ID } from '@angular/core';
 
 const MOCK_QUIZ: QuizResponseAsExams = {
@@ -57,7 +58,7 @@ describe('ExamBankItem', () => {
   });
 
   it('should render matches and emit unpublishMatch when unpublish button is clicked', () => {
-    const mockMatches = [
+    const mockMatches: Match[] = [
       { id: 'm1', title: 'M1', courseName: 'Course 101', questionCount: 5, professorName: 'Prof', duration: 45, status: 'Active' },
     ];
     fixture.componentRef.setInput('matches', mockMatches);
@@ -71,4 +72,3 @@ describe('ExamBankItem', () => {
     expect(unpublishSpy).toHaveBeenCalledWith(mockMatches[0]);
   });
 });
-

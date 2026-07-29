@@ -1,6 +1,6 @@
-import { Component, computed, debounced, inject, linkedSignal, signal } from '@angular/core';
+import { Component, debounced, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { MatchFilters, QuizAsExamRequest, TeacherExamService } from '../../services/teacher-exam.service';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -8,7 +8,7 @@ import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 import { ItemContainer } from "../../../../shared/atoms/item-container/item-container";
 import { ExamBankItem } from '../../components/exam-bank-item/exam-bank-item';
 import { QuizResponseAsExams } from '../../api/teacher-exam.contract';
-import { map, switchMap, take, tap } from 'rxjs';
+import { map, take } from 'rxjs';
 import { MatchesForQuizPipe } from "../../pipes/matches-for-quiz.pipe";
 import { Match } from '../../models/exam.model';
 @Component({
@@ -104,22 +104,6 @@ export class TeacherExamBankPage {
         return this.#accumulatedMatches;
       })
     ),
-  });
-
-  readonly matchesByQuiz = computed(() => {
-    const allMatches = this.matchesResource.value() ?? [];
-    console.log('allMatches', this.matchesResource.value())
-    const dictionary: Record<string, Match[]> = {};
-
-    for (const match of allMatches) {
-      if (!dictionary[match.quizId || '']) {
-        dictionary[match.quizId || ''] = [];
-      }
-      dictionary[match.quizId || ''].push(match);
-    }
-
-    console.log(dictionary)
-    return dictionary;
   });
 
 

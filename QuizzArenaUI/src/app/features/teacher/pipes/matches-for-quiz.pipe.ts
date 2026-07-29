@@ -6,7 +6,7 @@ import { Match } from '../models/exam.model';
   name: 'matchesForQuiz',
 })
 export class MatchesForQuizPipe implements PipeTransform {
-  transform(matches: Match[] | null | undefined, quiz: QuizResponseAsExams): Match[] {
+  transform(quiz: QuizResponseAsExams, matches?: Match[]): Match[] {
     if (!matches || !quiz) {
       return [];
     }

@@ -5,11 +5,16 @@ import { of } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { TeacherExamBankPage } from './exam-bank-page';
 import { QuizResponseAsExams } from '../../api/teacher-exam.contract';
+import { Match } from '../../models/exam.model';
 
 const MOCK_QUIZZES: QuizResponseAsExams[] = [
   { id: 'exam-draft-1', title: 'DDD Fundamentals', description: 'Core DDD', status: 'draft', origin: 'ManuallyCreated', questions: [{ questionId: 'q1', position: 1, valueScore: 10, content: 'Q1', type: 'SingleChoice' }] },
   { id: 'exam-draft-2', title: 'Hexagonal Architecture', description: 'Ports and adapters', status: 'draft', origin: 'ManuallyCreated', questions: [{ questionId: 'q3', position: 1, valueScore: 10, content: 'Q3', type: 'SingleChoice' }] },
   { id: 'exam-pub-1', title: 'DDD Week 1', description: 'Published exam', status: 'published', origin: 'ManuallyCreated', questions: [{ questionId: 'q4', position: 1, valueScore: 10, content: 'Q4', type: 'SingleChoice' }] },
+];
+
+const MOCK_MATCHES: Match[] = [
+  { id: 'm1', quizId: 'exam-draft-1', title: 'M1', courseName: 'C1', questionCount: 5, professorName: 'P', duration: 30 },
 ];
 
 describe('TeacherExamBankPage', () => {
@@ -19,7 +24,7 @@ describe('TeacherExamBankPage', () => {
     mockExamService = {
       getExams: vi.fn().mockReturnValue(of([])),
       getQuizzesAsExams: vi.fn().mockReturnValue(of(MOCK_QUIZZES)),
-      getMatches: vi.fn().mockReturnValue(of([])),
+      getMatches: vi.fn().mockReturnValue(of(MOCK_MATCHES)),
       unpublishMatch: vi.fn().mockReturnValue(of(undefined)),
     };
 
@@ -60,7 +65,7 @@ describe('TeacherExamBankPage', () => {
   it('should call unpublishMatch on TeacherExamService when unpublishMatch is invoked', () => {
     const fixture = TestBed.createComponent(TeacherExamBankPage);
     fixture.detectChanges();
-    const mockMatch = { id: 'm1', title: 'M1', courseName: 'C1', questionCount: 5, professorName: 'P', duration: 30 };
+    const mockMatch: Match = { id: 'm1', title: 'M1', courseName: 'C1', questionCount: 5, professorName: 'P', duration: 30 };
     fixture.componentInstance.unpublishMatch(mockMatch);
     expect(mockExamService.unpublishMatch).toHaveBeenCalledWith('m1');
   });
@@ -72,5 +77,12 @@ describe('TeacherExamBankPage', () => {
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     await fixture.componentInstance.goToQuizMatches('exam-draft-1');
     expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/bank', 'exam-draft-1', 'matches']);
+  });
+
+  it('should increment pageForQuizAsExams on loadMoreQuizzesAsExams', () => {
+    const fixture = TestBed.createComponent(TeacherExamBankPage);
+    fixture.detectChanges();
+    fixture.componentInstance.loadMoreQuizzesAsExams();
+    expect(fixture.componentInstance.pageForQuizAsExams()).toBe(2);
   });
 });
