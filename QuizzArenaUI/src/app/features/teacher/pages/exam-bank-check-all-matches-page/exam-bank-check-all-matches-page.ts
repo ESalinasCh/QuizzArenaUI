@@ -1,15 +1,16 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { Location, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs/operators';
-import { TeacherExamService } from '../../services/teacher-exam.service';
+import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { map, switchMap, take } from 'rxjs/operators';
+import { MatchFilters, TeacherExamService } from '../../services/teacher-exam.service';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { ItemContainer } from '../../../../shared/atoms/item-container/item-container';
 import { StatusLabel } from '../../../../shared/atoms/status-label/status-label';
 import { StatusVariantPipe } from '../../../../shared/pipes/status-variant.pipe';
 import { Match } from '../../models/exam.model';
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 @Component({
   selector: 'qz-exam-bank-check-all-matches-page',
@@ -26,15 +27,39 @@ export class ExamBankCheckAllMatchesPage {
   protected readonly backAriaLabel = $localize`:Check all matches back button aria label:Back`;
   protected readonly unpublishAriaLabel = $localize`:Check all matches unpublish aria label:Unpublish match`;
 
-  readonly #refresh = signal(0);
-  readonly #matchesResource = toSignal(
-    toObservable(this.#refresh).pipe(
-      switchMap(() => this.#examService.getMatches({ quizId: this.quizId() }))
-    ),
-    { initialValue: [] }
-  );
+  readonly matchPage = signal(1);
+  readonly matchPageSize = signal(DEFAULT_PAGE_SIZE);
 
-  readonly matches = computed(() => this.#matchesResource());
+  readonly matches = signal<Match[]>([]);
+  readonly matchesResource = rxResource<void, MatchFilters>({
+    params: () => ({
+      quizId: this.quizId(),
+      page: this.matchPage(),
+      pageSize: this.matchPageSize(),
+    }),
+    stream: ({ params }) => {
+      return this.#examService.getMatches(params).pipe(
+        take(1),
+        map((resp) => {
+          this.isHasMoreMatches.set(resp.length === this.matchPageSize());
+          if (params.page === 1) {
+            this.matches.set(resp);
+          } else {
+            this.matches.update(prev => [...prev, ...resp]);
+          }
+          return void [];
+        }),
+      );
+    },
+  })
+
+  isHasMoreMatches = signal(false);
+
+  loadMoreMatches() {
+    if (!this.isHasMoreMatches()) return
+    this.matchPage.update(page => page + 1);
+  }
+
 
   goBack(): void {
     if (window.history.length > 1) {
@@ -45,9 +70,9 @@ export class ExamBankCheckAllMatchesPage {
   }
 
   unpublishMatch(match: Match): void {
-    this.#examService.unpublishMatch(match.id).subscribe({
+    this.#examService.unpublishMatch(match.id).pipe(take(1)).subscribe({
       next: () => {
-        this.#refresh.update(n => n + 1);
+        // this.#refresh.update(n => n + 1);
       },
     });
   }

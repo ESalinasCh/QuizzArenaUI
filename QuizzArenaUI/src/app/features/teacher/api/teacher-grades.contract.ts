@@ -42,15 +42,3 @@ export interface GradeAttemptFilters {
     PageSize?: number;
 }
 
-export interface MatchFilters {
-    code?: string;
-    status?: MatchStatusResponse;
-    mode?: string;
-    courseId?: string;
-    quizId?: string;
-    Code?: string;
-    Status?: string;
-    Mode?: string;
-    CourseId?: string;
-    QuizId?: string;
-}

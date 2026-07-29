@@ -5,17 +5,15 @@ import { StatusLabelVariant } from '../atoms/status-label/status-label';
   name: 'statusVariant',
 })
 export class StatusVariantPipe implements PipeTransform {
-  transform(status: string | null | undefined): StatusLabelVariant {
-    switch (status?.toLowerCase()) {
-      case 'active':
-        return 'success';
-      case 'pending':
-        return 'warning';
-      case 'expired':
-      case 'finished':
-        return 'danger';
-      default:
-        return 'info';
-    }
+  readonly variants: Record<string, StatusLabelVariant> = {
+    'active': 'success',
+    'pending': 'warning',
+    'expired': 'danger',
+    'finished': 'danger',
+    'draft': 'info',
+  }
+
+  transform(status?: string): StatusLabelVariant {
+    return this.variants[status?.toLowerCase() ?? 'draft'] ?? 'info';
   }
 }

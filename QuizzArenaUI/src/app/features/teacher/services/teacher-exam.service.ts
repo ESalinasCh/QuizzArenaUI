@@ -22,7 +22,7 @@ import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
 import { TEACHER_EXAM_ENDPOINTS, TEACHER_GRADES_ENDPOINTS } from '../api/teacher-exam.endpoints';
 import { TEACHER_CLASSES_RESPONSE_MOCK } from '../mocks/teacher-exam.mock';
 import { ClassSource, CreateExamRequest, Exam, Grade, Match, Question } from '../models/exam.model';
-import { GradeAttemptFilters, GradeResponse, MatchFilters, MatchResponse } from '../api/teacher-grades.contract';
+import { GradeAttemptFilters, GradeResponse, MatchResponse, MatchStatusResponse } from '../api/teacher-grades.contract';
 import { mapGradeResponse, mapMatchResponse } from '../api/teacher-grades.mapper';
 import { PagedRequest } from '../../../core/models/pagination.model';
 
@@ -31,6 +31,14 @@ export interface QuizPagedRequest extends PagedRequest {
 }export interface QuizAsExamRequest extends PagedRequest {
   origin?: QuizOrigin
 }
+export interface MatchFilters extends PagedRequest {
+  code?: string;
+  status?: MatchStatusResponse;
+  mode?: string;
+  courseId?: string;
+  quizId?: string;
+}
+
 
 @Injectable({ providedIn: 'root' })
 export class TeacherExamService {
@@ -60,7 +68,7 @@ export class TeacherExamService {
   }
 
   getQuizzesAsExams(
-    request: QuizAsExamRequest
+    request?: QuizAsExamRequest
   ): Observable<QuizResponseAsExams[]> {
     const params = buildHttpParams(request);
     return this.#http
@@ -132,29 +140,7 @@ export class TeacherExamService {
   }
 
   getMatches(filters: MatchFilters = {}): Observable<Match[]> {
-    let params = new HttpParams();
-
-    const code = filters.code ?? filters.Code;
-    if (code) {
-      params = params.set('code', code);
-    }
-    const status = filters.status ?? filters.Status;
-    if (status) {
-      params = params.set('status', status);
-    }
-    const mode = filters.mode ?? filters.Mode;
-    if (mode) {
-      params = params.set('mode', mode);
-    }
-    const courseId = filters.courseId ?? filters.CourseId;
-    if (courseId) {
-      params = params.set('courseId', courseId);
-    }
-    const quizId = filters.quizId ?? filters.QuizId;
-    if (quizId) {
-      params = params.set('quizId', quizId);
-    }
-
+    const params = buildHttpParams(filters);
     return this.#http
       .get<MatchResponse[]>(buildApiUrl(TEACHER_GRADES_ENDPOINTS.matches), { params })
       .pipe(catchError(() => of([])), map(matches => matches.map(mapMatchResponse)));

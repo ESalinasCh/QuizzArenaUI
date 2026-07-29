@@ -37,14 +37,3 @@ export function mapCreateQuizResponse({ id, title, description, status, question
   };
 }
 
-export function mapQuizResponseAsExams(response: QuizResponseAsExams): Exam {
-  return {
-    id: response.id,
-    title: response.title,
-    description: response.description,
-    status: response.status === 'published' ? 'published' : 'draft',
-    questionIds: response.questions ? response.questions.map(q => q.questionId) : [],
-    createdAt: new Date().toISOString(),
-  };
-}
-

@@ -49,19 +49,21 @@ export interface ExamResponse {
   questions?: { questionId?: string; id?: string }[];
 }
 
+export interface QuestionsOfQuizResponseAsExams {
+  questionId: string;
+  position: number;
+  valueScore: number;
+  content: string;
+  type: string;
+}
+
 export interface QuizResponseAsExams {
   id: string;
   title: string;
   description: string;
   status: QuizStatus;
   origin: QuizOrigin;
-  questions: {
-    questionId: string;
-    position: number;
-    valueScore: number;
-    content: string;
-    type: string;
-  }[];
+  questions: QuestionsOfQuizResponseAsExams[];
 }
 
 export interface SaveMatchResponse {

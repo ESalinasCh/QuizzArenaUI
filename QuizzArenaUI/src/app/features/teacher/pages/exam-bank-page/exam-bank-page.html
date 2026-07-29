@@ -11,10 +11,11 @@
   </header>
 
   <div class="flex flex-col gap-3">
-    @for (quiz of quizzesAsExams(); track quiz.id) {
-    <qz-exam-bank-item [quizAsExams]="quiz" [matches]="matches() | matchesForQuiz: quiz" (publish)="publishExam(quiz)"
-      (checkOthers)="goToQuizMatches(quiz.id)" (unpublishMatch)="unpublishMatch($event)" />
-    } @empty {
+    @for (quiz of quizzesAsExams(); track quiz.id;) {
+    <qz-exam-bank-item [quizAsExams]="quiz" [matches]="matchesResource.value() | matchesForQuiz: quiz"
+      (publish)="publishExam(quiz)" (checkOthers)="goToQuizMatches(quiz.id)"
+      (unpublishMatch)="unpublishMatch($event)" />
+    } @empty {@if (!quizzesAsExamsResource.isLoading()) {
     <qz-item-container>
       <div class="flex flex-col items-center gap-4 py-12 text-center">
         <qz-icon name="quiz" class="h-12 w-12 text-light-text-secondary dark:text-dark-text-secondary opacity-40" />
@@ -22,13 +23,13 @@
           No draft quizzes yet. Create an exam to get started.
         </p>
       </div>
-    </qz-item-container>
+    </qz-item-container>}
     }
   </div>
-  <!-- @if (hasMoreExams()) {
+  @if (hasMoreQuizzesAsExams()) {
   <div class="flex justify-center mt-2">
-    <qz-button variant="secondary" size="small" (click)="loadMore()">Load More</qz-button>
+    <qz-button variant="secondary" size="small" (click)="loadMoreQuizzesAsExams()">Load More</qz-button>
   </div>
-  } -->
+  }
 
 </section>
