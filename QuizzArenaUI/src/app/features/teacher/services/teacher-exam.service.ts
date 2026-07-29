@@ -148,9 +148,9 @@ export class TeacherExamService {
       .pipe(catchError(() => of([])), map(matches => matches.map(mapMatchResponse)));
   }
 
-  resetAttempts(id: string): Observable<void> {
+  resetAttempts(matchId: string, userId: string): Observable<void> {
     return this.#http
-      .post(buildApiUrl(TEACHER_GRADES_ENDPOINTS.resetAttempts(id)), {})
+      .post(buildApiUrl(TEACHER_GRADES_ENDPOINTS.resetAttempts(matchId, userId)), {})
       .pipe(catchError(() => of([])), map(() => void 0));
   }
 }

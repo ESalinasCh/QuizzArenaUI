@@ -75,3 +75,8 @@ export interface Match {
   finishedAt?: string;
   attemptsAmount?: number;
 }
+
+export interface ResetAttemptResult {
+  matchId: string;
+  userId: string;
+};

@@ -3,7 +3,7 @@ import { TeacherExamService } from "../../services/teacher-exam.service";
 import { provideRouter } from "@angular/router";
 import { LOCALE_ID } from "@angular/core";
 import { of } from "rxjs";
-import { Grade, Match } from "../../models/exam.model";
+import { Grade, Match, ResetAttemptResult } from "../../models/exam.model";
 import { ModalService } from "../../../../core/services/modal.service";
 import { ResetAttemptModal } from "../../components/reset-attempt-modal/reset-attempt-modal";
 import { TeacherGradePanelPage } from "./grade-panel-page";
@@ -183,8 +183,8 @@ describe('TeacherGradePanelPage', () => {
     });
 
     it('should reset attempts when modal returns a userId', async () => {
-        let resolveAfterClosed!: (value: string | undefined) => void;
-        const afterClosed = new Promise<string | undefined>((resolve) => {
+        let resolveAfterClosed!: (value: ResetAttemptResult | undefined) => void;
+        const afterClosed = new Promise<ResetAttemptResult | undefined>((resolve) => {
             resolveAfterClosed = resolve;
         });
 
@@ -195,9 +195,9 @@ describe('TeacherGradePanelPage', () => {
         const component = fixture.componentInstance;
 
         component.openResetModal(mockGrades[0]);
-        resolveAfterClosed('user-1');
+        resolveAfterClosed({ matchId: 'match-1', userId: 'user-1' });
         await afterClosed;
-        expect(mockExamService.resetAttempts).toHaveBeenCalledWith('user-1');
+        expect(mockExamService.resetAttempts).toHaveBeenCalledWith('match-1', 'user-1');
     });
 
     it('should reload grades after successful resetAttempts', async () => {
@@ -206,10 +206,10 @@ describe('TeacherGradePanelPage', () => {
         const component = fixture.componentInstance;
         const reloadSpy = vi.spyOn(component.grades, 'reload');
 
-        component['resetAttempts']('user-1');
+        component['resetAttempts']('match-1', 'user-1');
         await Promise.resolve();
 
-        expect(mockExamService.resetAttempts).toHaveBeenCalledWith('user-1');
+        expect(mockExamService.resetAttempts).toHaveBeenCalledWith('match-1', 'user-1');
         expect(reloadSpy).toHaveBeenCalled();
     });
 });
