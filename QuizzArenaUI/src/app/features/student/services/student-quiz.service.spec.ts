@@ -53,7 +53,7 @@ describe('StudentQuizService', () => {
       expect(matchReq.request.method).toBe('GET');
       matchReq.flush(availableMatchesMock);
 
-      const attemptReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}`);
+      const attemptReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}?matchmode=Solo`);
       expect(attemptReq.request.method).toBe('GET');
       attemptReq.flush(matchAttemptsMock);
     });
@@ -70,6 +70,7 @@ describe('StudentQuizService', () => {
         { id: 'q1', statement: 'Question 1', options: [{ id: 'q1-a', label: 'A' }, { id: 'q1-b', label: 'B' }] },
         { id: 'q2', statement: 'Question 2', options: [{ id: 'q2-a', label: 'A' }, { id: 'q2-b', label: 'B' }] },
       ],
+      totalQuestions: 2, answeredQuestions: 0
     };
 
     it('should fetch match and create play', () => {

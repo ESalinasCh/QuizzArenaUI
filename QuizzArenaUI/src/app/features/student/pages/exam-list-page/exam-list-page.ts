@@ -5,7 +5,6 @@ import { SectionTitle } from '../../../../shared/molecules/section-title/section
 import { AvailableQuizCard } from '../../components/available-quiz-card/available-quiz-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { MatchFilters, MatchStatus } from '../../api/student-quiz.contract';
-import { FilterTabs } from '../../components/filter-tabs/filter-tabs';
 import { catchError, of } from 'rxjs';
 import { FilterStatusOption } from '../../models/student-quiz.model';
 import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
@@ -13,7 +12,7 @@ import { InfoCard } from '../../../../shared/molecules/info-card/info-card';
 
 @Component({
   selector: 'qz-student-exam-list-page',
-  imports: [AvailableQuizCard, SectionTitle, FilterTabs, EmptyState, InfoCard],
+  imports: [AvailableQuizCard, SectionTitle, EmptyState, InfoCard],
   templateUrl: './exam-list-page.html',
 })
 export class StudentExamListPage {
@@ -31,7 +30,7 @@ export class StudentExamListPage {
   ];
 
   readonly filters = signal<MatchFilters>({
-    status: 'Pending',
+    status: 'Active',
     mode: 'Exam',
   });
 

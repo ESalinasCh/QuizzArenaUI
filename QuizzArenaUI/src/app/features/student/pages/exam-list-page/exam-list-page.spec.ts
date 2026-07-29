@@ -42,7 +42,7 @@ describe('StudentExamListPage', () => {
         fixture.detectChanges();
 
         expect(mockStudentQuizService.getMatches).toHaveBeenCalledWith({
-            status: 'Pending',
+            status: 'Active',
             mode: 'Exam',
         });
     });

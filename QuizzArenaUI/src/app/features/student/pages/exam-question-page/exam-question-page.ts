@@ -15,10 +15,10 @@ export class StudentExamQuestionPage {
 
   readonly selectedOptionIds = signal<string[]>([]);
   readonly isSubmitting = signal(false);
-  readonly questionIndex = signal(0);
   readonly optionLetters = ['A', 'B', 'C', 'D'];
-
   readonly exam = computed(() => this.#studentQuizService.getActiveExamStart());
+
+  readonly questionIndex = signal(this.exam()?.answeredQuestions || 0);
 
   readonly currentQuestion = computed(() => this.exam()?.questions[this.questionIndex()]);
   readonly selectionInstruction = computed(() => {

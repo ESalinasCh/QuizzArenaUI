@@ -59,6 +59,11 @@ export class StudentQuizService {
       ),
       matchAttempts: this.#http.get<MatchAttemptSummaryResponse[]>(
         buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts),
+        {
+          params: {
+            matchmode: 'Solo',
+          },
+        }
       ),
     }).pipe(
       map(({ availableMatches, matchAttempts }) =>

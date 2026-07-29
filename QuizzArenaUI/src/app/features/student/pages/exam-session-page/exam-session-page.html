@@ -37,7 +37,11 @@
           (click)="beginExam()"
         >
           <qz-icon name="play" class="h-5 w-5 fill-white" />
-          <ng-container i18n="Student exam start button">Start exam</ng-container>
+          @if (examData.answeredQuestions > 0) {
+            <ng-container i18n="Student exam resume button">Resume exam</ng-container>
+          } @else {
+            <ng-container i18n="Student exam start button">Start exam</ng-container>
+          }
         </button>
       </div>
     } @else if (examLoadFailed()) {

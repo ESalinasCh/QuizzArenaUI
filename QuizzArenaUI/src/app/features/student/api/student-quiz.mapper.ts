@@ -72,7 +72,7 @@ export function mapAttemptHistoryCardResponse(
 
 export function mapQuizStartResponse(
   { id, title, courseName, professorName, questionCount, duration }: AvailableMatchResponse,
-  { matchId, matchAttemptId: attemptId, questions }: CreatePlayResponse,
+  { matchId, matchAttemptId: attemptId, questions, totalQuestions, answeredQuestions }: CreatePlayResponse,
 ): StudentQuizStart {
   return {
     id,
@@ -83,6 +83,8 @@ export function mapQuizStartResponse(
     professorName,
     questionCount,
     timeLimitMinutes: duration,
+    answeredQuestions,
+    totalQuestions,
     questions: questions.map(({ id, statement, questionType, options }) => ({
       id,
       statement,
