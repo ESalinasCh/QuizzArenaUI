@@ -29,33 +29,6 @@ export class TeacherExamBankPage {
 
   protected readonly createExamAriaLabel = $localize`:Exam bank create exam button aria label:Create exam`;
 
-  // #accumulatedQuizzes: QuizResponseAsExams[] = [];
-  // readonly quizzesAsExamsResource = rxResource<QuizResponseAsExams[], QuizAsExamRequest>({
-  //   defaultValue: [],
-  //   params: () => ({
-  //     search: this.debouncedSearchQuery.value() ?? '',
-  //     pageSize: this.pageSizeForQuizAsExams(),
-  //     page: this.pageForQuizAsExams(),
-  //   }),
-  //   stream: ({ params }) =>
-  //     this.#examService.getQuizzesAsExams(params).pipe(
-  //       map((quizzesResponse: QuizResponseAsExams[]) => {
-  //         this.hasMoreQuizzesAsExams.set(quizzesResponse.length === params.pageSize);
-  //         if (params.page === 1) {
-  //           this.#accumulatedQuizzes = quizzesResponse;
-  //           return quizzesResponse;
-  //         } else {
-  //           this.#accumulatedQuizzes.push(...quizzesResponse);
-  //           return this.#accumulatedQuizzes;
-  //         }
-  //       }),
-  //     ),
-  // });
-  // readonly hasMoreQuizzesAsExams = signal(false);
-  // loadMoreQuizzesAsExams(): void {
-  //   this.pageForQuizAsExams.update(pag => pag + 1);
-  // }
-
   readonly quizzesAsExams = signal<QuizResponseAsExams[]>([]);
   readonly quizzesAsExamsResource = rxResource<void, QuizAsExamRequest>({
     params: () => ({
@@ -77,8 +50,6 @@ export class TeacherExamBankPage {
         })),
 
   });
-
-
 
   readonly hasMoreQuizzesAsExams = signal(false);
   loadMoreQuizzesAsExams(): void {
@@ -105,7 +76,6 @@ export class TeacherExamBankPage {
       })
     ),
   });
-
 
   async createExam(): Promise<void> {
     await this.#router.navigate(['/teacher/exams/create']);

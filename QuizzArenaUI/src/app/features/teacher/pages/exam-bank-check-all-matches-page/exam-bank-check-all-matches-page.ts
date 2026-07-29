@@ -71,10 +71,10 @@ export class ExamBankCheckAllMatchesPage {
     this.#examService.unpublishMatch(match.id).pipe(take(1)).subscribe({
       next: () => {
         this.matches.update(prev =>
-          prev.map(m =>
-            m.id === match.id
-              ? { ...m, status: 'Pending' }
-              : m
+          prev.map(currentMatch =>
+            currentMatch.id === match.id
+              ? { ...currentMatch, status: 'Pending' }
+              : currentMatch
           )
         );
       }
