@@ -12,44 +12,7 @@
 
   <div class="flex flex-col gap-3">
     @for (match of matches(); track match.id) {
-    <qz-item-container>
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between p-1 text-xs gap-3 w-full">
-        <div class="flex flex-col gap-1">
-          <div class="flex sm:items-center gap-2">
-            <span class="font-semibold text-sm text-light-text dark:text-dark-text">{{ match.courseName }}</span>
-            @if (match.status) {
-            <qz-status-label [label]="match.status" [variant]="match.status | statusVariant" />
-            }
-          </div>
-          <div
-            class="flex flex-wrap items-center gap-x-2 gap-y-1 text-light-text-secondary dark:text-dark-text-secondary">
-            <span><ng-container i18n="Check all matches duration label">Duration:</ng-container> {{ match.duration }}
-              <ng-container i18n="Check all matches duration unit">mins</ng-container></span>
-            <span>•</span>
-            <span>{{ match.questionCount }} <ng-container
-                i18n="Check all matches questions count unit">questions</ng-container></span>
-            @if (match.startedAt) {
-            <span>•</span>
-            <span><ng-container i18n="Check all matches start date label">Start:</ng-container> {{ match.startedAt |
-              date:'short' }}</span>
-            }
-            @if (match.finishedAt) {
-            <span>•</span>
-            <span><ng-container i18n="Check all matches end date label">End:</ng-container> {{ match.finishedAt |
-              date:'short' }}</span>
-            }
-          </div>
-        </div>
-        @if (match.status === 'Active') {
-        <div class="flex shrink-0">
-          <qz-button size="small" [fullWidth]="true" variant="secondary" (click)="unpublishMatch(match)"
-            [ariaLabel]="unpublishAriaLabel">
-            <span i18n="Unpublish match button label">Unpublish</span>
-          </qz-button>
-        </div>
-        }
-      </div>
-    </qz-item-container>
+    <qz-match-of-quiz-item [match]="match" (unpublishMatch)="unpublishMatch($event)"></qz-match-of-quiz-item>
     } @empty {
     <qz-item-container>
       <div class="flex flex-col items-center gap-4 py-12 text-center">

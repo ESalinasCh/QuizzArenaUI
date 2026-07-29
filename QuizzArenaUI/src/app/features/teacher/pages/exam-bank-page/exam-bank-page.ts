@@ -106,6 +106,22 @@ export class TeacherExamBankPage {
     ),
   });
 
+  readonly matchesByQuiz = computed(() => {
+    const allMatches = this.matchesResource.value() ?? [];
+    console.log('allMatches', this.matchesResource.value())
+    const dictionary: Record<string, Match[]> = {};
+
+    for (const match of allMatches) {
+      if (!dictionary[match.quizId || '']) {
+        dictionary[match.quizId || ''] = [];
+      }
+      dictionary[match.quizId || ''].push(match);
+    }
+
+    console.log(dictionary)
+    return dictionary;
+  });
+
 
   async createExam(): Promise<void> {
     await this.#router.navigate(['/teacher/exams/create']);

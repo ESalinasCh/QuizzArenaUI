@@ -1,0 +1,47 @@
+<div
+  class="flex flex-col justify-between rounded-lg bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border p-3 text-xs gap-3 sm:flex-row sm:items-center">
+  <div class="flex flex-col gap-2">
+    <div class="flex items-center gap-2 justify-between sm:justify-start">
+      <span class="font-semibold text-light-text dark:text-dark-text">{{ match().courseName }}</span>
+      @if (match().status; as status) {
+      <qz-status-label [label]="status" [variant]="status | statusVariant" />
+      }
+    </div>
+    <div
+      class="flex flex-wrap justify-between items-center gap-x-2 gap-y-1 text-light-text-secondary dark:text-dark-text-secondary">
+      <span><ng-container i18n="Exam bank match duration label">Duration:</ng-container> {{ match().duration }}
+        <ng-container i18n="Exam bank match duration unit">mins</ng-container></span>
+      <span class="hidden sm:block">•</span>
+      <span>{{ match().questionCount }} <ng-container
+          i18n="Exam bank match questions count unit">questions</ng-container></span>
+      @if (match().startedAt) {
+      <span class="hidden sm:block">•</span>
+      <span><ng-container i18n="Exam bank match start date label">Start:</ng-container> {{ match().startedAt |
+        date:'short' }}</span>
+      }
+      @if (match().finishedAt) {
+      <span class="hidden sm:block">•</span>
+      <span><ng-container i18n="Exam bank match end date label">End:</ng-container> {{ match().finishedAt | date:'short'
+        }}</span>
+      }
+    </div>
+  </div>
+  <div class="flex w-full sm:w-auto">
+    @switch (match().status) {
+    @case ('Active') {
+    <qz-button [fullWidth]="true" class="w-full" variant="secondary" (click)="unpublishMatch.emit(match())"
+      [ariaLabel]="unpublishAriaLabel">
+      <span i18n="Unpublish match button label">Unpublish</span>
+    </qz-button>
+    }
+    @case ('Pending') {
+    <qz-button [fullWidth]="true" class="w-full" variant="primary" (click)="publishMatch.emit(match())"
+      [ariaLabel]="unpublishAriaLabel">
+      <span i18n="Republish match button label">Re-publish</span>
+    </qz-button>
+    }
+    @case ('Expired') {
+    }
+    }
+  </div>
+</div>

@@ -13,7 +13,7 @@ export class StatusVariantPipe implements PipeTransform {
     'draft': 'info',
   }
 
-  transform(status?: string): StatusLabelVariant {
+  transform(status?: string | null): StatusLabelVariant {
     return this.variants[status?.toLowerCase() ?? 'draft'] ?? 'info';
   }
 }

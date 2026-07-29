@@ -11,10 +11,11 @@ import { StatusLabel } from '../../../../shared/atoms/status-label/status-label'
 import { StatusVariantPipe } from '../../../../shared/pipes/status-variant.pipe';
 import { Match } from '../../models/exam.model';
 import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
+import { MatchOfQuizItem } from "../../components/match-of-quiz-item/match-of-quiz-item";
 
 @Component({
   selector: 'qz-exam-bank-check-all-matches-page',
-  imports: [Button, Icon, ItemContainer, StatusLabel, StatusVariantPipe, DatePipe],
+  imports: [Button, Icon, ItemContainer, StatusLabel, StatusVariantPipe, DatePipe, MatchOfQuizItem],
   templateUrl: './exam-bank-check-all-matches-page.html',
 })
 export class ExamBankCheckAllMatchesPage {
