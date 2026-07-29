@@ -13,6 +13,8 @@ import {
   CreateMatchRequestBody,
   CreateQuizResponseBody,
   QuestionResponse,
+  QuizOrigin,
+  QuizResponseAsExams,
   SaveMatchResponse,
   ExamResponse,
 } from '../api/teacher-exam.contract';
@@ -20,13 +22,23 @@ import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
 import { TEACHER_EXAM_ENDPOINTS, TEACHER_GRADES_ENDPOINTS } from '../api/teacher-exam.endpoints';
 import { TEACHER_CLASSES_RESPONSE_MOCK } from '../mocks/teacher-exam.mock';
 import { ClassSource, CreateExamRequest, Exam, Grade, Match, Question } from '../models/exam.model';
-import { GradeAttemptFilters, GradeResponse, MatchResponse } from '../api/teacher-grades.contract';
+import { GradeAttemptFilters, GradeResponse, MatchResponse, MatchStatusResponse } from '../api/teacher-grades.contract';
 import { mapGradeResponse, mapMatchResponse } from '../api/teacher-grades.mapper';
 import { PagedRequest } from '../../../core/models/pagination.model';
 
 export interface QuizPagedRequest extends PagedRequest {
   status?: string;
+}export interface QuizAsExamRequest extends PagedRequest {
+  origin?: QuizOrigin
 }
+export interface MatchFilters extends PagedRequest {
+  code?: string;
+  status?: MatchStatusResponse;
+  mode?: string;
+  courseId?: string;
+  quizId?: string;
+}
+
 
 @Injectable({ providedIn: 'root' })
 export class TeacherExamService {
@@ -53,6 +65,16 @@ export class TeacherExamService {
     return this.#http.get<ExamResponse[]>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), { params }).pipe(
       map(exams => exams.map(mapExamResponse))
     );
+  }
+
+  getQuizzesAsExams(
+    request?: QuizAsExamRequest
+  ): Observable<QuizResponseAsExams[]> {
+    const params = buildHttpParams(request);
+    return this.#http
+      .get<QuizResponseAsExams[]>(
+        buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), { params }
+      )
   }
 
   createExam(request: CreateExamRequest): Observable<Exam> {
@@ -96,6 +118,12 @@ export class TeacherExamService {
       .pipe(map(() => void 0));
   }
 
+  unpublishMatch(matchId: string): Observable<void> {
+    return this.#http
+      .post(buildApiUrl(TEACHER_EXAM_ENDPOINTS.unpublishMatch(matchId)), {})
+      .pipe(map(() => void 0));
+  }
+
   saveMatch(
     request: CreateMatchRequestBody
   ): Observable<SaveMatchResponse> {
@@ -111,9 +139,10 @@ export class TeacherExamService {
       .pipe(catchError(() => of([])), map(grades => grades.map(mapGradeResponse)));
   }
 
-  getMatches(): Observable<Match[]> {
+  getMatches(filters: MatchFilters = {}): Observable<Match[]> {
+    const params = buildHttpParams(filters);
     return this.#http
-      .get<MatchResponse[]>(buildApiUrl(TEACHER_GRADES_ENDPOINTS.matches))
+      .get<MatchResponse[]>(buildApiUrl(TEACHER_GRADES_ENDPOINTS.matches), { params })
       .pipe(catchError(() => of([])), map(matches => matches.map(mapMatchResponse)));
   }
 

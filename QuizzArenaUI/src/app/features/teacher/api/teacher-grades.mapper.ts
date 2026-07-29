@@ -18,7 +18,7 @@ export function mapGradeResponse({ id, nickname, status, score, userId, matchId,
   };
 }
 
-export function mapMatchResponse({ id, title, courseName, questionCount, professorName, duration }: MatchResponse): Match {
+export function mapMatchResponse({ id, title, courseName, questionCount, professorName, duration, quizId, startedAt, finishedAt, status, attemptsAmount }: MatchResponse): Match {
   return {
     id,
     title,
@@ -26,5 +26,10 @@ export function mapMatchResponse({ id, title, courseName, questionCount, profess
     questionCount,
     professorName,
     duration,
+    quizId,
+    startedAt,
+    finishedAt,
+    status,
+    attemptsAmount,
   };
 }

@@ -1,0 +1,34 @@
+<section class="mx-auto flex w-full max-w-[720px] flex-col gap-6 pb-6">
+  <header class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <qz-button size="small" variant="secondary" (click)="goBack()" [ariaLabel]="backAriaLabel">
+        <qz-icon name="arrow-left" class="w-4 h-4" />
+      </qz-button>
+      <h1 i18n="Check all matches heading" class="text-xl font-extrabold text-light-text dark:text-dark-text">
+        All Quiz Matches
+      </h1>
+    </div>
+  </header>
+
+  <div class="flex flex-col gap-3">
+    @for (match of matches(); track match.id) {
+    <qz-match-of-quiz-item [match]="match" (unpublishMatch)="unpublishMatch($event)"></qz-match-of-quiz-item>
+    } @empty {
+    <qz-item-container>
+      <div class="flex flex-col items-center gap-4 py-12 text-center">
+        <qz-icon name="quiz" class="h-12 w-12 text-light-text-secondary dark:text-dark-text-secondary opacity-40" />
+        <p i18n="Check all matches empty state" class="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+          No matches found for this quiz.
+        </p>
+      </div>
+    </qz-item-container>
+    }
+  </div>
+  @if (isHasMoreMatches()) {
+  <div class="flex justify-center mt-2">
+    <qz-button size="small" variant="secondary" (click)="loadMoreMatches()">
+      <span i18n="Load more matches button label">Load more</span>
+    </qz-button>
+  </div>
+  }
+</section>

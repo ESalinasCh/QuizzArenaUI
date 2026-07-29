@@ -36,3 +36,4 @@ export function mapCreateQuizResponse({ id, title, description, status, question
     createdAt: new Date().toISOString(),
   };
 }
+

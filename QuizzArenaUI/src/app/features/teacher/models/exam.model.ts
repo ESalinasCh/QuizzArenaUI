@@ -63,9 +63,15 @@ export interface Attempt {
 
 export interface Match {
   id: string;
+  quizId?: string;
   title: string;
   courseName: string;
+  courseId?: string;
   questionCount: number;
   professorName: string;
   duration: number;
+  status?: string;
+  startedAt?: string;
+  finishedAt?: string;
+  attemptsAmount?: number;
 }

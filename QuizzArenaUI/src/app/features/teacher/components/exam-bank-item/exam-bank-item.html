@@ -1,0 +1,41 @@
+<qz-item-container>
+  <div class="flex flex-col sm:flex-row justify-center sm:justify-between gap-1 w-full">
+    <div class="flex flex-col gap-0.5">
+      <span class="text-sm font-semibold text-light-text dark:text-dark-text">{{ quizAsExams().title }}</span>
+      <span class="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+        {{ quizAsExams().questions.length }}
+        <ng-container i18n="Exam bank question count label">
+          questions
+        </ng-container>
+      </span>
+    </div>
+    <div class="flex-0 flex gap-1 flex-col justify-center sm:flex-row sm:justify-between">
+      <qz-button size="small" [fullWidth]="true" variant="secondary" (click)="checkOthers.emit()"
+        [ariaLabel]="checkOthersAriaLabel">
+        <span i18n="Exam bank check others button label">
+          Check Others
+        </span>
+      </qz-button>
+      <qz-button size="small" [fullWidth]="true" variant="primary" (click)="publish.emit()"
+        [ariaLabel]="publishAriaLabel">
+        <span i18n="Exam bank publish button label">
+          Publish
+        </span>
+      </qz-button>
+    </div>
+  </div>
+
+  @if (matches().length > 0) {
+  <div class="mt-4 flex flex-col gap-2 border-t border-light-border dark:border-dark-border pt-3 w-full">
+    <span class="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary"
+      i18n="Exam bank matches section heading">
+      Active Matches
+    </span>
+    <div class="flex flex-col gap-2">
+      @for (match of matches(); track match.id) {
+      <qz-match-of-quiz-item [match]="match" (unpublishMatch)="unpublishMatch.emit($event)" />
+      }
+    </div>
+  </div>
+  }
+</qz-item-container>
