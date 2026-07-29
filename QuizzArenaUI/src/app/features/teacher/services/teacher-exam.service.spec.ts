@@ -95,7 +95,7 @@ describe('TeacherExamService', () => {
       expect(exam.title).toBe('Test Exam');
     });
 
-    httpMock.expectOne(r => r.url.includes('/quizzes')).flush(quizResponse);
+    httpMock.expectOne(r => r.url.endsWith('/quizzes')).flush(quizResponse);
     httpMock.expectOne(r => r.url.includes('/matches')).flush({});
   });
 
@@ -107,7 +107,8 @@ describe('TeacherExamService', () => {
       expect(exam.status).toBe('draft');
     });
 
-    const req = httpMock.expectOne(r => r.url.includes('/quizzes'));
+    const req = httpMock.expectOne(r => r.url.endsWith('/quizzes'));
+    expect(req.request.url).not.toContain('/users/me/');
     expect(req.request.body).toEqual({ title: 'Draft Title', description: 'Draft desc', questionIds: ['q3'] });
     req.flush(quizResponse);
   });

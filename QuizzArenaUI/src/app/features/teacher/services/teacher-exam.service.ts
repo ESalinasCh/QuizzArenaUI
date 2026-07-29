@@ -61,7 +61,7 @@ export class TeacherExamService {
       description: request.description,
       questionIds: request.questionIds,
     };
-    return this.#http.post<CreateQuizResponseBody>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), quizBody).pipe(
+    return this.#http.post<CreateQuizResponseBody>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.createExam), quizBody).pipe(
       switchMap(quiz => {
         const matchBody: CreateMatchRequestBody = {
           quizId: quiz.id,
@@ -84,7 +84,7 @@ export class TeacherExamService {
   saveDraftExam(title: string, description: string, questionIds: string[]): Observable<Exam> {
     const body: CreateExamRequestBody = { title, description, questionIds };
     return this.#http
-      .post<CreateQuizResponseBody>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.exams), body)
+      .post<CreateQuizResponseBody>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.createExam), body)
       .pipe(map(mapCreateQuizResponse));
   }
 
