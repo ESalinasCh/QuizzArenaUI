@@ -17,7 +17,7 @@ describe('StudentQuizService', () => {
   let httpTesting: HttpTestingController;
   const apiBaseUrl = 'http://localhost:8080';
   const activeMatchesUrl = `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}?status=active&mode=Solo`;
-  const activeMatchesWithoutModeUrl = `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}?status=active`;
+  const quizStartMatchesUrl = `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}?page=1&pageSize=100&status=active&mode=Solo`;
   const startedAt = '2026-06-18T00:00:00.000Z';
 
   beforeEach(() => {
@@ -80,7 +80,7 @@ describe('StudentQuizService', () => {
         expect(quizStart.questions.length).toBe(2);
       });
 
-      const matchReq = httpTesting.expectOne(activeMatchesWithoutModeUrl);
+      const matchReq = httpTesting.expectOne(quizStartMatchesUrl);
       matchReq.flush([match]);
 
       const playReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
@@ -93,7 +93,7 @@ describe('StudentQuizService', () => {
       service.getQuizStart('quiz-1').subscribe();
       service.getQuizStart('quiz-1').subscribe();
 
-      const matchReqs = httpTesting.match(activeMatchesWithoutModeUrl);
+      const matchReqs = httpTesting.match(quizStartMatchesUrl);
       expect(matchReqs.length).toBe(2);
       matchReqs.forEach(req => req.flush([match]));
 
@@ -111,7 +111,7 @@ describe('StudentQuizService', () => {
         error: err => expect(err.message).toContain('No match found for quiz unknown'),
       });
 
-      const matchReq = httpTesting.expectOne(activeMatchesWithoutModeUrl);
+      const matchReq = httpTesting.expectOne(quizStartMatchesUrl);
       matchReq.flush([match]);
 
       httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`).flush(playResponse);
