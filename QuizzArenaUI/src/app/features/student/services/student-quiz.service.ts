@@ -110,7 +110,12 @@ export class StudentQuizService {
       matches: this.#http.get<AvailableMatchResponse[]>(
         buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
         {
-          params: { status: 'active' },
+          params: buildHttpParams({
+            page: 1,
+            pageSize: 100,
+            status: 'active',
+            mode: 'Solo',
+          }),
         },
       ),
       play: this.#http.post<CreatePlayResponse>(
@@ -149,7 +154,12 @@ export class StudentQuizService {
       matches: this.#http.get<AvailableMatchResponse[]>(
         buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
         {
-          params: { status: 'Active', mode: 'Exam' },
+          params: buildHttpParams({
+            page: 1,
+            pageSize: 100,
+            status: 'Active',
+            mode: 'Exam',
+          }),
         },
       ),
       play: this.#http.post<CreatePlayResponse>(
