@@ -18,6 +18,7 @@ import { routes } from './app.routes';
 import { apiErrorInterceptor } from './core/interceptors/api-error.interceptor';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
+import { NavigationHistoryService } from './core/services/navigation-history.service';
 import { APP_CONFIG, AppConfig } from './core/config/app-config';
 
 function handleNavigationError(error: NavigationError): void {
@@ -49,6 +50,7 @@ export function createAppConfig(config: AppConfig): ApplicationConfig {
       provideHttpClient(withXhr(), withInterceptors([authInterceptor, apiErrorInterceptor])),
       provideOAuthClient(),
       provideAppInitializer(() => {
+        inject(NavigationHistoryService);
         const oAuthService = inject(OAuthService);
         const authService = inject(AuthService);
 

@@ -7,6 +7,7 @@ import { ClassSourcesService } from '../../services/class-sources.service';
 import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam-step-info';
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
 import { Question } from '../../models/exam.model';
+import { NavigationHistoryService } from '../../../../core/services/navigation-history.service';
 
 type Step = 1 | 2;
 
@@ -20,6 +21,7 @@ export class TeacherCreateExamPage {
   readonly #examService = inject(TeacherExamService);
   readonly #classSourcesService = inject(ClassSourcesService);
   readonly #destroyRef = inject(DestroyRef);
+  readonly #navigationHistoryService = inject(NavigationHistoryService);
 
   readonly currentStep = signal<Step>(1);
 
@@ -81,11 +83,6 @@ export class TeacherCreateExamPage {
   }
 
   goBack(): void {
-    const step = this.currentStep();
-    if (step === 1) {
-      void this.#router.navigate(['/teacher/dashboard']);
-    } else {
-      this.currentStep.set((step - 1) as Step);
-    }
+    this.#navigationHistoryService.back('/teacher/exams/bank');
   }
 }

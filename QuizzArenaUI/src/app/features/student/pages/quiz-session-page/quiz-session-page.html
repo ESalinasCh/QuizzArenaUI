@@ -1,61 +1,56 @@
 <section class="min-h-screen bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text">
   <div class="mx-auto flex min-h-screen w-full max-w-[430px] flex-col px-6 pb-10 pt-4 sm:max-w-[520px] sm:px-8">
     @if (quiz(); as quizData) {
-      <div class="flex flex-1 flex-col items-center justify-center gap-8 pb-10 pt-12">
-        <div
-          class="flex h-40 w-40 items-center justify-center rounded-full bg-purple-light text-5xl dark:bg-dark-surface-alt"
-          aria-hidden="true"
-        >
-          &#128221;
-        </div>
-
-        <div class="text-center">
-          <h1 class="text-[40px] font-extrabold leading-none tracking-normal text-light-text dark:text-white sm:text-5xl">
-            {{ quizData.title }}
-          </h1>
-          <p class="mt-1 text-2xl font-medium leading-tight text-purple dark:text-purple-dark">
-            {{ quizData.subtitle }}
-          </p>
-        </div>
-
-        <div
-          class="flex w-full flex-col items-center gap-6 rounded-3xl border border-light-border-strong bg-light-surface px-6 py-7 text-base font-medium text-light-text-secondary shadow-card dark:border-dark-border-strong dark:bg-dark-surface-alt dark:text-dark-text-secondary dark:shadow-none"
-        >
-          <p>
-            <span aria-hidden="true">&#128214;</span>
-            <ng-container i18n="Student quiz start question count">
-              {{ quizData.questionCount }} questions
-            </ng-container>
-          </p>
-          <p>&#128104;&#8205;&#127979; {{ quizData.professorName }}</p>
-          <p>&#9201;&#65039; {{ timeLimitLabel() }}</p>
-        </div>
-
-        <button
-          type="button"
-          class="mt-4 flex h-[74px] w-full items-center justify-center gap-2 rounded-2xl bg-purple px-5 text-xl font-bold text-white shadow-button transition hover:bg-primary active:scale-[0.98]"
-          (click)="beginQuiz()"
-        >
-          <qz-icon name="play" class="h-5 w-5 fill-white" />
-          <ng-container i18n="Student quiz start button">Start</ng-container>
-        </button>
+    <div class="flex flex-1 flex-col items-center justify-center gap-8 pb-10 pt-12">
+      <div
+        class="flex h-40 w-40 items-center justify-center rounded-full bg-purple-light text-5xl dark:bg-dark-surface-alt"
+        aria-hidden="true">
+        &#128221;
       </div>
-    } @else if (quizLoadFailed()) {
-      <div class="flex flex-1 flex-col items-center justify-center gap-5 text-center">
-        <h1 class="text-3xl font-extrabold text-light-text dark:text-white" i18n="Student quiz start fallback title">
-          Quiz unavailable
+
+      <div class="text-center">
+        <h1 class="text-[40px] font-extrabold leading-none tracking-normal text-light-text dark:text-white sm:text-5xl">
+          {{ quizData.title }}
         </h1>
-        <p class="max-w-xs text-base font-medium text-light-text-secondary dark:text-dark-text-secondary" i18n="Student quiz start fallback message">
-          We could not load this quiz right now.
+        <p class="mt-1 text-2xl font-medium leading-tight text-purple dark:text-purple-dark">
+          {{ quizData.subtitle }}
         </p>
-        <button
-          type="button"
-          class="mt-2 flex h-12 w-full max-w-xs items-center justify-center rounded-xl bg-primary px-5 text-base font-bold text-white shadow-button transition hover:bg-primary-hover active:scale-[0.98]"
-          (click)="goToQuizzes()"
-        >
-          <ng-container i18n="Student quiz start fallback action">Back to quizzes</ng-container>
-        </button>
       </div>
+
+      <div
+        class="flex w-full flex-col items-center gap-6 rounded-3xl border border-light-border-strong bg-light-surface px-6 py-7 text-base font-medium text-light-text-secondary shadow-card dark:border-dark-border-strong dark:bg-dark-surface-alt dark:text-dark-text-secondary dark:shadow-none">
+        <p>
+          <span aria-hidden="true">&#128214;</span>
+          <ng-container i18n="Student quiz start question count">
+            {{ quizData.questions.length }} questions
+          </ng-container>
+        </p>
+        <p>&#128104;&#8205;&#127979; {{ quizData.professorName }}</p>
+        <p>&#9201;&#65039; {{ timeLimitLabel() }}</p>
+      </div>
+
+      <button type="button"
+        class="mt-4 flex h-[74px] w-full items-center justify-center gap-2 rounded-2xl bg-purple px-5 text-xl font-bold text-white shadow-button transition hover:bg-primary active:scale-[0.98]"
+        (click)="beginQuiz()">
+        <qz-icon name="play" class="h-5 w-5 fill-white" />
+        <ng-container i18n="Student quiz start button">Start</ng-container>
+      </button>
+    </div>
+    } @else if (quizLoadFailed()) {
+    <div class="flex flex-1 flex-col items-center justify-center gap-5 text-center">
+      <h1 class="text-3xl font-extrabold text-light-text dark:text-white" i18n="Student quiz start fallback title">
+        Quiz unavailable
+      </h1>
+      <p class="max-w-xs text-base font-medium text-light-text-secondary dark:text-dark-text-secondary"
+        i18n="Student quiz start fallback message">
+        We could not load this quiz right now.
+      </p>
+      <button type="button"
+        class="mt-2 flex h-12 w-full max-w-xs items-center justify-center rounded-xl bg-primary px-5 text-base font-bold text-white shadow-button transition hover:bg-primary-hover active:scale-[0.98]"
+        (click)="goToQuizzes()">
+        <ng-container i18n="Student quiz start fallback action">Back to quizzes</ng-container>
+      </button>
+    </div>
     }
   </div>
 </section>

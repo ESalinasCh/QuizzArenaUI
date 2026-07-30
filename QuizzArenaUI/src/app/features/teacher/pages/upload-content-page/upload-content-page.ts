@@ -6,6 +6,7 @@ import { finalize } from 'rxjs';
 import { TeacherContentService } from '../../services/teacher-content.service';
 import { Button } from '../../../../shared/atoms/button/button';
 import { Icon } from '../../../../shared/atoms/icon/icon';
+import { NavigationHistoryService } from '../../../../core/services/navigation-history.service';
 
 const ACCEPTED_EXTENSIONS = ['.mp3', '.mp4', '.wav', '.txt'];
 const DEFAULT_QUESTION_COUNT = 4;
@@ -23,6 +24,7 @@ export class TeacherUploadContentPage {
   readonly #router = inject(Router);
   readonly #contentService = inject(TeacherContentService);
   readonly #destroyRef = inject(DestroyRef);
+  readonly #navigationHistoryService = inject(NavigationHistoryService);
 
   protected readonly uploadContentAriaLabel = $localize`:Upload content button aria label:Upload content`;
 
@@ -53,8 +55,8 @@ export class TeacherUploadContentPage {
       !this.isUploading(),
   );
 
-  async goBack(): Promise<void> {
-    await this.#router.navigate(['/teacher/dashboard']);
+  goBack(): void {
+    this.#navigationHistoryService.back('/teacher/dashboard');
   }
 
   onFileSelected(event: Event): void {

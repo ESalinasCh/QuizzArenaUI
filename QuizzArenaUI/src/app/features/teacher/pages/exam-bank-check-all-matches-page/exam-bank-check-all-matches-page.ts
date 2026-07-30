@@ -1,6 +1,4 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { map, take } from 'rxjs/operators';
 import { MatchFilters, TeacherExamService } from '../../services/teacher-exam.service';
@@ -10,6 +8,7 @@ import { ItemContainer } from '../../../../shared/atoms/item-container/item-cont
 import { Match } from '../../models/exam.model';
 import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 import { MatchOfQuizItem } from '../../components/match-of-quiz-item/match-of-quiz-item';
+import { NavigationHistoryService } from '../../../../core/services/navigation-history.service';
 
 @Component({
   selector: 'qz-exam-bank-check-all-matches-page',
@@ -19,8 +18,7 @@ import { MatchOfQuizItem } from '../../components/match-of-quiz-item/match-of-qu
 export class ExamBankCheckAllMatchesPage {
   readonly quizId = input<string>();
 
-  readonly #router = inject(Router);
-  readonly #location = inject(Location);
+  readonly #navigationHistoryService = inject(NavigationHistoryService);
   readonly #examService = inject(TeacherExamService);
 
   protected readonly backAriaLabel = $localize`:Check all matches back button aria label:Back`;
@@ -60,11 +58,7 @@ export class ExamBankCheckAllMatchesPage {
   }
 
   goBack(): void {
-    if (window.history.length > 1) {
-      this.#location.back();
-    } else {
-      void this.#router.navigate(['/teacher/exams/bank']);
-    }
+    this.#navigationHistoryService.back('/teacher/exams/bank');
   }
 
   unpublishMatch(match: Match): void {
