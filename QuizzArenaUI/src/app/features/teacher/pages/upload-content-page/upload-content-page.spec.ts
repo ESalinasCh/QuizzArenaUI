@@ -4,9 +4,11 @@ import { provideRouter, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { TeacherContentService } from '../../services/teacher-content.service';
 import { TeacherUploadContentPage } from './upload-content-page';
+import { NavigationHistoryService } from '../../../../core/services/navigation-history.service';
 
 describe('TeacherUploadContentPage', () => {
   let mockContentService: Partial<TeacherContentService>;
+  let mockNavHistoryService: Partial<NavigationHistoryService>;
 
   beforeEach(() => {
     mockContentService = {
@@ -16,11 +18,15 @@ describe('TeacherUploadContentPage', () => {
       ])),
       uploadContent: vi.fn().mockReturnValue(of({ id: 'new-content', title: 'Test Class', status: 'in-progress', info: '5 min' })),
     };
+    mockNavHistoryService = {
+      back: vi.fn(),
+    };
 
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
         { provide: TeacherContentService, useValue: mockContentService },
+        { provide: NavigationHistoryService, useValue: mockNavHistoryService },
         { provide: LOCALE_ID, useValue: 'en' },
       ],
     });
@@ -118,13 +124,11 @@ describe('TeacherUploadContentPage', () => {
     expect(mockContentService.uploadContent).not.toHaveBeenCalled();
   });
 
-  it('should navigate back on goBack', async () => {
+  it('should call navigationHistoryService.back on goBack', () => {
     const fixture = TestBed.createComponent(TeacherUploadContentPage);
     fixture.detectChanges();
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
-    await fixture.componentInstance.goBack();
-    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/dashboard']);
+    fixture.componentInstance.goBack();
+    expect(mockNavHistoryService.back).toHaveBeenCalledWith('/teacher/dashboard');
   });
 
   it('should toggle drag state on drag events', () => {

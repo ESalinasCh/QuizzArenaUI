@@ -6,6 +6,7 @@ import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ClassSourcesService } from '../../services/class-sources.service';
 import { TeacherClassSource } from '../../models/class-source.model';
 import { TeacherCreateExamPage } from './create-exam-page';
+import { NavigationHistoryService } from '../../../../core/services/navigation-history.service';
 
 const MOCK_CLASS_SOURCES: TeacherClassSource[] = [
   { id: 'source-ddd-1', name: 'DDD - Semana 1', status: 'Completed', sourceType: 'Document', createdAt: '2026-06-01T00:00:00Z', processingJobsIds: ['job-ddd-1'] },
@@ -20,6 +21,7 @@ const MOCK_QUESTIONS = [
 describe('TeacherCreateExamPage', () => {
   let mockExamService: Partial<TeacherExamService>;
   let mockClassSourcesService: Partial<ClassSourcesService>;
+  let mockNavHistoryService: Partial<NavigationHistoryService>;
 
   beforeEach(() => {
     mockExamService = {
@@ -33,11 +35,16 @@ describe('TeacherCreateExamPage', () => {
       getClassSources: vi.fn().mockReturnValue(of(MOCK_CLASS_SOURCES)),
     };
 
+    mockNavHistoryService = {
+      back: vi.fn(),
+    };
+
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
         { provide: TeacherExamService, useValue: mockExamService },
         { provide: ClassSourcesService, useValue: mockClassSourcesService },
+        { provide: NavigationHistoryService, useValue: mockNavHistoryService },
         { provide: LOCALE_ID, useValue: 'en' },
       ],
     });
@@ -81,21 +88,11 @@ describe('TeacherCreateExamPage', () => {
     expect(mockExamService.getQuestions).toHaveBeenCalledWith(['job-ddd-1']);
   });
 
-  it('should navigate to dashboard on goBack from step 1', () => {
+  it('should call navigationHistoryService.back on goBack', () => {
     const fixture = TestBed.createComponent(TeacherCreateExamPage);
     fixture.detectChanges();
-    const router = TestBed.inject(Router);
-    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     fixture.componentInstance.goBack();
-    expect(navigateSpy).toHaveBeenCalledWith(['/teacher/dashboard']);
-  });
-
-  it('should return to step 1 on goBack from step 2', () => {
-    const fixture = TestBed.createComponent(TeacherCreateExamPage);
-    fixture.detectChanges();
-    fixture.componentInstance.onInfoNext({ title: 'T', description: 'D', classIds: [] });
-    fixture.componentInstance.goBack();
-    expect(fixture.componentInstance.currentStep()).toBe(1);
+    expect(mockNavHistoryService.back).toHaveBeenCalledWith('/teacher/exams/bank');
   });
 
   it('should navigate to publish on onQuestionsPublish', () => {
