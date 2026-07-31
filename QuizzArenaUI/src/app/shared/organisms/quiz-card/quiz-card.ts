@@ -8,6 +8,7 @@ import { Component, input, output } from '@angular/core';
 export class QuizCard {
   title = input.required<string>();
   actionLabel = input.required<string>();
+  disabled = input<boolean>(false);
 
   actionClick = output<void>();
 }

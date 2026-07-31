@@ -44,7 +44,15 @@ export class AvailableQuizCard {
     },
   ]);
 
+  readonly isStartDisabled = computed(
+    () => !this.#hasUnlimitedAttempts() && this.attemptsLeft() === 0,
+  );
+
   emitStart(): void {
+    if (this.isStartDisabled()) {
+      return;
+    }
+
     this.startQuiz.emit(this.quiz().id);
   }
 

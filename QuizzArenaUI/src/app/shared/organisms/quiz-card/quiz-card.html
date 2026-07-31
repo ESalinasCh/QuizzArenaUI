@@ -10,7 +10,8 @@
 
   <button
     type="button"
-    class="shrink-0 text-lg font-bold text-info transition hover:text-primary-hover"
+    class="shrink-0 text-lg font-bold text-info transition hover:text-primary-hover disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-60"
+    [disabled]="disabled()"
     (click)="actionClick.emit()"
   >
     {{ actionLabel() }}

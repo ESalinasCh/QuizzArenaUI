@@ -1,6 +1,7 @@
 <qz-quiz-card
   [title]="quiz().title"
   [actionLabel]="startActionLabel"
+  [disabled]="isStartDisabled()"
   (actionClick)="emitStart()"
 >
   <qz-quiz-card-meta [items]="metaItems()" />

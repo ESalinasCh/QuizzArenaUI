@@ -107,6 +107,36 @@ describe('AvailableQuizCard', () => {
     );
   });
 
+  it('should disable the start action when no exam attempt is left', () => {
+    const fixture = renderCard({ mode: 'Exam', attemptsUsed: 10 });
+
+    expect(fixture.componentInstance.isStartDisabled()).toBe(true);
+    expect(fixture.nativeElement.querySelector('button').disabled).toBe(true);
+  });
+
+  it('should keep the start action enabled for solo quizzes without attempts left', () => {
+    const fixture = renderCard({ mode: 'Solo', attemptsAmount: 0, attemptsUsed: 0 });
+
+    expect(fixture.componentInstance.isStartDisabled()).toBe(false);
+    expect(fixture.nativeElement.querySelector('button').disabled).toBe(false);
+  });
+
+  it('should keep the start action enabled while exam attempts remain', () => {
+    expect(renderCard({ mode: 'Exam', attemptsUsed: 9 }).componentInstance.isStartDisabled()).toBe(
+      false,
+    );
+  });
+
+  it('should not emit startQuiz when the start action is disabled', () => {
+    const fixture = renderCard({ mode: 'Exam', attemptsUsed: 10 });
+
+    let emitted: string | undefined;
+    fixture.componentInstance.startQuiz.subscribe((id: string) => (emitted = id));
+
+    fixture.componentInstance.emitStart();
+    expect(emitted).toBeUndefined();
+  });
+
   it('should show the question count without a status variant', () => {
     expect(metaItem(renderCard(), 'Questions').variant).toBeUndefined();
   });
