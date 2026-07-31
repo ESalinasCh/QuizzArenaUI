@@ -84,14 +84,6 @@
     </div>
 
     <div class="flex flex-col gap-6">
-      
-      <div class="clean-card p-6 flex flex-col gap-4">
-        <h2 class="text-base font-bold text-light-text dark:text-dark-text flex items-center gap-2">
-          <qz-icon name="link" class="w-4 h-4 text-primary" />
-          <span i18n="Student link access panel title">Enter Code or Link</span>
-        </h2>
-        <qz-quiz-access-form (submitQuizLink)="goToQuizFromLink($event)" />
-      </div>
 
       <qz-info-card [icon]="'sparkles'" [title]="proTipTitle">
         <p i18n="Student pro tip body" class="leading-relaxed">

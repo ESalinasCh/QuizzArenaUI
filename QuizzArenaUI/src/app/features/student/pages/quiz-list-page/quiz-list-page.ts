@@ -18,10 +18,8 @@ import { Button } from '../../../../shared/atoms/button/button';
   selector: 'qz-student-quiz-list-page',
   imports: [
     AvailableQuizCard,
-    QuizAccessForm,
     RecentQuizCard,
     SectionTitle,
-    Icon,
     EmptyState,
     InfoCard,
     TextInput,
