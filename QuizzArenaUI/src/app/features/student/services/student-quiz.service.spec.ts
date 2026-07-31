@@ -35,7 +35,11 @@ describe('StudentQuizService', () => {
 
   describe('getDashboard', () => {
     const availableMatchesMock: AvailableMatchResponse[] = [
-      { id: 'm1', title: 'Quiz 1', courseName: 'DDD', createdAt: '2026-06-20', questionCount: 5, professorName: 'Prof A', duration: 10 },
+      {
+        id: 'm1', title: 'Quiz 1', courseName: 'DDD', createdAt: '2026-06-20', questionCount: 5,
+        professorName: 'Prof A', duration: 10, mode: 'Solo', attemptsAmount: 3, attemptsUsed: 0,
+        hasActiveAttempt: false,
+      },
     ];
     const matchAttemptsMock: MatchAttemptSummaryResponse[] = [
       { id: 'a1', title: 'Attempt 1', courseName: 'DDD', startedAt, completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 },
@@ -63,6 +67,7 @@ describe('StudentQuizService', () => {
     const match: AvailableMatchResponse = {
       id: 'quiz-1', title: 'Quiz 1', courseName: 'DDD', createdAt: '2026-06-20',
       questionCount: 2, professorName: 'Prof A', duration: 10,
+      mode: 'Solo', attemptsAmount: 3, attemptsUsed: 1, hasActiveAttempt: false,
     };
     const playResponse: CreatePlayResponse = {
       matchId: 'quiz-1', matchAttemptId: 'attempt-1',

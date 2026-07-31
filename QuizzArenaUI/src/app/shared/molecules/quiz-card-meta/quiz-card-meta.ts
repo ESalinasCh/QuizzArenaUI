@@ -1,18 +1,19 @@
-import { Component, computed, input } from '@angular/core';
-import { MetaText } from '../../atoms/meta-text/meta-text';
+import { Component, input } from '@angular/core';
+import { Icon, IconName } from '../../atoms/icon/icon';
 import { StatusLabel, StatusLabelVariant } from '../../atoms/status-label/status-label';
+
+export interface QuizCardMetaItem {
+  label: string;
+  value: string;
+  icon?: IconName;
+  variant?: StatusLabelVariant;
+}
 
 @Component({
   selector: 'qz-quiz-card-meta',
-  imports: [MetaText, StatusLabel],
+  imports: [Icon, StatusLabel],
   templateUrl: './quiz-card-meta.html',
 })
 export class QuizCardMeta {
-  questionCount = input.required<number>();
-  statusLabel = input.required<string>();
-  statusVariant = input<StatusLabelVariant>('info');
-
-  readonly questionCountLabel = computed(
-    () => $localize`:Quiz card question count:${this.questionCount()}:questionCount: questions`,
-  );
+  items = input.required<readonly QuizCardMetaItem[]>();
 }
