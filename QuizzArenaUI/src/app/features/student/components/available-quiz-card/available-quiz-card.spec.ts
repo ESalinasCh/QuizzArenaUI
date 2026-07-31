@@ -25,6 +25,10 @@ describe('AvailableQuizCard', () => {
     });
   }
 
+  function metaItem(fixture: ReturnType<typeof renderCard>, label: string) {
+    return fixture.componentInstance.metaItems().find((item) => item.label === label)!;
+  }
+
   it('should render quiz title', () => {
     expect(renderCard().nativeElement.textContent).toContain('Quiz 1');
   });
@@ -65,5 +69,45 @@ describe('AvailableQuizCard', () => {
 
   it('should report the remaining attempts for exams', () => {
     expect(rowTexts(renderCard({ mode: 'Exam', attemptsUsed: 7 }))).toContain('Attempts left: 3');
+  });
+
+  it('should report the remaining attempts for modes other than solo', () => {
+    expect(rowTexts(renderCard({ mode: 'Multiple', attemptsUsed: 7 }))).toContain('Attempts left: 3');
+  });
+
+  it('should highlight an active attempt as a warning', () => {
+    expect(metaItem(renderCard({ hasActiveAttempt: true }), 'Status').variant).toBe('warning');
+  });
+
+  it('should mark a quiz without an active attempt as successful', () => {
+    expect(metaItem(renderCard(), 'Status').variant).toBe('success');
+  });
+
+  it('should mark unlimited attempts as successful', () => {
+    expect(metaItem(renderCard({ mode: 'Solo', attemptsUsed: 10 }), 'Attempts left').variant).toBe(
+      'success',
+    );
+  });
+
+  it('should mark plenty of remaining exam attempts as successful', () => {
+    expect(metaItem(renderCard({ mode: 'Exam', attemptsUsed: 7 }), 'Attempts left').variant).toBe(
+      'success',
+    );
+  });
+
+  it('should warn when a single exam attempt is left', () => {
+    expect(metaItem(renderCard({ mode: 'Exam', attemptsUsed: 9 }), 'Attempts left').variant).toBe(
+      'warning',
+    );
+  });
+
+  it('should flag as danger when no exam attempt is left', () => {
+    expect(metaItem(renderCard({ mode: 'Exam', attemptsUsed: 10 }), 'Attempts left').variant).toBe(
+      'danger',
+    );
+  });
+
+  it('should show the question count without a status variant', () => {
+    expect(metaItem(renderCard(), 'Questions').variant).toBeUndefined();
   });
 });
