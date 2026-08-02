@@ -49,16 +49,6 @@ describe('StudentQuizListPage', () => {
     expect(fixture.nativeElement.textContent).toContain('johndoe');
   });
 
-  it('should render quiz access form', () => {
-    (mockAuthService.currentUser as unknown as ReturnType<typeof vi.fn>).mockReturnValue(null);
-
-    const fixture = TestBed.createComponent(StudentQuizListPage);
-    fixture.detectChanges();
-
-    const form = fixture.nativeElement.querySelector('qz-quiz-access-form');
-    expect(form).toBeTruthy();
-  });
-
   it('should navigate to quiz start on startQuiz', async () => {
     (mockAuthService.currentUser as unknown as ReturnType<typeof vi.fn>).mockReturnValue(null);
     const fixture = TestBed.createComponent(StudentQuizListPage);

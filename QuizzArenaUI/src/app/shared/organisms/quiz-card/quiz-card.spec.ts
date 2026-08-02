@@ -27,6 +27,32 @@ describe('QuizCard', () => {
     expect(emitted).toBe(true);
   });
 
+  it('should enable the action button by default', () => {
+    const fixture = TestBed.createComponent(QuizCard);
+    fixture.componentRef.setInput('title', 'Science Quiz');
+    fixture.componentRef.setInput('actionLabel', 'Begin');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('button').disabled).toBe(false);
+  });
+
+  it('should not emit actionClick when disabled', () => {
+    const fixture = TestBed.createComponent(QuizCard);
+    fixture.componentRef.setInput('title', 'Science Quiz');
+    fixture.componentRef.setInput('actionLabel', 'Begin');
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+
+    let emitted = false;
+    fixture.componentInstance.actionClick.subscribe(() => (emitted = true));
+
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.disabled).toBe(true);
+
+    button.click();
+    expect(emitted).toBe(false);
+  });
+
   it('should project ng-content', () => {
     const fixture = TestBed.createComponent(QuizCard);
     fixture.componentRef.setInput('title', 'History Quiz');

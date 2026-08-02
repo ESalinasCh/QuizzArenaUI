@@ -18,6 +18,7 @@ describe('student-quiz.mapper', () => {
       const response: AvailableMatchResponse = {
         id: 'quiz-1', title: 'Quiz 1', courseName: 'DDD',
         createdAt: '2026-06-20', questionCount: 5, professorName: 'Prof A', duration: 10,
+        mode: 'Solo', attemptsAmount: 10, attemptsUsed: 2, hasActiveAttempt: true,
       };
 
       const result = mapAvailableMatchResponse(response);
@@ -25,6 +26,11 @@ describe('student-quiz.mapper', () => {
       expect(result.title).toBe('Quiz 1');
       expect(result.questionCount).toBe(5);
       expect(result.status).toBe('available');
+      expect(result.mode).toBe('Solo');
+      expect(result.duration).toBe(10);
+      expect(result.attemptsAmount).toBe(10);
+      expect(result.attemptsUsed).toBe(2);
+      expect(result.hasActiveAttempt).toBe(true);
     });
   });
 
@@ -56,7 +62,11 @@ describe('student-quiz.mapper', () => {
   describe('mapStudentDashboardResponse', () => {
     it('should map available matches and match attempts to dashboard', () => {
       const matches: AvailableMatchResponse[] = [
-        { id: 'm1', title: 'Quiz 1', courseName: 'DDD', createdAt: '2026-06-20', questionCount: 5, professorName: 'Prof A', duration: 10 },
+        {
+          id: 'm1', title: 'Quiz 1', courseName: 'DDD', createdAt: '2026-06-20', questionCount: 5,
+          professorName: 'Prof A', duration: 10, mode: 'Solo', attemptsAmount: 3, attemptsUsed: 0,
+          hasActiveAttempt: false,
+        },
       ];
       const attempts: MatchAttemptSummaryResponse[] = [
         { id: 'a1', title: 'Attempt 1', courseName: 'DDD', startedAt, completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 },
@@ -110,6 +120,7 @@ describe('student-quiz.mapper', () => {
       const match: AvailableMatchResponse = {
         id: 'quiz-1', title: 'Quiz 1', courseName: 'DDD',
         createdAt: '2026-06-20', questionCount: 2, professorName: 'Prof A', duration: 10,
+        mode: 'Solo', attemptsAmount: 3, attemptsUsed: 1, hasActiveAttempt: false,
       };
       const play: CreatePlayResponse = {
         matchId: 'quiz-1', matchAttemptId: 'attempt-1',

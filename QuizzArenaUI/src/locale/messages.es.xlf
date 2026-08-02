@@ -292,20 +292,20 @@
         <target>Continuar intento</target>
         <note priority="1" from="description">Attempt exit dialog action</note>
       </trans-unit>
-      <trans-unit id="3955868613858648955" datatype="html">
-        <source>Available</source>
-        <target>Disponible</target>
-        <note priority="1" from="description">Available quiz status label</note>
-      </trans-unit>
-      <trans-unit id="5280218112746407598" datatype="html">
-        <source>New</source>
-        <target>Nuevo</target>
-        <note priority="1" from="description">New quiz status label</note>
-      </trans-unit>
       <trans-unit id="3247153808694041723" datatype="html">
         <source>in progress</source>
         <target>en progreso</target>
         <note priority="1" from="description">Recent quiz in progress label</note>
+      </trans-unit>
+      <trans-unit id="2424531886220839815" datatype="html">
+        <source>Attempts left</source>
+        <target>Intentos restantes</target>
+        <note priority="1" from="description">Available quiz attempts left meta label</note>
+      </trans-unit>
+      <trans-unit id="3955868613858648955" datatype="html">
+        <source>Available</source>
+        <target>Disponible</target>
+        <note priority="1" from="description">Available quiz ready status</note>
       </trans-unit>
       <trans-unit id="3307214558906712688" datatype="html">
         <source>In progress</source>
@@ -456,11 +456,6 @@
         <source>You don&apos;t have any exams.</source>
         <target>No tienes ningún examen disponible.</target>
         <note priority="1" from="description">Student no exams message</note>
-      </trans-unit>
-      <trans-unit id="2531042398197863879" datatype="html">
-        <source><x id="questionCount" equiv-text="this.questionCount()"/> questions</source>
-        <target><x id="questionCount" equiv-text="this.questionCount()"/> preguntas</target>
-        <note priority="1" from="description">Quiz card question count</note>
       </trans-unit>
       <trans-unit id="3635164936532222371" datatype="html">
         <source>Cuestionarios</source>

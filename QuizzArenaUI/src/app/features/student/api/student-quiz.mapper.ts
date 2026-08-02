@@ -34,12 +34,27 @@ export function mapStudentDashboardResponse(
   };
 }
 
-export function mapAvailableMatchResponse({ id, title, questionCount, createdAt }: AvailableMatchResponse): AvailableQuiz {
+export function mapAvailableMatchResponse({
+  id,
+  title,
+  questionCount,
+  createdAt,
+  mode,
+  duration,
+  attemptsAmount,
+  attemptsUsed,
+  hasActiveAttempt,
+}: AvailableMatchResponse): AvailableQuiz {
   return {
     id,
     title,
     questionCount,
     status: getAvailableMatchStatus(createdAt),
+    mode,
+    duration,
+    attemptsAmount,
+    attemptsUsed,
+    hasActiveAttempt,
   };
 }
 

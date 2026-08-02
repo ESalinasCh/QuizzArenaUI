@@ -17,6 +17,10 @@ export interface AvailableMatchResponse {
   questionCount: number;
   professorName: string;
   duration: number;
+  mode: MatchMode;
+  attemptsAmount: number;
+  attemptsUsed: number;
+  hasActiveAttempt: boolean;
 }
 
 export interface MatchAttemptSummaryResponse {

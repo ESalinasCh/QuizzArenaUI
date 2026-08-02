@@ -4,10 +4,8 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../../../core/services/auth.service';
 import { SectionTitle } from '../../../../shared/molecules/section-title/section-title';
 import { AvailableQuizCard } from '../../components/available-quiz-card/available-quiz-card';
-import { QuizAccessForm } from '../../components/quiz-access-form/quiz-access-form';
 import { RecentQuizCard } from '../../components/recent-quiz-card/recent-quiz-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
-import { Icon } from '../../../../shared/atoms/icon/icon';
 import { EmptyState } from '../../../../shared/molecules/empty-state/empty-state';
 import { InfoCard } from '../../../../shared/molecules/info-card/info-card';
 import { TextInput } from '../../../../shared/molecules/text-input/text-input';
@@ -18,10 +16,8 @@ import { Button } from '../../../../shared/atoms/button/button';
   selector: 'qz-student-quiz-list-page',
   imports: [
     AvailableQuizCard,
-    QuizAccessForm,
     RecentQuizCard,
     SectionTitle,
-    Icon,
     EmptyState,
     InfoCard,
     TextInput,

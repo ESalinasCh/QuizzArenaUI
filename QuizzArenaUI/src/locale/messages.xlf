@@ -471,21 +471,29 @@
         </context-group>
         <note priority="1" from="description">Available quiz card start action</note>
       </trans-unit>
+      <trans-unit id="3307214558906712688" datatype="html">
+        <source>In progress</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <note priority="1" from="description">Available quiz active attempt status</note>
+      </trans-unit>
       <trans-unit id="3955868613858648955" datatype="html">
         <source>Available</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">55</context>
         </context-group>
-        <note priority="1" from="description">Available quiz status label</note>
+        <note priority="1" from="description">Available quiz ready status</note>
       </trans-unit>
-      <trans-unit id="5280218112746407598" datatype="html">
-        <source>New</source>
+      <trans-unit id="2424531886220839815" datatype="html">
+        <source>Attempts left</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">24</context>
         </context-group>
-        <note priority="1" from="description">New quiz status label</note>
+        <note priority="1" from="description">Available quiz attempts left meta label</note>
       </trans-unit>
       <trans-unit id="2509141182388535183" datatype="html">
         <source>View</source>
@@ -1870,14 +1878,6 @@
           <context context-type="linenumber">40,43</context>
         </context-group>
         <note priority="1" from="description">Grade card other attempts section heading</note>
-      </trans-unit>
-      <trans-unit id="2531042398197863879" datatype="html">
-        <source><x id="questionCount" equiv-text="this.questionCount()"/> questions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/molecules/quiz-card-meta/quiz-card-meta.ts</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-        <note priority="1" from="description">Quiz card question count</note>
       </trans-unit>
       <trans-unit id="7228136119811576789" datatype="html">
         <source>User menu</source>
