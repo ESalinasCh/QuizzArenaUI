@@ -7,6 +7,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { AvailableQuiz } from '../../models/student-quiz.model';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { StudentExamListPage } from './exam-list-page';
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 describe('StudentExamListPage', () => {
     let mockAuthService: Partial<AuthService>;
@@ -54,6 +55,7 @@ describe('StudentExamListPage', () => {
 
         expect(mockStudentQuizService.getMatches).toHaveBeenCalledWith({
             status: 'Active',
+            pageSize: DEFAULT_PAGE_SIZE,
             mode: 'Exam',
         });
     });
@@ -106,6 +108,7 @@ describe('StudentExamListPage', () => {
 
         expect(mockStudentQuizService.getMatches).toHaveBeenCalledWith({
             status: 'Active',
+            pageSize: DEFAULT_PAGE_SIZE,
             mode: 'Exam',
         });
     });

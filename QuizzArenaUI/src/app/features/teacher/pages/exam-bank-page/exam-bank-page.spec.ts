@@ -66,7 +66,7 @@ describe('TeacherExamBankPage', () => {
     const fixture = TestBed.createComponent(TeacherExamBankPage);
     fixture.detectChanges();
     const mockMatch: Match = { id: 'm1', title: 'M1', courseName: 'C1', questionCount: 5, professorName: 'P', duration: 30 };
-    fixture.componentInstance.unpublishMatch(mockMatch);
+    fixture.componentInstance.unpublishMatch(mockMatch.id);
     expect(mockExamService.unpublishMatch).toHaveBeenCalledWith('m1');
   });
 
