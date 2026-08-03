@@ -76,6 +76,20 @@ export interface Match {
   attemptsAmount?: number;
 }
 
+export interface AttemptReviewQuestion {
+  id: string;
+  number: number;
+  text: string;
+  selectedAnswerLabel: string;
+  isCorrect: boolean;
+}
+
+export interface AttemptReview {
+  id: string;
+  score: number;
+  questions: AttemptReviewQuestion[];
+}
+
 export interface ResetAttemptResult {
   matchId: string;
   userId: string;

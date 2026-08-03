@@ -21,9 +21,9 @@ import {
 import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
 import { TEACHER_EXAM_ENDPOINTS, TEACHER_GRADES_ENDPOINTS } from '../api/teacher-exam.endpoints';
 import { TEACHER_CLASSES_RESPONSE_MOCK } from '../mocks/teacher-exam.mock';
-import { ClassSource, CreateExamRequest, Exam, Grade, Match, Question } from '../models/exam.model';
-import { GradeAttemptFilters, GradeResponse, MatchResponse, MatchStatusResponse } from '../api/teacher-grades.contract';
-import { mapGradeResponse, mapMatchResponse } from '../api/teacher-grades.mapper';
+import { AttemptReview, ClassSource, CreateExamRequest, Exam, Grade, Match, Question } from '../models/exam.model';
+import { AttemptDetailResponse, GradeAttemptFilters, GradeResponse, MatchResponse, MatchStatusResponse } from '../api/teacher-grades.contract';
+import { mapAttemptDetailResponse, mapGradeResponse, mapMatchResponse } from '../api/teacher-grades.mapper';
 import { PagedRequest } from '../../../core/models/pagination.model';
 
 export interface QuizPagedRequest extends PagedRequest {
@@ -139,6 +139,12 @@ export class TeacherExamService {
         params: { ...filters },
       })
       .pipe(catchError(() => of([])), map(grades => grades.map(mapGradeResponse)));
+  }
+
+  getAttemptReview(attemptId: string): Observable<AttemptReview> {
+    return this.#http
+      .get<AttemptDetailResponse>(buildApiUrl(TEACHER_GRADES_ENDPOINTS.attemptDetail(attemptId)))
+      .pipe(map(mapAttemptDetailResponse));
   }
 
   getMatches(filters: MatchFilters = {}): Observable<Match[]> {

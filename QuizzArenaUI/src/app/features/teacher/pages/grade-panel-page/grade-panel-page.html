@@ -31,7 +31,8 @@
   <div class="flex flex-col space-y-3">
     @for (grade of grades.value() ?? []; track grade.id) {
     <qz-grade-card [grade]="grade" [expanded]="expandedGrades().includes(grade.id)"
-      (toggleAttempts)="toggleAttempts($event)" (resetAttempts)="onResetAttempts($event)" />
+      (toggleAttempts)="toggleAttempts($event)" (resetAttempts)="onResetAttempts($event)"
+      (viewResults)="onViewResults($event)" />
     } @empty {
     <h2 class="text-xl font-bold text-light-text flex justify-center dark:text-dark-text">
       {{ noGradesMessage }}

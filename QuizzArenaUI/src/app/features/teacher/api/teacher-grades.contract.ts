@@ -35,6 +35,27 @@ export interface MatchResponse {
     createdAt?: string;
 }
 
+export interface AttemptDetailOptionResponse {
+    id: string;
+    description: string;
+    isCorrect: boolean;
+}
+
+export interface AttemptDetailQuestionResponse {
+    questionId: string;
+    content: string;
+    selectedOptionIds: string[];
+    isCorrect: boolean;
+    options: AttemptDetailOptionResponse[];
+}
+
+export interface AttemptDetailResponse {
+    id: string;
+    score: number;
+    status: string;
+    questions: AttemptDetailQuestionResponse[];
+}
+
 export interface GradeAttemptFilters {
     status?: GradeStatusResponse;
     Nickname?: string;
