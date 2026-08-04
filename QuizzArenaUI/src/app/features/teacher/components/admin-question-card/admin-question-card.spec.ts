@@ -33,6 +33,17 @@ describe('AdminQuestionCard', () => {
     fixture.detectChanges();
   });
 
+  it('should render the Q1 badge when index is 0 (falsy but valid)', () => {
+    fixture.componentRef.setInput('index', 0);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('Q1');
+  });
+
+  it('should not render a question number badge when index is not provided', () => {
+    expect(fixture.nativeElement.querySelector('app-badge')).toBeFalsy();
+  });
+
   it('should render question content and metadata', () => {
     expect(fixture.nativeElement.textContent).toContain('What is DDD?');
     expect(fixture.nativeElement.textContent).toContain('Verified');
@@ -134,8 +145,8 @@ describe('AdminQuestionCard', () => {
     const spans: HTMLElement[] = Array.from(fixture.nativeElement.querySelectorAll('span'));
     const correctSpan = spans.find(s => s.textContent?.trim() === 'Paris');
     const wrongSpan = spans.find(s => s.textContent?.trim() === 'Madrid');
-    expect(correctSpan?.className).toContain('text-green-600');
-    expect(wrongSpan?.className).not.toContain('text-green-600');
+    expect(correctSpan?.className).toContain('text-green-700');
+    expect(wrongSpan?.className).not.toContain('text-green-700');
   });
 
   it('should not render an options section when the question has no options', () => {

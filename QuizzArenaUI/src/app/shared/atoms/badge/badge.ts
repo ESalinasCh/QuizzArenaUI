@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 
-export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info';
+export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 
 @Component({
   selector: 'app-badge',
@@ -28,5 +28,7 @@ export class Badge {
       'bg-danger-bg-light text-danger-text-light dark:bg-danger-bg-dark dark:text-danger-text-dark',
     info:
       'bg-info-bg-light text-info dark:bg-info-bg-dark dark:text-white',
+    neutral:
+      'font-bold border border-light-border-strong dark:border-dark-border-strong bg-light-surface-alt dark:bg-dark-surface-alt text-light-text-secondary dark:text-dark-text-secondary',
   };
 }

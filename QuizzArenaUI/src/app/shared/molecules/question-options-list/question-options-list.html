@@ -1,0 +1,26 @@
+@if (options().length > 0) {
+<div class="flex flex-col gap-2">
+    @for (option of options(); track option.id ?? option.position) {
+    <div class="flex items-center justify-between gap-3 rounded-lg border px-3 py-2 transition-colors"
+        [class]="option.isCorrect
+            ? 'border-green-600/60 bg-green-600/10 dark:bg-green-500/10'
+            : 'border-light-border-strong dark:border-dark-border-strong bg-light-surface-alt dark:bg-dark-surface-alt'">
+        <div class="flex items-center gap-3 min-w-0">
+            <span class="flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold"
+                [class]="option.isCorrect
+                    ? 'bg-green-600 text-white'
+                    : 'bg-light-surface dark:bg-dark-surface border border-light-border-strong dark:border-dark-border-strong text-light-text-secondary dark:text-dark-text-secondary'">
+                {{ getOptionLetter($index) }}
+            </span>
+            <qz-text-span [bold]="option.isCorrect ? 'semibold' : 'none'"
+                [additionalCssClasses]="option.isCorrect ? 'text-green-700 dark:text-green-400' : ''">
+                {{ option.description }}
+            </qz-text-span>
+        </div>
+        @if (option.isCorrect) {
+        <qz-icon [name]="'check'" class="block !size-5 shrink-0 text-green-600" />
+        }
+    </div>
+    }
+</div>
+}
