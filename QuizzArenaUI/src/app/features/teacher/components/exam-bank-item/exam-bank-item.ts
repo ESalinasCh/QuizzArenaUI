@@ -13,6 +13,7 @@ import { MatchOfQuizItem } from '../match-of-quiz-item/match-of-quiz-item';
 })
 export class ExamBankItem {
   readonly quizAsExams = input.required<QuizResponseAsExams>();
+  readonly quizId = input.required<string>();
   readonly matches = input<Match[]>([]);
   readonly publish = output<void>();
   readonly checkOthers = output<void>();

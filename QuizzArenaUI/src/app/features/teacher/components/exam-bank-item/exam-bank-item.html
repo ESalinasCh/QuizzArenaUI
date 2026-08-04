@@ -35,7 +35,7 @@
     </span>
     <div class="flex flex-col gap-2">
       @for (match of matches(); track match.id) {
-      <qz-match-of-quiz-item [match]="match" (unpublishMatch)="unpublishMatch.emit($event)" />
+      <qz-match-of-quiz-item [match]="match" (unpublishMatch)="unpublishMatch.emit($event)" [quizId]="quizId()" />
       }
     </div>
   </div>

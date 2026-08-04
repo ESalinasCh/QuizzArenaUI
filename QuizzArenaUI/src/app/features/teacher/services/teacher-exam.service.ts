@@ -17,6 +17,7 @@ import {
   QuizResponseAsExams,
   SaveMatchResponse,
   ExamResponse,
+  UpdateMatchRequestBody,
 } from '../api/teacher-exam.contract';
 import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
 import { TEACHER_EXAM_ENDPOINTS, TEACHER_GRADES_ENDPOINTS } from '../api/teacher-exam.endpoints';
@@ -131,6 +132,13 @@ export class TeacherExamService {
   ): Observable<SaveMatchResponse> {
     return this.#http
       .post<SaveMatchResponse>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.matches), request);
+  }
+
+  updateMatch(
+    request: UpdateMatchRequestBody
+  ): Observable<void> {
+    return this.#http
+      .patch(buildApiUrl(TEACHER_EXAM_ENDPOINTS.updateMatch(request.id)), request).pipe(map(() => void 0));
   }
 
   getGrades(matchId?: string, filters: GradeAttemptFilters = {}): Observable<Grade[]> {

@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 
-type SpanVariant = 'default' | 'danger';
+type SpanVariant = 'default' | 'danger' | 'primary' | 'success' | 'info' | 'warning';
 type SpanBold = 'bold' | 'semibold' | 'none';
 type SpanFontSize = 'default' | 'small' | 'base' | 'big' | 'gigant';
 @Component({
@@ -17,7 +17,11 @@ export class TextSpan {
 
     variants: Record<SpanVariant, string> = {
         default: 'text-light-text dark:text-dark-text',
-        danger: 'text-red-500',
+        success: 'text-success-text-light dark:text-success-text-dark',
+        warning: 'text-warning-text-light dark:text-warning-text-dark',
+        danger: 'text-danger-text-light dark:text-danger-text-dark',
+        info: 'text-info-text-light dark:text-info-text-dark',
+        primary: 'text-primary',
     } as const;
 
     bolds: Record<SpanBold, string> = {

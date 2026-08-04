@@ -3,6 +3,7 @@ export const TEACHER_EXAM_ENDPOINTS = {
   exams: '/api/v1/users/me/quizzes',
   createExam: '/api/v1/quizzes',
   matches: '/api/v1/matches',
+  updateMatch: (matchId: string) => `/api/v1/matches/${matchId}`,
   matchesforTeacher: '/api/v1/users/me/matches',
   activeExams: (matchId: string) => `/api/v1/matches/${matchId}/publish`,
   unpublishMatch: (matchId: string) => `/api/v1/matches/${matchId}/unpublish`,

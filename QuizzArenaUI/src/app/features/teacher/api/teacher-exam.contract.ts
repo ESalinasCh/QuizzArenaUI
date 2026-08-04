@@ -39,6 +39,19 @@ export interface CreateMatchRequestBody {
   shuffleOptions: boolean;
 }
 
+export interface UpdateMatchRequestBody {
+  id: string;
+  quizId: string;
+  courseId: string;
+  startedAt: string;
+  finishedAt: string;
+  questionsAmount: number;
+  timeMinutes: number;
+  attemptsAmount: number;
+  shuffleQuestion: boolean;
+  shuffleOptions: boolean;
+}
+
 export interface ExamResponse {
   id: string;
   title: string;

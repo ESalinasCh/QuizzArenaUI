@@ -52,10 +52,11 @@ function formatSelectedAnswerLabel(selectedLabels: string[]): string {
   return selectedLabels.join(', ');
 }
 
-export function mapMatchResponse({ id, title, courseName, questionCount, professorName, duration, quizId, startedAt, finishedAt, status, attemptsAmount }: MatchResponse): Match {
+export function mapMatchResponse({ id, title, courseName, questionCount, professorName, duration, quizId, startedAt, finishedAt, status, attemptsAmount, courseId }: MatchResponse): Match {
   return {
     id,
     title,
+    courseId,
     courseName,
     questionCount,
     professorName,

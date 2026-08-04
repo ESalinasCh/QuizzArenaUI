@@ -13,6 +13,7 @@
     </h1>
   </header>
   <qz-publish-quiz-as-match-form [quizId]="quizId() || ''" [courses]="coursesResource.value() ?? []"
-    (sendMatchRequest)="handleMatchRequest($event)" (back)="goBack()" />
+    (emitSaveRequest)="handleSaveMatchRequest($event)" (emitUpdateRequest)="handleUpdateMatchRequest($event)"
+    (back)="goBack()" [mode]="mode()" [matchId]="matchId()" [match]="editMatchResource.value() || null" />
 
 </section>

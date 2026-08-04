@@ -1,4 +1,4 @@
-export interface PublishMatchForm {
+interface BaseForm {
     courseId: string;
     durationMinutes: string;
     questionsAmount: string;
@@ -8,3 +8,11 @@ export interface PublishMatchForm {
     shuffleQuestions: boolean;
     shuffleOptions: boolean;
 }
+
+export interface PublishMatchForm extends BaseForm {
+}
+
+export interface EditMatchForm extends BaseForm {
+}
+
+export type PublishMode = 'publish' | 'edit';
