@@ -9,10 +9,7 @@ interface BaseForm {
     shuffleOptions: boolean;
 }
 
-export interface PublishMatchForm extends BaseForm {
-}
-
-export interface EditMatchForm extends BaseForm {
-}
+export type PublishMatchForm = BaseForm;
+export type EditMatchForm = BaseForm;
 
 export type PublishMode = 'publish' | 'edit';

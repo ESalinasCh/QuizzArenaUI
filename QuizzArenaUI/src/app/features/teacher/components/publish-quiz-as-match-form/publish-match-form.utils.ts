@@ -37,7 +37,19 @@ export function getFormFieldErrorMessage(
     : null;
 }
 
-export function getDateRangeError(formState: any, isSubmitted: boolean): string | null {
+export interface FormStateField {
+  touched: () => boolean;
+  dirty: () => boolean;
+  value: () => string;
+}
+
+export interface MatchFormState {
+  (): { errors: () => { kind?: string; message?: string }[] };
+  enabledFrom: () => FormStateField;
+  enabledUntil: () => FormStateField;
+}
+
+export function getDateRangeError(formState: MatchFormState, isSubmitted: boolean): string | null {
   const rootErrors = formState().errors() as { kind?: string; message?: string }[];
   const dateError = rootErrors.find(
     e => e.kind === 'date_range' || e.message === 'End date must be after start date'
@@ -54,7 +66,7 @@ export function getDateRangeError(formState: any, isSubmitted: boolean): string 
   return isInteraction && dateError ? (dateError.message ?? 'End date must be after start date') : null;
 }
 
-export function getMoreThanCurrentDateTimeError(formState: any, isSubmitted: boolean): string | null {
+export function getMoreThanCurrentDateTimeError(formState: MatchFormState, isSubmitted: boolean): string | null {
   const enabledFrom = formState.enabledFrom();
   const enabledUntil = formState.enabledUntil();
   if (

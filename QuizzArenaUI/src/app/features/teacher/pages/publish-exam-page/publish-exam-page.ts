@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, input } from '@angular/core';
 import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, EMPTY, filter, map, of, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, filter, map, of, switchMap } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { PublishQuizAsMatchForm } from '../../components/publish-quiz-as-match-form/publish-quiz-as-match-form';
 import { CreateMatchRequestBody, UpdateMatchRequestBody } from '../../api/teacher-exam.contract';

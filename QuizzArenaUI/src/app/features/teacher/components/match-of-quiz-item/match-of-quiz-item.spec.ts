@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatchOfQuizItem } from './match-of-quiz-item';
 import { Match } from '../../models/exam.model';
 import { LOCALE_ID } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 const MOCK_ACTIVE_MATCH: Match = {
   id: 'm1',
@@ -33,10 +34,11 @@ describe('MatchOfQuizItem', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MatchOfQuizItem],
-      providers: [{ provide: LOCALE_ID, useValue: 'en' }],
+      providers: [provideRouter([]), { provide: LOCALE_ID, useValue: 'en' }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MatchOfQuizItem);
+    fixture.componentRef.setInput('quizId', 'quiz-1');
     fixture.componentRef.setInput('match', MOCK_ACTIVE_MATCH);
     component = fixture.componentInstance;
     await fixture.whenStable();
