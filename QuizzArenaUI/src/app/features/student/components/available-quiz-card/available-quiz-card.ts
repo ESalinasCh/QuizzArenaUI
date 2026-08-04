@@ -45,7 +45,9 @@ export class AvailableQuizCard {
   ]);
 
   readonly isStartDisabled = computed(
-    () => !this.#hasUnlimitedAttempts() && this.attemptsLeft() === 0,
+    () =>
+      (this.#hasUnlimitedAttempts() && this.quiz().hasActiveAttempt) ||
+      (!this.#hasUnlimitedAttempts() && this.attemptsLeft() === 0),
   );
 
   emitStart(): void {

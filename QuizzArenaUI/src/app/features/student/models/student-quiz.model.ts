@@ -38,6 +38,15 @@ export interface StudentQuizDashboard {
   recentQuizzes: RecentQuiz[];
 }
 
+export interface StudentMatchSessionInfo {
+  id: string;
+  title: string;
+  subtitle: string;
+  professorName: string;
+  questionCount: number;
+  timeLimitMinutes: number;
+}
+
 export interface AttemptHistoryCard {
   id: string;
   title: string;

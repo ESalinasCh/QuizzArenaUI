@@ -278,7 +278,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.html</context>
-          <context context-type="linenumber">63,64</context>
+          <context context-type="linenumber">61,62</context>
         </context-group>
         <note priority="1" from="description">Login illustration alt text</note>
       </trans-unit>
@@ -302,7 +302,7 @@
         <source> Generate quizzes from your classes using artificial intelligence </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.html</context>
-          <context context-type="linenumber">77,79</context>
+          <context context-type="linenumber">75,77</context>
         </context-group>
         <note priority="1" from="description">Login mobile tagline</note>
       </trans-unit>
@@ -310,7 +310,7 @@
         <source> Create, publish and evaluate your students&apos; performance instantly. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.html</context>
-          <context context-type="linenumber">80,82</context>
+          <context context-type="linenumber">78,80</context>
         </context-group>
         <note priority="1" from="description">Login mobile subtitle</note>
       </trans-unit>
@@ -318,7 +318,7 @@
         <source>Get started</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.html</context>
-          <context context-type="linenumber">91,92</context>
+          <context context-type="linenumber">89,90</context>
         </context-group>
         <note priority="1" from="description">Login CTA button</note>
       </trans-unit>
@@ -326,7 +326,7 @@
         <source>AI Processes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">30</context>
         </context-group>
         <note priority="1" from="description">AI Processes</note>
         <note priority="1" from="meaning">Feature card image alt</note>
@@ -335,7 +335,7 @@
         <source>AI Processes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="description">AI Processes</note>
         <note priority="1" from="meaning">Feature card title</note>
@@ -344,7 +344,7 @@
         <source>Generate personalized questions instantly</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="description">AI Processes</note>
         <note priority="1" from="meaning">Feature card description</note>
@@ -353,7 +353,7 @@
         <source>Quizzes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <note priority="1" from="description">Quizzes</note>
         <note priority="1" from="meaning">Feature card image alt</note>
@@ -362,7 +362,7 @@
         <source>Quizzes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <note priority="1" from="description">Quizzes</note>
         <note priority="1" from="meaning">Feature card title</note>
@@ -371,7 +371,7 @@
         <source>Create and publish quizzes ready for your classes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="description">Quizzes</note>
         <note priority="1" from="meaning">Feature card description</note>
@@ -380,7 +380,7 @@
         <source>Results</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="description">Results</note>
         <note priority="1" from="meaning">Feature card image alt</note>
@@ -389,7 +389,7 @@
         <source>Results</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="description">Results</note>
         <note priority="1" from="meaning">Feature card title</note>
@@ -398,7 +398,7 @@
         <source>Evaluate and analyze your students&apos; performance</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/pages/login-page/login-page.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <note priority="1" from="description">Results</note>
         <note priority="1" from="meaning">Feature card description</note>
@@ -407,15 +407,15 @@
         <source>in progress</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">87</context>
         </context-group>
         <note priority="1" from="description">Recent quiz in progress label</note>
       </trans-unit>
       <trans-unit id="7427655947787703925" datatype="html">
-        <source><x id="duration" equiv-text="response.duration"/> min</source>
+        <source><x id="duration" equiv-text="duration"/> min</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <note priority="1" from="description">Attempt history duration label</note>
       </trans-unit>
@@ -423,7 +423,7 @@
         <source>Result submitted</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">198</context>
         </context-group>
         <note priority="1" from="description">Student quiz result default message</note>
       </trans-unit>
@@ -431,7 +431,7 @@
         <source>Passed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">233</context>
         </context-group>
         <note priority="1" from="description">Attempt history passed status label</note>
       </trans-unit>
@@ -439,7 +439,7 @@
         <source>Failed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">180</context>
+          <context context-type="linenumber">234</context>
         </context-group>
         <note priority="1" from="description">Attempt history failed status label</note>
       </trans-unit>
@@ -447,7 +447,7 @@
         <source><x id="days" equiv-text="diffInDays"/> days ago</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">210</context>
+          <context context-type="linenumber">264</context>
         </context-group>
         <note priority="1" from="description">Recent quiz completed relative date</note>
       </trans-unit>
@@ -455,7 +455,7 @@
         <source>No answer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/api/student-quiz.mapper.ts</context>
-          <context context-type="linenumber">226</context>
+          <context context-type="linenumber">269</context>
         </context-group>
         <note priority="1" from="description">Student quiz unanswered fallback</note>
       </trans-unit>
@@ -463,19 +463,55 @@
         <source>Start</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
-          <context context-type="linenumber">40,42</context>
+          <context context-type="linenumber">41,43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.ts</context>
+          <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="description">Available quiz card start action</note>
+      </trans-unit>
+      <trans-unit id="907136822175606758" datatype="html">
+        <source>Questions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/create-exam-page/create-exam-page.html</context>
+          <context context-type="linenumber">21,26</context>
+        </context-group>
+        <note priority="1" from="description">Available quiz questions meta label</note>
+      </trans-unit>
+      <trans-unit id="5611592591303869712" datatype="html">
+        <source>Status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/grade-history-page/grade-history-page.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+        <note priority="1" from="description">Available quiz status meta label</note>
+      </trans-unit>
+      <trans-unit id="2424531886220839815" datatype="html">
+        <source>Attempts left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="description">Available quiz attempts left meta label</note>
       </trans-unit>
       <trans-unit id="3307214558906712688" datatype="html">
         <source>In progress</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="description">Available quiz active attempt status</note>
       </trans-unit>
@@ -483,17 +519,9 @@
         <source>Available</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="description">Available quiz ready status</note>
-      </trans-unit>
-      <trans-unit id="2424531886220839815" datatype="html">
-        <source>Attempts left</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/student/components/available-quiz-card/available-quiz-card.ts</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-        <note priority="1" from="description">Available quiz attempts left meta label</note>
       </trans-unit>
       <trans-unit id="2509141182388535183" datatype="html">
         <source>View</source>
@@ -519,7 +547,7 @@
         <source>Exams have a set timeframe and limit. Make sure your internet connection is stable.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.html</context>
-          <context context-type="linenumber">48,50</context>
+          <context context-type="linenumber">54,56</context>
         </context-group>
         <note priority="1" from="description">Student evaluation guideline 1</note>
       </trans-unit>
@@ -527,7 +555,7 @@
         <source>Answers are saved automatically as you progress.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.html</context>
-          <context context-type="linenumber">52,54</context>
+          <context context-type="linenumber">58,60</context>
         </context-group>
         <note priority="1" from="description">Student evaluation guideline 2</note>
       </trans-unit>
@@ -535,7 +563,7 @@
         <source>Once submitted, you cannot change your answers.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.html</context>
-          <context context-type="linenumber">56,59</context>
+          <context context-type="linenumber">62,65</context>
         </context-group>
         <note priority="1" from="description">Student evaluation guideline 3</note>
       </trans-unit>
@@ -543,7 +571,7 @@
         <source>Available Exams</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <note priority="1" from="description">Student available exams section title</note>
       </trans-unit>
@@ -551,7 +579,7 @@
         <source>Recent Exams</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="description">Student recent exams section title</note>
       </trans-unit>
@@ -559,11 +587,11 @@
         <source>Student</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="description">Student fallback display name</note>
       </trans-unit>
@@ -571,7 +599,7 @@
         <source>You don&apos;t have any exams.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <note priority="1" from="description">Student no exams message</note>
       </trans-unit>
@@ -579,7 +607,7 @@
         <source>There are no evaluations matching the selected category right now.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="description">Student no exams matching category message</note>
       </trans-unit>
@@ -587,7 +615,7 @@
         <source>Evaluation Guidelines</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-list-page/exam-list-page.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <note priority="1" from="description">Student evaluation guidelines title</note>
       </trans-unit>
@@ -599,7 +627,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-question-page/quiz-question-page.html</context>
-          <context context-type="linenumber">28,31</context>
+          <context context-type="linenumber">24,27</context>
         </context-group>
         <note priority="1" from="description">Student exam options section label</note>
       </trans-unit>
@@ -611,7 +639,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-question-page/quiz-question-page.html</context>
-          <context context-type="linenumber">56,57</context>
+          <context context-type="linenumber">47,48</context>
         </context-group>
         <note priority="1" from="description">Student exam confirm answer button</note>
       </trans-unit>
@@ -691,7 +719,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.html</context>
-          <context context-type="linenumber">56,58</context>
+          <context context-type="linenumber">61,63</context>
         </context-group>
         <note priority="1" from="description">Student exam back to exams button</note>
       </trans-unit>
@@ -711,15 +739,31 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
-          <context context-type="linenumber">27,28</context>
+          <context context-type="linenumber">25,26</context>
         </context-group>
         <note priority="1" from="description">Student exam start question count</note>
+      </trans-unit>
+      <trans-unit id="4169589529068600715" datatype="html">
+        <source> Read each question carefully before continuing. This exam may include single choice, multiple choice, and true or false questions. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.html</context>
+          <context context-type="linenumber">35,38</context>
+        </context-group>
+        <note priority="1" from="description">Student exam start instructions</note>
       </trans-unit>
       <trans-unit id="5539097211548480304" datatype="html">
         <source>Start exam</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.html</context>
-          <context context-type="linenumber">40,42</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.ts</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <note priority="1" from="description">Student exam start button</note>
       </trans-unit>
@@ -727,7 +771,7 @@
         <source> Exam unavailable </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.html</context>
-          <context context-type="linenumber">46,48</context>
+          <context context-type="linenumber">51,53</context>
         </context-group>
         <note priority="1" from="description">Student exam start fallback title</note>
       </trans-unit>
@@ -735,19 +779,39 @@
         <source> We could not load this exam right now. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.html</context>
-          <context context-type="linenumber">49,52</context>
+          <context context-type="linenumber">54,57</context>
         </context-group>
         <note priority="1" from="description">Student exam start fallback message</note>
+      </trans-unit>
+      <trans-unit id="5697829689557235836" datatype="html">
+        <source>You are about to start this exam. Once you begin, your progress will be tracked as you answer each question.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="description">Student exam start confirmation message</note>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <note priority="1" from="description">Student exam start confirmation cancel</note>
       </trans-unit>
       <trans-unit id="3066208008327816783" datatype="html">
         <source>Time limit <x id="minutes" equiv-text="minutes"/> min</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/exam-session-page/exam-session-page.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <note priority="1" from="description">Student exam time limit label</note>
       </trans-unit>
@@ -831,14 +895,6 @@
         </context-group>
         <note priority="1" from="description">Grade history table score column</note>
       </trans-unit>
-      <trans-unit id="5611592591303869712" datatype="html">
-        <source>Status</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/student/pages/grade-history-page/grade-history-page.html</context>
-          <context context-type="linenumber">77,78</context>
-        </context-group>
-        <note priority="1" from="description">Grade history table status column</note>
-      </trans-unit>
       <trans-unit id="9216117865911519658" datatype="html">
         <source>Action</source>
         <context-group purpose="location">
@@ -855,7 +911,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/class-sources-page/class-sources-page.html</context>
-          <context context-type="linenumber">39,43</context>
+          <context context-type="linenumber">39,42</context>
         </context-group>
         <note priority="1" from="description">Student grade history load more button</note>
       </trans-unit>
@@ -867,19 +923,11 @@
         </context-group>
         <note priority="1" from="description">Student dashboard welcome heading</note>
       </trans-unit>
-      <trans-unit id="5615144960373383664" datatype="html">
-        <source>Enter Code or Link</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.html</context>
-          <context context-type="linenumber">91,93</context>
-        </context-group>
-        <note priority="1" from="description">Student link access panel title</note>
-      </trans-unit>
       <trans-unit id="4112003894380000412" datatype="html">
         <source> Consistent reviews help double retention rates. Check your previous attempts to review incorrect answers and learn faster. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.html</context>
-          <context context-type="linenumber">98,100</context>
+          <context context-type="linenumber">90,92</context>
         </context-group>
         <note priority="1" from="description">Student pro tip body</note>
       </trans-unit>
@@ -887,7 +935,7 @@
         <source>Available Quizzes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">40</context>
         </context-group>
         <note priority="1" from="description">Student dashboard available quizzes section title</note>
       </trans-unit>
@@ -895,7 +943,7 @@
         <source>Recent Quizzes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <note priority="1" from="description">Student dashboard recent quizzes section title</note>
       </trans-unit>
@@ -903,7 +951,7 @@
         <source>No quizzes available</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="description">Student no quizzes available title</note>
       </trans-unit>
@@ -911,7 +959,7 @@
         <source>Ask your teacher to share a quiz or upload class materials.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <note priority="1" from="description">Student no quizzes available description</note>
       </trans-unit>
@@ -919,7 +967,7 @@
         <source>No history</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="description">Student no history title</note>
       </trans-unit>
@@ -927,7 +975,7 @@
         <source>Complete your first quiz to see your history here.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <note priority="1" from="description">Student no history description</note>
       </trans-unit>
@@ -935,7 +983,7 @@
         <source>Pro Tip</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-list-page/quiz-list-page.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <note priority="1" from="description">Student pro tip title</note>
       </trans-unit>
@@ -1007,11 +1055,19 @@
         </context-group>
         <note priority="1" from="description">Student quiz correct answers stat label</note>
       </trans-unit>
+      <trans-unit id="3727891703060345358" datatype="html">
+        <source> Read each question carefully before continuing. This quiz may include single choice, multiple choice, and true or false questions. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
+          <context context-type="linenumber">33,36</context>
+        </context-group>
+        <note priority="1" from="description">Student quiz start instructions</note>
+      </trans-unit>
       <trans-unit id="7258563223298766851" datatype="html">
         <source> Quiz unavailable </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
-          <context context-type="linenumber">46,48</context>
+          <context context-type="linenumber">47,49</context>
         </context-group>
         <note priority="1" from="description">Student quiz start fallback title</note>
       </trans-unit>
@@ -1019,7 +1075,7 @@
         <source> We could not load this quiz right now. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
-          <context context-type="linenumber">49,52</context>
+          <context context-type="linenumber">51,53</context>
         </context-group>
         <note priority="1" from="description">Student quiz start fallback message</note>
       </trans-unit>
@@ -1027,9 +1083,89 @@
         <source>Back to quizzes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.html</context>
-          <context context-type="linenumber">56,58</context>
+          <context context-type="linenumber">56,59</context>
         </context-group>
         <note priority="1" from="description">Student quiz start fallback action</note>
+      </trans-unit>
+      <trans-unit id="4459786067389143650" datatype="html">
+        <source>Start quiz</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <note priority="1" from="description">Student quiz start confirmation title</note>
+      </trans-unit>
+      <trans-unit id="3674885568452389400" datatype="html">
+        <source>You are about to start this quiz. Make sure you are ready before continuing.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/student/pages/quiz-session-page/quiz-session-page.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="description">Student quiz start confirmation message</note>
+      </trans-unit>
+      <trans-unit id="2512428324476842077" datatype="html">
+        <source> questions </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/exam-bank-item/exam-bank-item.html</context>
+          <context context-type="linenumber">8,10</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank question count label</note>
+      </trans-unit>
+      <trans-unit id="2790056728085092240" datatype="html">
+        <source> Check Others </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/exam-bank-item/exam-bank-item.html</context>
+          <context context-type="linenumber">16,18</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank check others button label</note>
+      </trans-unit>
+      <trans-unit id="6221775712840236751" datatype="html">
+        <source> Publish </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/exam-bank-item/exam-bank-item.html</context>
+          <context context-type="linenumber">22,24</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank publish button label</note>
+      </trans-unit>
+      <trans-unit id="7458777214705400502" datatype="html">
+        <source> Active Matches </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/exam-bank-item/exam-bank-item.html</context>
+          <context context-type="linenumber">32,34</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank matches section heading</note>
+      </trans-unit>
+      <trans-unit id="5610408988501843695" datatype="html">
+        <source>Publish exam</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/exam-bank-item/exam-bank-item.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-questions/exam-step-questions.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/publish-quiz-as-match-form/publish-quiz-as-match-form.html</context>
+          <context context-type="linenumber">95,99</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/publish-quiz-as-match-form/publish-quiz-as-match-form.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank publish button aria label</note>
+      </trans-unit>
+      <trans-unit id="895410377836115564" datatype="html">
+        <source>Check others</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/exam-bank-item/exam-bank-item.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank check others button aria label</note>
       </trans-unit>
       <trans-unit id="1669185263898985643" datatype="html">
         <source> Question </source>
@@ -1070,174 +1206,6 @@
           <context context-type="linenumber">48,53</context>
         </context-group>
         <note priority="1" from="description">Exam question card remove from bank label</note>
-      </trans-unit>
-      <trans-unit id="688110201336267369" datatype="html">
-        <source> Duration (minutes) </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">8,11</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config duration label</note>
-      </trans-unit>
-      <trans-unit id="553796158312016055" datatype="html">
-        <source>Duration is required</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">17,19</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config duration required error</note>
-      </trans-unit>
-      <trans-unit id="1873557814712918690" datatype="html">
-        <source>Duration must be at least 1 minute</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">20,24</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config duration min error</note>
-      </trans-unit>
-      <trans-unit id="5919883372499707403" datatype="html">
-        <source> Max retries </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">30,33</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config retries label</note>
-      </trans-unit>
-      <trans-unit id="5924907352393694188" datatype="html">
-        <source>Max retries is required</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">39,43</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config retries required error</note>
-      </trans-unit>
-      <trans-unit id="9112907888990088848" datatype="html">
-        <source> Shuffle questions </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">53,55</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config shuffle questions label</note>
-      </trans-unit>
-      <trans-unit id="2442998897716567096" datatype="html">
-        <source> Questions will be shown in a random order for each student </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">56,60</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config shuffle questions description</note>
-      </trans-unit>
-      <trans-unit id="7469576359727404685" datatype="html">
-        <source> Shuffle options </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">70,72</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config shuffle options label</note>
-      </trans-unit>
-      <trans-unit id="5205925535482897256" datatype="html">
-        <source> Answer options will be shown in a random order for each student </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">73,76</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config shuffle options description</note>
-      </trans-unit>
-      <trans-unit id="7069458098680012267" datatype="html">
-        <source> Available from </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">85,88</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config enabled from label</note>
-      </trans-unit>
-      <trans-unit id="6583026510154883429" datatype="html">
-        <source>Start date is required</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">94,98</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config enabled from required error</note>
-      </trans-unit>
-      <trans-unit id="1442313495084915483" datatype="html">
-        <source> Available until </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">104,107</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config enabled until label</note>
-      </trans-unit>
-      <trans-unit id="4160695003192296009" datatype="html">
-        <source>End date is required</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">113,116</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config enabled until required error</note>
-      </trans-unit>
-      <trans-unit id="5502970700065255293" datatype="html">
-        <source>End date must be after start date</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">116,120</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config date range error</note>
-      </trans-unit>
-      <trans-unit id="8890553633144307762" datatype="html">
-        <source>Back</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">129,132</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.ts</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-questions/exam-step-questions.html</context>
-          <context context-type="linenumber">33,36</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-questions/exam-step-questions.ts</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/pages/create-exam-page/create-exam-page.html</context>
-          <context context-type="linenumber">9,11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/pages/publish-exam-page/publish-exam-page.html</context>
-          <context context-type="linenumber">9,11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/pages/publish-exam-page/publish-exam-page.ts</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config back button label</note>
-      </trans-unit>
-      <trans-unit id="5610408988501843695" datatype="html">
-        <source>Publish exam</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.html</context>
-          <context context-type="linenumber">138,143</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-config/exam-step-config.ts</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-questions/exam-step-questions.ts</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.ts</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-page/exam-bank-page.ts</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <note priority="1" from="description">Exam step config publish button label</note>
       </trans-unit>
       <trans-unit id="8705682626553784795" datatype="html">
         <source> Exam title </source>
@@ -1347,6 +1315,42 @@
         </context-group>
         <note priority="1" from="description">Exam step questions empty state</note>
       </trans-unit>
+      <trans-unit id="8890553633144307762" datatype="html">
+        <source>Back</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-questions/exam-step-questions.html</context>
+          <context context-type="linenumber">33,36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/exam-step-questions/exam-step-questions.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/publish-quiz-as-match-form/publish-quiz-as-match-form.html</context>
+          <context context-type="linenumber">92,94</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/publish-quiz-as-match-form/publish-quiz-as-match-form.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/create-exam-page/create-exam-page.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-check-all-matches-page/exam-bank-check-all-matches-page.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/publish-exam-page/publish-exam-page.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/publish-exam-page/publish-exam-page.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="description">Exam step questions back button</note>
+      </trans-unit>
       <trans-unit id="5736826871078477774" datatype="html">
         <source>Save to Exam Bank</source>
         <context-group purpose="location">
@@ -1371,6 +1375,98 @@
         </context-group>
         <note priority="1" from="description">Exam step questions save to bank button aria label</note>
       </trans-unit>
+      <trans-unit id="4220765745195024064" datatype="html">
+        <source>Duration:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/match-of-quiz-item/match-of-quiz-item.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank match duration label</note>
+      </trans-unit>
+      <trans-unit id="2552362010398373707" datatype="html">
+        <source>mins</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/match-of-quiz-item/match-of-quiz-item.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank match duration unit</note>
+      </trans-unit>
+      <trans-unit id="2650269401046048840" datatype="html">
+        <source>questions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/match-of-quiz-item/match-of-quiz-item.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank match questions count unit</note>
+      </trans-unit>
+      <trans-unit id="6816326784504885062" datatype="html">
+        <source>Start:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/match-of-quiz-item/match-of-quiz-item.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank match start date label</note>
+      </trans-unit>
+      <trans-unit id="1908524204371641029" datatype="html">
+        <source>End:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/match-of-quiz-item/match-of-quiz-item.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank match end date label</note>
+      </trans-unit>
+      <trans-unit id="4530164283214234705" datatype="html">
+        <source>Unpublish</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/match-of-quiz-item/match-of-quiz-item.html</context>
+          <context context-type="linenumber">34,37</context>
+        </context-group>
+        <note priority="1" from="description">Unpublish match button label</note>
+      </trans-unit>
+      <trans-unit id="5220030365354968001" datatype="html">
+        <source>Unpublish match</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/match-of-quiz-item/match-of-quiz-item.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-check-all-matches-page/exam-bank-check-all-matches-page.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="description">Exam bank unpublish match button aria label</note>
+      </trans-unit>
+      <trans-unit id="9112907888990088848" datatype="html">
+        <source> Shuffle questions </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/publish-quiz-as-match-form/publish-quiz-as-match-form.html</context>
+          <context context-type="linenumber">40,42</context>
+        </context-group>
+        <note priority="1" from="description">Exam step config shuffle questions label</note>
+      </trans-unit>
+      <trans-unit id="2442998897716567096" datatype="html">
+        <source> Questions will be shown in a random order for each student </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/publish-quiz-as-match-form/publish-quiz-as-match-form.html</context>
+          <context context-type="linenumber">44,48</context>
+        </context-group>
+        <note priority="1" from="description">Exam step config shuffle questions description</note>
+      </trans-unit>
+      <trans-unit id="7469576359727404685" datatype="html">
+        <source> Shuffle options </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/publish-quiz-as-match-form/publish-quiz-as-match-form.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+        <note priority="1" from="description">Exam step config shuffle options label</note>
+      </trans-unit>
+      <trans-unit id="5205925535482897256" datatype="html">
+        <source> Answer options will be shown in a random order for each student </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/components/publish-quiz-as-match-form/publish-quiz-as-match-form.html</context>
+          <context context-type="linenumber">59,62</context>
+        </context-group>
+        <note priority="1" from="description">Exam step config shuffle options description</note>
+      </trans-unit>
       <trans-unit id="4250948520990652627" datatype="html">
         <source>Teacher</source>
         <context-group purpose="location">
@@ -1379,7 +1475,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="description">Teacher role label</note>
       </trans-unit>
@@ -1431,14 +1527,6 @@
         </context-group>
         <note priority="1" from="description">Create exam step info breadcrumb</note>
       </trans-unit>
-      <trans-unit id="907136822175606758" datatype="html">
-        <source>Questions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/pages/create-exam-page/create-exam-page.html</context>
-          <context context-type="linenumber">21,26</context>
-        </context-group>
-        <note priority="1" from="description">Create exam step questions breadcrumb</note>
-      </trans-unit>
       <trans-unit id="636910979756194345" datatype="html">
         <source> Welcome back, <x id="INTERPOLATION" equiv-text="{{ displayName() }}"/> </source>
         <context-group purpose="location">
@@ -1467,7 +1555,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-page/exam-bank-page.html</context>
-          <context context-type="linenumber">14,18</context>
+          <context context-type="linenumber">9,13</context>
         </context-group>
         <note priority="1" from="description">Teacher dashboard create exam button label</note>
       </trans-unit>
@@ -1492,10 +1580,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.html</context>
           <context context-type="linenumber">83,85</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-page/exam-bank-page.html</context>
-          <context context-type="linenumber">50,52</context>
         </context-group>
         <note priority="1" from="description">Teacher dashboard publish exam button label</note>
       </trans-unit>
@@ -1527,7 +1611,7 @@
         <source>Quizzes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/organisms/sidebar/sidebar.ts</context>
@@ -1539,7 +1623,7 @@
         <source>Published</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="description">Stat card published label</note>
       </trans-unit>
@@ -1547,11 +1631,11 @@
         <source>Upload content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.ts</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/upload-content-page/upload-content-page.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <note priority="1" from="description">Upload content button aria label</note>
       </trans-unit>
@@ -1559,11 +1643,11 @@
         <source>Create exam</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-page/exam-bank-page.ts</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="description">Create exam button aria label</note>
       </trans-unit>
@@ -1571,7 +1655,7 @@
         <source>No exams created yet</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="description">Teacher no exams created title</note>
       </trans-unit>
@@ -1579,35 +1663,51 @@
         <source>Upload contents or use the quick creator tool to get started.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/dashboard-page/dashboard-page.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="description">Teacher no exams created description</note>
+      </trans-unit>
+      <trans-unit id="773785342299759416" datatype="html">
+        <source> All Quiz Matches </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-check-all-matches-page/exam-bank-check-all-matches-page.html</context>
+          <context context-type="linenumber">8,11</context>
+        </context-group>
+        <note priority="1" from="description">Check all matches heading</note>
+      </trans-unit>
+      <trans-unit id="1989001151929023455" datatype="html">
+        <source> No matches found for this quiz. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-check-all-matches-page/exam-bank-check-all-matches-page.html</context>
+          <context context-type="linenumber">21,24</context>
+        </context-group>
+        <note priority="1" from="description">Check all matches empty state</note>
+      </trans-unit>
+      <trans-unit id="33149636091572968" datatype="html">
+        <source>Load more</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-check-all-matches-page/exam-bank-check-all-matches-page.html</context>
+          <context context-type="linenumber">30,34</context>
+        </context-group>
+        <note priority="1" from="description">Load more matches button label</note>
       </trans-unit>
       <trans-unit id="6858966534640657016" datatype="html">
         <source> Exam Bank </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-page/exam-bank-page.html</context>
-          <context context-type="linenumber">5,8</context>
+          <context context-type="linenumber">5,7</context>
         </context-group>
         <note priority="1" from="description">Exam bank page heading</note>
       </trans-unit>
-      <trans-unit id="6105704867856680001" datatype="html">
-        <source> No draft exams yet. Create an exam to get started. </source>
+      <trans-unit id="6127005637100036631" datatype="html">
+        <source> No draft quizzes yet. Create an exam to get started. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-page/exam-bank-page.html</context>
-          <context context-type="linenumber">22,25</context>
+          <context context-type="linenumber">23,25</context>
         </context-group>
         <note priority="1" from="description">Exam bank empty state</note>
       </trans-unit>
-      <trans-unit id="4459192685950606885" datatype="html">
-        <source> questions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/teacher/pages/exam-bank-page/exam-bank-page.html</context>
-          <context context-type="linenumber">41,43</context>
-        </context-group>
-        <note priority="1" from="description">Exam bank question count label</note>
-      </trans-unit>
-      <trans-unit id="4077369017576821458" datatype="html">
+      <trans-unit id="3037724974707384935" datatype="html">
         <source> Exam grades </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/grade-panel-page/grade-panel-page.html</context>
@@ -1635,15 +1735,15 @@
         <source>You don&apos;t have any grades.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/grade-panel-page/grade-panel-page.ts</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="description">Teacher no grades message</note>
       </trans-unit>
-      <trans-unit id="6119386296422043482" datatype="html">
-        <source> Publish Exam </source>
+      <trans-unit id="6975304808718826023" datatype="html">
+        <source> Publish Quizz as an Exam </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/publish-exam-page/publish-exam-page.html</context>
-          <context context-type="linenumber">16,20</context>
+          <context context-type="linenumber">12,15</context>
         </context-group>
         <note priority="1" from="description">Publish exam page heading</note>
       </trans-unit>
@@ -1811,7 +1911,7 @@
         <source>Invalid file format. Accepted formats: <x id="extensions" equiv-text="ACCEPTED_EXTENSIONS.join(&apos;, &apos;)"/>.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/upload-content-page/upload-content-page.ts</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="description">Invalid file format error</note>
       </trans-unit>
@@ -1819,9 +1919,17 @@
         <source>File is too large. Maximum size is 500MB.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/teacher/pages/upload-content-page/upload-content-page.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">16</context>
         </context-group>
         <note priority="1" from="description">File too large error</note>
+      </trans-unit>
+      <trans-unit id="4995666178549500973" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{ text() }}"/> <x id="START_TAG_NG_CONTENT" ctype="x-ng_content" equiv-text="&lt;ng-content&gt;"/><x id="CLOSE_TAG_NG_CONTENT" ctype="x-ng_content" equiv-text="&lt;/ng-content&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/atoms/text-span/text-span.html</context>
+          <context context-type="linenumber">8,10</context>
+        </context-group>
+        <note priority="1" from="description">{{ texti18() }}</note>
       </trans-unit>
       <trans-unit id="2674751543961259085" datatype="html">
         <source>Error code:</source>
@@ -1859,7 +1967,7 @@
         <source> other attempts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/molecules/grade-card/grade-card.html</context>
-          <context context-type="linenumber">15,17</context>
+          <context context-type="linenumber">13,15</context>
         </context-group>
         <note priority="1" from="description">Grade card other attempts count label</note>
       </trans-unit>
@@ -1867,7 +1975,7 @@
         <source> Score </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/molecules/grade-card/grade-card.html</context>
-          <context context-type="linenumber">30,31</context>
+          <context context-type="linenumber">29,30</context>
         </context-group>
         <note priority="1" from="description">Grade card score label</note>
       </trans-unit>
@@ -1875,9 +1983,26 @@
         <source> Other attempts </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/molecules/grade-card/grade-card.html</context>
-          <context context-type="linenumber">40,43</context>
+          <context context-type="linenumber">52,55</context>
         </context-group>
         <note priority="1" from="description">Grade card other attempts section heading</note>
+      </trans-unit>
+      <trans-unit id="718664953917016933" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{ label() }}"/>
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/molecules/text-input/text-input.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+        <note priority="1" from="description">{{ labeli18() }}</note>
+      </trans-unit>
+      <trans-unit id="187187500641108332" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ errorMessage() }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/molecules/text-input/text-input.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+        <note priority="1" from="description">{{ errori18() }}</note>
       </trans-unit>
       <trans-unit id="7228136119811576789" datatype="html">
         <source>User menu</source>
@@ -1983,7 +2108,7 @@
         </context-group>
         <note priority="1" from="description">Sidebar nav teacher exam bank label</note>
       </trans-unit>
-      <trans-unit id="1401467117049945528" datatype="html">
+      <trans-unit id="2989904485146463638" datatype="html">
         <source>Exam Attempts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/organisms/sidebar/sidebar.ts</context>

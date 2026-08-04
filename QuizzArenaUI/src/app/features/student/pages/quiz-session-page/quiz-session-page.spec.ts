@@ -2,26 +2,41 @@ import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
+import { ModalService } from '../../../../core/services/modal.service';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { StudentQuizSessionPage } from './quiz-session-page';
 
 describe('StudentQuizSessionPage', () => {
   let mockStudentQuizService: Partial<StudentQuizService>;
+  let mockModalService: Pick<ModalService, 'open'>;
 
   const mockQuizStart = {
     id: 'quiz-1', title: 'Quiz 1', subtitle: 'DDD', professorName: 'Prof A',
-    questionCount: 5, timeLimitMinutes: 10, questions: [],
+    questionCount: 5, timeLimitMinutes: 10,
+  };
+  const mockStartedQuiz = {
+    ...mockQuizStart,
+    matchId: 'quiz-1',
+    attemptId: 'attempt-1',
+    answeredQuestions: 0,
+    totalQuestions: 5,
+    questions: [],
   };
 
   beforeEach(() => {
     mockStudentQuizService = {
       getQuizStart: vi.fn().mockReturnValue(of(mockQuizStart)),
+      startQuizPlay: vi.fn().mockReturnValue(of(mockStartedQuiz)),
+    };
+    mockModalService = {
+      open: vi.fn().mockReturnValue({ afterClosed: Promise.resolve(true) }),
     };
 
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
         { provide: StudentQuizService, useValue: mockStudentQuizService },
+        { provide: ModalService, useValue: mockModalService },
         { provide: ActivatedRoute, useValue: { paramMap: of(new Map([['quizId', 'quiz-1']])) } },
         { provide: LOCALE_ID, useValue: 'en' },
       ],
@@ -51,7 +66,24 @@ describe('StudentQuizSessionPage', () => {
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
 
     await fixture.componentInstance.beginQuiz();
+    expect(mockModalService.open).toHaveBeenCalled();
+    expect(mockStudentQuizService.startQuizPlay).toHaveBeenCalledWith(mockQuizStart);
     expect(navigateSpy).toHaveBeenCalledWith(['/student/quizzes', 'quiz-1', 'questions']);
+  });
+
+  it('should not start quiz when confirmation is cancelled', async () => {
+    mockModalService.open = vi.fn().mockReturnValue({ afterClosed: Promise.resolve(false) });
+
+    const fixture = TestBed.createComponent(StudentQuizSessionPage);
+    fixture.detectChanges();
+
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+    await fixture.componentInstance.beginQuiz();
+
+    expect(mockStudentQuizService.startQuizPlay).not.toHaveBeenCalled();
+    expect(navigateSpy).not.toHaveBeenCalled();
   });
 
   it('should not navigate if quiz is not loaded on beginQuiz', () => {
@@ -64,6 +96,22 @@ describe('StudentQuizSessionPage', () => {
     const navigateSpy = vi.spyOn(router, 'navigate');
 
     fixture.componentInstance.beginQuiz();
+    expect(navigateSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not navigate when starting quiz fails', async () => {
+    mockStudentQuizService.startQuizPlay = vi.fn().mockReturnValue(
+      throwError(() => new Error('Start failed')),
+    );
+
+    const fixture = TestBed.createComponent(StudentQuizSessionPage);
+    fixture.detectChanges();
+
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+    await fixture.componentInstance.beginQuiz();
+
     expect(navigateSpy).not.toHaveBeenCalled();
   });
 
