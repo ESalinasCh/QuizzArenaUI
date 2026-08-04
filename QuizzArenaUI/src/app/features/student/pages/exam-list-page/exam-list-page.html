@@ -38,6 +38,11 @@
           />
         }
       </div>
+      @if (hasMoreRecent()) {
+        <div class="flex justify-center mt-2">
+          <qz-button variant="secondary" (click)="loadMoreExams()">Load More</qz-button>
+        </div>
+      }
 
     </div>
 

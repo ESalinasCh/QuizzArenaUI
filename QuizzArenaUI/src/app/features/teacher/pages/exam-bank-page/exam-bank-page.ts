@@ -11,6 +11,8 @@ import { QuizResponseAsExams } from '../../api/teacher-exam.contract';
 import { map, take } from 'rxjs';
 import { MatchesForQuizPipe } from "../../pipes/matches-for-quiz.pipe";
 import { Match } from '../../models/exam.model';
+import { UnpublishMatchModal } from '../../components/unpublish-match-modal/unpublish-match-modal';
+import { ModalService } from '../../../../core/services/modal.service';
 @Component({
   selector: 'qz-teacher-exam-bank-page',
   imports: [Button, Icon, ItemContainer, ExamBankItem, MatchesForQuizPipe],
@@ -19,6 +21,7 @@ import { Match } from '../../models/exam.model';
 export class TeacherExamBankPage {
   readonly #router = inject(Router);
   readonly #examService = inject(TeacherExamService);
+  readonly #modalService = inject(ModalService);
 
   readonly searchQuery = signal('');
   readonly debouncedSearchQuery = debounced(this.searchQuery, 300);
@@ -89,12 +92,28 @@ export class TeacherExamBankPage {
     await this.#router.navigate(['/teacher/exams/bank', quizId, 'matches']);
   }
 
-  unpublishMatch(match: Match): void {
-    this.#examService.unpublishMatch(match.id).pipe(take(1)).subscribe({
+  onUnpublishMatch(match: Match): void {
+    const exam = this.matchesResource.value()?.find(exam => exam.id === match.id);
+    if (exam) {
+      this.openUnpublishModal(exam);
+    }
+  }
+
+  openUnpublishModal(exam: Match) {
+    const ref = this.#modalService.open<UnpublishMatchModal, string>(UnpublishMatchModal, { match: exam }, { title: 'Unpublish Match' });
+    ref.afterClosed.then(id => {
+      if (id) {
+        this.unpublishMatch(id);
+      }
+    });
+  }
+
+  unpublishMatch(id: string): void {
+    this.#examService.unpublishMatch(id).pipe(take(1)).subscribe({
       next: () => {
         this.matchesResource.value.update(currentMatches => {
           const matches = currentMatches ?? [];
-          return matches.filter(m => m.id !== match.id);
+          return matches.filter(m => m.id !== id);
         });
       },
     });
