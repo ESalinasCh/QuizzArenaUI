@@ -17,9 +17,11 @@ export class ExamBankItem {
   readonly publish = output<void>();
   readonly checkOthers = output<void>();
   readonly unpublishMatch = output<Match>();
+  readonly viewQuestions = output<void>();
 
   protected readonly publishAriaLabel = $localize`:Exam bank publish button aria label:Publish exam`;
   protected readonly checkOthersAriaLabel = $localize`:Exam bank check others button aria label:Check others`;
+  protected readonly viewQuestionsAriaLabel = $localize`:Exam bank view questions aria label:View exam questions`;
 }
 
 

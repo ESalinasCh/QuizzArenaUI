@@ -22,6 +22,7 @@ export interface UpdateQuestionBody {
 export interface QuestionFilters {
     status?: 'Draft' | 'Verified' | 'Disapproved';
     processingJobsIds?: string[];
+    questionIds?: string[];
     page?: number;
     pageSize?: number;
 }
@@ -39,8 +40,13 @@ export class QuestionBankService {
         params = params
             .set("Page", (filters?.page || 0).toString())
             .set("PageSize", (filters?.pageSize || pageSize).toString())
-            .set("ProcessingJobIds", filters?.processingJobsIds?.join(';') || "")
             .set("Status", filters?.status || 'Verified');
+        filters?.processingJobsIds?.forEach(id => {
+            params = params.append("ProcessingJobIds", id);
+        });
+        filters?.questionIds?.forEach(id => {
+            params = params.append("QuestionIds", id);
+        });
         return this.#http.get<Question[]>(`${this.#api}/api/v1/questions`, { params });
     }
 

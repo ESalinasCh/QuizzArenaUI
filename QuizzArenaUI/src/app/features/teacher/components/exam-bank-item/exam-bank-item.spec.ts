@@ -57,6 +57,27 @@ describe('ExamBankItem', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('should emit viewQuestions when the card body is clicked', () => {
+    const spy = vi.spyOn(component.viewQuestions, 'emit');
+    fixture.detectChanges();
+
+    const card: HTMLElement = fixture.nativeElement.querySelector('[role="button"]');
+    card.click();
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should not emit viewQuestions when the publish button is clicked', () => {
+    const spy = vi.spyOn(component.viewQuestions, 'emit');
+    fixture.detectChanges();
+
+    const buttons = fixture.nativeElement.querySelectorAll('button');
+    const publishBtn = Array.from<HTMLButtonElement>(buttons).find(b => b.textContent?.includes('Publish'));
+    publishBtn?.click();
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('should render matches and emit unpublishMatch when unpublish button is clicked', () => {
     const mockMatches: Match[] = [
       { id: 'm1', title: 'M1', courseName: 'Course 101', questionCount: 5, professorName: 'Prof', duration: 45, status: 'Active' },

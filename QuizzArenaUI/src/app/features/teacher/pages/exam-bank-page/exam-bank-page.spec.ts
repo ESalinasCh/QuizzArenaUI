@@ -79,6 +79,18 @@ describe('TeacherExamBankPage', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['/teacher/exams/bank', 'exam-draft-1', 'matches']);
   });
 
+  it('should navigate to questions view with the quiz in router state on viewQuestions', async () => {
+    const fixture = TestBed.createComponent(TeacherExamBankPage);
+    fixture.detectChanges();
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+    await fixture.componentInstance.viewQuestions(MOCK_QUIZZES[0]);
+    expect(navigateSpy).toHaveBeenCalledWith(
+      ['/teacher/exams/bank', 'exam-draft-1', 'questions'],
+      { state: { quiz: MOCK_QUIZZES[0] } },
+    );
+  });
+
   it('should increment pageForQuizAsExams on loadMoreQuizzesAsExams', () => {
     const fixture = TestBed.createComponent(TeacherExamBankPage);
     fixture.detectChanges();

@@ -1,5 +1,6 @@
 <div
-    class="flex items-center justify-between rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3 gap-6">
+    class="flex flex-col rounded-xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border px-4 py-3 gap-3">
+    <div class="flex items-center justify-between gap-6">
     <div class="flex flex-col gap-2">
         <qz-text-span [bold]="'none'" [additionalCssClasses]="'block flex items-center gap-1'">
             @switch (question().status) {
@@ -48,12 +49,14 @@
                 <qz-item-container [clickable]="true" [additionalClasses]="'pr-8'" (click)="openInfoModal()">
                     Information
                 </qz-item-container>
+                @if (!readOnly()) {
                 <qz-item-container [clickable]="true" (click)="openEditModal()">
                     Edit
                 </qz-item-container>
                 <qz-item-container [clickable]="true" (click)="openDeleteModal()">
                     Delete
                 </qz-item-container>
+                }
             </qz-clickable-dropbox>
             }
         </div>
@@ -62,6 +65,7 @@
         <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openInfoModal()">
             <qz-icon [name]="'question'"></qz-icon>
         </qz-button>
+        @if (!readOnly()) {
         <qz-button size="small" variant="secondary" [fullWidth]="true" (click)="openEditModal()">
             <qz-icon [name]="'edit'"></qz-icon>
         </qz-button>
@@ -69,4 +73,25 @@
             <qz-icon [name]="'trash'"></qz-icon>
         </qz-button>
         }
+        }
     </div>
+    </div>
+
+    @if (question().options && question().options!.length > 0) {
+    <div class="flex flex-col gap-1 border-t border-light-border dark:border-dark-border pt-3">
+        @for (option of question().options; track option.id ?? option.position) {
+        <div class="flex items-center gap-2">
+            @if (option.isCorrect) {
+            <qz-icon [name]="'check'" class="block !size-4 shrink-0 text-green-600" />
+            } @else {
+            <div class="size-4 shrink-0"></div>
+            }
+            <qz-text-span [bold]="option.isCorrect ? 'semibold' : 'none'"
+                [additionalCssClasses]="option.isCorrect ? 'text-green-600' : ''">
+                {{ option.description }}
+            </qz-text-span>
+        </div>
+        }
+    </div>
+    }
+</div>

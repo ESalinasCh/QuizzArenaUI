@@ -21,6 +21,7 @@ import { ModalService } from '../../../../core/services/modal.service';
 export class AdminQuestionCard {
     readonly #modalService = inject(ModalService);
     question = input.required<Question>();
+    readOnly = input(false);
     newQuestion = output<Question>()
     deleteQuestionById = output<string>();
 
