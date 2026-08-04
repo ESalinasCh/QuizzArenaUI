@@ -1,18 +1,30 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { from, switchMap } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const oAuthService = inject(OAuthService);
-  const token = oAuthService.getAccessToken();
+  const authService = inject(AuthService);
 
-  if (!token) {
+  if (isTokenRequest(req.url)) {
     return next(req);
   }
 
-  const authReq = req.clone({
-    setHeaders: { Authorization: `Bearer ${token}` },
-  });
+  return from(authService.getValidAccessToken()).pipe(
+    switchMap(token => {
+      if (!token) {
+        return next(req);
+      }
 
-  return next(authReq);
+      const authReq = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
+
+      return next(authReq);
+    }),
+  );
 };
+
+function isTokenRequest(url: string): boolean {
+  return url.includes('/protocol/openid-connect/token');
+}

@@ -12,6 +12,7 @@ export class AuthService {
 
   readonly #authState = signal<AuthState>({ isAuthenticated: false });
   readonly #jwtHelper = inject(JwtHelperService);
+  #refreshTokenPromise: Promise<string | null> | undefined;
   readonly currentUser: Signal<User | undefined> = computed(() => {
     const state = this.#authState();
     return state.isAuthenticated ? state.user : undefined;
@@ -24,6 +25,7 @@ export class AuthService {
       .then(() => {
         if (this.#oAuthService.hasValidAccessToken()) {
           this.#setUserFromToken();
+          this.#oAuthService.setupAutomaticSilentRefresh();
         }
         return true;
       })
@@ -58,6 +60,36 @@ export class AuthService {
     return state.isAuthenticated ? state.user.roles.includes(role) : false;
   }
 
+  async getValidAccessToken(): Promise<string | null> {
+    if (this.#oAuthService.hasValidAccessToken()) {
+      return this.#getAccessToken();
+    }
+
+    if (!this.#oAuthService.getRefreshToken()) {
+      return null;
+    }
+
+    return this.#refreshAccessToken();
+  }
+
+  #refreshAccessToken(): Promise<string | null> {
+    this.#refreshTokenPromise ??= this.#oAuthService
+      .refreshToken()
+      .then(() => {
+        this.#setUserFromToken();
+        return this.#getAccessToken();
+      })
+      .catch(() => {
+        this.#authState.set({ isAuthenticated: false });
+        return null;
+      })
+      .finally(() => {
+        this.#refreshTokenPromise = undefined;
+      });
+
+    return this.#refreshTokenPromise;
+  }
+
   #setUserFromToken(): void {
     const claims = this.#oAuthService.getIdentityClaims() as KeycloakTokenClaims | null;
     const accessTokenClaims = this.#decodeAccessToken();
@@ -84,7 +116,7 @@ export class AuthService {
   }
 
   #decodeAccessToken(): KeycloakAccessTokenClaims | null {
-    const token = this.#oAuthService.getAccessToken();
+    const token = this.#getAccessToken();
 
     if (!token) {
       return null;
@@ -97,5 +129,9 @@ export class AuthService {
     } catch {
       return null;
     }
+  }
+
+  #getAccessToken(): string | null {
+    return this.#oAuthService.getAccessToken() || null;
   }
 }

@@ -4,22 +4,22 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { authInterceptor } from './auth.interceptor';
+import { AuthService } from '../services/auth.service';
 
 describe('authInterceptor', () => {
   let httpClient: HttpClient;
   let httpTesting: HttpTestingController;
-  let mockOAuthService: { getAccessToken: ReturnType<typeof vi.fn> };
+  let mockAuthService: { getValidAccessToken: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
-    mockOAuthService = { getAccessToken: vi.fn() };
+    mockAuthService = { getValidAccessToken: vi.fn() };
 
     TestBed.configureTestingModule({
       providers: [
         provideHttpClient(withInterceptors([authInterceptor])),
         provideHttpClientTesting(),
-        { provide: OAuthService, useValue: mockOAuthService },
+        { provide: AuthService, useValue: mockAuthService },
       ],
     });
 
@@ -31,37 +31,41 @@ describe('authInterceptor', () => {
     httpTesting.verify();
   });
 
-  it('should add Authorization Bearer header when access token exists', () => {
-    mockOAuthService.getAccessToken.mockReturnValue('keycloak-token-123');
+  it('should add Authorization Bearer header when access token exists', async () => {
+    mockAuthService.getValidAccessToken.mockResolvedValue('keycloak-token-123');
     httpClient.get('/api/test').subscribe();
+    await Promise.resolve();
     const req = httpTesting.expectOne('/api/test');
     expect(req.request.headers.get('Authorization')).toBe('Bearer keycloak-token-123');
     req.flush({});
   });
 
-  it('should not add Authorization header when there is no access token', () => {
-    mockOAuthService.getAccessToken.mockReturnValue('');
+  it('should not add Authorization header when there is no access token', async () => {
+    mockAuthService.getValidAccessToken.mockResolvedValue(null);
     httpClient.get('/api/test').subscribe();
+    await Promise.resolve();
     const req = httpTesting.expectOne('/api/test');
     expect(req.request.headers.has('Authorization')).toBe(false);
     req.flush({});
   });
 
-  it('should not add Authorization header when token is null', () => {
-    mockOAuthService.getAccessToken.mockReturnValue(null);
-    httpClient.get('/api/test').subscribe();
-    const req = httpTesting.expectOne('/api/test');
-    expect(req.request.headers.has('Authorization')).toBe(false);
-    req.flush({});
-  });
-
-  it('should pass request through unchanged when no token', () => {
-    mockOAuthService.getAccessToken.mockReturnValue(null);
+  it('should pass request through unchanged when no token', async () => {
+    mockAuthService.getValidAccessToken.mockResolvedValue(null);
     httpClient.get('/api/test', {
       headers: { 'X-Custom': 'value' },
     }).subscribe();
+    await Promise.resolve();
     const req = httpTesting.expectOne('/api/test');
     expect(req.request.headers.get('X-Custom')).toBe('value');
+    expect(req.request.headers.has('Authorization')).toBe(false);
+    req.flush({});
+  });
+
+  it('should not request a valid token for Keycloak token requests', () => {
+    httpClient.post('/realms/master/protocol/openid-connect/token', {}).subscribe();
+
+    const req = httpTesting.expectOne('/realms/master/protocol/openid-connect/token');
+    expect(mockAuthService.getValidAccessToken).not.toHaveBeenCalled();
     expect(req.request.headers.has('Authorization')).toBe(false);
     req.flush({});
   });

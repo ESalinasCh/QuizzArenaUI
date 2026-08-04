@@ -22,6 +22,9 @@ describe('AuthService', () => {
       hasValidAccessToken: vi.fn(),
       getIdentityClaims: vi.fn(),
       getAccessToken: vi.fn(),
+      getRefreshToken: vi.fn(),
+      refreshToken: vi.fn(),
+      setupAutomaticSilentRefresh: vi.fn(),
       initCodeFlow: vi.fn(),
       logOut: vi.fn(),
       configure: vi.fn(),
@@ -206,6 +209,7 @@ describe('AuthService', () => {
       await service.initAuth();
 
       expect(service.isAuthenticated()).toBe(true);
+      expect(mockOAuthService.setupAutomaticSilentRefresh).toHaveBeenCalled();
       expect(service.currentUser()).toEqual({
         id: 'user-1',
         username: 'johndoe',
@@ -231,6 +235,88 @@ describe('AuthService', () => {
 
       expect(result).toBe(true);
       expect(service.isAuthenticated()).toBe(false);
+    });
+  });
+
+  describe('getValidAccessToken', () => {
+    it('should return the current access token when it is still valid', async () => {
+      (mockOAuthService.hasValidAccessToken as ReturnType<typeof vi.fn>).mockReturnValue(true);
+      (mockOAuthService.getAccessToken as ReturnType<typeof vi.fn>).mockReturnValue('access-token');
+
+      const token = await service.getValidAccessToken();
+
+      expect(token).toBe('access-token');
+      expect(mockOAuthService.refreshToken).not.toHaveBeenCalled();
+    });
+
+    it('should refresh and return a new access token when the current token is expired', async () => {
+      const refreshedToken = createMockToken({
+        sub: 'user-1',
+        preferred_username: 'johndoe',
+        email: 'john@test.com',
+        name: 'John Doe',
+        roles: ['student'],
+      });
+
+      (mockOAuthService.hasValidAccessToken as ReturnType<typeof vi.fn>).mockReturnValue(false);
+      (mockOAuthService.getRefreshToken as ReturnType<typeof vi.fn>).mockReturnValue('refresh-token');
+      (mockOAuthService.refreshToken as ReturnType<typeof vi.fn>).mockResolvedValue({});
+      (mockOAuthService.getIdentityClaims as ReturnType<typeof vi.fn>).mockReturnValue({
+        sub: 'user-1',
+        preferred_username: 'johndoe',
+        email: 'john@test.com',
+        name: 'John Doe',
+      });
+      (mockOAuthService.getAccessToken as ReturnType<typeof vi.fn>).mockReturnValue(refreshedToken);
+
+      const token = await service.getValidAccessToken();
+
+      expect(mockOAuthService.refreshToken).toHaveBeenCalled();
+      expect(token).toBe(refreshedToken);
+      expect(service.isAuthenticated()).toBe(true);
+    });
+
+    it('should return null when there is no refresh token', async () => {
+      (mockOAuthService.hasValidAccessToken as ReturnType<typeof vi.fn>).mockReturnValue(false);
+      (mockOAuthService.getRefreshToken as ReturnType<typeof vi.fn>).mockReturnValue('');
+
+      const token = await service.getValidAccessToken();
+
+      expect(token).toBeNull();
+      expect(mockOAuthService.refreshToken).not.toHaveBeenCalled();
+    });
+
+    it('should return null and reset auth state when token refresh fails', async () => {
+      (mockOAuthService.hasValidAccessToken as ReturnType<typeof vi.fn>).mockReturnValue(false);
+      (mockOAuthService.getRefreshToken as ReturnType<typeof vi.fn>).mockReturnValue('refresh-token');
+      (mockOAuthService.refreshToken as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Refresh failed'));
+
+      const token = await service.getValidAccessToken();
+
+      expect(token).toBeNull();
+      expect(service.isAuthenticated()).toBe(false);
+    });
+
+    it('should reuse the same refresh promise for concurrent refresh requests', async () => {
+      (mockOAuthService.hasValidAccessToken as ReturnType<typeof vi.fn>).mockReturnValue(false);
+      (mockOAuthService.getRefreshToken as ReturnType<typeof vi.fn>).mockReturnValue('refresh-token');
+      (mockOAuthService.refreshToken as ReturnType<typeof vi.fn>).mockResolvedValue({});
+      (mockOAuthService.getIdentityClaims as ReturnType<typeof vi.fn>).mockReturnValue({
+        sub: 'user-1',
+        preferred_username: 'johndoe',
+        email: 'john@test.com',
+        name: 'John Doe',
+      });
+      (mockOAuthService.getAccessToken as ReturnType<typeof vi.fn>).mockReturnValue('new-token');
+
+      const [firstToken, secondToken] = await Promise.all([
+        service.getValidAccessToken(),
+        service.getValidAccessToken(),
+      ]);
+
+      expect(mockOAuthService.refreshToken).toHaveBeenCalledTimes(1);
+      expect(firstToken).toBe('new-token');
+      expect(secondToken).toBe('new-token');
     });
   });
 });
