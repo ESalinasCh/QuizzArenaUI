@@ -10,10 +10,6 @@ export class MatchesForQuizPipe implements PipeTransform {
     if (!matches || !quiz) {
       return [];
     }
-    return matches.filter(match => {
-      if (match.quizId && match.quizId === quiz.id) return true;
-      if (match.title && quiz.title && match.title.toLowerCase().startsWith(quiz.title.toLowerCase())) return true;
-      return false;
-    });
+    return matches.filter(match => match.quizId === quiz.id);
   }
 }

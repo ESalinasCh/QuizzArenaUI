@@ -56,9 +56,14 @@ describe('MatchesForQuizPipe', () => {
     expect(pipe.transform(mockQuiz, undefined)).toEqual([]);
   });
 
-  it('should filter matches by quizId or title prefix', () => {
+  it('should filter matches by exact quizId only', () => {
     const result = pipe.transform(mockQuiz, mockMatches);
-    expect(result.length).toBe(2);
-    expect(result.map(m => m.id)).toEqual(['m1', 'm2']);
+    expect(result.length).toBe(1);
+    expect(result.map(m => m.id)).toEqual(['m1']);
+  });
+
+  it('should not match a match with no quizId, even if its title looks similar', () => {
+    const result = pipe.transform(mockQuiz, mockMatches);
+    expect(result.find(m => m.id === 'm2')).toBeUndefined();
   });
 });
