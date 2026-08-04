@@ -2,7 +2,9 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, EMPTY, filter, firstValueFrom, map, of, switchMap } from 'rxjs';
+import { ModalService } from '../../../../core/services/modal.service';
 import { Icon } from '../../../../shared/atoms/icon/icon';
+import { AttemptStartDialog } from '../../../../shared/molecules/attempt-start-dialog/attempt-start-dialog';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
 @Component({
@@ -15,9 +17,14 @@ export class StudentQuizSessionPage {
   readonly #route = inject(ActivatedRoute);
   readonly #router = inject(Router);
   readonly #studentQuizService = inject(StudentQuizService);
+  readonly #modalService = inject(ModalService);
 
   readonly quizLoadFailed = signal(false);
   readonly isStarting = signal(false);
+  readonly startConfirmationTitle = $localize`:Student quiz start confirmation title:Start quiz`;
+  readonly startConfirmationMessage = $localize`:Student quiz start confirmation message:You are about to start this quiz. Make sure you are ready before continuing.`;
+  readonly startConfirmationCancelLabel = $localize`:Student quiz start confirmation cancel:Cancel`;
+  readonly startConfirmationActionLabel = $localize`:Student quiz start confirmation action:Start`;
 
   readonly quiz = toSignal(
     this.#route.paramMap.pipe(
@@ -56,6 +63,12 @@ export class StudentQuizSessionPage {
       return;
     }
 
+    const confirmed = await this.#confirmStart();
+
+    if (!confirmed) {
+      return;
+    }
+
     this.isStarting.set(true);
 
     const quizStart = await firstValueFrom(
@@ -71,5 +84,23 @@ export class StudentQuizSessionPage {
     }
 
     await this.#router.navigate(['/student/quizzes', quizStart.id, 'questions']);
+  }
+
+  async #confirmStart(): Promise<boolean> {
+    const modalRef = this.#modalService.open<AttemptStartDialog, boolean>(
+      AttemptStartDialog,
+      {
+        message: this.startConfirmationMessage,
+        cancelLabel: this.startConfirmationCancelLabel,
+        confirmLabel: this.startConfirmationActionLabel,
+      },
+      {
+        title: this.startConfirmationTitle,
+        closeOnOverlayClick: false,
+        width: 'min(90vw, 420px)',
+      },
+    );
+
+    return (await modalRef.afterClosed) ?? false;
   }
 }

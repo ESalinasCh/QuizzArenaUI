@@ -232,6 +232,26 @@
         <target>Empezar examen</target>
         <note priority="1" from="description">Student exam start button</note>
       </trans-unit>
+      <trans-unit id="5697829689557235836" datatype="html">
+        <source>You are about to start this exam. Once you begin, your progress will be tracked as you answer each question.</source>
+        <target>Estas por iniciar este examen. Una vez que comiences, tu progreso se registrara mientras respondes cada pregunta.</target>
+        <note priority="1" from="description">Student exam start confirmation message</note>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <target>Cancelar</target>
+        <note priority="1" from="description">Student exam start confirmation cancel</note>
+      </trans-unit>
+      <trans-unit id="4459786067389143650" datatype="html">
+        <source>Start quiz</source>
+        <target>Empezar quiz</target>
+        <note priority="1" from="description">Student quiz start confirmation title</note>
+      </trans-unit>
+      <trans-unit id="3674885568452389400" datatype="html">
+        <source>You are about to start this quiz. Make sure you are ready before continuing.</source>
+        <target>Estas por iniciar este quiz. Asegurate de estar listo antes de continuar.</target>
+        <note priority="1" from="description">Student quiz start confirmation message</note>
+      </trans-unit>
       <trans-unit id="4169589529068600715" datatype="html">
         <source> Read each question carefully before continuing. This exam may include single choice, multiple choice, and true or false questions. </source>
         <target> Lee cada pregunta cuidadosamente antes de continuar. Este examen puede incluir preguntas de seleccion unica, seleccion multiple y verdadero o falso. </target>

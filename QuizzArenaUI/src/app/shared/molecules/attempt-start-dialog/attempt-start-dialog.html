@@ -1,0 +1,14 @@
+<div class="flex flex-col gap-6 px-6 py-7 text-center">
+  <p class="text-base font-medium leading-relaxed text-light-text-secondary dark:text-dark-text-secondary">
+    {{ message() }}
+  </p>
+
+  <div class="grid grid-cols-1 gap-3">
+    <qz-button size="large" [fullWidth]="true" (click)="confirm()">
+      {{ confirmLabel() }}
+    </qz-button>
+    <qz-button variant="secondary" size="large" [fullWidth]="true" (click)="cancel()">
+      {{ cancelLabel() }}
+    </qz-button>
+  </div>
+</div>
