@@ -187,6 +187,11 @@
         <target>Volver a quizzes</target>
         <note priority="1" from="description">Student quiz start fallback action</note>
       </trans-unit>
+      <trans-unit id="3727891703060345358" datatype="html">
+        <source> Read each question carefully before continuing. This quiz may include single choice, multiple choice, and true or false questions. </source>
+        <target> Lee cada pregunta cuidadosamente antes de continuar. Este quiz puede incluir preguntas de seleccion unica, seleccion multiple y verdadero o falso. </target>
+        <note priority="1" from="description">Student quiz start instructions</note>
+      </trans-unit>
       <trans-unit id="8762257556328863715" datatype="html">
         <source>QuizArena illustration</source>
         <target>QuizArena ilustración</target>
@@ -226,6 +231,11 @@
         <source>Start exam</source>
         <target>Empezar examen</target>
         <note priority="1" from="description">Student exam start button</note>
+      </trans-unit>
+      <trans-unit id="4169589529068600715" datatype="html">
+        <source> Read each question carefully before continuing. This exam may include single choice, multiple choice, and true or false questions. </source>
+        <target> Lee cada pregunta cuidadosamente antes de continuar. Este examen puede incluir preguntas de seleccion unica, seleccion multiple y verdadero o falso. </target>
+        <note priority="1" from="description">Student exam start instructions</note>
       </trans-unit>
       <trans-unit id="5267725781322904219" datatype="html">
         <source>Back to exam start</source>

@@ -4,6 +4,7 @@ import {
   mapAvailableMatchResponse,
   mapCompleteExamAttemptResponse,
   mapMatchAttemptDetailResponse,
+  mapMatchSessionInfoResponse,
   mapMatchAttemptSummaryResponse,
   mapQuizStartResponse,
   mapStudentDashboardResponse,
@@ -56,6 +57,27 @@ describe('student-quiz.mapper', () => {
 
       const result = mapMatchAttemptSummaryResponse(response);
       expect(result.status).toBe('warning');
+    });
+  });
+
+  describe('mapMatchSessionInfoResponse', () => {
+    it('should map match metadata for the start page', () => {
+      const response: AvailableMatchResponse = {
+        id: 'quiz-1', title: 'Quiz 1', courseName: 'DDD',
+        createdAt: '2026-06-20', questionCount: 5, professorName: 'Prof A', duration: 10,
+        mode: 'Solo', attemptsAmount: 10, attemptsUsed: 2, hasActiveAttempt: true,
+      };
+
+      const result = mapMatchSessionInfoResponse(response);
+
+      expect(result).toEqual({
+        id: 'quiz-1',
+        title: 'Quiz 1',
+        subtitle: 'DDD',
+        professorName: 'Prof A',
+        questionCount: 5,
+        timeLimitMinutes: 10,
+      });
     });
   });
 

@@ -10,12 +10,21 @@ describe('StudentQuizSessionPage', () => {
 
   const mockQuizStart = {
     id: 'quiz-1', title: 'Quiz 1', subtitle: 'DDD', professorName: 'Prof A',
-    questionCount: 5, timeLimitMinutes: 10, questions: [],
+    questionCount: 5, timeLimitMinutes: 10,
+  };
+  const mockStartedQuiz = {
+    ...mockQuizStart,
+    matchId: 'quiz-1',
+    attemptId: 'attempt-1',
+    answeredQuestions: 0,
+    totalQuestions: 5,
+    questions: [],
   };
 
   beforeEach(() => {
     mockStudentQuizService = {
       getQuizStart: vi.fn().mockReturnValue(of(mockQuizStart)),
+      startQuizPlay: vi.fn().mockReturnValue(of(mockStartedQuiz)),
     };
 
     TestBed.configureTestingModule({
@@ -51,6 +60,7 @@ describe('StudentQuizSessionPage', () => {
     const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
 
     await fixture.componentInstance.beginQuiz();
+    expect(mockStudentQuizService.startQuizPlay).toHaveBeenCalledWith(mockQuizStart);
     expect(navigateSpy).toHaveBeenCalledWith(['/student/quizzes', 'quiz-1', 'questions']);
   });
 
@@ -64,6 +74,22 @@ describe('StudentQuizSessionPage', () => {
     const navigateSpy = vi.spyOn(router, 'navigate');
 
     fixture.componentInstance.beginQuiz();
+    expect(navigateSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not navigate when starting quiz fails', async () => {
+    mockStudentQuizService.startQuizPlay = vi.fn().mockReturnValue(
+      throwError(() => new Error('Start failed')),
+    );
+
+    const fixture = TestBed.createComponent(StudentQuizSessionPage);
+    fixture.detectChanges();
+
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+    await fixture.componentInstance.beginQuiz();
+
     expect(navigateSpy).not.toHaveBeenCalled();
   });
 

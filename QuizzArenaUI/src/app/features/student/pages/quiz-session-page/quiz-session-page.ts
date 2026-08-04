@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, EMPTY, filter, map, switchMap } from 'rxjs';
+import { catchError, EMPTY, filter, firstValueFrom, map, of, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
@@ -17,6 +17,7 @@ export class StudentQuizSessionPage {
   readonly #studentQuizService = inject(StudentQuizService);
 
   readonly quizLoadFailed = signal(false);
+  readonly isStarting = signal(false);
 
   readonly quiz = toSignal(
     this.#route.paramMap.pipe(
@@ -49,12 +50,26 @@ export class StudentQuizSessionPage {
   }
 
   async beginQuiz(): Promise<void> {
-    const quizId = this.quiz()?.id;
+    const quiz = this.quiz();
 
-    if (!quizId) {
+    if (!quiz || this.isStarting()) {
       return;
     }
 
-    await this.#router.navigate(['/student/quizzes', quizId, 'questions']);
+    this.isStarting.set(true);
+
+    const quizStart = await firstValueFrom(
+      this.#studentQuizService.startQuizPlay(quiz).pipe(
+        catchError(() => of(undefined)),
+      ),
+    );
+
+    this.isStarting.set(false);
+
+    if (!quizStart) {
+      return;
+    }
+
+    await this.#router.navigate(['/student/quizzes', quizStart.id, 'questions']);
   }
 }

@@ -69,46 +69,19 @@ describe('StudentQuizService', () => {
       questionCount: 2, professorName: 'Prof A', duration: 10,
       mode: 'Solo', attemptsAmount: 3, attemptsUsed: 1, hasActiveAttempt: false,
     };
-    const playResponse: CreatePlayResponse = {
-      matchId: 'quiz-1', matchAttemptId: 'attempt-1',
-      questions: [
-        { id: 'q1', statement: 'Question 1', options: [{ id: 'q1-a', label: 'A' }, { id: 'q1-b', label: 'B' }] },
-        { id: 'q2', statement: 'Question 2', options: [{ id: 'q2-a', label: 'A' }, { id: 'q2-b', label: 'B' }] },
-      ],
-      totalQuestions: 2, answeredQuestions: 0
-    };
 
-    it('should fetch match and create play', () => {
+    it('should fetch quiz metadata without creating a play', () => {
       service.getQuizStart('quiz-1').subscribe(quizStart => {
         expect(quizStart.title).toBe('Quiz 1');
-        expect(quizStart.attemptId).toBe('attempt-1');
-        expect(quizStart.questions.length).toBe(2);
+        expect(quizStart.questionCount).toBe(2);
+        expect(quizStart.timeLimitMinutes).toBe(10);
       });
 
       const matchReq = httpTesting.expectOne(quizStartMatchesUrl);
+      expect(matchReq.request.method).toBe('GET');
       matchReq.flush([match]);
 
-      const playReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
-      expect(playReq.request.method).toBe('POST');
-      expect(playReq.request.body).toEqual({ matchId: 'quiz-1' });
-      playReq.flush(playResponse);
-    });
-
-    it('should create a new play for each quiz start request', () => {
-      service.getQuizStart('quiz-1').subscribe();
-      service.getQuizStart('quiz-1').subscribe();
-
-      const matchReqs = httpTesting.match(quizStartMatchesUrl);
-      expect(matchReqs.length).toBe(2);
-      matchReqs.forEach(req => req.flush([match]));
-
-      const playReqs = httpTesting.match(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
-      expect(playReqs.length).toBe(2);
-      playReqs.forEach(req => {
-        expect(req.request.method).toBe('POST');
-        expect(req.request.body).toEqual({ matchId: 'quiz-1' });
-        req.flush(playResponse);
-      });
+      httpTesting.expectNone(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
     });
 
     it('should throw when match not found', () => {
@@ -119,7 +92,52 @@ describe('StudentQuizService', () => {
       const matchReq = httpTesting.expectOne(quizStartMatchesUrl);
       matchReq.flush([match]);
 
-      httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`).flush(playResponse);
+      httpTesting.expectNone(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
+    });
+  });
+
+  describe('startQuizPlay', () => {
+    const quiz = {
+      id: 'quiz-1',
+      title: 'Quiz 1',
+      subtitle: 'DDD',
+      professorName: 'Prof A',
+      questionCount: 2,
+      timeLimitMinutes: 10,
+    };
+    const playResponse: CreatePlayResponse = {
+      matchId: 'quiz-1', matchAttemptId: 'attempt-1',
+      questions: [
+        { id: 'q1', statement: 'Question 1', options: [{ id: 'q1-a', label: 'A' }, { id: 'q1-b', label: 'B' }] },
+        { id: 'q2', statement: 'Question 2', options: [{ id: 'q2-a', label: 'A' }, { id: 'q2-b', label: 'B' }] },
+      ],
+      totalQuestions: 2, answeredQuestions: 0
+    };
+
+    it('should create play from loaded quiz metadata', () => {
+      service.startQuizPlay(quiz).subscribe(quizStart => {
+        expect(quizStart.title).toBe('Quiz 1');
+        expect(quizStart.attemptId).toBe('attempt-1');
+        expect(quizStart.questions.length).toBe(2);
+      });
+
+      const playReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
+      expect(playReq.request.method).toBe('POST');
+      expect(playReq.request.body).toEqual({ matchId: 'quiz-1' });
+      playReq.flush(playResponse);
+    });
+
+    it('should create a new play for each quiz start request', () => {
+      service.startQuizPlay(quiz).subscribe();
+      service.startQuizPlay(quiz).subscribe();
+
+      const playReqs = httpTesting.match(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.plays}`);
+      expect(playReqs.length).toBe(2);
+      playReqs.forEach(req => {
+        expect(req.request.method).toBe('POST');
+        expect(req.request.body).toEqual({ matchId: 'quiz-1' });
+        req.flush(playResponse);
+      });
     });
   });
 

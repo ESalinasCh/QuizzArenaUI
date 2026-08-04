@@ -14,6 +14,7 @@ import {
   RecentQuizStatus,
   StudentQuizDashboard,
   StudentExamResult,
+  StudentMatchSessionInfo,
   StudentQuizReview,
   StudentQuizResultSummary,
   StudentQuizStart,
@@ -58,6 +59,24 @@ export function mapAvailableMatchResponse({
   };
 }
 
+export function mapMatchSessionInfoResponse({
+  id,
+  title,
+  courseName,
+  professorName,
+  questionCount,
+  duration,
+}: AvailableMatchResponse): StudentMatchSessionInfo {
+  return {
+    id,
+    title,
+    subtitle: courseName,
+    professorName,
+    questionCount,
+    timeLimitMinutes: duration,
+  };
+}
+
 export function mapMatchAttemptSummaryResponse({ id, title, score, completedAt, status }: MatchAttemptSummaryResponse): RecentQuiz {
   return {
     id,
@@ -98,6 +117,30 @@ export function mapQuizStartResponse(
     professorName,
     questionCount,
     timeLimitMinutes: duration,
+    answeredQuestions,
+    totalQuestions,
+    questions: questions.map(({ id, statement, questionType, options }) => ({
+      id,
+      statement,
+      questionType: questionType ?? DEFAULT_QUESTION_TYPE,
+      options: options.map(({ id, label }) => ({ id, label })),
+    })),
+  };
+}
+
+export function mapQuizStartFromSessionInfoResponse(
+  { id, title, subtitle, professorName, questionCount, timeLimitMinutes }: StudentMatchSessionInfo,
+  { matchId, matchAttemptId: attemptId, questions, totalQuestions, answeredQuestions }: CreatePlayResponse,
+): StudentQuizStart {
+  return {
+    id,
+    matchId,
+    attemptId,
+    title,
+    subtitle,
+    professorName,
+    questionCount,
+    timeLimitMinutes,
     answeredQuestions,
     totalQuestions,
     questions: questions.map(({ id, statement, questionType, options }) => ({

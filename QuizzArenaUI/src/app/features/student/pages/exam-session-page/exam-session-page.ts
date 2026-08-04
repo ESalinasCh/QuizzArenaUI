@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, EMPTY, filter, map, switchMap } from 'rxjs';
+import { catchError, EMPTY, filter, firstValueFrom, map, of, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StudentQuizService } from '../../services/student-quiz.service';
 import { ThemeService } from '../../../../core/services/theme.service';
@@ -19,6 +19,7 @@ export class StudentExamSessionPage {
   currentTheme = this.#themeService.currentTheme;
 
   readonly examLoadFailed = signal(false);
+  readonly isStarting = signal(false);
 
   readonly exam = toSignal(
     this.#route.paramMap.pipe(
@@ -51,12 +52,26 @@ export class StudentExamSessionPage {
   }
 
   async beginExam(): Promise<void> {
-    const examId = this.exam()?.id;
+    const exam = this.exam();
 
-    if (!examId) {
+    if (!exam || this.isStarting()) {
       return;
     }
 
-    await this.#router.navigate(['/student/exams', examId, 'questions']);
+    this.isStarting.set(true);
+
+    const examStart = await firstValueFrom(
+      this.#studentQuizService.startExamPlay(exam).pipe(
+        catchError(() => of(undefined)),
+      ),
+    );
+
+    this.isStarting.set(false);
+
+    if (!examStart) {
+      return;
+    }
+
+    await this.#router.navigate(['/student/exams', examStart.id, 'questions']);
   }
 }

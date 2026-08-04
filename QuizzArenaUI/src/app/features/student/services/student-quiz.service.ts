@@ -17,12 +17,13 @@ import {
   mapAttemptHistoryCardResponse,
   mapCompleteExamAttemptResponse,
   mapMatchAttemptDetailResponse,
-  mapQuizStartResponse,
   mapStudentDashboardResponse,
   mapStudentMatchesResponse,
   mapSubmitMatchAttemptResponse,
   mapAvailableMatchResponse,
   mapMatchAttemptSummaryResponse,
+  mapMatchSessionInfoResponse,
+  mapQuizStartFromSessionInfoResponse,
 } from '../api/student-quiz.mapper';
 import {
   AttemptHistoryCard,
@@ -33,6 +34,7 @@ import {
   AvailableQuiz,
   StudentExamResult,
   RecentQuiz,
+  StudentMatchSessionInfo,
 } from '../models/student-quiz.model';
 import { buildApiUrl, buildHttpParams } from '../../../core/utils/api-url.util';
 import { PagedRequest } from '../../../core/models/pagination.model';
@@ -104,85 +106,36 @@ export class StudentQuizService {
   }
 
 
-  getQuizStart(quizId: string): Observable<StudentQuizStart> {
+  getQuizStart(quizId: string): Observable<StudentMatchSessionInfo> {
+    return this.#getQuizMatch(quizId).pipe(map(mapMatchSessionInfoResponse));
+  }
 
-    const quizStart = forkJoin({
-      matches: this.#http.get<AvailableMatchResponse[]>(
-        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
-        {
-          params: buildHttpParams({
-            page: 1,
-            pageSize: 100,
-            status: 'active',
-            mode: 'Solo',
-          }),
-        },
-      ),
-      play: this.#http.post<CreatePlayResponse>(
-        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.plays),
-        { matchId: quizId },
-      ),
-    }).pipe(
-      map(({ matches, play }) => {
-        const match = matches.find(item => item.id === quizId);
-
-        if (!match) {
-          throw new Error(`No match found for quiz ${quizId}`);
-        }
-
-        const mappedQuizStart = mapQuizStartResponse(match, play);
+  startQuizPlay(quiz: StudentMatchSessionInfo): Observable<StudentQuizStart> {
+    return this.#createPlay(quiz.id).pipe(
+      map(play => {
+        const mappedQuizStart = mapQuizStartFromSessionInfoResponse(quiz, play);
         this.#activeQuizStart.set(mappedQuizStart);
-        if (mappedQuizStart.attemptId) {
-          this.#attemptMetadataCache.set(mappedQuizStart.attemptId, {
-            title: mappedQuizStart.title,
-            subtitle: mappedQuizStart.subtitle,
-          });
-        }
+        this.#cacheAttemptMetadata(mappedQuizStart);
 
         return mappedQuizStart;
-      })
+      }),
     );
-
-    return quizStart;
   }
+
   getActiveQuizStart(): StudentQuizStart | undefined {
     return this.#activeQuizStart();
   }
 
-  getExamStart(examId: string): Observable<StudentQuizStart> {
-    return forkJoin({
-      matches: this.#http.get<AvailableMatchResponse[]>(
-        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches),
-        {
-          params: buildHttpParams({
-            page: 1,
-            pageSize: 100,
-            status: 'Active',
-            mode: 'Exam',
-          }),
-        },
-      ),
-      play: this.#http.post<CreatePlayResponse>(
-        buildApiUrl(STUDENT_QUIZ_ENDPOINTS.plays),
-        { matchId: examId },
-      ),
-    }).pipe(
-      map(({ matches, play }) => {
-        const match = matches.find(item => item.id === examId);
+  getExamStart(examId: string): Observable<StudentMatchSessionInfo> {
+    return this.#getExamMatch(examId).pipe(map(mapMatchSessionInfoResponse));
+  }
 
-        if (!match) {
-          throw new Error(`No exam found for match ${examId}`);
-        }
-
-        const mappedExamStart = mapQuizStartResponse(match, play);
+  startExamPlay(exam: StudentMatchSessionInfo): Observable<StudentQuizStart> {
+    return this.#createPlay(exam.id).pipe(
+      map(play => {
+        const mappedExamStart = mapQuizStartFromSessionInfoResponse(exam, play);
         this.#activeExamStart.set(mappedExamStart);
-
-        if (mappedExamStart.attemptId) {
-          this.#attemptMetadataCache.set(mappedExamStart.attemptId, {
-            title: mappedExamStart.title,
-            subtitle: mappedExamStart.subtitle,
-          });
-        }
+        this.#cacheAttemptMetadata(mappedExamStart);
 
         return mappedExamStart;
       }),
@@ -292,5 +245,63 @@ export class StudentQuizService {
       title: attempt.title,
       subtitle: attempt.courseName,
     };
+  }
+
+  #getQuizMatch(quizId: string): Observable<AvailableMatchResponse> {
+    return this.#http
+      .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
+        params: buildHttpParams({
+          page: 1,
+          pageSize: 100,
+          status: 'active',
+          mode: 'Solo',
+        }),
+      })
+      .pipe(map(matches => this.#findMatch(matches, quizId, `No match found for quiz ${quizId}`)));
+  }
+
+  #getExamMatch(examId: string): Observable<AvailableMatchResponse> {
+    return this.#http
+      .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
+        params: buildHttpParams({
+          page: 1,
+          pageSize: 100,
+          status: 'Active',
+          mode: 'Exam',
+        }),
+      })
+      .pipe(map(matches => this.#findMatch(matches, examId, `No exam found for match ${examId}`)));
+  }
+
+  #createPlay(matchId: string): Observable<CreatePlayResponse> {
+    return this.#http.post<CreatePlayResponse>(
+      buildApiUrl(STUDENT_QUIZ_ENDPOINTS.plays),
+      { matchId },
+    );
+  }
+
+  #findMatch(
+    matches: AvailableMatchResponse[],
+    matchId: string,
+    errorMessage: string,
+  ): AvailableMatchResponse {
+    const match = matches.find(item => item.id === matchId);
+
+    if (!match) {
+      throw new Error(errorMessage);
+    }
+
+    return match;
+  }
+
+  #cacheAttemptMetadata(quizStart: StudentQuizStart): void {
+    if (!quizStart.attemptId) {
+      return;
+    }
+
+    this.#attemptMetadataCache.set(quizStart.attemptId, {
+      title: quizStart.title,
+      subtitle: quizStart.subtitle,
+    });
   }
 }

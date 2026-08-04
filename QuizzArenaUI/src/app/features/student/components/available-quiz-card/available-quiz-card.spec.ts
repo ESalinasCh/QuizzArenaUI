@@ -121,6 +121,20 @@ describe('AvailableQuizCard', () => {
     expect(fixture.nativeElement.querySelector('button').disabled).toBe(false);
   });
 
+  it('should disable the start action for solo quizzes with an active attempt', () => {
+    const fixture = renderCard({ mode: 'Solo', hasActiveAttempt: true });
+
+    expect(fixture.componentInstance.isStartDisabled()).toBe(true);
+    expect(fixture.nativeElement.querySelector('button').disabled).toBe(true);
+  });
+
+  it('should keep exam start enabled with an active attempt while attempts remain', () => {
+    const fixture = renderCard({ mode: 'Exam', hasActiveAttempt: true, attemptsUsed: 1 });
+
+    expect(fixture.componentInstance.isStartDisabled()).toBe(false);
+    expect(fixture.nativeElement.querySelector('button').disabled).toBe(false);
+  });
+
   it('should keep the start action enabled while exam attempts remain', () => {
     expect(renderCard({ mode: 'Exam', attemptsUsed: 9 }).componentInstance.isStartDisabled()).toBe(
       false,

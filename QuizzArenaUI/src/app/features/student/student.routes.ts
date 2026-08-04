@@ -16,8 +16,6 @@ export const studentRoutes: Routes = [
   {
     path: 'quizzes/:quizId/start',
     component: StudentQuizSessionPage,
-    canDeactivate: [attemptFlowGuard],
-    data: { immersive: true },
   },
   {
     path: 'quizzes/:quizId/questions',
@@ -31,8 +29,6 @@ export const studentRoutes: Routes = [
   {
     path: 'exams/:examId/start',
     component: StudentExamSessionPage,
-    canDeactivate: [attemptFlowGuard],
-    data: { immersive: true },
   },
   {
     path: 'exams/:examId/questions',
