@@ -1,6 +1,6 @@
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { rxResource, takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY, of } from 'rxjs';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { ClassSourcesService } from '../../services/class-sources.service';
@@ -8,6 +8,7 @@ import { ExamStepInfo, ExamInfoData } from '../../components/exam-step-info/exam
 import { ExamStepQuestions } from '../../components/exam-step-questions/exam-step-questions';
 import { Question } from '../../models/exam.model';
 import { NavigationHistoryService } from '../../../../core/services/navigation-history.service';
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 type Step = 1 | 2;
 
@@ -28,14 +29,29 @@ export class TeacherCreateExamPage {
   readonly #examInfo = signal<ExamInfoData | null>(null);
   readonly #selectedClassIds = signal<string[]>([]);
 
-  readonly #classSources = toSignal(this.#classSourcesService.getClassSources(), { initialValue: [] });
+  readonly limit = signal(DEFAULT_PAGE_SIZE);
 
-  readonly classes = computed(() => this.#classSources().map(({ id, name }) => ({ id, name })));
+  readonly #classSources = rxResource({
+    defaultValue: [],
+    params: () => ({
+      limit: this.limit()
+    }),
+    stream: ({ params }) => this.#classSourcesService.getClassSources({
+      page: 1,
+      pageSize: params.limit
+    })
+  });
+
+  readonly classes = computed(() => this.#classSources.value().map(({ id, name }) => ({ id, name })));
+
+  loadMore(): void {
+    this.limit.update(l => l + DEFAULT_PAGE_SIZE);
+  }
 
   readonly questionsResource = rxResource<Question[], { processingJobIds: string[] }>({
     params: () => {
       const selectedIds = new Set(this.#selectedClassIds());
-      const processingJobIds = this.#classSources()
+      const processingJobIds = this.#classSources.value()
         .filter(source => selectedIds.has(source.id))
         .flatMap(source => source.processingJobsIds);
       return { processingJobIds };
