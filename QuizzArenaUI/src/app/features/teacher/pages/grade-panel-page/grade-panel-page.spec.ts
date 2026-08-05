@@ -1,6 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { TeacherExamService } from "../../services/teacher-exam.service";
-import { provideRouter } from "@angular/router";
+import { provideRouter, Router } from "@angular/router";
 import { LOCALE_ID } from "@angular/core";
 import { of } from "rxjs";
 import { Grade, Match, ResetAttemptResult } from "../../models/exam.model";
@@ -165,6 +165,53 @@ describe('TeacherGradePanelPage', () => {
 
         const cards = fixture.nativeElement.querySelectorAll('qz-grade-card');
         expect(cards.length).toBe(2);
+    });
+
+    it('should navigate to the attempt review with the match and nickname', async () => {
+        const fixture = TestBed.createComponent(TeacherGradePanelPage);
+        const component = fixture.componentInstance;
+        const router = TestBed.inject(Router);
+        const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+        vi.spyOn(component.grades, 'value').mockReturnValue(mockGrades);
+        component.onMatchChange('match-1');
+
+        await component.onViewResults('grade-1');
+
+        expect(navigateSpy).toHaveBeenCalledWith(
+            ['/teacher/exams/attempts', 'grade-1', 'review'],
+            { queryParams: { matchId: 'match-1', nickname: 'Alice' } },
+        );
+    });
+
+    it('should navigate using the nickname of a nested attempt', async () => {
+        const fixture = TestBed.createComponent(TeacherGradePanelPage);
+        const component = fixture.componentInstance;
+        const router = TestBed.inject(Router);
+        const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+        vi.spyOn(component.grades, 'value').mockReturnValue(mockGrades);
+        component.onMatchChange('match-1');
+
+        await component.onViewResults('attempt-1');
+
+        expect(navigateSpy).toHaveBeenCalledWith(
+            ['/teacher/exams/attempts', 'attempt-1', 'review'],
+            { queryParams: { matchId: 'match-1', nickname: 'Bob' } },
+        );
+    });
+
+    it('should navigate with an empty nickname for an unknown attempt', async () => {
+        const fixture = TestBed.createComponent(TeacherGradePanelPage);
+        const component = fixture.componentInstance;
+        const router = TestBed.inject(Router);
+        const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+        vi.spyOn(component.grades, 'value').mockReturnValue(undefined);
+
+        await component.onViewResults('unknown');
+
+        expect(navigateSpy).toHaveBeenCalledWith(
+            ['/teacher/exams/attempts', 'unknown', 'review'],
+            { queryParams: { matchId: '', nickname: '' } },
+        );
     });
 
     it('should open the reset modal for the selected grade', () => {

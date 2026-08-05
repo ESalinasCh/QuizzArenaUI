@@ -8,6 +8,7 @@ import { TeacherGradePanelPage } from './pages/grade-panel-page/grade-panel-page
 import { TeacherClassSourcesPage } from './pages/class-sources-page/class-sources-page';
 import { TeacherQuestionBankPage } from './pages/question-bank-page/question-bank-page';
 import { ExamBankCheckAllMatchesPage } from './pages/exam-bank-check-all-matches-page/exam-bank-check-all-matches-page';
+import { TeacherAttemptReviewPage } from './pages/attempt-review-page/attempt-review-page';
 
 export const teacherRoutes: Routes = [
   { path: 'dashboard', component: TeacherDashboardPage, pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const teacherRoutes: Routes = [
   { path: 'exams/publish/:quizId', component: TeacherPublishExamPage, pathMatch: 'full' },
   { path: 'exams/bank', component: TeacherExamBankPage },
   { path: 'exams/bank/:quizId/matches', component: ExamBankCheckAllMatchesPage, pathMatch: 'full' },
+  { path: 'exams/attempts/:attemptId/review', component: TeacherAttemptReviewPage, pathMatch: 'full' },
   { path: 'exams/attempts', component: TeacherGradePanelPage },
   { path: 'class-sources', component: TeacherClassSourcesPage, pathMatch: 'full' },
   { path: 'class-sources/from-processing-job/:processing-job-id', component: TeacherQuestionBankPage, pathMatch: 'full' },

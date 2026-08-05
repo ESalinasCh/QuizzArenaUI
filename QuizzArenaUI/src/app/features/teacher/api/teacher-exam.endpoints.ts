@@ -11,5 +11,6 @@ export const TEACHER_EXAM_ENDPOINTS = {
 export const TEACHER_GRADES_ENDPOINTS = {
   matches: '/api/v1/users/me/matches',
   grades: (matchId: string) => `/api/v1/match-attempts/${matchId}/grades`,
+  attemptDetail: (attemptId: string) => `/api/v1/match-attempts/${attemptId}`,
   resetAttempts: (matchId: string, userId: string) => `/api/v1/matches/${matchId}/users/${userId}/match-attempts/reset`,
 } as const;
