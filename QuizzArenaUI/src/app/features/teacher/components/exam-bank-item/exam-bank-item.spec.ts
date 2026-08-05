@@ -95,4 +95,17 @@ describe('ExamBankItem', () => {
 
     expect(unpublishSpy).toHaveBeenCalledWith(mockMatches[0]);
   });
+
+  it('should emit publishMatch when publishMatch event is triggered by child match item', () => {
+    const mockMatches: Match[] = [
+      { id: 'm1', title: 'M1', courseName: 'Course 101', questionCount: 5, professorName: 'Prof', duration: 45, status: 'Pending' },
+    ];
+    fixture.componentRef.setInput('matches', mockMatches);
+    fixture.detectChanges();
+
+    const publishSpy = vi.spyOn(component.publishMatch, 'emit');
+    component.publishMatch.emit(mockMatches[0]);
+
+    expect(publishSpy).toHaveBeenCalledWith(mockMatches[0]);
+  });
 });
