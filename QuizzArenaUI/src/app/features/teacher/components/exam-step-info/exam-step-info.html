@@ -72,6 +72,11 @@
         </button>
       }
     </div>
+    @if (hasMoreClasses()) {
+      <div class="flex justify-center mt-4">
+        <qz-button variant="secondary" (click)="emitLoadMore()" i18n="Class sources load more button">Load More</qz-button>
+      </div>
+    }
   </div>
 
   <qz-button size="large" variant="primary" type="submit" [fullWidth]="true" [ariaLabel]="nextAriaLabel">

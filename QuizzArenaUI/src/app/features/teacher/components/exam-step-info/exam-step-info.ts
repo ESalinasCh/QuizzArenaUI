@@ -17,8 +17,14 @@ export interface ExamInfoData {
 })
 export class ExamStepInfo {
   classes = input.required<ClassSource[]>();
+  limit = input.required<number>();
+  loadMore = output<void>();
 
   next = output<ExamInfoData>();
+
+  readonly hasMoreClasses = computed(() => {
+    return this.classes().length >= this.limit();
+  });
 
   readonly nextAriaLabel = $localize`:Exam step info next button aria label:Next`;
 
@@ -54,6 +60,10 @@ export class ExamStepInfo {
 
   isClassSelected(id: string): boolean {
     return this.#selectedClassIds().has(id);
+  }
+
+  emitLoadMore(): void {
+    this.loadMore.emit();
   }
 
   classButtonClass(selected: boolean): string {

@@ -27,6 +27,8 @@
     <qz-exam-step-info
       [classes]="classes()"
       (next)="onInfoNext($event)"
+      [limit]="limit()"
+      (loadMore)="loadMore()"
     />
   }
 

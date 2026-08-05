@@ -1,6 +1,7 @@
 import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ExamStepInfo, ExamInfoData } from './exam-step-info';
+import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 
 const MOCK_CLASSES = [
   { id: 'cls-1', name: 'DDD Week 1' },
@@ -17,6 +18,7 @@ describe('ExamStepInfo', () => {
   it('should render class names', () => {
     const fixture = TestBed.createComponent(ExamStepInfo);
     fixture.componentRef.setInput('classes', MOCK_CLASSES);
+    fixture.componentRef.setInput('limit', DEFAULT_PAGE_SIZE);
     fixture.detectChanges();
 
     expect(fixture.nativeElement.textContent).toContain('DDD Week 1');
@@ -26,6 +28,7 @@ describe('ExamStepInfo', () => {
   it('should show title required error on empty submit', () => {
     const fixture = TestBed.createComponent(ExamStepInfo);
     fixture.componentRef.setInput('classes', MOCK_CLASSES);
+    fixture.componentRef.setInput('limit', DEFAULT_PAGE_SIZE);
     fixture.detectChanges();
 
     fixture.componentInstance.submit();
@@ -37,6 +40,7 @@ describe('ExamStepInfo', () => {
   it('should show minlength error on short title', () => {
     const fixture = TestBed.createComponent(ExamStepInfo);
     fixture.componentRef.setInput('classes', MOCK_CLASSES);
+    fixture.componentRef.setInput('limit', DEFAULT_PAGE_SIZE);
     fixture.detectChanges();
 
     fixture.componentInstance.form.controls.title.setValue('ab');
@@ -49,6 +53,7 @@ describe('ExamStepInfo', () => {
   it('should show no-classes error when no class selected on submit', () => {
     const fixture = TestBed.createComponent(ExamStepInfo);
     fixture.componentRef.setInput('classes', MOCK_CLASSES);
+    fixture.componentRef.setInput('limit', DEFAULT_PAGE_SIZE);
     fixture.detectChanges();
 
     fixture.componentInstance.form.controls.title.setValue('Valid Title');
@@ -61,6 +66,7 @@ describe('ExamStepInfo', () => {
   it('should toggle class selection', () => {
     const fixture = TestBed.createComponent(ExamStepInfo);
     fixture.componentRef.setInput('classes', MOCK_CLASSES);
+    fixture.componentRef.setInput('limit', DEFAULT_PAGE_SIZE);
     fixture.detectChanges();
 
     expect(fixture.componentInstance.isClassSelected('cls-1')).toBe(false);
@@ -73,6 +79,7 @@ describe('ExamStepInfo', () => {
   it('should emit ExamInfoData on valid submit', () => {
     const fixture = TestBed.createComponent(ExamStepInfo);
     fixture.componentRef.setInput('classes', MOCK_CLASSES);
+    fixture.componentRef.setInput('limit', DEFAULT_PAGE_SIZE);
     fixture.detectChanges();
 
     let emitted: ExamInfoData | undefined;
@@ -93,6 +100,7 @@ describe('ExamStepInfo', () => {
   it('should not emit when form is invalid', () => {
     const fixture = TestBed.createComponent(ExamStepInfo);
     fixture.componentRef.setInput('classes', MOCK_CLASSES);
+    fixture.componentRef.setInput('limit', DEFAULT_PAGE_SIZE);
     fixture.detectChanges();
 
     let emitted = false;
