@@ -2,10 +2,14 @@
   class="flex flex-col justify-between rounded-lg bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border p-3 text-xs gap-3 sm:flex-row sm:items-center">
   <div class="flex flex-col gap-2">
     <div class="flex items-center gap-2 justify-between items-start sm:justify-start">
-      <span class="font-semibold text-light-text dark:text-dark-text">{{ match().courseName }}</span>
+      <span class="font-semibold text-light-text dark:text-dark-text">{{ match().title }}</span>
       @if (match().status; as status) {
       <qz-status-label [label]="status" [variant]="status | statusVariant" />
       }
+    </div>
+    <div>
+      <span class="text-light-text-secondary dark:text-dark-text-secondary">
+        <ng-container i18n="Exam bank title">Course:</ng-container> {{ match().courseName }}</span>
     </div>
     <div
       class="flex flex-wrap justify-between items-center gap-x-2 gap-y-1 text-light-text-secondary dark:text-dark-text-secondary">
@@ -33,6 +37,11 @@
     @if (match().status === 'Active') {
     <qz-button [fullWidth]="true" class="w-full flex-1" variant="secondary" (click)="unpublishMatch.emit(match())">
       <span i18n="Unpublish match button label">Unpublish</span>
+    </qz-button>
+    }
+    @if (match().status === 'Pending') {
+    <qz-button [fullWidth]="true" class="w-full flex-1" variant="primary" (click)="publishMatch.emit(match())">
+      <span i18n="Unpublish match button label">Publish</span>
     </qz-button>
     }
   </div>

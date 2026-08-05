@@ -1,4 +1,9 @@
 <form class="flex flex-col gap-6" (submit)="$event.preventDefault(); submit()">
+
+  <qz-text-input [label]="'Title'" id="title" [type]="'text'" [formField]="matchForm.title"
+    [errorMessage]="titleError() || ''" [labeli18]="'Exam step config title label'"
+    [errori18]="'Exam step config duration error'" />
+
   @if (mode() === 'publish') {
   @if (courses().length > 0) {
   <qz-select-input [label]="'Select Course'" [formField]="matchForm.courseId" [errorMessage]="courseError() || ''">

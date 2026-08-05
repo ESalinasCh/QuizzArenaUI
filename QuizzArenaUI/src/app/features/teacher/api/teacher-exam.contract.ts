@@ -28,6 +28,7 @@ export interface CreateQuizResponseBody {
 }
 
 export interface CreateMatchRequestBody {
+  title: string;
   quizId: string;
   courseId: string;
   startedAt: string;
@@ -40,6 +41,7 @@ export interface CreateMatchRequestBody {
 }
 
 export interface UpdateMatchRequestBody {
+  title: string;
   id: string;
   quizId: string;
   courseId: string;

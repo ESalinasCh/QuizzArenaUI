@@ -15,7 +15,11 @@
     <qz-exam-bank-item [quizAsExams]="quiz" [quizId]="quiz.id"
       [matches]="quiz | matchesForQuiz: matchesResource.value()" (publish)="publishExam(quiz)"
       (checkOthers)="goToQuizMatches(quiz.id)" (unpublishMatch)="unpublishMatch($event)"
+<<<<<<< HEAD
       (viewQuestions)="viewQuestions(quiz)" />
+=======
+      (publishMatch)="publishMatch($event)" />
+>>>>>>> aa03f16 (feat: update form)
     } @empty {@if (!quizzesAsExamsResource.isLoading()) {
     <qz-item-container>
       <div class="flex flex-col items-center gap-4 py-12 text-center">

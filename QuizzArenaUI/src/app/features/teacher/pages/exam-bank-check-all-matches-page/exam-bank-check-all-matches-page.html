@@ -12,7 +12,8 @@
 
   <div class="flex flex-col gap-3">
     @for (match of matches(); track match.id) {
-    <qz-match-of-quiz-item [match]="match" (unpublishMatch)="unpublishMatch($event)" [quizId]="quizId() || ''" />
+    <qz-match-of-quiz-item [match]="match" (unpublishMatch)="unpublishMatch($event)"
+      (publishMatch)="publishMatch($event)" [quizId]="quizId() || ''" />
     } @empty {
     <qz-item-container>
       <div class="flex flex-col items-center gap-4 py-12 text-center">

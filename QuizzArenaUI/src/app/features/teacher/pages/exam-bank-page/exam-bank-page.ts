@@ -122,4 +122,23 @@ export class TeacherExamBankPage {
       },
     });
   }
+
+  publishMatch(match: Match): void {
+    if (!match) {
+      return;
+    }
+    this.#examService.activateMatchAsActiveExam(match.id).pipe(take(1)).subscribe({
+      next: () => {
+        this.matchesResource.value.update(currentMatches => {
+          const foundMatch = currentMatches.find(m => m.id == match.id);
+
+          if (foundMatch) {
+            foundMatch.status = 'Active';
+          }
+
+          return currentMatches;
+        });
+      },
+    });
+  }
 }

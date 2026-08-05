@@ -1,4 +1,5 @@
 interface BaseForm {
+    title: string;
     courseId: string;
     durationMinutes: string;
     questionsAmount: string;

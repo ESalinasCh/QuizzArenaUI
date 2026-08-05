@@ -62,6 +62,10 @@ export class PublishQuizAsMatchForm {
     getFormFieldErrorMessage(this.matchForm.courseId(), this.isSubmitted(), 'A course must be selected')
   );
 
+  readonly titleError = computed(() =>
+    getFormFieldErrorMessage(this.matchForm.title(), this.isSubmitted(), 'Title is required')
+  );
+
   readonly durationError = computed(() =>
     getFormFieldErrorMessage(this.matchForm.durationMinutes(), this.isSubmitted(), 'Duration is required')
   );

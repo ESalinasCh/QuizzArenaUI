@@ -89,6 +89,7 @@ export class TeacherExamService {
     return this.#http.post<CreateQuizResponseBody>(buildApiUrl(TEACHER_EXAM_ENDPOINTS.createExam), quizBody).pipe(
       switchMap(quiz => {
         const matchBody: CreateMatchRequestBody = {
+          title: request.title,
           quizId: quiz.id,
           courseId: request.classIds[0],
           questionsAmount: 8,

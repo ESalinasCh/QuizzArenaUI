@@ -80,4 +80,21 @@ export class ExamBankCheckAllMatchesPage {
       }
     });
   }
+
+  publishMatch(match: Match): void {
+    if (!match) {
+      return;
+    }
+    this.#examService.activateMatchAsActiveExam(match.id).pipe(take(1)).subscribe({
+      next: () => {
+        this.matches.update(prev =>
+          prev.map(currentMatch =>
+            currentMatch.id === match.id
+              ? { ...currentMatch, status: 'Active' }
+              : currentMatch
+          )
+        );
+      },
+    });
+  }
 }

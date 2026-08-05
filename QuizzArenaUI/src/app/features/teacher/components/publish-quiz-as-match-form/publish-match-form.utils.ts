@@ -9,6 +9,7 @@ export function createQuizAsMatchFormModel(
   match?: Match,
 ): PublishMatchForm {
   return {
+    title: match?.title || '',
     courseId: match?.courseId || '',
     durationMinutes: match?.duration.toString() || '30',
     questionsAmount: match?.questionCount.toString() || '10',
@@ -87,6 +88,7 @@ export function getMoreThanCurrentDateTimeError(formState: MatchFormState, isSub
 export function mapFormToCreateMatchRequest(formModel: PublishMatchForm, quizId: string): CreateMatchRequestBody {
   return {
     quizId,
+    title: formModel.title,
     courseId: formModel.courseId,
     questionsAmount: Number(formModel.questionsAmount),
     startedAt: formatLocalToUtcIso(formModel.enabledFrom),
@@ -101,6 +103,7 @@ export function mapFormToCreateMatchRequest(formModel: PublishMatchForm, quizId:
 export function mapFormToUpdateMatchRequest(formModel: PublishMatchForm, matchId: string, quizId: string): UpdateMatchRequestBody {
   return {
     id: matchId,
+    title: formModel.title,
     quizId,
     courseId: formModel.courseId,
     questionsAmount: Number(formModel.questionsAmount),
