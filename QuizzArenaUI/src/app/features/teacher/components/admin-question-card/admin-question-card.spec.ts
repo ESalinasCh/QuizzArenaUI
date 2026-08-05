@@ -33,6 +33,17 @@ describe('AdminQuestionCard', () => {
     fixture.detectChanges();
   });
 
+  it('should render the Q1 badge when index is 0 (falsy but valid)', () => {
+    fixture.componentRef.setInput('index', 0);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('Q1');
+  });
+
+  it('should not render a question number badge when index is not provided', () => {
+    expect(fixture.nativeElement.querySelector('app-badge')).toBeFalsy();
+  });
+
   it('should render question content and metadata', () => {
     expect(fixture.nativeElement.textContent).toContain('What is DDD?');
     expect(fixture.nativeElement.textContent).toContain('Verified');
@@ -116,6 +127,46 @@ describe('AdminQuestionCard', () => {
     fixture.componentInstance.handleToggleDropdown(false);
 
     expect(fixture.componentInstance.isDropdownOpened()).toBe(false);
+  });
+
+  it('should render each option and highlight the correct one', () => {
+    fixture.componentRef.setInput('question', {
+      ...question,
+      options: [
+        { id: 'opt-1', description: 'Paris', isCorrect: true, position: 0, questionId: 'question-1' },
+        { id: 'opt-2', description: 'Madrid', isCorrect: false, position: 1, questionId: 'question-1' },
+      ],
+    });
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('Paris');
+    expect(fixture.nativeElement.textContent).toContain('Madrid');
+
+    const spans: HTMLElement[] = Array.from(fixture.nativeElement.querySelectorAll('span'));
+    const correctSpan = spans.find(s => s.textContent?.trim() === 'Paris');
+    const wrongSpan = spans.find(s => s.textContent?.trim() === 'Madrid');
+    expect(correctSpan?.className).toContain('text-green-700');
+    expect(wrongSpan?.className).not.toContain('text-green-700');
+  });
+
+  it('should not render an options section when the question has no options', () => {
+    fixture.componentRef.setInput('question', { ...question, options: [] });
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.border-t')).toBeFalsy();
+  });
+
+  it('should show edit and delete actions by default (not read-only)', () => {
+    const buttons = fixture.nativeElement.querySelectorAll('qz-button');
+    expect(buttons.length).toBe(3);
+  });
+
+  it('should hide edit and delete actions but keep info when readOnly is true', () => {
+    fixture.componentRef.setInput('readOnly', true);
+    fixture.detectChanges();
+
+    const buttons = fixture.nativeElement.querySelectorAll('qz-button');
+    expect(buttons.length).toBe(1);
   });
 
   it('should update width on resize', () => {

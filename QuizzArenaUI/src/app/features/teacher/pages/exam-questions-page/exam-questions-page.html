@@ -1,0 +1,34 @@
+<section class="mx-auto flex w-full max-w-5xl flex-col gap-5 pb-6">
+  <header class="flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <qz-button size="small" variant="secondary" (click)="goBack()" [ariaLabel]="backAriaLabel">
+        <qz-icon name="arrow-left" class="w-4 h-4" />
+      </qz-button>
+      <h1 i18n="Exam questions page heading" class="text-xl font-extrabold text-light-text dark:text-dark-text">
+        {{ quiz()?.title }}
+      </h1>
+    </div>
+    @if (questions().length > 0) {
+    <app-badge [label]="questionsCountLabel()" [variant]="'neutral'" />
+    }
+  </header>
+
+  @if (noQuizData()) {
+  <qz-empty-state [icon]="'quiz'" [title]="noQuizDataTitle" [description]="noQuizDataDescription" />
+  } @else {
+  <div class="flex flex-col gap-3">
+    @for (question of questions(); track question.id; let i = $index) {
+    <qz-admin-question-card [question]="question" [readOnly]="true" [index]="i" />
+    } @empty {
+    @if (!isLoadingQuestions()) {
+    <qz-empty-state [icon]="'quiz'" [title]="noQuestionsTitle" [description]="noQuestionsDescription" />
+    }
+    }
+    @if (isLoadingQuestions()) {
+    <div class="flex justify-center items-center py-4">
+      <qz-text-span [text]="'Loading questions...'" />
+    </div>
+    }
+  </div>
+  }
+</section>

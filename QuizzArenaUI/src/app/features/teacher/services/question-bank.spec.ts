@@ -38,7 +38,8 @@ describe('QuestionBankService', () => {
     expect(req.request.method).toBe('GET');
     expect(req.request.params.get('Page')).toBe('0');
     expect(req.request.params.get('PageSize')).toBe('5');
-    expect(req.request.params.get('ProcessingJobIds')).toBe('');
+    expect(req.request.params.has('ProcessingJobIds')).toBe(false);
+    expect(req.request.params.has('QuestionIds')).toBe(false);
     expect(req.request.params.get('Status')).toBe('Verified');
 
     req.flush(questions);
@@ -59,9 +60,18 @@ describe('QuestionBankService', () => {
     expect(req.request.method).toBe('GET');
     expect(req.request.params.get('Page')).toBe('2');
     expect(req.request.params.get('PageSize')).toBe('10');
-    expect(req.request.params.get('ProcessingJobIds')).toBe('job-1;job-2');
+    expect(req.request.params.getAll('ProcessingJobIds')).toEqual(['job-1', 'job-2']);
     expect(req.request.params.get('Status')).toBe('Draft');
 
+    req.flush([]);
+  });
+
+  it('should send each questionIds entry as a repeated QuestionIds param', () => {
+    service.getQuestions({ questionIds: ['q-1', 'q-2'] }).subscribe();
+
+    const req = httpTesting.expectOne(request => request.url === questionsUrl);
+
+    expect(req.request.params.getAll('QuestionIds')).toEqual(['q-1', 'q-2']);
     req.flush([]);
   });
 

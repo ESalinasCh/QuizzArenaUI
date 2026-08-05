@@ -92,6 +92,10 @@ export class TeacherExamBankPage {
     await this.#router.navigate(['/teacher/exams/bank', quizId, 'matches']);
   }
 
+  async viewQuestions(quiz: QuizResponseAsExams): Promise<void> {
+    await this.#router.navigate(['/teacher/exams/bank', quiz.id, 'questions'], { state: { quiz } });
+  }
+
   onUnpublishMatch(match: Match): void {
     const exam = this.matchesResource.value()?.find(exam => exam.id === match.id);
     if (exam) {

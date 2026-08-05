@@ -9,6 +9,8 @@ import { QuestionInfoModal } from '../question-info-modal/question-info-modal';
 import { QuestionDeleteModal } from '../question-delete-modal/question-delete-modal';
 import { Question } from '../../models/question';
 import { ModalService } from '../../../../core/services/modal.service';
+import { QuestionOptionsList } from '../../../../shared/molecules/question-options-list/question-options-list';
+import { Badge } from '../../../../shared/atoms/badge/badge';
 
 @Component({
     selector: 'qz-admin-question-card',
@@ -16,11 +18,14 @@ import { ModalService } from '../../../../core/services/modal.service';
     host: {
         '(window:resize)': 'onResize()',
     },
-    imports: [Button, TextSpan, Icon, ClickableDropbox, ItemContainer],
+    imports: [Button, TextSpan, Icon, ClickableDropbox, ItemContainer, QuestionOptionsList, Badge],
 })
 export class AdminQuestionCard {
     readonly #modalService = inject(ModalService);
     question = input.required<Question>();
+    readOnly = input(false);
+    index = input<number>();
+
     newQuestion = output<Question>()
     deleteQuestionById = output<string>();
 
