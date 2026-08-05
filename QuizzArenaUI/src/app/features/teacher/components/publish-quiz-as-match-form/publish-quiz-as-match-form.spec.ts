@@ -28,6 +28,17 @@ describe('PublishQuizAsMatchForm', () => {
     });
   });
 
+  it('should show title error when title is empty on submit', () => {
+    const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
+    fixture.componentInstance.matchModel.update(m => ({ ...m, title: '' }));
+    fixture.detectChanges();
+
+    fixture.componentInstance.submit();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('Title is required');
+  });
+
   it('should show duration error when value is out of range (< 1)', () => {
     const fixture = TestBed.createComponent(PublishQuizAsMatchForm);
     fixture.detectChanges();
@@ -55,6 +66,7 @@ describe('PublishQuizAsMatchForm', () => {
     fixture.detectChanges();
 
     fixture.componentInstance.matchModel.set({
+      title: 'Sample Exam',
       courseId: 'c1',
       durationMinutes: '30',
       questionsAmount: '10',
@@ -75,6 +87,7 @@ describe('PublishQuizAsMatchForm', () => {
     fixture.detectChanges();
 
     fixture.componentInstance.matchModel.set({
+      title: 'Sample Exam',
       courseId: 'c1',
       durationMinutes: '30',
       questionsAmount: '10',
@@ -122,6 +135,7 @@ describe('PublishQuizAsMatchForm', () => {
     fixture.componentInstance.emitSaveRequest.subscribe((req: CreateMatchRequestBody) => (emitted = req));
 
     fixture.componentInstance.matchModel.set({
+      title: 'Final Exam',
       courseId: '10000000-0000-0000-0000-000000000001',
       durationMinutes: '45',
       questionsAmount: '10',
@@ -135,6 +149,7 @@ describe('PublishQuizAsMatchForm', () => {
 
     expect(emitted).toEqual({
       quizId: 'quiz-99',
+      title: 'Final Exam',
       courseId: '10000000-0000-0000-0000-000000000001',
       questionsAmount: 10,
       startedAt: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
@@ -154,6 +169,7 @@ describe('PublishQuizAsMatchForm', () => {
     fixture.componentRef.setInput('match', MOCK_MATCH);
     fixture.detectChanges();
 
+    expect(fixture.componentInstance.matchModel().title).toBe('Sample Match');
     expect(fixture.componentInstance.matchModel().courseId).toBe('10000000-0000-0000-0000-000000000001');
     expect(fixture.componentInstance.matchModel().durationMinutes).toBe('45');
     expect(fixture.componentInstance.matchModel().questionsAmount).toBe('15');
@@ -173,6 +189,7 @@ describe('PublishQuizAsMatchForm', () => {
     expect(emittedUpdate).toEqual({
       id: 'match-123',
       quizId: 'quiz-456',
+      title: 'Sample Match',
       courseId: '10000000-0000-0000-0000-000000000001',
       questionsAmount: 15,
       startedAt: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),

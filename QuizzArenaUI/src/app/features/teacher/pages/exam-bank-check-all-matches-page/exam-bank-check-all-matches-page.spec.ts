@@ -73,4 +73,12 @@ describe('ExamBankCheckAllMatchesPage', () => {
     component.loadMoreMatches();
     expect(component.matchPage()).toBe(2);
   });
+
+  it('should call activateMatchAsActiveExam and update match status to Active on publishMatch', () => {
+    mockExamService.activateMatchAsActiveExam = vi.fn().mockReturnValue(of(undefined));
+    fixture.detectChanges();
+    const pendingMatch: Match = { id: 'm1', quizId: 'quiz-1', title: 'Match 1', courseName: 'AI Course', questionCount: 5, professorName: 'Prof', duration: 30, status: 'Pending' };
+    component.publishMatch(pendingMatch);
+    expect(mockExamService.activateMatchAsActiveExam).toHaveBeenCalledWith('m1');
+  });
 });

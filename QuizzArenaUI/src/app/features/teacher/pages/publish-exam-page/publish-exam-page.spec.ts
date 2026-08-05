@@ -13,6 +13,7 @@ import { Course } from '../../models/content-upload.model';
 
 const MOCK_CREATE_REQUEST: CreateMatchRequestBody = {
   quizId: 'quiz-1',
+  title: 'Quiz 1 Title',
   courseId: 'course-1',
   startedAt: '2026-07-01T10:00',
   finishedAt: '2026-07-31T10:00',
@@ -26,6 +27,7 @@ const MOCK_CREATE_REQUEST: CreateMatchRequestBody = {
 const MOCK_UPDATE_REQUEST: UpdateMatchRequestBody = {
   id: 'match-1',
   quizId: 'quiz-1',
+  title: 'Quiz 1 Title',
   courseId: 'course-1',
   startedAt: '2026-07-01T10:00',
   finishedAt: '2026-07-31T10:00',

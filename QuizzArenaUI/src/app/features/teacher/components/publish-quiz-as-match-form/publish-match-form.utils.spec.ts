@@ -10,6 +10,7 @@ import {
 } from './publish-match-form.utils';
 import { Match } from '../../models/exam.model';
 import { PublishMatchForm } from '../../models/publish-match-form.model';
+import { getLocalDatetimeString } from '../../../../core/utils/date-formatter.utils';
 
 const MOCK_MATCH: Match = {
   id: 'match-100',
@@ -27,12 +28,11 @@ const MOCK_MATCH: Match = {
   shuffleOptions: false,
 };
 
-import { getLocalDatetimeString } from '../../../../core/utils/date-formatter.utils';
-
 describe('publish-match-form.utils', () => {
   describe('createQuizAsMatchFormModel', () => {
     it('should return default values when no match is provided', () => {
       const model = createQuizAsMatchFormModel();
+      expect(model.title).toBe('');
       expect(model.courseId).toBe('');
       expect(model.durationMinutes).toBe('30');
       expect(model.questionsAmount).toBe('10');
@@ -45,6 +45,7 @@ describe('publish-match-form.utils', () => {
 
     it('should map values from existing Match', () => {
       const model = createQuizAsMatchFormModel(MOCK_MATCH);
+      expect(model.title).toBe('Math Exam');
       expect(model.courseId).toBe('course-abc');
       expect(model.durationMinutes).toBe('60');
       expect(model.questionsAmount).toBe('20');
@@ -167,6 +168,7 @@ describe('publish-match-form.utils', () => {
   describe('mapFormToCreateMatchRequest', () => {
     it('should correctly map form model to CreateMatchRequestBody', () => {
       const formModel: PublishMatchForm = {
+        title: 'Midterm Exam',
         courseId: 'course-1',
         durationMinutes: '45',
         questionsAmount: '12',
@@ -180,6 +182,7 @@ describe('publish-match-form.utils', () => {
       const result = mapFormToCreateMatchRequest(formModel, 'quiz-1');
       expect(result).toEqual({
         quizId: 'quiz-1',
+        title: 'Midterm Exam',
         courseId: 'course-1',
         questionsAmount: 12,
         startedAt: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
@@ -195,6 +198,7 @@ describe('publish-match-form.utils', () => {
   describe('mapFormToUpdateMatchRequest', () => {
     it('should correctly map form model to UpdateMatchRequestBody', () => {
       const formModel: PublishMatchForm = {
+        title: 'Updated Exam Title',
         courseId: 'course-1',
         durationMinutes: '60',
         questionsAmount: '15',
@@ -209,6 +213,7 @@ describe('publish-match-form.utils', () => {
       expect(result).toEqual({
         id: 'match-999',
         quizId: 'quiz-1',
+        title: 'Updated Exam Title',
         courseId: 'course-1',
         questionsAmount: 15,
         startedAt: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),

@@ -115,6 +115,7 @@ describe('TeacherExamService', () => {
 
   it('should call POST /matches on saveMatch with correct body and return id', () => {
     const matchBody = {
+      title: 'Test Exam Title',
       quizId: 'quiz-1',
       courseId: 'course-1',
       startedAt: '2026-07-01',

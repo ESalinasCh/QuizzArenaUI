@@ -97,4 +97,13 @@ describe('TeacherExamBankPage', () => {
     fixture.componentInstance.loadMoreQuizzesAsExams();
     expect(fixture.componentInstance.pageForQuizAsExams()).toBe(2);
   });
+
+  it('should call activateMatchAsActiveExam on publishMatch and update match status to Active', () => {
+    mockExamService.activateMatchAsActiveExam = vi.fn().mockReturnValue(of(undefined));
+    const fixture = TestBed.createComponent(TeacherExamBankPage);
+    fixture.detectChanges();
+    const mockMatch: Match = { id: 'm1', title: 'M1', courseName: 'C1', questionCount: 5, professorName: 'P', duration: 30, status: 'Pending' };
+    fixture.componentInstance.publishMatch(mockMatch);
+    expect(mockExamService.activateMatchAsActiveExam).toHaveBeenCalledWith('m1');
+  });
 });
