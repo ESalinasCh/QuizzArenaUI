@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, Signal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Icon } from '../../../../shared/atoms/icon/icon';
@@ -20,7 +20,9 @@ export class TeacherAttemptReviewPage {
 
   readonly fallbackTitle = $localize`:Teacher attempt review fallback title:Attempt review`;
 
-  readonly #matches = toSignal(this.#examService.getMatches(), { initialValue: [] as Match[] });
+  readonly #matches: Signal<Match[]> = toSignal(this.#examService.getMatches(), {
+    initialValue: [],
+  });
 
   readonly match = computed(
     () => this.#matches().find((match) => match.id === this.matchId()) ?? null,

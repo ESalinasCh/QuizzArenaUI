@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, Signal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { TeacherExamService } from '../../services/teacher-exam.service';
 import { GradeCard } from '../../components/grade-card/grade-card';
@@ -22,7 +22,9 @@ export class TeacherGradePanelPage {
 
   readonly noGradesMessage = $localize`:Teacher no grades message:You don't have any grades.`;
   readonly selectedMatchId = signal<string>('');
-  readonly matches = toSignal(this.#examService.getMatches(), { initialValue: [] as Match[] });
+  readonly matches: Signal<Match[]> = toSignal(this.#examService.getMatches(), {
+    initialValue: [],
+  });
   readonly selectedMatch = computed(
     () => this.matches().find((match) => match.id === this.selectedMatchId()) ?? null,
   );
