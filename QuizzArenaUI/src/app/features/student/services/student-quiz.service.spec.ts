@@ -17,7 +17,7 @@ describe('StudentQuizService', () => {
   let httpTesting: HttpTestingController;
   const apiBaseUrl = 'http://localhost:8080';
   const activeMatchesUrl = `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}?status=active&mode=Solo`;
-  const quizStartMatchesUrl = `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}?page=1&pageSize=100&status=active&mode=Solo`;
+  const quizStartMatchesUrl = `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.availableMatches}?page=1&pageSize=500&status=active&mode=Solo`;
   const startedAt = '2026-06-18T00:00:00.000Z';
 
   beforeEach(() => {
@@ -162,7 +162,7 @@ describe('StudentQuizService', () => {
         request =>
           request.url === `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}` &&
           request.params.get('page') === '1' &&
-          request.params.get('pageSize') === '100' &&
+          request.params.get('pageSize') === '500' &&
           request.params.get('matchmode') === 'exam',
       );
       metaReq.flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 }]);
@@ -257,7 +257,7 @@ describe('StudentQuizService', () => {
         request =>
           request.url === `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}` &&
           request.params.get('page') === '1' &&
-          request.params.get('pageSize') === '100' &&
+          request.params.get('pageSize') === '500' &&
           request.params.get('matchmode') === 'exam',
       )
         .flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', startedAt, completedAt: null, score: 80, status: 'passed', duration: 10 }]);
