@@ -84,7 +84,10 @@ export class StudentQuizService {
     const params = buildHttpParams(filters);
     return this.#http
       .get<MatchAttemptSummaryResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts), { params })
-      .pipe(map(matchAttempts => matchAttempts.map(mapMatchAttemptSummaryResponse)));
+      .pipe(
+        tap(matchAttempts => matchAttempts.forEach(attempt => this.#cacheAttemptSummaryMetadata(attempt))),
+        map(matchAttempts => matchAttempts.map(mapMatchAttemptSummaryResponse)),
+      );
   }
 
   getMatches(filters: MatchFilters): Observable<AvailableQuiz[]> {
@@ -226,7 +229,13 @@ export class StudentQuizService {
     }
 
     return this.#http
-      .get<MatchAttemptSummaryResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts))
+      .get<MatchAttemptSummaryResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts), {
+        params: buildHttpParams({
+          page: 1,
+          pageSize: 100,
+          matchmode: 'exam',
+        }),
+      })
       .pipe(
         map(attempts => {
           const attempt = attempts.find(item => item.id === attemptId);
@@ -306,5 +315,9 @@ export class StudentQuizService {
       title: quizStart.title,
       subtitle: quizStart.subtitle,
     });
+  }
+
+  #cacheAttemptSummaryMetadata(attempt: MatchAttemptSummaryResponse): void {
+    this.#attemptMetadataCache.set(attempt.id, this.#mapAttemptSummaryToMetadata(attempt));
   }
 }
