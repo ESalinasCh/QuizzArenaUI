@@ -8,7 +8,6 @@ import { StudentExamListPage } from './pages/exam-list-page/exam-list-page';
 import { StudentGradeHistoryPage } from './pages/grade-history-page/grade-history-page';
 import { StudentExamSessionPage } from './pages/exam-session-page/exam-session-page';
 import { StudentExamQuestionPage } from './pages/exam-question-page/exam-question-page';
-import { StudentExamResultsPage } from './pages/exam-results-page/exam-results-page';
 
 export const studentRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'quizzes' },

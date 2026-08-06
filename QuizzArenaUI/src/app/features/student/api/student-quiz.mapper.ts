@@ -242,11 +242,3 @@ function formatRelativeDate(value: string): string {
 
   return $localize`:Recent quiz completed relative date:${diffInDays}:days: days ago`;
 }
-
-function formatSelectedAnswerLabel(selectedLabels: string[]): string {
-  if (!selectedLabels.length) {
-    return $localize`:Student quiz unanswered fallback:No answer`;
-  }
-
-  return selectedLabels.join(', ');
-}

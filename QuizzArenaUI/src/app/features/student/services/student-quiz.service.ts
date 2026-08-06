@@ -16,7 +16,6 @@ import { STUDENT_QUIZ_ENDPOINTS } from '../api/student-quiz.endpoints';
 import {
   mapAttemptHistoryCardResponse,
   mapCompleteExamAttemptResponse,
-  mapMatchAttemptDetailResponse,
   mapStudentDashboardResponse,
   mapStudentMatchesResponse,
   mapSubmitMatchAttemptResponse,
