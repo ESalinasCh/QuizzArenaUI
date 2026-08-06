@@ -1,0 +1,146 @@
+<section class="flex w-full flex-col gap-5">
+
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span
+        class="inline-flex items-center gap-1 rounded-full bg-purple-light px-3 py-1 text-sm font-extrabold text-purple dark:bg-dark-surface-alt dark:text-purple-dark">
+        <qz-icon name="history" class="h-4 w-4" />
+        <span i18n="Question review label">
+          Review
+        </span>
+      </span>
+      @if (question().isCorrect !== null) {
+      <span class="inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-extrabold"
+        [class.bg-success-bg-light]="question().isCorrect" [class.text-success]="question().isCorrect"
+        [class.dark:bg-success-bg-dark]="question().isCorrect" [class.bg-danger-bg-light]="!question().isCorrect"
+        [class.text-danger]="!question().isCorrect" [class.dark:bg-danger-bg-dark]="!question().isCorrect">
+        @if (question().isCorrect) {
+        <qz-icon name="check" class="h-4 w-4" />
+
+        <span i18n="Correct question status">
+          Correct
+        </span>
+        } @else {
+        <qz-icon name="close" class="h-4 w-4" />
+
+        <span i18n="Incorrect question status">
+          Incorrect
+        </span>
+        }
+      </span>
+      }
+
+
+      <span class="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary">
+        <span i18n="Question number label">
+          Question {{ questionNumber() }} of {{ totalQuestions() }}
+        </span>
+      </span>
+    </div>
+  </div>
+
+
+  <article
+    class="rounded-2xl border-3 border-light-border bg-white px-5 py-5 shadow-sm dark:border-dark-border dark:bg-dark-surface">
+
+    <h3 class="mb-6 text-lg font-extrabold leading-snug text-light-text dark:text-white">
+      {{ question().content }}
+    </h3>
+
+    <div class="flex flex-col gap-3">
+
+      @for (option of reviewOptions(); track option.id) {
+
+      <div class="relative flex items-start rounded-xl p-4"
+        [class.border-3]="option.showCorrect || option.showIncorrect || option.selected"
+        [class.border-success]="option.showCorrect" [class.bg-success-bg-light]="option.showCorrect"
+        [class.dark:bg-success-bg-dark]="option.showCorrect" [class.border-danger]="option.showIncorrect"
+        [class.bg-danger-bg-light]="option.showIncorrect" [class.dark:bg-danger-bg-dark]="option.showIncorrect"
+        [class.border-purple]="option.selected && !option.showCorrect && !option.showIncorrect"
+        [class.bg-purple-light]="option.selected && !option.showCorrect && !option.showIncorrect"
+        [class.dark:bg-dark-surface-alt]="option.selected && !option.showCorrect && !option.showIncorrect"
+        [class.border-light-border]="!option.showCorrect && !option.showIncorrect && !option.selected"
+        [class.dark:border-dark-border]="!option.showCorrect && !option.showIncorrect && !option.selected">
+
+        <div class="mr-4 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-sm font-extrabold"
+          [class.bg-success]="option.showCorrect" [class.text-white]="option.showCorrect"
+          [class.bg-danger]="option.showIncorrect" [class.text-white]="option.showIncorrect"
+          [class.bg-purple]="option.selected && !option.showCorrect && !option.showIncorrect"
+          [class.text-white]="option.selected && !option.showCorrect && !option.showIncorrect"
+          [class.border]="!option.showCorrect && !option.showIncorrect && !option.selected"
+          [class.border-light-border]="!option.showCorrect && !option.showIncorrect && !option.selected"
+          [class.text-light-text-secondary]="!option.showCorrect && !option.showIncorrect && !option.selected"
+          [class.dark:text-dark-text-secondary]="!option.showCorrect && !option.showIncorrect && !option.selected">
+          {{option.letter}}
+        </div>
+
+
+        <div class="flex-1">
+
+          <p class="text-base font-medium text-light-text dark:text-white">
+            {{ option.description }}
+          </p>
+
+
+          @if (option.selected) {
+
+          @if (option.showIncorrect) {
+          <span class="mt-1 block text-sm font-extrabold text-danger">
+            <ng-container i18n="Incorrect selected answer">
+              Your answer (Incorrect)
+            </ng-container>
+          </span>
+          } @else {
+          <span class="mt-1 block text-sm font-extrabold text-purple">
+            <ng-container i18n="Selected answer">
+              Your answer
+            </ng-container>
+          </span>
+          }
+
+          }
+
+        </div>
+
+
+        @if(option.showCorrect) {
+        <qz-icon name="check" class="absolute right-4 top-4 h-5 w-5 text-success" />
+        }
+
+
+        @if(option.showIncorrect) {
+        <qz-icon name="close" class="absolute right-4 top-4 h-5 w-5 text-danger" />
+        }
+
+
+      </div>
+
+      }
+
+    </div>
+
+    @if(question().justification) {
+
+    <div
+      class="mt-8 rounded-b-2xl border-t border-light-border bg-light-surface px-5 py-5 dark:border-dark-border dark:bg-dark-surface-alt">
+
+      <h4 class="mb-2 flex items-center gap-2 text-lg font-extrabold text-purple dark:text-purple-dark">
+        <qz-icon name="lightbulb" class="h-5 w-5" />
+
+        <span i18n="Question explanation title">
+          Explanation
+        </span>
+      </h4>
+
+
+      <p class="leading-relaxed text-light-text-secondary dark:text-dark-text-secondary">
+        {{ question().justification }}
+      </p>
+
+    </div>
+
+    }
+
+  </article>
+
+</section>

@@ -1,7 +1,7 @@
 import { PagedRequest } from "../../../core/models/pagination.model";
 import { AvailableQuizStatus } from "../models/student-quiz.model";
 
-export type MatchAttemptDetailStatus = 'passed' | 'failed';
+export type MatchAttemptDetailStatus = 'completed' | 'in-progress';
 export type MatchAttemptSummaryStatus = MatchAttemptDetailStatus | 'in-progress';
 
 export type MatchStatus = 'Active' | 'Pending' | 'Expired';
@@ -37,15 +37,16 @@ export interface MatchAttemptSummaryResponse {
 export interface MatchAttemptDetailOptionResponse {
   id: string;
   description: string;
-  isCorrect: boolean;
+  isCorrect: boolean | null;
 }
 
 export interface MatchAttemptDetailQuestionResponse {
   questionId: string;
-  content: string;
-  questionType?: QuestionType;
+  content: string;  
+  justification: string | null;
   selectedOptionIds: string[];
-  isCorrect: boolean;
+  isCorrect: boolean | null;
+
   options: MatchAttemptDetailOptionResponse[];
 }
 

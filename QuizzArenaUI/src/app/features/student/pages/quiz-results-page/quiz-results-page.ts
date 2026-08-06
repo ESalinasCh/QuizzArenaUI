@@ -1,14 +1,14 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, EMPTY, filter, map, shareReplay, switchMap } from 'rxjs';
-import { Icon } from '../../../../shared/atoms/icon/icon';
+import { catchError, distinctUntilChanged, EMPTY, filter, map, shareReplay, switchMap } from 'rxjs';
 import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
+import { QuestionReviewCardComponent } from "../../components/question-review-card.component/question-review-card.component";
 
 @Component({
   selector: 'qz-student-quiz-results-page',
-  imports: [Icon, StatCard],
+  imports: [StatCard, QuestionReviewCardComponent],
   templateUrl: './quiz-results-page.html',
 
 })
@@ -22,7 +22,7 @@ export class StudentQuizResultsPage {
   readonly correctAnswersLabel = $localize`:Student quiz correct answers stat label:Correct`;
 
   readonly #attemptId$ = this.#route.paramMap.pipe(
-    map(params => params.get('quizId')),
+    map(params => params.get('attemptId')),
     filter((attemptId): attemptId is string => attemptId !== null),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
@@ -40,12 +40,13 @@ export class StudentQuizResultsPage {
     ),
   );
 
-  readonly review = toSignal(
-    this.#attemptId$.pipe(
-      switchMap(attemptId => this.#studentQuizService.getMatchAttemptDetail(attemptId)),
-      catchError(() => EMPTY),
-    ),
-  );
+readonly review = toSignal(
+  this.#attemptId$.pipe(
+    distinctUntilChanged(), 
+    switchMap(attemptId => this.#studentQuizService.getMatchAttemptDetail(attemptId)),
+    catchError(() => EMPTY),
+  ),
+);
 
   readonly scoreDashArray = computed(() => {
     const score = this.summary()?.scorePercentage ?? 0;

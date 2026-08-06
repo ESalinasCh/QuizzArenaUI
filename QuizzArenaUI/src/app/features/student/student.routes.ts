@@ -8,7 +8,6 @@ import { StudentExamListPage } from './pages/exam-list-page/exam-list-page';
 import { StudentGradeHistoryPage } from './pages/grade-history-page/grade-history-page';
 import { StudentExamSessionPage } from './pages/exam-session-page/exam-session-page';
 import { StudentExamQuestionPage } from './pages/exam-question-page/exam-question-page';
-import { StudentExamResultsPage } from './pages/exam-results-page/exam-results-page';
 
 export const studentRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'quizzes' },
@@ -23,7 +22,7 @@ export const studentRoutes: Routes = [
     canDeactivate: [attemptFlowGuard],
     data: { immersive: true },
   },
-  { path: 'quizzes/:quizId/results', component: StudentQuizResultsPage },
+  { path: 'quizzes/:attemptId/results', component: StudentQuizResultsPage },
 
   { path: 'exams', component: StudentExamListPage },
   {
@@ -36,6 +35,7 @@ export const studentRoutes: Routes = [
     canDeactivate: [attemptFlowGuard],
     data: { immersive: true },
   },
-  { path: 'exams/:attemptId/results', component: StudentExamResultsPage },
+  // path: 'exams/:attemptId/results', component: StudentExamResultsPage },
+  { path: 'exams/:attemptId/results', component: StudentQuizResultsPage },
   { path: 'grades', component: StudentGradeHistoryPage },
 ];

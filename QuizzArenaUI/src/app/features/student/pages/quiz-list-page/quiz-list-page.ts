@@ -67,7 +67,7 @@ export class StudentQuizListPage {
     }),
     stream: ({ params }) =>
       this.#studentQuizService.getRecentQuizzes({
-        page: 1, pageSize: params.limit, search: params.search, matchmode: 'Solo',
+        page: 1, pageSize: params.limit, search: params.search, matchmode: 'Solo', status : 'completed'
       }),
   });
 

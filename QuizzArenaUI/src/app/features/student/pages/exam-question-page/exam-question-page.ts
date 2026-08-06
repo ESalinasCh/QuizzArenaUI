@@ -92,8 +92,17 @@ export class StudentExamQuestionPage {
 
           return this.#studentQuizService.completeExamAttempt(attemptId).pipe(
             switchMap(result =>
-              from(this.#router.navigate(['/student/exams', result.attemptId, 'results'])),
-            ),
+              from(
+               
+                this.#router.navigate(
+                  ['/student/exams', result.attemptId, 'results'],
+                  {
+                    queryParams: {
+                      view: 'details',
+                    },
+                  },
+                ),
+              )),
           );
         }),
         catchError(() => {

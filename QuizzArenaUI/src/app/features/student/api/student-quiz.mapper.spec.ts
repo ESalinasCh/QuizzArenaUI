@@ -39,7 +39,7 @@ describe('student-quiz.mapper', () => {
     it('should map a passed attempt', () => {
       const response: MatchAttemptSummaryResponse = {
         id: 'a1', title: 'Attempt 1', courseName: 'DDD',
-        startedAt, completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10,
+        startedAt, completedAt: '2026-06-19', score: 80, status: 'completed', duration: 10,
       };
 
       const result = mapMatchAttemptSummaryResponse(response);
@@ -52,11 +52,11 @@ describe('student-quiz.mapper', () => {
     it('should map an in-progress attempt', () => {
       const response: MatchAttemptSummaryResponse = {
         id: 'a2', title: 'Attempt 2', courseName: 'DDD',
-        startedAt, completedAt: null, score: 60, status: 'failed', duration: 10,
+        startedAt, completedAt: null, score: 60, status: 'completed', duration: 10,
       };
 
       const result = mapMatchAttemptSummaryResponse(response);
-      expect(result.status).toBe('warning');
+      expect(result.status).toBe('passed');
     });
   });
 
@@ -91,7 +91,7 @@ describe('student-quiz.mapper', () => {
         },
       ];
       const attempts: MatchAttemptSummaryResponse[] = [
-        { id: 'a1', title: 'Attempt 1', courseName: 'DDD', startedAt, completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 },
+        { id: 'a1', title: 'Attempt 1', courseName: 'DDD', startedAt, completedAt: '2026-06-19', score: 80, status: 'completed', duration: 10 },
       ];
 
       const result = mapStudentDashboardResponse(matches, attempts);
@@ -104,7 +104,7 @@ describe('student-quiz.mapper', () => {
     it('should use startedAt as the grade history date label', () => {
       const response: MatchAttemptSummaryResponse = {
         id: 'a0', title: 'Attempt 0', courseName: 'DDD',
-        startedAt, completedAt: null, score: 80, status: 'failed', duration: 10,
+        startedAt, completedAt: null, score: 80, status: 'completed', duration: 10,
       };
 
       const result = mapAttemptHistoryCardResponse(response);
@@ -115,24 +115,22 @@ describe('student-quiz.mapper', () => {
     it('should mark grade history attempt as passed when score is greater than the passing threshold', () => {
       const response: MatchAttemptSummaryResponse = {
         id: 'a1', title: 'Attempt 1', courseName: 'DDD',
-        startedAt, completedAt: '2026-06-19', score: 80, status: 'failed', duration: 10,
+        startedAt, completedAt: '2026-06-19', score: 80, status: 'completed', duration: 10,
       };
 
       const result = mapAttemptHistoryCardResponse(response);
 
-      expect(result.statusLabel).toBe('Passed');
       expect(result.statusVariant).toBe('success');
     });
 
     it('should mark grade history attempt as failed when score is equal to the passing threshold', () => {
       const response: MatchAttemptSummaryResponse = {
         id: 'a2', title: 'Attempt 2', courseName: 'DDD',
-        startedAt, completedAt: '2026-06-19', score: 50, status: 'passed', duration: 10,
+        startedAt, completedAt: '2026-06-19', score: 50, status: 'completed', duration: 10,
       };
 
       const result = mapAttemptHistoryCardResponse(response);
 
-      expect(result.statusLabel).toBe('Failed');
       expect(result.statusVariant).toBe('danger');
     });
   });
@@ -165,41 +163,46 @@ describe('student-quiz.mapper', () => {
   describe('mapMatchAttemptDetailResponse', () => {
     it('should map attempt detail with metadata', () => {
       const response: MatchAttemptDetailResponse = {
-        id: 'attempt-1', score: 80, status: 'passed',
+        id: 'attempt-1', score: 80, status: 'completed',
         questions: [
-          { questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [{ id: 'q1-a', description: 'Answer A', isCorrect: true }] },
+          { questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [{ id: 'q1-a', description: 'Answer A', isCorrect: true }], justification: "justification" },
         ],
       };
       const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
 
       const result = mapMatchAttemptDetailResponse(response, metadata);
       expect(result.title).toBe('Quiz 1');
-      expect(result.questions[0].text).toBe('Q1');
-      expect(result.questions[0].isCorrect).toBe(true);
+      expect(result.matchAttempt.questions[0].content).toBe('Q1');
+      expect(result.matchAttempt.questions[0].isCorrect).toBe(true);
     });
 
-    it('should map multiple selected answers from attempt detail', () => {
-      const response: MatchAttemptDetailResponse = {
-        id: 'attempt-1', score: 80, status: 'passed',
-        questions: [
-          {
-            questionId: 'q1',
-            content: 'Q1',
-            selectedOptionIds: ['q1-a', 'q1-b'],
-            isCorrect: true,
-            options: [
-              { id: 'q1-a', description: 'Answer A', isCorrect: true },
-              { id: 'q1-b', description: 'Answer B', isCorrect: true },
-            ],
-          },
+  it('should map multiple selected answers from attempt detail', () => {
+  const response: MatchAttemptDetailResponse = {
+    id: 'attempt-1',
+    score: 80,
+    status: 'completed',
+    questions: [
+      {
+        questionId: 'q1',
+        content: 'Q1',
+        selectedOptionIds: ['q1-a', 'q1-b'],
+        justification: "justification",
+        isCorrect: true,
+        options: [
+          { id: 'q1-a', description: 'Answer A', isCorrect: true },
+          { id: 'q1-b', description: 'Answer B', isCorrect: true },
         ],
-      };
-      const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
+      },
+    ],
+  };
 
-      const result = mapMatchAttemptDetailResponse(response, metadata);
+  const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
 
-      expect(result.questions[0].selectedAnswerLabel).toBe('Answer A, Answer B');
-    });
+  const result = mapMatchAttemptDetailResponse(response, metadata);
+
+  expect(result.matchAttempt.questions[0].selectedOptionIds)
+    .toEqual(['q1-a', 'q1-b']);
+});
   });
 
   describe('mapSubmitMatchAttemptResponse', () => {

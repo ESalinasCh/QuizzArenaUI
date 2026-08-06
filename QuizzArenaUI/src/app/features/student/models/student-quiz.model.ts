@@ -1,4 +1,4 @@
-import { MatchMode, MatchStatus, QuestionType } from "../api/student-quiz.contract";
+import { MatchAttemptDetailResponse, MatchMode, MatchStatus, QuestionType } from "../api/student-quiz.contract";
 
 export type AvailableQuizStatus = 'available' | 'new';
 export type RecentQuizStatus = 'passed' | 'warning';
@@ -93,11 +93,9 @@ export interface StudentQuizReviewQuestion {
 }
 
 export interface StudentQuizReview {
-  id: string;
   title: string;
   subtitle: string;
-  score: number;
-  questions: StudentQuizReviewQuestion[];
+  matchAttempt : MatchAttemptDetailResponse
 }
 
 export interface StudentQuizResultSummary {

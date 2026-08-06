@@ -84,7 +84,7 @@ export function mapMatchAttemptSummaryResponse({ id, title, score, completedAt, 
     score,
     completedAtLabel: completedAt
       ? formatRelativeDate(completedAt)
-      : $localize`:Recent quiz in progress label:in progress`,
+      : $localize`:Recent quiz in progress label:Completed`,
     status: mapRecentQuizStatus(status),
   };
 }
@@ -151,35 +151,14 @@ export function mapQuizStartFromSessionInfoResponse(
     })),
   };
 }
-
 export function mapMatchAttemptDetailResponse(
-  { id, score, questions }: MatchAttemptDetailResponse,
+  matchAttempt: MatchAttemptDetailResponse,
   { title, subtitle }: Pick<StudentQuizReview, 'title' | 'subtitle'>,
 ): StudentQuizReview {
   return {
-    id,
     title,
     subtitle,
-    score,
-    questions: questions.map(({ questionId, content, options, selectedOptionIds, isCorrect }, index) => {
-      const optionDescriptionById = new Map(
-        options.map(option => [option.id, option.description]),
-      );
-
-      const selectedAnswerLabel = formatSelectedAnswerLabel(
-        selectedOptionIds
-          .map(optionId => optionDescriptionById.get(optionId))
-          .filter((description): description is string => Boolean(description)),
-      );
-
-      return {
-        id: questionId,
-        number: index + 1,
-        text: content,
-        isCorrect,
-        selectedAnswerLabel,
-      };
-    }),
+    matchAttempt,
   };
 }
 
@@ -225,7 +204,7 @@ export function mapStudentMatchesResponse(
 }
 
 function mapRecentQuizStatus(status: MatchAttemptSummaryResponse['status']): RecentQuizStatus {
-  return status === 'passed' ? 'passed' : 'warning';
+  return status === 'completed' ? 'passed' : 'warning';
 }
 
 function mapAttemptHistoryStatusLabel(score: number): string {
@@ -262,12 +241,4 @@ function formatRelativeDate(value: string): string {
   const diffInDays = Math.max(1, Math.round(diffInMs / MILLISECONDS_PER_DAY));
 
   return $localize`:Recent quiz completed relative date:${diffInDays}:days: days ago`;
-}
-
-function formatSelectedAnswerLabel(selectedLabels: string[]): string {
-  if (!selectedLabels.length) {
-    return $localize`:Student quiz unanswered fallback:No answer`;
-  }
-
-  return selectedLabels.join(', ');
 }

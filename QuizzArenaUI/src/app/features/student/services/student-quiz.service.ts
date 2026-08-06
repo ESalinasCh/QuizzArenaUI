@@ -16,7 +16,6 @@ import { STUDENT_QUIZ_ENDPOINTS } from '../api/student-quiz.endpoints';
 import {
   mapAttemptHistoryCardResponse,
   mapCompleteExamAttemptResponse,
-  mapMatchAttemptDetailResponse,
   mapStudentDashboardResponse,
   mapStudentMatchesResponse,
   mapSubmitMatchAttemptResponse,
@@ -180,12 +179,16 @@ export class StudentQuizService {
 
   getMatchAttemptDetail(attemptId: string): Observable<StudentQuizReview> {
     return forkJoin({
-      response: this.#http.get<MatchAttemptDetailResponse>(
+      matchAttempt: this.#http.get<MatchAttemptDetailResponse>(
         buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttemptDetail(attemptId)),
       ),
       metadata: this.#getAttemptMetadata(attemptId),
     }).pipe(
-      map(({ response, metadata }) => mapMatchAttemptDetailResponse(response, metadata)),
+      map(({ matchAttempt, metadata }) => ({
+        title: metadata.title,
+        subtitle: metadata.subtitle,
+        matchAttempt,
+      })),
     );
   }
 
