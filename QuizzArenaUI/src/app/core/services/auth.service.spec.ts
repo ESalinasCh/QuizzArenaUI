@@ -295,6 +295,7 @@ describe('AuthService', () => {
 
       expect(token).toBeNull();
       expect(service.isAuthenticated()).toBe(false);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
     });
 
     it('should reuse the same refresh promise for concurrent refresh requests', async () => {

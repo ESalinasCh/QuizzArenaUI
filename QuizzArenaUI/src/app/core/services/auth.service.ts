@@ -33,7 +33,9 @@ export class AuthService {
   }
 
   login(): void {
-    this.#oAuthService.customQueryParams = {};
+    this.#oAuthService.customQueryParams = {
+      theme : localStorage.getItem('theme') ?? 'dark'
+    };
     this.#oAuthService.initCodeFlow();
   }
 
@@ -81,6 +83,7 @@ export class AuthService {
       })
       .catch(() => {
         this.#authState.set({ isAuthenticated: false });
+        this.#router.navigate(['/login']);
         return null;
       })
       .finally(() => {
