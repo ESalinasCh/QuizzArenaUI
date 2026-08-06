@@ -158,8 +158,48 @@ describe('StudentQuizService', () => {
       detailReq.flush(attemptMock);
 
       // service falls back to fetching metadata from match-attempts
-      const metaReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}`);
+      const metaReq = httpTesting.expectOne(
+        request =>
+          request.url === `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}` &&
+          request.params.get('page') === '1' &&
+          request.params.get('pageSize') === '100' &&
+          request.params.get('matchmode') === 'exam',
+      );
       metaReq.flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 }]);
+    });
+
+    it('should use recent quiz metadata cache when available', () => {
+      const attemptMock: MatchAttemptDetailResponse = {
+        id: 'attempt-1', score: 80, status: 'passed',
+        questions: [{ questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [] }],
+      };
+
+      service.getRecentQuizzes({ page: 1, pageSize: 6, matchmode: 'Solo' }).subscribe();
+
+      httpTesting.expectOne(
+        request =>
+          request.url === `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}` &&
+          request.params.get('matchmode') === 'Solo',
+      ).flush([
+        {
+          id: 'attempt-1',
+          title: 'Quiz 1',
+          courseName: 'DDD',
+          startedAt,
+          completedAt: '2026-06-19',
+          score: 80,
+          status: 'passed',
+          duration: 10,
+        },
+      ]);
+
+      service.getMatchAttemptDetail('attempt-1').subscribe(review => {
+        expect(review.title).toBe('Quiz 1');
+        expect(review.subtitle).toBe('DDD');
+      });
+
+      const detailReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttemptDetail('attempt-1')}`);
+      detailReq.flush(attemptMock);
     });
   });
 
@@ -213,7 +253,13 @@ describe('StudentQuizService', () => {
         expect(summary.scorePercentage).toBe(80);
       });
 
-      httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}`)
+      httpTesting.expectOne(
+        request =>
+          request.url === `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}` &&
+          request.params.get('page') === '1' &&
+          request.params.get('pageSize') === '100' &&
+          request.params.get('matchmode') === 'exam',
+      )
         .flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', startedAt, completedAt: null, score: 80, status: 'passed', duration: 10 }]);
     });
 
