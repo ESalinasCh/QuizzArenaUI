@@ -1,7 +1,7 @@
 {
   "production": false,
   "keycloak": {
-    "issuer": "https://auth.bsdevbo.com/realms/master",
+    "issuer": "https://quiz-keycloak.agreeableocean-4dc1e010.northcentralus.azurecontainerapps.io/realms/master",
     "clientId": "quiz-arena-ui"
   },
   "apiBaseUrl": ""

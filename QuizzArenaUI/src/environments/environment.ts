@@ -4,7 +4,7 @@ export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:8080',
   keycloak: {
-    issuer: 'https://auth.bsdevbo.com/realms/master',
+    issuer: 'https://quiz-keycloak.agreeableocean-4dc1e010.northcentralus.azurecontainerapps.io/realms/master',
     clientId: 'quiz-arena-ui',
     redirectUri: 'http://localhost:3000/en/',
   },
