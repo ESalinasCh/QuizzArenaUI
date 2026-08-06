@@ -37,7 +37,7 @@ export interface MatchAttemptSummaryResponse {
 export interface MatchAttemptDetailOptionResponse {
   id: string;
   description: string;
-  isCorrect: boolean;
+  isCorrect: boolean | null;
 }
 
 export interface MatchAttemptDetailQuestionResponse {
@@ -45,7 +45,8 @@ export interface MatchAttemptDetailQuestionResponse {
   content: string;
   questionType?: QuestionType;
   selectedOptionIds: string[];
-  isCorrect: boolean;
+  isCorrect: boolean | null;
+  justification: string | null;
   options: MatchAttemptDetailOptionResponse[];
 }
 

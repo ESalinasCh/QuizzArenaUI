@@ -151,35 +151,14 @@ export function mapQuizStartFromSessionInfoResponse(
     })),
   };
 }
-
 export function mapMatchAttemptDetailResponse(
-  { id, score, questions }: MatchAttemptDetailResponse,
+  matchAttempt: MatchAttemptDetailResponse,
   { title, subtitle }: Pick<StudentQuizReview, 'title' | 'subtitle'>,
 ): StudentQuizReview {
   return {
-    id,
     title,
     subtitle,
-    score,
-    questions: questions.map(({ questionId, content, options, selectedOptionIds, isCorrect }, index) => {
-      const optionDescriptionById = new Map(
-        options.map(option => [option.id, option.description]),
-      );
-
-      const selectedAnswerLabel = formatSelectedAnswerLabel(
-        selectedOptionIds
-          .map(optionId => optionDescriptionById.get(optionId))
-          .filter((description): description is string => Boolean(description)),
-      );
-
-      return {
-        id: questionId,
-        number: index + 1,
-        text: content,
-        isCorrect,
-        selectedAnswerLabel,
-      };
-    }),
+    matchAttempt,
   };
 }
 

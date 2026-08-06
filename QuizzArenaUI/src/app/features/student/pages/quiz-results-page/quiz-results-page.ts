@@ -5,10 +5,11 @@ import { catchError, EMPTY, filter, map, shareReplay, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StatCard } from '../../../../shared/molecules/stat-card/stat-card';
 import { StudentQuizService } from '../../services/student-quiz.service';
+import { QuestionReviewCardComponent } from "../../components/question-review-card.component/question-review-card.component";
 
 @Component({
   selector: 'qz-student-quiz-results-page',
-  imports: [Icon, StatCard],
+  imports: [Icon, StatCard, QuestionReviewCardComponent],
   templateUrl: './quiz-results-page.html',
 
 })
