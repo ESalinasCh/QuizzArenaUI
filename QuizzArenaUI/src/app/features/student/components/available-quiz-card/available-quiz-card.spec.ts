@@ -128,6 +128,13 @@ describe('AvailableQuizCard', () => {
     expect(fixture.nativeElement.querySelector('button').disabled).toBe(true);
   });
 
+  it('should keep the start action enabled to resume an in-progress exam even with no attempts left', () => {
+    const fixture = renderCard({ mode: 'Exam', attemptsUsed: 10, hasActiveAttempt: true });
+
+    expect(fixture.componentInstance.isStartDisabled()).toBe(false);
+    expect(fixture.nativeElement.querySelector('button').disabled).toBe(false);
+  });
+
   it('should keep exam start enabled with an active attempt while attempts remain', () => {
     const fixture = renderCard({ mode: 'Exam', hasActiveAttempt: true, attemptsUsed: 1 });
 
