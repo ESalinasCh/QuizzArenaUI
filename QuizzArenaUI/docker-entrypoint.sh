@@ -7,7 +7,7 @@ cat > "$CONFIG_PATH" <<CONF
 {
   "production": ${APP_PRODUCTION:-true},
   "keycloak": {
-    "issuer": "${KEYCLOAK_ISSUER:-https://auth.bsdevbo.com/realms/master}",
+    "issuer": "${KEYCLOAK_ISSUER:-https://quiz-keycloak.agreeableocean-4dc1e010.northcentralus.azurecontainerapps.io/realms/master}",
     "clientId": "${KEYCLOAK_CLIENT_ID:-quiz-arena-ui}"
   },
   "apiBaseUrl": "${API_BASE_URL:-}"
