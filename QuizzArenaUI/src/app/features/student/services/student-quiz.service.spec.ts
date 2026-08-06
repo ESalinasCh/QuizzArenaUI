@@ -165,13 +165,13 @@ describe('StudentQuizService', () => {
           request.params.get('pageSize') === '500' &&
           request.params.get('matchmode') === 'exam',
       );
-      metaReq.flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', completedAt: '2026-06-19', score: 80, status: 'passed', duration: 10 }]);
+      metaReq.flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', completedAt: '2026-06-19', score: 80, status: 'completed', duration: 10 }]);
     });
 
     it('should use recent quiz metadata cache when available', () => {
       const attemptMock: MatchAttemptDetailResponse = {
-        id: 'attempt-1', score: 80, status: 'passed',
-        questions: [{ questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [] }],
+        id: 'attempt-1', score: 80, status: 'completed',
+        questions: [{ questionId: 'q1', content: 'Q1', justification: null, selectedOptionIds: ['q1-a'], isCorrect: true, options: [] }],
       };
 
       service.getRecentQuizzes({ page: 1, pageSize: 6, matchmode: 'Solo' }).subscribe();
@@ -188,7 +188,7 @@ describe('StudentQuizService', () => {
           startedAt,
           completedAt: '2026-06-19',
           score: 80,
-          status: 'passed',
+          status: 'completed',
           duration: 10,
         },
       ]);
@@ -260,7 +260,7 @@ describe('StudentQuizService', () => {
           request.params.get('pageSize') === '500' &&
           request.params.get('matchmode') === 'exam',
       )
-        .flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', startedAt, completedAt: null, score: 80, status: 'passed', duration: 10 }]);
+        .flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', startedAt, completedAt: null, score: 80, status: 'completed', duration: 10 }]);
     });
 
     it('should throw when no cached result', () => {
@@ -296,7 +296,7 @@ describe('StudentQuizService', () => {
           startedAt,
           completedAt: '2026-06-01',
           score: 80,
-          status: 'passed',
+          status: 'completed',
           duration: 10,
         },
       ]);
