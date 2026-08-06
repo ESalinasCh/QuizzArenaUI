@@ -1,0 +1,9 @@
+Pregunta {{ questionNumber() }} de {{ totalQuestions() }}
+
+<h3>{{ question().content }}</h3>
+
+@for (option of reviewOptions(); track option.id) {
+  <div>
+    {{ option.description }}
+  </div>
+}
