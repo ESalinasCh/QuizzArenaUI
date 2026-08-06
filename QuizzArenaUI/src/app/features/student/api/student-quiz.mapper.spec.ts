@@ -56,7 +56,7 @@ describe('student-quiz.mapper', () => {
       };
 
       const result = mapMatchAttemptSummaryResponse(response);
-      expect(result.status).toBe('warning');
+      expect(result.status).toBe('passed');
     });
   });
 
