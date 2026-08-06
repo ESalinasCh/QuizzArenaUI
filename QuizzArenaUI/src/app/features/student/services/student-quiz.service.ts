@@ -228,11 +228,12 @@ export class StudentQuizService {
       return of(cachedMetadata);
     }
 
+    // TODO: Replace this paginated lookup with an attempt metadata endpoint by id.
     return this.#http
       .get<MatchAttemptSummaryResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts), {
         params: buildHttpParams({
           page: 1,
-          pageSize: 100,
+          pageSize: 500,
           matchmode: 'exam',
         }),
       })
@@ -260,11 +261,12 @@ export class StudentQuizService {
   }
 
   #getQuizMatch(quizId: string): Observable<AvailableMatchResponse> {
+    // TODO: Replace this paginated lookup with a match metadata endpoint by id.
     return this.#http
       .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
         params: buildHttpParams({
           page: 1,
-          pageSize: 100,
+          pageSize: 500,
           status: 'active',
           mode: 'Solo',
         }),
@@ -273,11 +275,12 @@ export class StudentQuizService {
   }
 
   #getExamMatch(examId: string): Observable<AvailableMatchResponse> {
+    // TODO: Replace this paginated lookup with a match metadata endpoint by id.
     return this.#http
       .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
         params: buildHttpParams({
           page: 1,
-          pageSize: 100,
+          pageSize: 500,
           status: 'Active',
           mode: 'Exam',
         }),
