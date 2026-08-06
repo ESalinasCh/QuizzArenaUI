@@ -2,6 +2,7 @@ import { required, schema, validate } from "@angular/forms/signals";
 import { PublishMatchForm } from "../../models/publish-match-form.model";
 
 export const publishMatchSchema = schema<PublishMatchForm>(path => {
+    required(path.title, { message: 'Title is required' });
     required(path.courseId, { message: 'A course must be selected' });
     required(path.durationMinutes, { message: 'Duration is required' });
     required(path.questionsAmount, { message: 'Number of questions is required' });

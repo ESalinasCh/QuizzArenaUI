@@ -28,6 +28,21 @@ export interface CreateQuizResponseBody {
 }
 
 export interface CreateMatchRequestBody {
+  title: string;
+  quizId: string;
+  courseId: string;
+  startedAt: string;
+  finishedAt: string;
+  questionsAmount: number;
+  timeMinutes: number;
+  attemptsAmount: number;
+  shuffleQuestion: boolean;
+  shuffleOptions: boolean;
+}
+
+export interface UpdateMatchRequestBody {
+  title: string;
+  id: string;
   quizId: string;
   courseId: string;
   startedAt: string;

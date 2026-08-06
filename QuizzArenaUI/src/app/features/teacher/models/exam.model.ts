@@ -74,6 +74,8 @@ export interface Match {
   startedAt?: string;
   finishedAt?: string;
   attemptsAmount?: number;
+  shuffleQuestion?: boolean;
+  shuffleOptions?: boolean;
 }
 
 export interface AttemptReviewQuestion {

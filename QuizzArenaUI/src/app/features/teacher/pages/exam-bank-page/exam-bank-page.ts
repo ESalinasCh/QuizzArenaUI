@@ -107,17 +107,36 @@ export class TeacherExamBankPage {
     const ref = this.#modalService.open<UnpublishMatchModal, string>(UnpublishMatchModal, { match: exam }, { title: 'Unpublish Match' });
     ref.afterClosed.then(id => {
       if (id) {
-        this.unpublishMatch(id);
+        this.unpublishMatch(exam);
       }
     });
   }
 
-  unpublishMatch(id: string): void {
-    this.#examService.unpublishMatch(id).pipe(take(1)).subscribe({
+  unpublishMatch(match: Match): void {
+    this.#examService.unpublishMatch(match.id).pipe(take(1)).subscribe({
       next: () => {
         this.matchesResource.value.update(currentMatches => {
           const matches = currentMatches ?? [];
-          return matches.filter(m => m.id !== id);
+          return matches.filter(m => m.id !== match.id);
+        });
+      },
+    });
+  }
+
+  publishMatch(match: Match): void {
+    if (!match) {
+      return;
+    }
+    this.#examService.activateMatchAsActiveExam(match.id).pipe(take(1)).subscribe({
+      next: () => {
+        this.matchesResource.value.update(currentMatches => {
+          const foundMatch = currentMatches.find(m => m.id == match.id);
+
+          if (foundMatch) {
+            foundMatch.status = 'Active';
+          }
+
+          return currentMatches;
         });
       },
     });

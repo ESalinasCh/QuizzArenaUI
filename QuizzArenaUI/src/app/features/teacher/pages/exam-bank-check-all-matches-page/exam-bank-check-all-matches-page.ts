@@ -9,6 +9,7 @@ import { Match } from '../../models/exam.model';
 import { DEFAULT_PAGE_SIZE } from '../../../../core/models/pagination.model';
 import { MatchOfQuizItem } from '../../components/match-of-quiz-item/match-of-quiz-item';
 import { NavigationHistoryService } from '../../../../core/services/navigation-history.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qz-exam-bank-check-all-matches-page',
@@ -16,6 +17,7 @@ import { NavigationHistoryService } from '../../../../core/services/navigation-h
   templateUrl: './exam-bank-check-all-matches-page.html',
 })
 export class ExamBankCheckAllMatchesPage {
+  readonly #router = inject(Router);
   readonly quizId = input<string>();
 
   readonly #navigationHistoryService = inject(NavigationHistoryService);
@@ -61,6 +63,10 @@ export class ExamBankCheckAllMatchesPage {
     this.#navigationHistoryService.back('/teacher/exams/bank');
   }
 
+  editMatch(match: Match): void {
+    this.#router.navigate(['/teacher/exams/edit', match.id]);
+  }
+
   unpublishMatch(match: Match): void {
     this.#examService.unpublishMatch(match.id).pipe(take(1)).subscribe({
       next: () => {
@@ -72,6 +78,23 @@ export class ExamBankCheckAllMatchesPage {
           )
         );
       }
+    });
+  }
+
+  publishMatch(match: Match): void {
+    if (!match) {
+      return;
+    }
+    this.#examService.activateMatchAsActiveExam(match.id).pipe(take(1)).subscribe({
+      next: () => {
+        this.matches.update(prev =>
+          prev.map(currentMatch =>
+            currentMatch.id === match.id
+              ? { ...currentMatch, status: 'Active' }
+              : currentMatch
+          )
+        );
+      },
     });
   }
 }

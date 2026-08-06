@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExamBankItem } from './exam-bank-item';
 import { QuizResponseAsExams } from '../../api/teacher-exam.contract';
 import { Match } from '../../models/exam.model';
-import { LOCALE_ID } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 const MOCK_QUIZ: QuizResponseAsExams = {
   id: 'exam-1',
@@ -15,6 +15,8 @@ const MOCK_QUIZ: QuizResponseAsExams = {
   ],
 };
 
+import { LOCALE_ID } from '@angular/core';
+
 describe('ExamBankItem', () => {
   let component: ExamBankItem;
   let fixture: ComponentFixture<ExamBankItem>;
@@ -22,11 +24,12 @@ describe('ExamBankItem', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ExamBankItem],
-      providers: [{ provide: LOCALE_ID, useValue: 'en' }],
+      providers: [provideRouter([]), { provide: LOCALE_ID, useValue: 'en' }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExamBankItem);
     fixture.componentRef.setInput('quizAsExams', MOCK_QUIZ);
+    fixture.componentRef.setInput('quizId', 'exam-1');
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
@@ -91,5 +94,18 @@ describe('ExamBankItem', () => {
     unpublishBtn?.click();
 
     expect(unpublishSpy).toHaveBeenCalledWith(mockMatches[0]);
+  });
+
+  it('should emit publishMatch when publishMatch event is triggered by child match item', () => {
+    const mockMatches: Match[] = [
+      { id: 'm1', title: 'M1', courseName: 'Course 101', questionCount: 5, professorName: 'Prof', duration: 45, status: 'Pending' },
+    ];
+    fixture.componentRef.setInput('matches', mockMatches);
+    fixture.detectChanges();
+
+    const publishSpy = vi.spyOn(component.publishMatch, 'emit');
+    component.publishMatch.emit(mockMatches[0]);
+
+    expect(publishSpy).toHaveBeenCalledWith(mockMatches[0]);
   });
 });

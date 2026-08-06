@@ -6,6 +6,7 @@ import { TeacherExamService } from '../../services/teacher-exam.service';
 import { TeacherExamBankPage } from './exam-bank-page';
 import { QuizResponseAsExams } from '../../api/teacher-exam.contract';
 import { Match } from '../../models/exam.model';
+import { ModalService } from '../../../../core/services/modal.service';
 
 const MOCK_QUIZZES: QuizResponseAsExams[] = [
   { id: 'exam-draft-1', title: 'DDD Fundamentals', description: 'Core DDD', status: 'draft', origin: 'ManuallyCreated', questions: [{ questionId: 'q1', position: 1, valueScore: 10, content: 'Q1', type: 'SingleChoice' }] },
@@ -19,6 +20,7 @@ const MOCK_MATCHES: Match[] = [
 
 describe('TeacherExamBankPage', () => {
   let mockExamService: Partial<TeacherExamService>;
+  let mockModalService: Partial<ModalService>;
 
   beforeEach(() => {
     mockExamService = {
@@ -27,11 +29,15 @@ describe('TeacherExamBankPage', () => {
       getMatches: vi.fn().mockReturnValue(of(MOCK_MATCHES)),
       unpublishMatch: vi.fn().mockReturnValue(of(undefined)),
     };
+    mockModalService = {
+      open: vi.fn().mockReturnValue({ afterClosed: Promise.resolve('m1') }),
+    };
 
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
         { provide: TeacherExamService, useValue: mockExamService },
+        { provide: ModalService, useValue: mockModalService },
         { provide: LOCALE_ID, useValue: 'en' },
       ],
     });
@@ -66,8 +72,19 @@ describe('TeacherExamBankPage', () => {
     const fixture = TestBed.createComponent(TeacherExamBankPage);
     fixture.detectChanges();
     const mockMatch: Match = { id: 'm1', title: 'M1', courseName: 'C1', questionCount: 5, professorName: 'P', duration: 30 };
-    fixture.componentInstance.unpublishMatch(mockMatch.id);
+    fixture.componentInstance.unpublishMatch(mockMatch);
     expect(mockExamService.unpublishMatch).toHaveBeenCalledWith('m1');
+  });
+
+  it('should open unpublish modal when onUnpublishMatch is called for an existing match', async () => {
+    const fixture = TestBed.createComponent(TeacherExamBankPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const mockMatch: Match = { id: 'm1', quizId: 'exam-draft-1', title: 'M1', courseName: 'C1', questionCount: 5, professorName: 'P', duration: 30 };
+    fixture.componentInstance.onUnpublishMatch(mockMatch);
+
+    expect(mockModalService.open).toHaveBeenCalled();
   });
 
   it('should navigate to matches list on goToQuizMatches', async () => {
@@ -96,5 +113,14 @@ describe('TeacherExamBankPage', () => {
     fixture.detectChanges();
     fixture.componentInstance.loadMoreQuizzesAsExams();
     expect(fixture.componentInstance.pageForQuizAsExams()).toBe(2);
+  });
+
+  it('should call activateMatchAsActiveExam on publishMatch and update match status to Active', () => {
+    mockExamService.activateMatchAsActiveExam = vi.fn().mockReturnValue(of(undefined));
+    const fixture = TestBed.createComponent(TeacherExamBankPage);
+    fixture.detectChanges();
+    const mockMatch: Match = { id: 'm1', title: 'M1', courseName: 'C1', questionCount: 5, professorName: 'P', duration: 30, status: 'Pending' };
+    fixture.componentInstance.publishMatch(mockMatch);
+    expect(mockExamService.activateMatchAsActiveExam).toHaveBeenCalledWith('m1');
   });
 });

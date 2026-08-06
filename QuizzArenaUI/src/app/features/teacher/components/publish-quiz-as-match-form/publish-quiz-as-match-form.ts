@@ -1,29 +1,22 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, input, linkedSignal, output, signal } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
 import { Button } from '../../../../shared/atoms/button/button';
 import { SelectInput } from '../../../../shared/molecules/select-input/select-input';
-import { TextInput } from "../../../../shared/molecules/text-input/text-input";
-import { TextSpan } from "../../../../shared/atoms/text-span/text-span";
-import { PublishMatchForm } from '../../models/publish-match-form.model';
-import { CreateMatchRequestBody } from '../../api/teacher-exam.contract';
-import { publishMatchSchema } from './publish-match-schema';
-import { getLocalDatetimeString, formatLocalToUtcIso } from '../../../../core/utils/date-formatter.utils';
-
+import { TextInput } from '../../../../shared/molecules/text-input/text-input';
+import { TextSpan } from '../../../../shared/atoms/text-span/text-span';
+import { PublishMatchForm, PublishMode } from '../../models/publish-match-form.model';
+import { CreateMatchRequestBody, UpdateMatchRequestBody } from '../../api/teacher-exam.contract';
 import { Course } from '../../models/content-upload.model';
-
-const hour = 60 * 60 * 1000;
-const defaultFormModel: PublishMatchForm = {
-  courseId: '',
-  durationMinutes: '30',
-  questionsAmount: '10',
-  maxRetries: '1',
-  enabledFrom: getLocalDatetimeString(new Date(Date.now() + hour)),
-  enabledUntil: getLocalDatetimeString(new Date(Date.now() + 2 * hour)),
-  shuffleQuestions: false,
-  shuffleOptions: false,
-};
-
-export const formSchema = publishMatchSchema;
+import { publishMatchSchema } from './publish-match-schema';
+import {
+  createQuizAsMatchFormModel,
+  getDateRangeError,
+  getFormFieldErrorMessage,
+  getMoreThanCurrentDateTimeError,
+  mapFormToCreateMatchRequest,
+  mapFormToUpdateMatchRequest,
+} from './publish-match-form.utils';
+import { Match } from '../../models/exam.model';
 
 @Component({
   selector: 'qz-publish-quiz-as-match-form',
@@ -31,102 +24,70 @@ export const formSchema = publishMatchSchema;
   templateUrl: './publish-quiz-as-match-form.html',
 })
 export class PublishQuizAsMatchForm {
-  sendMatchRequest = output<CreateMatchRequestBody>();
-  back = output<void>();
-  courses = input<Course[]>([]);
-  quizId = input<string>('');
+  readonly emitSaveRequest = output<CreateMatchRequestBody>();
+  readonly emitUpdateRequest = output<UpdateMatchRequestBody>();
 
-  readonly matchModel = signal<PublishMatchForm>(structuredClone(defaultFormModel));
-  readonly matchForm = form(this.matchModel, formSchema);
+  readonly back = output<void>();
+
+  readonly courses = input<Course[]>([]);
+
+  readonly quizId = input<string>('');
+  readonly matchId = input<string>('');
+  readonly mode = input<PublishMode>('publish');
+
+  readonly match = input<Match | null>(null);
+
+  readonly matchModel = linkedSignal<PublishMatchForm>(() => {
+    return (this.mode() === 'edit' && this.match())
+      ? createQuizAsMatchFormModel(this.match()!)
+      : createQuizAsMatchFormModel()
+  });
+  readonly matchForm = form(this.matchModel, publishMatchSchema);
 
   readonly isSubmitted = signal(false);
-  readonly isDirtyEnabledFrom = computed(() => this.matchForm.enabledFrom().touched());
-  readonly isDirtyEnabledUntil = computed(() => this.matchForm.enabledUntil().touched());
 
   readonly backAriaLabel = $localize`:Exam step config back button aria label:Back`;
-  readonly publishAriaLabel = $localize`:Exam step config publish button aria label:Publish exam`;
+  readonly publishAriaLabel = computed(() =>
+    this.mode() === 'edit'
+      ? $localize`:Exam step config update button aria label:Save changes`
+      : $localize`:Exam step config publish button aria label:Publish exam`
+  );
+  readonly submitButtonText = computed(() =>
+    this.mode() === 'edit'
+      ? $localize`:Exam step config save button label:Save changes`
+      : $localize`:Exam step config publish button label:Publish exam`
+  );
 
-  readonly courseError = computed(() => {
-    const field = this.matchForm.courseId();
-    const errs = field.errors();
-    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
-      ? (errs[0].message ?? 'A course must be selected')
-      : null;
-  });
+  readonly courseError = computed(() =>
+    getFormFieldErrorMessage(this.matchForm.courseId(), this.isSubmitted(), 'A course must be selected')
+  );
 
-  readonly durationError = computed(() => {
-    const field = this.matchForm.durationMinutes();
-    const errs = field.errors();
-    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
-      ? (errs[0].message ?? 'Duration is required')
-      : null;
-  });
+  readonly titleError = computed(() =>
+    getFormFieldErrorMessage(this.matchForm.title(), this.isSubmitted(), 'Title is required')
+  );
 
-  readonly questionsAmountError = computed(() => {
-    const field = this.matchForm.questionsAmount();
-    const errs = field.errors();
-    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
-      ? (errs[0].message ?? 'Number of questions is required')
-      : null;
-  });
+  readonly durationError = computed(() =>
+    getFormFieldErrorMessage(this.matchForm.durationMinutes(), this.isSubmitted(), 'Duration is required')
+  );
 
-  readonly retriesError = computed(() => {
-    const field = this.matchForm.maxRetries();
-    const errs = field.errors();
-    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
-      ? (errs[0].message ?? 'Max retries is required')
-      : null;
-  });
+  readonly questionsAmountError = computed(() =>
+    getFormFieldErrorMessage(this.matchForm.questionsAmount(), this.isSubmitted(), 'Number of questions is required')
+  );
 
-  readonly enabledFromError = computed(() => {
-    const field = this.matchForm.enabledFrom();
-    const errs = field.errors();
-    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
-      ? (errs[0].message ?? 'Start date is required')
-      : null;
-  });
+  readonly retriesError = computed(() =>
+    getFormFieldErrorMessage(this.matchForm.maxRetries(), this.isSubmitted(), 'Max retries is required')
+  );
 
-  readonly enabledUntilError = computed(() => {
-    const field = this.matchForm.enabledUntil();
-    const errs = field.errors();
-    return (this.isSubmitted() || field.touched() || field.dirty()) && errs.length > 0
-      ? (errs[0].message ?? 'End date is required')
-      : null;
-  });
+  readonly enabledFromError = computed(() =>
+    getFormFieldErrorMessage(this.matchForm.enabledFrom(), this.isSubmitted(), 'Start date is required')
+  );
 
-  readonly dateRangeError = computed(() => {
-    const rootErrors = this.matchForm().errors();
-    const dateError = rootErrors.find(e => e.kind === 'date_range' || e.message === 'End date must be after start date');
-    const isInteraction = this.isSubmitted() ||
-      this.matchForm.enabledFrom().touched() || this.matchForm.enabledFrom().dirty() ||
-      this.matchForm.enabledUntil().touched() || this.matchForm.enabledUntil().dirty();
-    return isInteraction && dateError
-      ? (dateError.message ?? 'End date must be after start date')
-      : null;
-  });
+  readonly enabledUntilError = computed(() =>
+    getFormFieldErrorMessage(this.matchForm.enabledUntil(), this.isSubmitted(), 'End date is required')
+  );
 
-  readonly dateRangeInvalid = computed(() => {
-    return this.dateRangeError() !== null;
-  });
-
-  readonly isFormValid = computed(() => {
-    return this.matchForm().valid();
-  });
-
-  readonly isMoreThanCurrentDateTime = computed(() => {
-
-    if (
-      this.isSubmitted() ||
-      this.matchForm.enabledFrom().touched() || this.matchForm.enabledFrom().dirty() ||
-      this.matchForm.enabledUntil().touched() || this.matchForm.enabledUntil().dirty()
-    ) {
-      const now = new Date().getTime();
-      const enabledFrom = new Date(this.matchForm.enabledFrom().value()).getTime();
-      const enabledUntil = new Date(this.matchForm.enabledUntil().value()).getTime();
-      return (enabledFrom <= now || enabledUntil <= now) ? 'Date must be greater than current date' : null;
-    }
-    return null;
-  });
+  readonly dateRangeError = computed(() => getDateRangeError(this.matchForm, this.isSubmitted()));
+  readonly isMoreThanCurrentDateTime = computed(() => getMoreThanCurrentDateTimeError(this.matchForm, this.isSubmitted()));
 
   toggleShuffleQuestions(): void {
     this.matchModel.update(m => ({ ...m, shuffleQuestions: !m.shuffleQuestions }));
@@ -138,20 +99,11 @@ export class PublishQuizAsMatchForm {
 
   submit(): void {
     this.isSubmitted.set(true);
-    if (!this.isFormValid()) return;
-    const m = this.matchModel();
-    this.sendMatchRequest.emit(
-      {
-        quizId: this.quizId(),
-        courseId: m.courseId,
-        questionsAmount: Number(m.questionsAmount),
-        startedAt: formatLocalToUtcIso(m.enabledFrom),
-        finishedAt: formatLocalToUtcIso(m.enabledUntil),
-        timeMinutes: Number(m.durationMinutes),
-        attemptsAmount: Number(m.maxRetries),
-        shuffleQuestion: m.shuffleQuestions,
-        shuffleOptions: m.shuffleOptions,
-      }
-    );
+    if (!this.matchForm().valid()) return;
+    if (this.mode() === 'publish') {
+      this.emitSaveRequest.emit(mapFormToCreateMatchRequest(this.matchModel(), this.quizId()));
+      return;
+    }
+    this.emitUpdateRequest.emit(mapFormToUpdateMatchRequest(this.matchModel(), this.matchId(), this.quizId()));
   }
 }

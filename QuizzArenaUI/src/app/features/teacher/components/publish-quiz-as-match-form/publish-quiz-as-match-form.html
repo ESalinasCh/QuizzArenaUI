@@ -1,5 +1,11 @@
 <form class="flex flex-col gap-6" (submit)="$event.preventDefault(); submit()">
-  @if(courses().length > 0){
+
+  <qz-text-input [label]="'Title'" id="title" [type]="'text'" [formField]="matchForm.title"
+    [errorMessage]="titleError() || ''" [labeli18]="'Exam step config title label'"
+    [errori18]="'Exam step config duration error'" />
+
+  @if (mode() === 'publish') {
+  @if (courses().length > 0) {
   <qz-select-input [label]="'Select Course'" [formField]="matchForm.courseId" [errorMessage]="courseError() || ''">
     <option value="" disabled>-- Select a course --</option>
     @for (course of courses(); track course.id) {
@@ -15,6 +21,7 @@
       Courses are loading ..
     </qz-text-span>
   </p>
+  }
   }
 
   <qz-text-input [label]="'Duration (minutes)'" id="durationMinutes" [type]="'number'"
@@ -91,8 +98,8 @@
       [ariaLabel]="backAriaLabel">
       <span i18n="Exam step config back button label">Back</span>
     </qz-button>
-    <qz-button type="submit" size="large" variant="primary" [fullWidth]="true" [ariaLabel]="publishAriaLabel">
-      <span i18n="Exam step config publish button label">Publish exam</span>
+    <qz-button type="submit" size="large" variant="primary" [fullWidth]="true" [ariaLabel]="publishAriaLabel()">
+      <span>{{ submitButtonText() }}</span>
     </qz-button>
   </div>
 

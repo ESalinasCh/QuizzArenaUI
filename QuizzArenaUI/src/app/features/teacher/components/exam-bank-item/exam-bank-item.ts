@@ -13,11 +13,13 @@ import { MatchOfQuizItem } from '../match-of-quiz-item/match-of-quiz-item';
 })
 export class ExamBankItem {
   readonly quizAsExams = input.required<QuizResponseAsExams>();
+  readonly quizId = input.required<string>();
   readonly matches = input<Match[]>([]);
   readonly publish = output<void>();
   readonly checkOthers = output<void>();
   readonly unpublishMatch = output<Match>();
   readonly viewQuestions = output<void>();
+  readonly publishMatch = output<Match>();
 
   protected readonly publishAriaLabel = $localize`:Exam bank publish button aria label:Publish exam`;
   protected readonly checkOthersAriaLabel = $localize`:Exam bank check others button aria label:Check others`;
