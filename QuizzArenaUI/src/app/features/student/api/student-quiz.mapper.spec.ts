@@ -131,7 +131,7 @@ describe('student-quiz.mapper', () => {
 
       const result = mapAttemptHistoryCardResponse(response);
 
-      expect(result.statusVariant).toBe('warning');
+      expect(result.statusVariant).toBe('danger');
     });
   });
 
