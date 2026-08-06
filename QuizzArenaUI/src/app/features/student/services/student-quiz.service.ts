@@ -233,7 +233,7 @@ export class StudentQuizService {
       .get<MatchAttemptSummaryResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts), {
         params: buildHttpParams({
           page: 1,
-          pageSize: 100,
+          pageSize: 99,
           matchmode: 'exam',
         }),
       })
