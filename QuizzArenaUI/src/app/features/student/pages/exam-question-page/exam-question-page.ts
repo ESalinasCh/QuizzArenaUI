@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, EMPTY, from, of, switchMap } from 'rxjs';
+import { catchError, delay, EMPTY, from, of, switchMap } from 'rxjs';
 import { Icon } from '../../../../shared/atoms/icon/icon';
 import { StudentQuizService } from '../../services/student-quiz.service';
 
@@ -92,8 +92,17 @@ export class StudentExamQuestionPage {
 
           return this.#studentQuizService.completeExamAttempt(attemptId).pipe(
             switchMap(result =>
-              from(this.#router.navigate(['/student/exams', result.attemptId, 'results'])),
-            ),
+              from(
+               
+                this.#router.navigate(
+                  ['/student/exams', result.attemptId, 'results'],
+                  {
+                    queryParams: {
+                      view: 'details',
+                    },
+                  },
+                ),
+              )),
           );
         }),
         catchError(() => {

@@ -167,39 +167,44 @@ describe('student-quiz.mapper', () => {
       const response: MatchAttemptDetailResponse = {
         id: 'attempt-1', score: 80, status: 'passed',
         questions: [
-          { questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [{ id: 'q1-a', description: 'Answer A', isCorrect: true }] },
+          { questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [{ id: 'q1-a', description: 'Answer A', isCorrect: true }], justification: "justification" },
         ],
       };
       const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
 
       const result = mapMatchAttemptDetailResponse(response, metadata);
       expect(result.title).toBe('Quiz 1');
-      expect(result.questions[0].text).toBe('Q1');
-      expect(result.questions[0].isCorrect).toBe(true);
+      expect(result.matchAttempt.questions[0].content).toBe('Q1');
+      expect(result.matchAttempt.questions[0].isCorrect).toBe(true);
     });
 
-    it('should map multiple selected answers from attempt detail', () => {
-      const response: MatchAttemptDetailResponse = {
-        id: 'attempt-1', score: 80, status: 'passed',
-        questions: [
-          {
-            questionId: 'q1',
-            content: 'Q1',
-            selectedOptionIds: ['q1-a', 'q1-b'],
-            isCorrect: true,
-            options: [
-              { id: 'q1-a', description: 'Answer A', isCorrect: true },
-              { id: 'q1-b', description: 'Answer B', isCorrect: true },
-            ],
-          },
+  it('should map multiple selected answers from attempt detail', () => {
+  const response: MatchAttemptDetailResponse = {
+    id: 'attempt-1',
+    score: 80,
+    status: 'passed',
+    questions: [
+      {
+        questionId: 'q1',
+        content: 'Q1',
+        selectedOptionIds: ['q1-a', 'q1-b'],
+        justification: "justification",
+        isCorrect: true,
+        options: [
+          { id: 'q1-a', description: 'Answer A', isCorrect: true },
+          { id: 'q1-b', description: 'Answer B', isCorrect: true },
         ],
-      };
-      const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
+      },
+    ],
+  };
 
-      const result = mapMatchAttemptDetailResponse(response, metadata);
+  const metadata = { title: 'Quiz 1', subtitle: 'DDD' };
 
-      expect(result.questions[0].selectedAnswerLabel).toBe('Answer A, Answer B');
-    });
+  const result = mapMatchAttemptDetailResponse(response, metadata);
+
+  expect(result.matchAttempt.questions[0].selectedOptionIds)
+    .toEqual(['q1-a', 'q1-b']);
+});
   });
 
   describe('mapSubmitMatchAttemptResponse', () => {

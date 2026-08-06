@@ -23,7 +23,7 @@ export const studentRoutes: Routes = [
     canDeactivate: [attemptFlowGuard],
     data: { immersive: true },
   },
-  { path: 'quizzes/:quizId/results', component: StudentQuizResultsPage },
+  { path: 'quizzes/:attemptId/results', component: StudentQuizResultsPage },
 
   { path: 'exams', component: StudentExamListPage },
   {
@@ -36,6 +36,7 @@ export const studentRoutes: Routes = [
     canDeactivate: [attemptFlowGuard],
     data: { immersive: true },
   },
-  { path: 'exams/:attemptId/results', component: StudentExamResultsPage },
+  // path: 'exams/:attemptId/results', component: StudentExamResultsPage },
+  { path: 'exams/:attemptId/results', component: StudentQuizResultsPage },
   { path: 'grades', component: StudentGradeHistoryPage },
 ];

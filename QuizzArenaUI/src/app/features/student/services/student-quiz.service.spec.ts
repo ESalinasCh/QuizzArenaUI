@@ -145,12 +145,12 @@ describe('StudentQuizService', () => {
     it('should fetch attempt detail and combine with metadata', () => {
       const attemptMock: MatchAttemptDetailResponse = {
         id: 'attempt-1', score: 80, status: 'passed',
-        questions: [{ questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [] }],
+        questions: [{ questionId: 'q1', content: 'Q1', selectedOptionIds: ['q1-a'], isCorrect: true, options: [], justification:"justification" }],
       };
 
       service.getMatchAttemptDetail('attempt-1').subscribe(review => {
         expect(review.title).toBe('Quiz 1');
-        expect(review.score).toBe(80);
+        expect(review.matchAttempt.score).toBe(80);
       });
 
       const detailReq = httpTesting.expectOne(`${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttemptDetail('attempt-1')}`);

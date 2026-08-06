@@ -42,11 +42,11 @@ export interface MatchAttemptDetailOptionResponse {
 
 export interface MatchAttemptDetailQuestionResponse {
   questionId: string;
-  content: string;
-  questionType?: QuestionType;
+  content: string;  
+  justification: string | null;
   selectedOptionIds: string[];
   isCorrect: boolean | null;
-  justification: string | null;
+
   options: MatchAttemptDetailOptionResponse[];
 }
 
