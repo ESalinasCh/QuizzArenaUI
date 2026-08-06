@@ -233,7 +233,7 @@ export class StudentQuizService {
       .get<MatchAttemptSummaryResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.matchAttempts), {
         params: buildHttpParams({
           page: 1,
-          pageSize: 500,
+          pageSize: 100,
           matchmode: 'exam',
         }),
       })
@@ -266,7 +266,7 @@ export class StudentQuizService {
       .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
         params: buildHttpParams({
           page: 1,
-          pageSize: 500,
+          pageSize: 100,
           status: 'active',
           mode: 'Solo',
         }),
@@ -280,7 +280,7 @@ export class StudentQuizService {
       .get<AvailableMatchResponse[]>(buildApiUrl(STUDENT_QUIZ_ENDPOINTS.availableMatches), {
         params: buildHttpParams({
           page: 1,
-          pageSize: 500,
+          pageSize: 100,
           status: 'Active',
           mode: 'Exam',
         }),
