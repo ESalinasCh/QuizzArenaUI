@@ -84,7 +84,7 @@ export function mapMatchAttemptSummaryResponse({ id, title, score, completedAt, 
     score,
     completedAtLabel: completedAt
       ? formatRelativeDate(completedAt)
-      : $localize`:Recent quiz in progress label:in progress`,
+      : $localize`:Recent quiz in progress label:Completed`,
     status: mapRecentQuizStatus(status),
   };
 }
@@ -204,7 +204,7 @@ export function mapStudentMatchesResponse(
 }
 
 function mapRecentQuizStatus(status: MatchAttemptSummaryResponse['status']): RecentQuizStatus {
-  return status === 'passed' ? 'passed' : 'warning';
+  return status === 'completed' ? 'passed' : 'warning';
 }
 
 function mapAttemptHistoryStatusLabel(score: number): string {

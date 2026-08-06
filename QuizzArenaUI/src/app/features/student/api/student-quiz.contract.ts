@@ -1,7 +1,7 @@
 import { PagedRequest } from "../../../core/models/pagination.model";
 import { AvailableQuizStatus } from "../models/student-quiz.model";
 
-export type MatchAttemptDetailStatus = 'passed' | 'failed';
+export type MatchAttemptDetailStatus = 'completed' | 'in-progress';
 export type MatchAttemptSummaryStatus = MatchAttemptDetailStatus | 'in-progress';
 
 export type MatchStatus = 'Active' | 'Pending' | 'Expired';

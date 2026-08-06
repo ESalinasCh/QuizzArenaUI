@@ -1,7 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { Icon, IconName } from '../../atoms/icon/icon';
 
-export type RecentQuizMetaStatus = 'passed' | 'warning';
+export type RecentQuizMetaStatus = 'completed' | 'warning';
 
 @Component({
   selector: 'qz-recent-quiz-meta',
@@ -14,11 +14,11 @@ export class RecentQuizMeta {
   status = input<RecentQuizMetaStatus>('warning');
 
   readonly iconName = computed<IconName>(() =>
-    this.status() === 'passed' ? 'check' : 'warning',
+    this.status() === 'completed' ? 'check' : 'warning',
   );
 
   readonly metaClasses = computed(() =>
-    this.status() === 'passed'
+    this.score() >= 51
       ? 'text-success-text-light dark:text-success-text-dark'
       : 'text-warning-text-light dark:text-warning-text-dark',
   );

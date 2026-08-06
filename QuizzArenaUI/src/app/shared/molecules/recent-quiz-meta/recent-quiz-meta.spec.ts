@@ -20,53 +20,55 @@ describe('RecentQuizMeta', () => {
     expect(fixture.nativeElement.textContent).toContain('Yesterday');
   });
 
-  it('should default to warning status with warning icon', () => {
+  it('should apply warning styles by default for scores below the passing threshold', () => {
     const fixture = TestBed.createComponent(RecentQuizMeta);
     fixture.componentRef.setInput('score', 50);
     fixture.componentRef.setInput('completedAtLabel', '1 day ago');
     fixture.detectChanges();
 
     const icon = fixture.nativeElement.querySelector('qz-icon');
+    const paragraph = fixture.nativeElement.querySelector('p');
+
     expect(icon).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('p')?.classList.contains('text-warning-text-light')).toBe(true);
+    expect(paragraph?.classList.contains('text-warning-text-light')).toBe(true);
   });
 
-  it('should show check icon and success styles when passed', () => {
+  it('should show the check icon when status is completed', () => {
     const fixture = TestBed.createComponent(RecentQuizMeta);
     fixture.componentRef.setInput('score', 95);
     fixture.componentRef.setInput('completedAtLabel', 'Just now');
-    fixture.componentRef.setInput('status', 'passed');
+    fixture.componentRef.setInput('status', 'completed');
     fixture.detectChanges();
 
     const icon = fixture.nativeElement.querySelector('qz-icon');
+
     expect(icon).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('p')?.classList.contains('text-success-text-light')).toBe(true);
   });
 
-  it('should show warning icon and warning styles when status is warning', () => {
+  it('should apply success styles for scores above the passing threshold', () => {
+    const fixture = TestBed.createComponent(RecentQuizMeta);
+    fixture.componentRef.setInput('score', 95);
+    fixture.componentRef.setInput('completedAtLabel', 'Just now');
+    fixture.detectChanges();
+
+    const paragraph = fixture.nativeElement.querySelector('p');
+
+    expect(paragraph?.classList.contains('text-success-text-light')).toBe(true);
+  });
+
+  it('should update styles when the score changes', () => {
     const fixture = TestBed.createComponent(RecentQuizMeta);
     fixture.componentRef.setInput('score', 40);
-    fixture.componentRef.setInput('completedAtLabel', '3 days ago');
-    fixture.componentRef.setInput('status', 'warning');
-    fixture.detectChanges();
-
-    const icon = fixture.nativeElement.querySelector('qz-icon');
-    expect(icon).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('p')?.classList.contains('text-warning-text-light')).toBe(true);
-  });
-
-  it('should update icon when status changes', () => {
-    const fixture = TestBed.createComponent(RecentQuizMeta);
-    fixture.componentRef.setInput('score', 70);
     fixture.componentRef.setInput('completedAtLabel', '5 min ago');
-    fixture.componentRef.setInput('status', 'warning');
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('p')?.classList.contains('text-warning-text-light')).toBe(true);
+    let paragraph = fixture.nativeElement.querySelector('p');
+    expect(paragraph?.classList.contains('text-warning-text-light')).toBe(true);
 
-    fixture.componentRef.setInput('status', 'passed');
+    fixture.componentRef.setInput('score', 80);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('p')?.classList.contains('text-success-text-light')).toBe(true);
+    paragraph = fixture.nativeElement.querySelector('p');
+    expect(paragraph?.classList.contains('text-success-text-light')).toBe(true);
   });
 });
