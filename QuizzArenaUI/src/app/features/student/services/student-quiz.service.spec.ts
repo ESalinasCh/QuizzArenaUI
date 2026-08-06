@@ -162,7 +162,7 @@ describe('StudentQuizService', () => {
         request =>
           request.url === `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}` &&
           request.params.get('page') === '1' &&
-          request.params.get('pageSize') === '100' &&
+          request.params.get('pageSize') === '99' &&
           request.params.get('matchmode') === 'exam',
       );
       metaReq.flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', completedAt: '2026-06-19', score: 80, status: 'completed', duration: 10 }]);
@@ -257,7 +257,7 @@ describe('StudentQuizService', () => {
         request =>
           request.url === `${apiBaseUrl}${STUDENT_QUIZ_ENDPOINTS.matchAttempts}` &&
           request.params.get('page') === '1' &&
-          request.params.get('pageSize') === '100' &&
+          request.params.get('pageSize') === '99' &&
           request.params.get('matchmode') === 'exam',
       )
         .flush([{ id: 'attempt-1', title: 'Quiz 1', courseName: 'DDD', startedAt, completedAt: null, score: 80, status: 'completed', duration: 10 }]);
